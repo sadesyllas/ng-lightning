@@ -1,0 +1,20 @@
+### Build generated
+/dist
+/demo/assets
+/demo/bundle.js*
+/temp/
+/coverage/
+
+### Package manager generated
+/node_modules/
+/typings/
+
+### Logs
+*.log
+
+### OS/IDE generated files
+Thumbs.db
+.DS_Store
+.vscode
+.idea
+*.iml
