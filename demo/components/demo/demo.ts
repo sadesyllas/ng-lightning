@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core';
+import {NGL_DIRECTIVES} from '../../../dist/ng-lightning';
 
 interface IComponent {
   key: string;
@@ -24,6 +25,6 @@ components.forEach(component => {
 
 @Component({
   template: require('./demo.jade')({ content, components }),
-  directives: [].concat(components.map((c: any) => c.component)),
+  directives: [NGL_DIRECTIVES].concat(components.map((c: any) => c.component)),
 })
 export class DemoRoute { }
