@@ -48,4 +48,44 @@ gulp.task('build:watch', function() {
   gulp.watch([ PATHS.src ], ['build:ts']);
 });
 
+function startKarmaServer(isTddMode, done) {
+  var config = {configFile: __dirname + '/karma.conf.js', singleRun: !isTddMode, autoWatch: isTddMode};
+
+  var karmaServer = require('karma').Server;
+  new karmaServer(config, done).start();
+}
+
+gulp.task('test:clean', function() {
+  return require('del')(PATHS.temp);
+});
+
+gulp.task('test:build', function() {
+  var sourcemaps = require('gulp-sourcemaps');
+
+  var tsResult = gulp.src(PATHS.spec)
+    .pipe(sourcemaps.init())
+    .pipe(ts(tsProject));
+
+  return tsResult.js
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(PATHS.temp));
+});
+
+gulp.task('test:clean-build', function(done) {
+  runSequence('test:clean', 'test:build', done);
+});
+
+gulp.task('test', ['test:clean-build'], function(done) {
+  startKarmaServer(false, done)
+});
+
+gulp.task('tdd', ['test:clean-build'], function(done) {
+  startKarmaServer(true, function(err) {
+    done(err);
+    process.exit(1);
+  });
+
+  gulp.watch(PATHS.spec, ['test:build']);
+});
+
 gulp.task('default', ['build']);
