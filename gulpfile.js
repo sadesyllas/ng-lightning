@@ -88,4 +88,9 @@ gulp.task('tdd', ['test:clean-build'], function(done) {
   gulp.watch(PATHS.spec, ['test:build']);
 });
 
+gulp.task('prepublish', ['build'], function(done) {
+  return gulp.src(['package.json', '*.md', 'LICENSE'])
+    .pipe(gulp.dest(BUILD));
+});
+
 gulp.task('default', ['build']);
