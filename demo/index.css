@@ -1,0 +1,46 @@
+app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background:#363636;
+  border-bottom: 1px solid #1c1c1c;
+  position:fixed; top:0;
+  width:100%;
+  z-index: 1000;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5);
+}
+
+header a {
+  color: #d9d9d9 !important;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex: none;
+  background: #FAFBFC;
+}
+
+.readme p {
+  margin: 5px 0 10px 0;
+}
+.readme ul { list-style: disc; margin-left: 20px; margin-bottom: 10px;}
+
+.api {
+  background-color: #151718;
+  color: #d4d7d6;
+}
+.api code {
+  color: #ffffff;
+  background-color: #696969;
+  padding: 0 3px;
+}
+
+.api h1 { font-size: x-large; margin-bottom: 20px; margin-top: 5px;}
+.api h3 { font-size: large; line-height: 0; }
+.api ul { list-style: disc; margin-left: 50px; margin-bottom: 10px; line-height: 14px;}

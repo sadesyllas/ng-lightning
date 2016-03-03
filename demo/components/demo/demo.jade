@@ -1,0 +1,28 @@
+mixin code-preview(comp)
+  ngl-tabs( [(selected)]="selectedTab#{comp.key}")
+    template(ngl-tab, heading="Markup")
+      pre.language-html
+        code.language-html(ngNonBindable)!= comp.html
+    template(ngl-tab, heading="Typescript")
+      pre.language-typescript
+        code.language-typescript(ngNonBindable)!= comp.ts
+    template(ngl-tab, heading="API")
+      pre.language-markup
+        code.language-markup.api(ngNonBindable)
+          div!= comp.api
+
+.slds-container--large.slds-container--center
+  .slds-p-around--large
+    each comp in components
+      section.slds-m-top--x-large(id="#{comp.key}")
+        h1.slds-text-heading--large
+          | #{comp.title}
+        hr.slds-m-top--small.slds-m-bottom--large
+        .slds-grid
+          .slds-col.slds-size--1-of-2
+            #{'demo-' + comp.key}
+          .slds-col.slds-size--1-of-2
+            .slds-p-horizontal--small.readme!= comp.readme
+        .slds-grid.slds-m-top--large
+          .slds-col 
+            +code-preview(comp)

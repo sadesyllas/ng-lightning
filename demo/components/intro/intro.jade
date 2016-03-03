@@ -1,0 +1,62 @@
+#banner(style="background: #111111; color: #ccc; tex-align: center;")
+  .slds-container--large.slds-container--center
+    .slds-grid.slds-grid--align-center.slds-p-around--x-large
+      .slds-col.slds-text-align--center
+        img(src='/img/shield.svg', alt='', style="height: 180px;")
+        .slds-text-heading--large(style="color:#FFF;") NG-LIGHTNING
+        .slds-text-heading--small.slds-p-top--small Native Angular 2 components & directives for Lightning Design System
+
+.slds-container--large.slds-container--center.slds-m-top--large.slds-p-around--x-large
+
+  .slds-grid.slds-m-top--large
+    .slds-col--padded.slds-text-align--center.slds-size--1-of-3
+      .slds-text-heading--medium BUILDING FOR THE FUTURE
+      .slds-m-top--large 
+        | Built upon next genearation frameworks like 
+        b: a(href="https://angular.io/") Angular 2 
+        | and 
+        b: a(href="https://www.lightningdesignsystem.com/") Salesforce's Lightning Design System
+        | , rest ​assured that you’re going to build an application to stand the test of time.
+    .slds-col--padded.slds-text-align--center.slds-size--1-of-3
+      .slds-text-heading--medium BEST PRACTICES
+      .slds-m-top--large 
+        | We focus on building stateless functional components that depend only on their input properties, guaranteeing better performance, more development flexibility and seamless integration with your application's requirements.
+    .slds-col--padded.slds-text-align--center.slds-size--1-of-3
+      .slds-text-heading--medium  ACCESSIBILITY
+      .slds-m-top--large 
+        | We put much effort to follow Lightning Design System's accessibility guidelines, so that you are sure that your product is operable by people with a wide range of abilities
+        | and meets all legal requirements.
+
+  hr
+
+  .slds-p-vertical--large
+    .slds-text-heading--large.slds-m-bottom--large Getting started
+    p.slds-m-bottom--small 
+      | You need to install through 
+      code npm
+      | :
+    pre.language-bash
+      code.language-bash(ngNonBindable)!= install
+      
+  .slds-p-vertical--large
+    .slds-text-heading--large.slds-m-bottom--large Reading the documentation
+    p 
+      | Each component has API documentation, examples and working demo, that can be found&nbsp;
+      a([routerLink]="['Components']") here
+      | .
+
+  .slds-p-vertical--large
+    .slds-text-heading--large.slds-m-bottom--large Usage
+    p.slds-m-bottom--small 
+      | You should configure&nbsp;
+      code ng-lightning
+      | &nbsp;when your Angular 2 application is bootstraping:
+    pre.language-typescript
+      code.language-typescript(ngNonBindable)!= usageApp
+      
+    p.slds-m-bottom--small.slds-m-top--large 
+      | Then, you can use all the&nbsp;
+      code ng-lightning
+      | &nbsp;directives in your own components like this:
+    pre.language-typescript
+      code.language-typescript(ngNonBindable)!= usageCmp
