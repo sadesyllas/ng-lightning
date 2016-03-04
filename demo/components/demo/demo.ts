@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {NGL_DIRECTIVES} from '../../../dist/ng-lightning';
 
+import {DemoBadges} from './components/badges/badges';
 import {DemoIcons} from './components/icons/icons';
 import {DemoSpinners} from './components/spinners/spinners';
 import {DemoTabs} from './components/tabs/tabs';
@@ -16,6 +17,7 @@ interface IComponent {
 };
 
 const components: IComponent[] = [
+  { key: 'badges', title: 'Badges', component: DemoBadges, readme: require('src/badges/README.md'), api: require('src/badges/API.md') },
   { key: 'icons', title: 'Icons', component: DemoIcons, readme: require('src/icons/README.md'), api: require('src/icons/API.md')  },
   { key: 'spinners', title: 'Spinners', component: DemoSpinners, readme: require('src/spinners/README.md'), api: require('src/spinners/API.md') },
   { key: 'tabs', title: 'Tabs', component: DemoTabs, readme: require('src/tabs/README.md'), api: require('src/tabs/API.md') },
