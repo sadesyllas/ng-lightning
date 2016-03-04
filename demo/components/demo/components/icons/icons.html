@@ -1,0 +1,9 @@
+<ngl-icon icon="warning" type="warning" alt="Warning"></ngl-icon>
+
+<div class="slds-grid slds-m-top--large" style="height: 50px;">
+ <div class="slds-align-middle slds-col">
+   Size: <code>{{size}}</code>
+   <button type="button" nglButton="neutral" (click)="change()">Change</button>
+   <ngl-icon [icon]="icon" [size]="size" [type]="size === 'small' ? 'error' : ''"></ngl-icon>
+ </div>
+</div>
