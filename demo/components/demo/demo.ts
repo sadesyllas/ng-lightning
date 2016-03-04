@@ -1,6 +1,8 @@
 import {Component} from 'angular2/core';
 import {NGL_DIRECTIVES} from '../../../dist/ng-lightning';
 
+import {DemoTabs} from './components/tabs/tabs';
+
 interface IComponent {
   key: string;
   title: string;
@@ -12,6 +14,7 @@ interface IComponent {
 };
 
 const components: IComponent[] = [
+  { key: 'tabs', title: 'Tabs', component: DemoTabs, readme: require('src/tabs/README.md'), api: require('src/tabs/API.md') },
 ].sort((a, b) => a.key.localeCompare(b.key));
 
 const content = {};

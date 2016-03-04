@@ -1,0 +1,20 @@
+<ngl-tabs [(selected)]="selectedTab" [type]="type">
+  <template ngl-tab heading="Overview">
+    You have {{details.length}} details.
+  </template>
+  <template *ngFor="#detail of details" ngl-tab [heading]="detail.title"
+            (onActivate)="tabChange(detail, 'add')"
+            (onDeactivate)="tabChange(detail, 'remove')">
+    {{detail.text}}
+    <button type="button" nglButton="destructive" (click)="removeDetail(detail)">Remove</button>
+  </template>
+  <template ngl-tab="sum" heading="Summary">
+    Next last ID is {{id}}.
+  </template>
+</ngl-tabs>
+
+<div class="slds-m-top--large">
+  <button type="button" nglButton="brand" (click)="addDetail()">Add Detail</button>
+  <button type="button" nglButton="neutral" (click)="change()">Toggle scope</button>
+  <button type="button" nglButton="neutral" (click)="selectedTab = 'sum'" [disabled]="isDisabled()">Show Summary</button>
+</div>
