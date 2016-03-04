@@ -1,5 +1,5 @@
-import 'angular2/bundles/angular2-polyfills';
-import {Component, provide} from 'angular2/core';
+import './vendor';
+import {Component, provide, enableProdMode} from 'angular2/core';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {bootstrap} from 'angular2/platform/browser';
 
@@ -9,6 +9,9 @@ import {IntroRoute} from './components/intro/intro';
 import {DemoRoute} from './components/demo/demo';
 import {SupportRoute} from './components/support/support';
 
+if (__PROD__) {
+  enableProdMode();
+}
 
 @Component({
     selector: 'app',

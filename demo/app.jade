@@ -4,7 +4,7 @@ header
       .slds-col.slds-align-middle.slds-no-flex
         .slds-media.slds-media--center.slds-media--responsive
           span.slds-media__figure
-            img(src="/img/shield.svg", style="height: 30px;")
+            img(src="img/shield.svg", style="height:30px;")
           .slds-media__body 
             a.slds-text-heading--small([routerLink]="['Intro']", style="color:#fff;") NG-LIGHTNING
 
@@ -14,14 +14,14 @@ header
       
       .slds-col.slds-align-middle.slds-no-flex
         a(href="https://www.npmjs.com/package/ng-lightning", alt="NPM", title="Install with NPM")
-          img(src="/img/npm.svg", style="height:15px; background:transparent;")
+          img(src="img/npm.svg", style="height:15px; background:transparent;")
 
         a.slds-m-left--small(href="https://github.com/ng-lightning/ng-lightning", alt="Source", title="View Source")
-          img(src="/img/octicon.png", style="height:20px; background:transparent;")
+          img(src="img/octicon.png", style="height:20px; background:transparent;")
         
 main(style="margin-top: 54px;")
   router-outlet
     
 footer.slds-p-vertical--small.slds-p-horizontal--x-large.slds-grid.slds-text-body--small
   .slds-col © 2016. Code licensed under the MIT License. 
-  .slds-col.slds-text-align--right Last updated on {{ #{now} | date }}. v#{version}
+  .slds-col.slds-text-align--right Last updated on #{now}. v#{version}

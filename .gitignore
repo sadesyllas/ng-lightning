@@ -1,7 +1,6 @@
 ### Build generated
 /dist
-/demo/assets
-/demo/bundle.js*
+/demo/dist
 /temp/
 /coverage/
 
