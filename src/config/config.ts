@@ -5,7 +5,7 @@ export interface IConfig {
 };
 
 const DEFAULT_CONFIG: IConfig = {
-  svgPath: '/assets/icons/utility-sprite/svg',
+  svgPath: 'assets/icons/utility-sprite/svg',
 };
 
 export function getConfig(_config: IConfig = {}): IConfig {
