@@ -4,6 +4,7 @@ import {NGL_DIRECTIVES} from '../../../dist/ng-lightning';
 import {DemoBadges} from './components/badges/badges';
 import {DemoButtons} from './components/buttons/buttons';
 import {DemoIcons} from './components/icons/icons';
+import {DemoAvatars} from './components/images/images';
 import {DemoModals} from './components/modals/modals';
 import {DemoPaginations} from './components/paginations/paginations';
 import {DemoSpinners} from './components/spinners/spinners';
@@ -20,6 +21,7 @@ interface IComponent {
 };
 
 const components: IComponent[] = [
+  { key: 'images', title: 'Images', component: DemoAvatars, readme: require('src/images/README.md'), api: require('src/images/API.md') },
   { key: 'badges', title: 'Badges', component: DemoBadges, readme: require('src/badges/README.md'), api: require('src/badges/API.md') },
   { key: 'buttons', title: 'Buttons', component: DemoButtons, readme: require('src/buttons/README.md'), api: require('src/buttons/API.md') },
   { key: 'icons', title: 'Icons', component: DemoIcons, readme: require('src/icons/README.md'), api: require('src/icons/API.md')  },

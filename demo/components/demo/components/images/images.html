@@ -1,0 +1,19 @@
+<div class="slds-text-heading--label slds-m-bottom--small">Avatars</div>
+<ngl-avatar src="assets/images/avatar1.jpg" alt="avatar 1"></ngl-avatar>
+<ngl-avatar size="small" type="circle" src="assets/images/avatar2.jpg" alt="avatar 2"></ngl-avatar>
+
+<div class="slds-grid slds-m-top--large" style="height: 50px;">
+ <div class="slds-align-middle slds-col">
+   <button type="button" nglButton="neutral" (click)="changeType()">Change Type</button>
+   <ngl-avatar [src]="src" [type]="type"></ngl-avatar>
+   Type: <code>{{type}}</code>
+ </div>
+</div>
+ <br />
+<div class="slds-grid slds-m-top--large" style="height: 50px;">
+ <div class="slds-align-middle slds-col">
+   <button type="button" nglButton="neutral" (click)="changeSize()">Change Size</button>
+   <ngl-avatar [src]="src" [size]="size"></ngl-avatar>
+   Size: <code>{{size}}</code>
+ </div>
+</div>
