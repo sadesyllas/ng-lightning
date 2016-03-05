@@ -2,6 +2,13 @@
   "name": "ng-lightning",
   "version": "0.1.1-0",
   "description": "Native Angular 2 components and directives for Lightning Design System",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ng-lightning/ng-lightning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ng-lightning/ng-lightning/issues"
+  },
   "main": "./ng-lightning.js",
   "typings": "./ng-lightning.d.ts",
   "scripts": {
