@@ -44,3 +44,8 @@ footer {
 .api h1 { font-size: x-large; margin-bottom: 20px; margin-top: 5px;}
 .api h3 { font-size: large; line-height: 0; }
 .api ul { list-style: disc; margin-left: 50px; margin-bottom: 10px; line-height: 14px;}
+
+ngl-pagination {
+  display: block;
+  margin-bottom: 15px;
+}
