@@ -1,4 +1,4 @@
-import {OpaqueToken} from 'angular2/core';
+import {provide, OpaqueToken, Provider} from 'angular2/core';
 
 export interface IConfig {
     svgPath?: string;
@@ -8,8 +8,9 @@ const DEFAULT_CONFIG: IConfig = {
   svgPath: 'assets/icons/utility-sprite/svg',
 };
 
-export function getConfig(_config: IConfig = {}): IConfig {
-  return Object.assign({}, DEFAULT_CONFIG, _config || {});
-};
-
 export const NGL_CONFIG = new OpaqueToken('ngl.config');
+
+export function provideNglConfig(config: IConfig = {}): Provider[] {
+  const useValue = Object.assign({}, DEFAULT_CONFIG, config || {});
+  return [ provide(NGL_CONFIG, {useValue}) ];
+}

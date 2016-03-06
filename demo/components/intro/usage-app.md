@@ -1,7 +1,7 @@
-import {NGL_CONFIG} from 'ng-lightning/ng-lightning';
+import {provideNglConfig} from 'ng-lightning/ng-lightning';
 
 bootstrap(App, [
   ...
-  provide(NGL_CONFIG, {useValue: {}}),
+  provideNglConfig( /* optional configuration object with overrides */ ),
   ...
 ]);

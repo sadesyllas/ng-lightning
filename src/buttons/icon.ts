@@ -1,5 +1,5 @@
 import {Component, Input, Attribute, ElementRef, Renderer, ChangeDetectionStrategy, Inject} from 'angular2/core';
-import {NGL_CONFIG, getConfig, IConfig} from '../config/config';
+import {NGL_CONFIG, IConfig} from '../config/config';
 
 @Component({
   selector: 'ngl-icon-button',
@@ -17,13 +17,8 @@ export class NglIconButton {
   @Input() size: 'x-small' | 'small' | 'large';
   @Input() alt: string;
 
-  private config: IConfig;
-
   constructor(@Attribute('state') public state: 'not-selected' | 'selected' | 'selected-focus',
-              @Inject(NGL_CONFIG) public _config: IConfig,
-              element: ElementRef, renderer: Renderer) {
-
-    this.config = getConfig(_config);
+              @Inject(NGL_CONFIG) public config: IConfig, element: ElementRef, renderer: Renderer) {
 
     if (this.state) {
       renderer.setElementClass(element.nativeElement, `slds-text-${this.state}`, true);

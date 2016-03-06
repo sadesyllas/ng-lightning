@@ -34,4 +34,4 @@ export const NGL_DIRECTIVES = [
   NglTabs, NglTab,
 ];
 
-export {NGL_CONFIG} from './config/config';
+export {provideNglConfig} from './config/config';

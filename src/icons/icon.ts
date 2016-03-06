@@ -1,5 +1,5 @@
 import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Inject} from 'angular2/core';
-import {NGL_CONFIG, getConfig, IConfig} from '../config/config';
+import {NGL_CONFIG, IConfig} from '../config/config';
 
 @Component({
   selector: 'ngl-icon',
@@ -17,13 +17,7 @@ export class NglIcon {
   @Input() size: 'x-small' | 'small' | 'large';
   @Input() alt: string;
 
-  private config: IConfig;
-
-  constructor(@Inject(NGL_CONFIG) public _config: IConfig,
-              element: ElementRef, renderer: Renderer) {
-
-    this.config = getConfig(_config);
-  }
+  constructor(@Inject(NGL_CONFIG) public config: IConfig, element: ElementRef, renderer: Renderer) {}
 
   protected svgClasses() {
     let classes: string[] = [];
