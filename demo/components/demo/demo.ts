@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import {NGL_DIRECTIVES} from '../../../dist/ng-lightning';
+import {Plunker} from './playground/plunker';
 
 import {DemoBadges} from './components/badges/badges';
 import {DemoButtons} from './components/buttons/buttons';
@@ -11,13 +12,15 @@ import {DemoRatings} from './components/ratings/ratings';
 import {DemoSpinners} from './components/spinners/spinners';
 import {DemoTabs} from './components/tabs/tabs';
 
-interface IComponent {
+export interface IComponent {
   key: string;
   component: any;
   title?: string;
   readme?: string;
   html?: string;
+  htmlRaw?: string;
   ts?: string;
+  tsRaw?: string;
   api?: string;
 };
 
@@ -48,11 +51,25 @@ components.forEach(component => {
   if (!component.api) {
     component.api = require('src/' + key + '/API.md');
   }
+
+  // Retrieve raw for live editing in plunker
+  component.htmlRaw = require('!!raw!./' + path + '.html');
+  component.tsRaw = require('!!raw!./' + path + '.ts');
 });
 
 
 @Component({
   template: require('./demo.jade')({ content, components }),
-  directives: [NGL_DIRECTIVES].concat(components.map((c: any) => c.component)),
+  directives: [NGL_DIRECTIVES, Plunker].concat(components.map((c: any) => c.component)),
 })
-export class DemoRoute { }
+export class DemoRoute {
+
+  getComponent(key: string): IComponent {
+    for (var i = 0, ii = components.length; i < ii; i++) {
+      if (components[i].key === key) {
+        return components[i];
+      }
+    }
+  }
+
+}

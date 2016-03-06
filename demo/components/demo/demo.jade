@@ -12,11 +12,14 @@ mixin code-preview(comp)
           div!= comp.api
 
 .slds-container--large.slds-container--center
+  plunker(#playground="playground")
   .slds-p-around--large
     each comp in components
       section.slds-m-top--x-large(id="#{comp.key}")
         h1.slds-text-heading--large
           | #{comp.title}
+          button.slds-button.slds-button--neutral.slds-button--small((click)="playground.open(getComponent('#{comp.key}'))", style="float:right; font-size:small;")
+            | TRY IN PLUNKER
         hr.slds-m-top--small.slds-m-bottom--large
         .slds-grid
           .slds-col.slds-size--1-of-2

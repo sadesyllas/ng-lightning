@@ -1,0 +1,6 @@
+form(action="http://plnkr.co/edit/?p=preview", method="POST", target="_blank")
+  input(type="hidden", name="files[index.html]", [value]="index()")
+  input(type="hidden", name="files[app/demo.html]", [value]="html()")
+  input(type="hidden", name="files[app/demo.ts]", [value]="ts()")
+  input(type="hidden", name="files[ng-lightning.js]", [value]="lib()")
+  input(type="hidden", name="files[styles.css]", value="body { padding: 20px; }")

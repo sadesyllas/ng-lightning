@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title ng-lightning
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="https://www.lightningdesignsystem.com/assets/styles/slds.css")
+    link(rel="stylesheet", href="styles.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js")
+    script(src="https://npmcdn.com/angular2@2.0.0-beta.8/es6/dev/src/testing/shims_for_IE.js")
+    script(src="https://code.angularjs.org/2.0.0-beta.8/angular2-polyfills.js")
+    script(src="https://code.angularjs.org/tools/system.js")
+    script(src="https://npmcdn.com/typescript@1.8.2/lib/typescript.js")
+    script(src="https://code.angularjs.org/2.0.0-beta.8/Rx.js")
+    script(src="https://code.angularjs.org/2.0.0-beta.8/angular2.dev.js")
+    script(src="ng-lightning.js")
+    script.
+      System.config({
+        transpiler: 'typescript',
+        typescriptOptions: { emitDecoratorMetadata: true },
+        packages: {'app': {defaultExtension: 'ts'}}
+      });
+      System.import('app/demo').then(null, console.error.bind(console));
+  body
+    demo Loading...

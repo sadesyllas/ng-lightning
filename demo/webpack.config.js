@@ -25,6 +25,7 @@ const config = {
     extensions: ['', '.ts',  '.js'],
     alias: {
       src: path.resolve(__dirname, '../src'),
+      dist: path.resolve(__dirname, '../dist'),
     }
   },
   module: {
