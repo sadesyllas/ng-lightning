@@ -6,16 +6,20 @@ import {replaceClass} from '../util/util';
 })
 export class NglButtonIcon {
 
-  private prefix = `slds-button--icon-`;
+  private _type: string = 'slds-button--icon-border';
 
-  private _type: string;
   @Input() set nglButtonIcon(type: 'container' | 'border' | 'border-filled' | 'small') {
-    replaceClass(this, `${this.prefix}${this._type}`, `${this.prefix}${type || 'border'}`);
+    replaceClass(this, this.normalize(this._type), this.normalize(type));
     this._type = type;
   }
 
   constructor(public element: ElementRef, public renderer: Renderer) {
     this.renderer.setElementClass(this.element.nativeElement, 'slds-button', true);
+    this.renderer.setElementClass(this.element.nativeElement, 'slds-button--icon-border', true);
   }
 
-};
+  private normalize(type: string): string {
+    if (!type && type !== '') return 'slds-button--icon-border';
+    return `slds-button--icon${type ? `-${type}` : type}`;
+  }
+}
