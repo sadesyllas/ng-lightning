@@ -56,6 +56,11 @@ If you want to run your tests in watch mode, you can use:
 npm run tdd
 ```
 
+You can control log level with extra command line argument. For example:
+```bash
+npm run tdd -- --logLevel=ERROR
+```
+
 ### Demo
 
 The best way to see your changes in action, is to use our demo page locally. Run:
