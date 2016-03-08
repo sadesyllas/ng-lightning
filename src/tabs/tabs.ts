@@ -37,7 +37,7 @@ export class NglTabs {
     if (!this.tabs) return; // Wait for content to initialize
 
     const tab = this.findTab();
-    this.tabs.toArray().forEach((t: NglTab) => t.active = t === tab);
+    this.tabs.forEach((t: NglTab) => t.active = t === tab);
   }
   get selected() {
     return this._selected;
