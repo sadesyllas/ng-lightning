@@ -30,9 +30,7 @@ System.import('angular2/testing')
 
 function createPathRecords(pathsMapping, appPath) {
     // creates local module name mapping to global path with karma's fingerprint in path
-    var pathParts = appPath.split('/');
-    var moduleName = './' + pathParts.slice(Math.max(pathParts.length - 2, 1)).join('/');
-    moduleName = moduleName.replace(/\.js$/, '');
+    var moduleName = appPath.replace('/base/temp/', './').replace(/\.js$/, '');
     pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
     return pathsMapping;
 }

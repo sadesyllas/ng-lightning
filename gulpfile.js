@@ -7,7 +7,7 @@ var BUILD = tsProject.options.outDir;
 
 var PATHS = {
   src: ['src/**/*.ts','!src/**/*.spec.ts'],
-  spec: ['src/**/*.ts'],
+  spec: ['src/**/*.ts', 'test/helpers.ts'],
   temp: 'temp/',
 };
 

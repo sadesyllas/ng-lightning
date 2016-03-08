@@ -1,0 +1,7 @@
+Value is: {{value}}
+<ngl-rating [(rate)]="value" [isReadonly]="readonly"></ngl-rating>
+
+
+<div class="slds-grid slds-m-top--large"></div>
+<button type="button" nglButton="destructive" (click)="value = 0" [disabled]="readonly">Clear</button>
+<button type="button" nglButton="neutral" (click)="readonly = !readonly">Toggle readonly</button>
