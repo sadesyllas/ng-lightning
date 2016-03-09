@@ -12,23 +12,23 @@ import {DemoTabs} from './components/tabs/tabs';
 
 interface IComponent {
   key: string;
-  title: string;
   component: any;
-  readme: string;
+  title?: string;
+  readme?: string;
   html?: string;
   ts?: string;
   api?: string;
 };
 
-const components: IComponent[] = [
-  { key: 'images', title: 'Images', component: DemoAvatars, readme: require('src/images/README.md'), api: require('src/images/API.md') },
-  { key: 'badges', title: 'Badges', component: DemoBadges, readme: require('src/badges/README.md'), api: require('src/badges/API.md') },
-  { key: 'buttons', title: 'Buttons', component: DemoButtons, readme: require('src/buttons/README.md'), api: require('src/buttons/API.md') },
-  { key: 'icons', title: 'Icons', component: DemoIcons, readme: require('src/icons/README.md'), api: require('src/icons/API.md')  },
-  { key: 'modals', title: 'Modals', component: DemoModals, readme: require('src/modals/README.md'), api: require('src/modals/API.md') },
-  { key: 'paginations', title: 'Paginations', component: DemoPaginations, readme: require('src/paginations/README.md'), api: require('src/paginations/API.md') },
-  { key: 'spinners', title: 'Spinners', component: DemoSpinners, readme: require('src/spinners/README.md'), api: require('src/spinners/API.md') },
-  { key: 'tabs', title: 'Tabs', component: DemoTabs, readme: require('src/tabs/README.md'), api: require('src/tabs/API.md') },
+const components: any[] = [
+  { key: 'badges', component: DemoBadges },
+  { key: 'buttons', component: DemoButtons },
+  { key: 'icons', component: DemoIcons },
+  { key: 'images', component: DemoAvatars },
+  { key: 'modals', component: DemoModals },
+  { key: 'paginations', component: DemoPaginations },
+  { key: 'spinners', component: DemoSpinners },
+  { key: 'tabs', component: DemoTabs },
 ].sort((a, b) => a.key.localeCompare(b.key));
 
 const content = {};
@@ -37,6 +37,15 @@ components.forEach(component => {
   const path = 'components/' + key + '/' + key;
   component.html = require('!!prismjs?lang=markdown!./' + path + '.html');
   component.ts = require('!!string-replace?search=../../../../../dist&replace=ng-lightning!prismjs?lang=typescript!./' + path + '.ts');
+  if (!component.title) {
+    component.title = key.charAt(0).toUpperCase() + key.slice(1);
+  }
+  if (!component.readme) {
+    component.readme = require('src/' + key + '/README.md');
+  }
+  if (!component.api) {
+    component.api = require('src/' + key + '/API.md');
+  }
 });
 
 
