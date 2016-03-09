@@ -3,6 +3,7 @@ var runSequence = require('run-sequence');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 var argv = require('yargs').argv;
+var bundle = require('./scripts/bundle');
 
 var BUILD = tsProject.options.outDir;
 
@@ -39,14 +40,20 @@ gulp.task('build:ts', ['lint:ts'], function() {
   ]);
 });
 
+gulp.task('bundle', function() {
+  return bundle({mangle: false});
+});
+
+gulp.task('bundle:min', function() {
+  return bundle({minify: true, sourceMaps: true, mangle: false});
+});
+
 gulp.task('build', function(done) {
-  runSequence('clean',
-              'build:ts',
-              done);
+  runSequence('clean', 'build:ts', ['bundle', 'bundle:min'], done);
 });
 
 gulp.task('build:watch', function() {
-  gulp.watch([ PATHS.src ], ['build:ts']);
+  gulp.watch([ PATHS.src ], ['build']);
 });
 
 function startKarmaServer(isTddMode, done) {
