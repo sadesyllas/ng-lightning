@@ -71,3 +71,15 @@ which will create a development server accessible through `http:localhost:1111`.
 In conjunction with `npm run build:watch` in another command tab you have a fully working environment!
 
 All demo resources can be found in the `/demo` folder.
+
+## Release
+
+When you believe it's time to release a new version, you can do it through an interactive process, by using:
+```bash
+npm run release
+```
+
+Demo site published to `gh-pages` branch can be updated at any time using:
+```bash
+npm run demo:release
+```
