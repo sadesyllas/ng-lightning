@@ -44,9 +44,17 @@ module.exports = function(config) {
       '/assets/icons/utility-sprite/svg/symbols.svg': '/base/test/fixtures/fake.svg',
     },
 
-    preprocessors: {'temp/**/*.js': ['sourcemap']},
+    preprocessors: {
+      'temp/**/*.js': ['sourcemap'],
+      'temp/src/**/!(*spec|*mock).js': ['coverage'],
+    },
 
-    reporters: [isTravis ? 'dots' : 'progress'],
+    coverageReporter: {
+      dir: 'coverage/',
+      reporters: [{type: 'text-summary'}, {type: 'html'}],
+    },
+
+    reporters: isTravis ? ['dots'] : ['progress', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
