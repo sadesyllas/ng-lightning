@@ -9,14 +9,15 @@ import {IntroRoute} from './components/intro/intro';
 import {DemoRoute} from './components/demo/demo';
 import {SupportRoute} from './components/support/support';
 
-if (__PROD__) {
+declare const __ENV__: any;
+if (__ENV__.production) {
   enableProdMode();
 }
 
 @Component({
     selector: 'app',
     directives: [ROUTER_DIRECTIVES],
-    template: require('./app.jade')({ now: __NOW__, version: __VERSION__ }),
+    template: require('./app.jade')(__ENV__),
 })
 @RouteConfig([
   { path: '/', name: 'Intro', component: IntroRoute, useAsDefault: true },

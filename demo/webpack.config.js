@@ -52,9 +52,11 @@ const config = {
       baseHref: isProduction ? '/ng-lightning/' : '/',
     }),
     new webpack.DefinePlugin({
-      __NOW__: JSON.stringify(dateFormat(new Date(), 'dd mmm yyyy')),
-      __VERSION__: JSON.stringify(pkg.version),
-      __PROD__: JSON.stringify(isProduction),
+      __ENV__: JSON.stringify({
+        now: dateFormat(new Date(), 'dd mmm yyyy'),
+        version: pkg.version,
+        production: isProduction,
+      }),
     }),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, '../node_modules/@salesforce-ux/design-system/assets'), to: 'assets' },
