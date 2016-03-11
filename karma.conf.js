@@ -1,6 +1,19 @@
-module.exports = function(config) {
-  config.set({
+const isTravis = process.env.TRAVIS;
+const isSaucelabs = process.argv.indexOf('--saucelabs') !== -1 || (isTravis && process.env.TRAVIS_PULL_REQUEST === 'false');
 
+if (isSaucelabs && !process.env.SAUCE_USERNAME) {
+  try {
+    const credentials = require('./saucelabs.json');
+    process.env.SAUCE_USERNAME = credentials.username;
+    process.env.SAUCE_ACCESS_KEY = credentials.accessKey;
+  } catch (err) {
+    console.log('Please, create a valid "saucelabs.json" with your credentials.');
+    process.exit(1);
+  }
+}
+
+module.exports = function(config) {
+  const cfg = {
     basePath: '',
 
     frameworks: ['jasmine'],
@@ -33,18 +46,37 @@ module.exports = function(config) {
 
     preprocessors: {'temp/**/*.js': ['sourcemap']},
 
-    reporters: process.env.TRAVIS ? ['dots'] : ['progress'],
+    reporters: [isTravis ? 'dots' : 'progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: process.env.TRAVIS ? ['Chrome_travis_ci', 'Firefox'] : ['Chrome'],
+    browsers: [isTravis ? 'Firefox' : 'Chrome'],
     singleRun: false,
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
+  };
+
+  if (isSaucelabs) {
+    cfg.customLaunchers =  {
+      'SL_Chrome': {
+        base: 'SauceLabs',
+        browserName: 'chrome'
+      },
+      'SL_FireFox': {
+        base: 'SauceLabs',
+        browserName: 'firefox',
       }
-    },
-  });
+    };
+    cfg.browsers = Object.keys(cfg.customLaunchers);
+    cfg.reporters.push('saucelabs');
+    cfg.sauceLabs = {
+      tunnelIdentifier: 'ng-lightning',
+      connectOptions: {
+        logfile: './saucelabs.log',
+      },
+    };
+    cfg.captureTimeout = 120000;
+    cfg.browserNoActivityTimeout = 120000;
+  }
+
+  config.set(cfg);
 };

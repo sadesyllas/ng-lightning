@@ -18,3 +18,7 @@ Thumbs.db
 .idea
 *.iml
 *.typingsrc
+
+### SauceLabs
+saucelabs.json
+saucelabs.log
