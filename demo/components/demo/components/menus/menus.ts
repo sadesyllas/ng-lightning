@@ -1,0 +1,22 @@
+import {Component} from 'angular2/core';
+import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
+
+@Component({
+    selector: 'demo-menus',
+    directives: [NGL_DIRECTIVES],
+    template: require('./menus.html'),
+})
+export class DemoMenus {
+  open: boolean;
+
+  items = [
+    { value: 'Item 1', icon: 'kanban' },
+    { value: 'Item 2', icon: 'side_list' },
+    { value: 'Item 3', icon: 'table' },
+  ];
+
+  onToggle($event: Event) {
+    $event.stopPropagation();
+    this.open = true;
+  }
+}

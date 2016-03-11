@@ -1,0 +1,22 @@
+<div class="slds-text-heading--label slds-m-bottom--small">Dropdown</div>
+<span class="slds-dropdown-trigger slds-dropdown-trigger--click" nglDropdown [(open)]="open">
+  <button class="slds-button slds-button--neutral" nglDropdownTrigger>
+    <span class="slds-truncate">Select an item</span>
+    <ngl-icon icon="down" size="x-small"></ngl-icon>
+  </button>
+  <div class="slds-dropdown slds-dropdown--left">
+    <ul class="dropdown__list" role="menu">
+      <li class="slds-dropdown__item" *ngFor="#item of items;">
+        <a role="menuitem" nglDropdownItem (click)="selected = item.value; open = false;">
+          <p class="slds-truncate">{{item.value}}</p>
+          <ngl-icon [icon]="item.icon" size="x-small"></ngl-icon>
+        </a>
+      </li>
+    </ul>
+  </div>
+</span>
+
+<button type="button" nglButton="neutral" (click)="onToggle($event)">Open</button>
+<button type="button" nglButton="neutral" style="margin-left: 0px;" (click)="open = !open">Toggle</button>
+
+<div *ngIf="selected" class="slds-m-top--large">You selected: <b>{{selected}}</b></div>
