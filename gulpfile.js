@@ -52,8 +52,12 @@ gulp.task('build', function(done) {
   runSequence('clean', 'build:ts', ['bundle', 'bundle:min'], done);
 });
 
+gulp.task('build:continuous', function(done) {
+  runSequence('build:ts', 'bundle', done);
+});
+
 gulp.task('build:watch', function() {
-  gulp.watch([ PATHS.src ], ['build']);
+  gulp.watch([ PATHS.src ], ['build:continuous']);
 });
 
 function startKarmaServer(isTddMode, done) {

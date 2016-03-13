@@ -46,10 +46,10 @@ components.forEach(component => {
     component.title = key.charAt(0).toUpperCase() + key.slice(1);
   }
   if (!component.readme) {
-    component.readme = require('src/' + key + '/README.md');
+    component.readme = require('./components/' + key + '/README.md');
   }
   if (!component.api) {
-    component.api = require('src/' + key + '/API.md');
+    component.api = require('./components/' + key + '/API.md');
   }
 
   // Retrieve raw for live editing in plunker

@@ -72,7 +72,8 @@ const config = {
       server: {
         baseDir: [path.resolve(__dirname, 'dist')]
       },
-      reloadDelay: 500,
+      reloadDelay: 200,
+      reloadDebounce: 200,
     })
   ],
 };
