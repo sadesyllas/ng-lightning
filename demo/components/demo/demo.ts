@@ -40,7 +40,7 @@ const content = {};
 components.forEach(component => {
   const { key } = component;
   const path = 'components/' + key + '/' + key;
-  component.html = require('!!prismjs?lang=markdown!./' + path + '.html');
+  component.html = require('!!prismjs?lang=markup!./' + path + '.html');
   component.ts = require('!!string-replace?search=../../../../../dist&replace=ng-lightning!prismjs?lang=typescript!./' + path + '.ts');
   if (!component.title) {
     component.title = key.charAt(0).toUpperCase() + key.slice(1);
