@@ -61,6 +61,17 @@ You can control log level with extra command line argument. For example:
 npm run tdd -- --logLevel=ERROR
 ```
 
+#### Saucelabs
+If you want and already have a personal account, you can run tests on Saucelabs, just by passing the `--saucelabs` flag.
+The setup assumes that eiter `process.env.SAUCE_USERNAME` and `process.env.SAUCE_ACCESS_KEY` are set or a `saucelabs.json` file exists inside the root folder, with the following format.
+
+```json
+{
+  "username": "YOUR_SAUCE_USERNAME",
+  "accessKey": "YOUR_SAUCE_ACCESS_KEY"
+}
+```
+
 ### Demo
 
 The best way to see your changes in action, is to use our demo page locally. Run:
