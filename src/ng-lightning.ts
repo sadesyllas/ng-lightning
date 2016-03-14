@@ -7,6 +7,8 @@ import {NglButton} from './buttons/button';
 import {NglButtonState} from './buttons/button-state';
 import {NglButtonIcon} from './buttons/button-icon';
 import {NglIconButton} from './buttons/icon';
+import {NglButtonGroup} from './button-groups/button-group';
+import {NglButtonRadio} from './button-groups/button-radio';
 import {NglIcon} from './icons/icon';
 import {NglDropdownTrigger} from './menus/dropdown-trigger';
 import {NglDropdown} from './menus/dropdown';
@@ -29,6 +31,8 @@ export {NglButton} from './buttons/button';
 export {NglButtonState} from './buttons/button-state';
 export {NglButtonIcon} from './buttons/button-icon';
 export {NglIconButton} from './buttons/icon';
+export {NglButtonGroup} from './button-groups/button-group';
+export {NglButtonRadio} from './button-groups/button-radio';
 export {NglIcon} from './icons/icon';
 export {NglDropdownTrigger} from './menus/dropdown-trigger';
 export {NglDropdown} from './menus/dropdown';
@@ -49,6 +53,7 @@ export const NGL_DIRECTIVES = [
   NglBadge,
   NglBreadcrumbs, NglBreadcrumb,
   NglButton, NglButtonState, NglButtonIcon, NglIconButton,
+  NglButtonGroup, NglButtonRadio,
   NglIcon,
   NglDropdownTrigger, NglDropdown, NglDropdownItem,
   NglModal,
