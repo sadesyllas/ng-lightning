@@ -18,8 +18,8 @@ describe('`nglButtonIcon`', () => {
 
     componentInstance.style = '';
     fixture.detectChanges();
-    expect(button).toHaveCssClass('slds-button--icon');
-    expect(button).not.toHaveCssClass('slds-button--icon-border');
+    expect(button).not.toHaveCssClass('slds-button--icon');
+    expect(button).toHaveCssClass('slds-button--icon-border');
 
     componentInstance.style = 'container';
     fixture.detectChanges();
@@ -37,7 +37,8 @@ describe('`nglButtonIcon`', () => {
     fixture.detectChanges();
 
     const button = getButtonElement(fixture.nativeElement);
-    expect(button).toHaveCssClass('slds-button--icon');
+    expect(button).toHaveCssClass('slds-button--icon-border');
+    expect(button).not.toHaveCssClass('slds-button--icon');
     done();
   }, `<button nglButtonIcon=""></button>`));
 
@@ -46,9 +47,19 @@ describe('`nglButtonIcon`', () => {
     fixture.detectChanges();
 
     const button = getButtonElement(fixture.nativeElement);
+    expect(button).not.toHaveCssClass('slds-button--icon');
     expect(button).toHaveCssClass('slds-button--icon-border');
     done();
   }, `<button nglButtonIcon></button>`));
+
+  it('should render the bare button for \'\'', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+
+    const button = getButtonElement(fixture.nativeElement);
+    expect(button).toHaveCssClass('slds-button--icon');
+    expect(button).not.toHaveCssClass('slds-button--icon-border');
+    done();
+  }, `<button nglButtonIcon="''"></button>`));
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`

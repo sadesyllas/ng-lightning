@@ -9,7 +9,7 @@
 
 ### Input
 
-  * `nglButtonIcon?: 'container' | 'border' | 'border-filled' | 'small' = 'border'`: Buttons container.
+  * `nglButtonIcon?: 'container' | 'border' | 'border-filled' | 'small' | '' = 'border'`: Buttons container.
 
 
 # `[nglButtonState]`
