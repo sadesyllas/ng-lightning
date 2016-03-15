@@ -35,7 +35,8 @@
   "license": "MIT",
   "peerDependencies": {
     "@salesforce-ux/design-system": "^1.0.0",
-    "angular2": "^2.0.0-beta.8"
+    "angular2": "^2.0.0-beta.8",
+    "tether": "^1.2.0"
   },
   "devDependencies": {
     "@salesforce-ux/design-system": "^1.0.0",
@@ -91,6 +92,7 @@
     "string-replace-loader": "^1.0.0",
     "systemjs": "^0.19.24",
     "systemjs-builder": "^0.15.11",
+    "tether": "^1.2.0",
     "ts-loader": "^0.8.1",
     "tslint": "^3.5.0",
     "typescript": "^1.8.7",

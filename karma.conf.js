@@ -25,8 +25,9 @@ module.exports = function(config) {
         {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
         {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: false},
         {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: false},
-        {pattern: 'node_modules/angular2/bundles/angular2.js', included: true, watched: true},
-        {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
+        {pattern: 'node_modules/angular2/bundles/angular2.js', included: true, watched: false},
+        {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: false},
+        {pattern: 'node_modules/tether/dist/js/tether.min.js', included: true, watched: false},
         {pattern: 'karma-shim.js', included: true, watched: true},
 
         // paths loaded via module imports
@@ -42,6 +43,7 @@ module.exports = function(config) {
 
     proxies: {
       '/assets/icons/utility-sprite/svg/symbols.svg': '/base/test/fixtures/fake.svg',
+      '/tether': '/base/node_modules/tether/dist/js/tether.min.js'
     },
 
     preprocessors: {

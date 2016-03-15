@@ -8,6 +8,7 @@ import {DemoIcons} from './components/icons/icons';
 import {DemoAvatars} from './components/images/images';
 import {DemoModals} from './components/modals/modals';
 import {DemoPaginations} from './components/paginations/paginations';
+import {DemoPopovers} from './components/popovers/popovers';
 import {DemoRatings} from './components/ratings/ratings';
 import {DemoSpinners} from './components/spinners/spinners';
 import {DemoTabs} from './components/tabs/tabs';
@@ -31,10 +32,11 @@ const components: any[] = [
   { key: 'images', component: DemoAvatars },
   { key: 'modals', component: DemoModals },
   { key: 'paginations', component: DemoPaginations },
+  { key: 'popovers', component: DemoPopovers },
   { key: 'ratings', component: DemoRatings },
   { key: 'spinners', component: DemoSpinners },
   { key: 'tabs', component: DemoTabs },
-].sort((a, b) => a.key.localeCompare(b.key));
+];
 
 const content = {};
 components.forEach(component => {

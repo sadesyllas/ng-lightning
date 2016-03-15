@@ -9,6 +9,8 @@ import {NglIconButton} from './buttons/icon';
 import {NglIcon} from './icons/icon';
 import {NglModal} from './modals/modal';
 import {NglPagination} from './paginations/pagination';
+import {NglPopover} from './popovers/popover';
+import {NglPopoverTrigger} from './popovers/trigger';
 import {NglRating} from './ratings/rating';
 import {NglSpinner} from './spinners/spinner';
 import {NglTabs} from './tabs/tabs';
@@ -23,6 +25,8 @@ export {NglIconButton} from './buttons/icon';
 export {NglIcon} from './icons/icon';
 export {NglModal} from './modals/modal';
 export {NglPagination} from './paginations/pagination';
+export {NglPopover} from './popovers/popover';
+export {NglPopoverTrigger} from './popovers/trigger';
 export {NglRating} from './ratings/rating';
 export {NglSpinner} from './spinners/spinner';
 export {NglTabs} from './tabs/tabs';
@@ -35,6 +39,7 @@ export const NGL_DIRECTIVES = [
   NglIcon,
   NglModal,
   NglPagination,
+  NglPopover, NglPopoverTrigger,
   NglRating,
   NglSpinner,
   NglTabs, NglTab,

@@ -12,16 +12,17 @@ const config = {
     module: 'cjs'
   },
   map: {
-    typescript: 'node_modules/typescript/lib/typescript',
+    typescript: path.resolve('node_modules/typescript/lib/typescript'),
     angular2: path.resolve('node_modules/angular2'),
-    rxjs: path.resolve('node_modules/rxjs')
+    rxjs: path.resolve('node_modules/rxjs'),
   },
   paths: {
     '*': '*.js'
   },
   meta: {
     'node_modules/angular2/*': { build: false },
-    'node_modules/rxjs/*': { build: false }
+    'node_modules/rxjs/*': { build: false },
+    'tether': { build: false },
   },
 };
 

@@ -18,7 +18,10 @@ html
       System.config({
         transpiler: 'typescript',
         typescriptOptions: { emitDecoratorMetadata: true },
-        packages: {'app': {defaultExtension: 'ts'}}
+        packages: {'app': {defaultExtension: 'ts'}},
+        paths: {
+          'tether': 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.js'
+        },
       });
       System.import('app/demo').then(null, console.error.bind(console));
   body
