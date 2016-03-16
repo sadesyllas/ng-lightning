@@ -4,23 +4,7 @@ import {NglTab} from './tab';
 
 @Component({
   selector: 'ngl-tabs',
-  template: `
-    <ul [ngClass]="'slds-tabs--' + type + '__nav'" role="tablist" (keyup.ArrowLeft)="move(-1)" (keyup.ArrowRight)="move(1)">
-      <li *ngFor="var tab of tabs"
-          [ngClass]="'slds-tabs--' + type + '__item'"
-          class="slds-text-heading--label"
-          (click)="select(tab)"
-          [class.slds-active]="tab.active"
-          role="presentation">
-        <a [tabindex]="tab.active ? 0 : -1"
-           [attr.aria-selected]="tab.active"
-           [ngClass]="'slds-tabs--' + type + '__link'"
-           role="tab">{{tab.heading}}</a>
-      </li>
-    </ul>
-    <div [ngClass]="'slds-tabs--' + type + '__content'" role="tabpanel">
-          <ng-content></ng-content>
-    </div>`,
+  templateUrl: './tabs.html',
   styles: ['a { cursor: pointer; }'],
 })
 export class NglTabs {

@@ -2,11 +2,7 @@ import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from 'a
 
 @Component({
   selector: 'ngl-spinner',
-  template: `
-    <div class="slds-spinner" [ngClass]="['slds-spinner--' + size, type ? 'slds-spinner--' + type : '']" aria-hidden="false" role="alert">
-      <div class="slds-spinner__dot-a"></div>
-      <div class="slds-spinner__dot-b"></div>
-    </div>`,
+  templateUrl: './spinner.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglSpinner {

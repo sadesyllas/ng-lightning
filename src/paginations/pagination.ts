@@ -3,15 +3,7 @@ import {Component, EventEmitter, Input, Output, OnChanges, ChangeDetectionStrate
 @Component({
   selector: 'ngl-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="slds-button-group" role="group">
-      <button class="slds-button slds-button--neutral" [disabled]="!hasPrevious()" (click)="goto(current - 1)">Previous</button>
-      <button *ngFor="#pageNumber of pages" class="slds-button slds-button--neutral" [class.slds-button--brand]="pageNumber === current" (click)="goto(pageNumber)">
-          {{pageNumber}}
-      </button>
-      <button class="slds-button slds-button--neutral" [disabled]="!hasNext()" (click)="goto(current + 1)">Next</button>
-    </div>
-  `,
+  templateUrl: './pagination.html',
 })
 export class NglPagination implements OnChanges {
 

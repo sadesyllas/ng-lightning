@@ -3,12 +3,7 @@ import {NGL_CONFIG, IConfig} from '../config/config';
 
 @Component({
   selector: 'ngl-icon-button',
-  template: `
-    <svg aria-hidden="true" [ngClass]="svgClasses()">
-      <use [attr.xlink:href]="config.svgPath + '/symbols.svg#' + icon"></use>
-    </svg>
-    <span class="slds-assistive-text" *ngIf="alt">{{alt}}</span>
-    <ng-content></ng-content>`,
+  templateUrl: './icon.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglIconButton {

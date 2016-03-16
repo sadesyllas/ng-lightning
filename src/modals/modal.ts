@@ -7,28 +7,7 @@ import {NglIconButton} from '../buttons/icon';
   selector: 'ngl-modal',
   directives: [NglButtonIcon, NglIconButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div *ngIf="open" (click)="$event.stopPropagation()" tabindex="0" (keyup.esc)="close()">
-      <div class="slds-modal slds-fade-in-open" [ngClass]="[size ? 'slds-modal--' + size : '']" aria-hidden="false" role="dialog">
-        <div class="slds-modal__container">
-          <div class="slds-modal__header">
-            <button type="button" nglButtonIcon="inverse" class="slds-modal__close" (click)="close()">
-              <ngl-icon-button icon="close" size="large" alt="Close"></ngl-icon-button>
-            </button>
-            <h2 class="slds-text-heading--medium">{{header}}</h2>
-            <ng-content select="[tagline]"></ng-content>
-          </div>
-          <div class="slds-modal__content slds-p-around--medium">
-            <ng-content select="[body]"></ng-content>
-          </div>
-          <div class="slds-modal__footer">
-            <ng-content select="button"></ng-content>
-          </div>
-        </div>
-      </div>
-      <div tabindex="0" (focus)="focusFirst()"></div>
-      <div class="slds-backdrop slds-backdrop--open"></div>
-    </div>`,
+  templateUrl: './modal.html',
 })
 export class NglModal {
   @Input() header: string = '';
