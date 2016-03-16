@@ -1,0 +1,3 @@
+svg.slds-icon(aria-hidden="true", [ngClass]="svgClasses()")
+  use([attr.xlink:href]="config.svgPath + '/symbols.svg#' + icon")
+span.slds-assistive-text(*ngIf="alt") {{alt}}

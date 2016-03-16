@@ -4,7 +4,7 @@ import {NglTab} from './tab';
 
 @Component({
   selector: 'ngl-tabs',
-  templateUrl: './tabs.html',
+  templateUrl: './tabs.jade',
   styles: ['a { cursor: pointer; }'],
 })
 export class NglTabs {

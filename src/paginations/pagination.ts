@@ -3,7 +3,7 @@ import {Component, EventEmitter, Input, Output, OnChanges, ChangeDetectionStrate
 @Component({
   selector: 'ngl-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './pagination.html',
+  templateUrl: './pagination.jade',
 })
 export class NglPagination implements OnChanges {
 

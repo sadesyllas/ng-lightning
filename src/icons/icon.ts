@@ -3,7 +3,7 @@ import {NGL_CONFIG, IConfig} from '../config/config';
 
 @Component({
   selector: 'ngl-icon',
-  templateUrl: './icon.html',
+  templateUrl: './icon.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglIcon {

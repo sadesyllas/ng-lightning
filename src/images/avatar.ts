@@ -3,7 +3,7 @@ import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
 @Component({
   selector: 'ngl-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './avatar.html',
+  templateUrl: './avatar.jade',
 })
 export class NglAvatar {
   @Input() src: string = '';

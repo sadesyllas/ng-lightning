@@ -6,7 +6,7 @@ import {NglIcon} from '../icons/icon';
   selector: 'ngl-rating',
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [NglIcon],
-  templateUrl: './rating.html',
+  templateUrl: './rating.jade',
 })
 export class NglRating {
 

@@ -7,7 +7,7 @@ import {NglIconButton} from '../buttons/icon';
   selector: 'ngl-modal',
   directives: [NglButtonIcon, NglIconButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './modal.html',
+  templateUrl: './modal.jade',
 })
 export class NglModal {
   @Input() header: string = '';

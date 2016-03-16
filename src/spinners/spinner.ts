@@ -2,7 +2,7 @@ import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from 'a
 
 @Component({
   selector: 'ngl-spinner',
-  templateUrl: './spinner.html',
+  templateUrl: './spinner.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglSpinner {
