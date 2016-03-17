@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
+var lazypipe = require('lazypipe');
 var jade = require('jade');
 var inlineTemplates = require('gulp-inline-ng2-template');
 var argv = require('yargs').argv;
@@ -16,9 +17,15 @@ var PATHS = {
   temp: 'temp/',
 };
 
-function jadeProcessor(path, file) {
-  return jade.render(file);
-}
+var inlineTemplatesTask = lazypipe()
+  .pipe(inlineTemplates, {
+    base: '/src',
+    useRelativePaths: true,
+    templateProcessor: function(path, file) {
+      return jade.render(file);
+    },
+    templateExtension: '.jade',
+  });
 
 gulp.task('clean', function() {
   return require('del')(BUILD);
@@ -38,13 +45,9 @@ gulp.task('build:ts', ['lint:ts'], function() {
   var replace = require('gulp-replace');
   var merge = require('merge2');
 
-  var tsResult = gulp.src( PATHS.src, {base: 'src'} )
-    .pipe(inlineTemplates({
-      base: '/src',
-      useRelativePaths: true,
-      templateProcessor: jadeProcessor,
-      templateExtension: '.jade',
-    })).pipe(ts(tsProject));
+  var tsResult = gulp.src(PATHS.src, {base: 'src'})
+    .pipe(inlineTemplatesTask())
+    .pipe(ts(tsProject));
 
   return merge([
     tsResult.dts.pipe(replace(/^\/{3}.*$/gm, '')),
@@ -89,12 +92,7 @@ gulp.task('test:build', function() {
 
   var tsResult = gulp.src(PATHS.spec)
     .pipe(sourcemaps.init())
-    .pipe(inlineTemplates({
-      base: '/src',
-      useRelativePaths: true,
-      templateProcessor: jadeProcessor,
-      templateExtension: '.jade',
-    }))
+    .pipe(inlineTemplatesTask())
     .pipe(ts(tsProject));
 
   return tsResult.js

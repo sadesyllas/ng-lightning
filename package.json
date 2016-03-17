@@ -73,6 +73,7 @@
     "karma-jasmine": "^0.3.6",
     "karma-sauce-launcher": "^0.3.1",
     "karma-sourcemap-loader": "^0.3.6",
+    "lazypipe": "^1.0.1",
     "markdown-loader": "^0.1.7",
     "merge2": "^1.0.1",
     "prismjs": "^1.4.1",
