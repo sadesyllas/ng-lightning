@@ -11,7 +11,7 @@ var BUILD = tsProject.options.outDir;
 
 var PATHS = {
   src: ['src/**/*.ts','!src/**/*.spec.ts'],
-  templates: ['src/**/*.html'],
+  templates: ['src/**/*.jade'],
   spec: ['src/**/*.ts', 'test/helpers.ts'],
   temp: 'temp/',
 };
@@ -69,7 +69,7 @@ gulp.task('build:continuous', function(done) {
 });
 
 gulp.task('build:watch', function() {
-  gulp.watch([ PATHS.src ], ['build:continuous']);
+  gulp.watch([ PATHS.src, PATHS.templates ], ['build:continuous']);
 });
 
 function startKarmaServer(isTddMode, done) {
