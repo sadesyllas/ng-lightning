@@ -11,11 +11,12 @@ export class NglIcon {
   @Input() type: 'default' | 'warning' | 'error';
   @Input() size: 'x-small' | 'small' | 'large';
   @Input() alt: string;
+  @Input() svgClass: string | string[] = '';
 
   constructor(@Inject(NGL_CONFIG) public config: IConfig, element: ElementRef, renderer: Renderer) {}
 
   protected svgClasses() {
-    let classes: string[] = [];
+    const classes = Array.isArray(this.svgClass) ? <string[]>this.svgClass : [this.svgClass || ''];
 
     if (this.size) {
       classes.push(`slds-icon--${this.size}`);

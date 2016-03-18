@@ -42,6 +42,31 @@ describe('Icon Component', () => {
     done();
   }));
 
+  it('should allow extra svg classes', testAsync(`<ngl-icon [svgClass]="svgClass"></ngl-icon>`, ({fixture, done}) => {
+    fixture.detectChanges();
+
+    const { nativeElement, componentInstance } = fixture;
+    const icon = getIconElement(nativeElement);
+    expect(icon).toHaveCssClass('anextra');
+    expect(icon).toHaveCssClass('fancy');
+    expect(icon).toHaveCssClass('one');
+
+    componentInstance.svgClass = ['another', 'one'];
+    fixture.detectChanges();
+    expect(icon).not.toHaveCssClass('anextra');
+    expect(icon).not.toHaveCssClass('fancy');
+    expect(icon).toHaveCssClass('one');
+    expect(icon).toHaveCssClass('another');
+
+    componentInstance.svgClass = null;
+    fixture.detectChanges();
+    expect(icon).not.toHaveCssClass('one');
+    expect(icon).not.toHaveCssClass('another');
+    expect(icon).toHaveCssClass('slds-icon');
+    fixture.detectChanges();
+    done();
+  }));
+
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
@@ -60,4 +85,5 @@ function testAsync(html: string, fn: Function) {
 })
 export class TestComponent {
   size = 'small';
+  svgClass = 'anextra fancy one';
 }
