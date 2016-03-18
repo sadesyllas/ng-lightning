@@ -70,7 +70,7 @@ module.exports = function(config) {
     cfg.browsers = Object.keys(cfg.customLaunchers);
     cfg.reporters.push('saucelabs');
     cfg.sauceLabs = {
-      tunnelIdentifier: 'ng-lightning',
+      tunnelIdentifier: isTravis ? process.env.TRAVIS_JOB_NUMBER : 'ng-lightning',
       connectOptions: {
         logfile: './saucelabs.log',
       },
