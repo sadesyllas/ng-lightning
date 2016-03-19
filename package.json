@@ -35,12 +35,12 @@
   "license": "MIT",
   "peerDependencies": {
     "@salesforce-ux/design-system": "^1.0.0",
-    "angular2": "^2.0.0-beta.10",
+    "angular2": "^2.0.0-beta.11",
     "tether": "^1.2.0"
   },
   "devDependencies": {
     "@salesforce-ux/design-system": "^1.0.0",
-    "angular2": "2.0.0-beta.10",
+    "angular2": "2.0.0-beta.11",
     "app-root-path": "^1.0.0",
     "browser-sync": "^2.11.1",
     "browser-sync-webpack-plugin": "^1.0.1",
@@ -50,7 +50,7 @@
     "dateformat": "^1.0.12",
     "del": "^2.2.0",
     "es6-promise": "^3.1.2",
-    "es6-shim": "^0.33.13",
+    "es6-shim": "^0.35.0",
     "gh-pages": "^0.11.0",
     "glob": "^7.0.0",
     "gulp": "^3.9.1",
