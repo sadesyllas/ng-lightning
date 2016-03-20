@@ -1,4 +1,5 @@
-import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, HostBinding} from 'angular2/core';
+import {toBoolean} from '../util/util';
 
 @Component({
   selector: 'ngl-spinner',
@@ -9,7 +10,11 @@ export class NglSpinner {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() type: 'brand' |  'inverse';
 
-  constructor(public element: ElementRef, public renderer: Renderer) {
-    this.renderer.setElementClass(this.element.nativeElement, 'slds-spinner_container', true);
+  private _container = false;
+  @HostBinding('class.slds-spinner_container') get hasContainer() {
+    return this._container;
+  }
+  @Input() set container(container: string | boolean) {
+    this._container = toBoolean(container);
   }
 };
