@@ -27,7 +27,7 @@ export class NglPopoverTrigger {
   @Input() set nglOpen(_open: boolean) {
     this.popover.open = _open;
     if (_open) {
-      this.tether.position();
+      setTimeout(() => this.tether.position());
     }
   }
 
