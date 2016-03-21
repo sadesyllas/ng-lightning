@@ -1,0 +1,7 @@
+.slds-section__title
+  h3.slds-section__title-action((click)="toggle($event)")
+    button(type="button", nglButtonIcon="container")
+      ngl-icon-button(icon="switch")
+    | {{title}}
+.slds-section__content
+  ng-content
