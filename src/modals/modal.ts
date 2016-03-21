@@ -1,5 +1,5 @@
 import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter} from 'angular2/core';
-import {toBoolean} from '../util/util';
+import {toBoolean, uniqueId} from '../util/util';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIconButton} from '../buttons/icon';
 
@@ -13,22 +13,21 @@ export class NglModal {
   @Input() header: string = '';
   @Input() size: 'large';
 
-  _open: boolean = false;
-  @Input() set open(_open: any) {
+  headingId = uniqueId('modal_header');
+
+  open: boolean = false;
+  @Input('open') set _open(_open: any) {
     _open = toBoolean(_open);
     if (_open === this.open) return;
 
     if (_open) {
       setTimeout(() => this.focusFirst());
     }
-    this._open = _open;
-  }
-  get open() {
-    return this._open;
+    this.open = _open;
   }
   @Output() openChange = new EventEmitter(false);
 
-  constructor(public element: ElementRef, public renderer: Renderer) {}
+  constructor(private element: ElementRef, private renderer: Renderer) {}
 
   close(event: string | boolean = false) {
     this.openChange.emit(event);
