@@ -22,6 +22,13 @@ export function isInt(value: any): boolean {
   return (x | 0) === x;
 }
 
+// Generate a unique id (unique within the entire client session).
+// Useful for temporary DOM ids.
+let idCounter = 0;
+export function uniqueId(prefix = 'uid') {
+  return `${prefix}_${++idCounter}`;
+}
+
 export interface IReplaceClass {
   renderer: Renderer;
   element: ElementRef;

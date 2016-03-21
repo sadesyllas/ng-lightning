@@ -14,4 +14,11 @@ describe('utility', () => {
     expect(util.isInt(undefined)).toBe(false);
   });
 
+  it('uniqueId', () => {
+    expect(util.uniqueId('pr1')).toBe('pr1_1');
+    expect(util.uniqueId('pr1')).toBe('pr1_2');
+    expect(util.uniqueId('pr2')).toBe('pr2_3');
+    expect(util.uniqueId()).toBe('uid_4');
+  });
+
 });
