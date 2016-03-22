@@ -67,6 +67,7 @@ components.forEach(component => {
   directives: [NGL_DIRECTIVES, Plunker].concat(components.map((c: any) => c.component)),
 })
 export class DemoRoute {
+  selectedTab: string[] = [];
 
   getComponent(key: string): IComponent {
     for (var i = 0, ii = components.length; i < ii; i++) {

@@ -1,5 +1,5 @@
 mixin code-preview(comp)
-  ngl-tabs( [(selected)]="selectedTab#{comp.key}")
+  ngl-tabs( [(selected)]="selectedTab['#{comp.key}']")
     template(ngl-tab, heading="Markup")
       pre.language-html
         code.language-html(ngNonBindable)!= comp.html
