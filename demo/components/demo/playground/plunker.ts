@@ -1,8 +1,10 @@
 import {Component, ElementRef} from 'angular2/core';
 
+declare const __ENV__: any;
+
 @Component({
   selector: 'plunker',
-  template: require('./plunker.jade')(),
+  template: require('./plunker.jade')(__ENV__),
   exportAs: 'playground',
 })
 export class Plunker {
@@ -10,7 +12,7 @@ export class Plunker {
 
   index() {
     if (!this.component) return '';
-    return require('!!jade?pretty=true!./plunker-html.jade')();
+    return require('!!jade?pretty=true!./plunker-html.jade')(__ENV__);
   }
 
   ts() {

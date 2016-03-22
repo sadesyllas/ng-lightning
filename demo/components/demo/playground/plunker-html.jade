@@ -13,7 +13,8 @@ html
     script(src="https://npmcdn.com/typescript@1.8.2/lib/typescript.js")
     script(src="https://code.angularjs.org/2.0.0-beta.8/Rx.js")
     script(src="https://code.angularjs.org/2.0.0-beta.8/angular2.dev.js")
-    script(src="ng-lightning.js")
+    - var url = production ? 'https://npmcdn.com/ng-lightning@' + version + '/ng-lightning.bundle.js' : 'ng-lightning.js';
+    script(src="#{url}")
     script.
       System.config({
         transpiler: 'typescript',
