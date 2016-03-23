@@ -1,5 +1,9 @@
 # `<ngl-popover #ref>`
 
+### Input
+
+  * `theme?: 'info' | 'success' | 'warning' | 'error'`: Theme you want to apply.
+
 # `[nglPopoverTrigger]`
 
  ### Input

@@ -50,6 +50,28 @@ describe('Popovers', () => {
     expect(popoverEl).not.toHaveCssClass('slds-nubbin--right');
     done();
   }));
+
+  it('should change theme based on input', testAsync(({fixture, done}) => {
+    const { nativeElement, componentInstance } = fixture;
+    const popoverEl = getPopoverElement(nativeElement);
+
+    fixture.detectChanges();
+    expect(popoverEl).not.toHaveCssClass('slds-theme--info');
+
+    componentInstance.theme = 'info';
+    fixture.detectChanges();
+    expect(popoverEl).toHaveCssClass('slds-theme--info');
+
+    componentInstance.theme = 'error';
+    fixture.detectChanges();
+    expect(popoverEl).toHaveCssClass('slds-theme--error');
+    expect(popoverEl).not.toHaveCssClass('slds-theme--info');
+
+    componentInstance.theme = null;
+    fixture.detectChanges();
+    expect(popoverEl).not.toHaveCssClass('slds-theme--error');
+    done();
+  }, '<ngl-popover [theme]="theme">I am a tooltip</ngl-popover>'));
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`

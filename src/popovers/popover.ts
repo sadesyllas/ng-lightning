@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, ElementRef, Renderer} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from 'angular2/core';
 import {replaceClass} from '../util/util';
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
@@ -9,6 +9,12 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
   templateUrl: './popover.jade',
 })
 export class NglPopover {
+
+  theme: 'info' | 'success' | 'warning' | 'error';
+  @Input('theme') set setTheme(theme: any) {
+    replaceClass(this, `slds-theme--${this.theme}`, theme ? `slds-theme--${theme}` : '');
+    this.theme = theme;
+  }
 
   set open(isOpen: boolean) {
     this.renderer.setElementClass(this.element.nativeElement, 'slds-hide', !isOpen);
