@@ -57,7 +57,7 @@ module.exports = function(config) {
     },
 
     reporters: isTravis ? ['dots'] : ['progress', 'coverage'],
-    port: 9876,
+    port: isTravis ? 9876 : 23011,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
