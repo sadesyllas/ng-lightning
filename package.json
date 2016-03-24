@@ -35,21 +35,20 @@
   "license": "MIT",
   "peerDependencies": {
     "@salesforce-ux/design-system": "^1.0.0",
-    "angular2": "^2.0.0-beta.11",
+    "angular2": "^2.0.0-beta.12",
     "tether": "^1.2.0"
   },
   "devDependencies": {
     "@salesforce-ux/design-system": "^1.0.0",
-    "angular2": "2.0.0-beta.11",
+    "angular2": "2.0.0-beta.12",
     "app-root-path": "^1.0.0",
-    "browser-sync": "^2.11.1",
+    "browser-sync": "^2.11.2",
     "browser-sync-webpack-plugin": "^1.0.1",
     "clean-webpack-plugin": "^0.1.8",
     "conventional-changelog": "^1.1.0",
     "copy-webpack-plugin": "^1.1.1",
     "dateformat": "^1.0.12",
     "del": "^2.2.0",
-    "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
     "gh-pages": "^0.11.0",
     "glob": "^7.0.0",
@@ -57,7 +56,7 @@
     "gulp-inline-ng2-template": "^1.1.2",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-tslint": "^4.3.3",
+    "gulp-tslint": "^4.3.4",
     "gulp-typescript": "^2.12.1",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.10.0",
@@ -68,10 +67,10 @@
     "jasmine-spec-reporter": "^2.4.0",
     "json-loader": "^0.5.3",
     "karma": "^0.13.22",
-    "karma-chrome-launcher": "^0.2.1",
+    "karma-chrome-launcher": "^0.2.2",
     "karma-coverage": "^0.5.5",
     "karma-firefox-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.6",
+    "karma-jasmine": "^0.3.8",
     "karma-sauce-launcher": "^0.3.1",
     "karma-sourcemap-loader": "^0.3.6",
     "lazypipe": "^1.0.1",
@@ -96,9 +95,9 @@
     "ts-loader": "^0.8.1",
     "tslint": "^3.6.0",
     "typescript": "^1.8.9",
-    "typings": "^0.7.7",
+    "typings": "^0.7.9",
     "webpack": "^1.12.14",
     "yargs": "^4.3.1",
-    "zone.js": "0.6.4"
+    "zone.js": "0.6.6"
   }
 }
