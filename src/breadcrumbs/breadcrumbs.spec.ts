@@ -7,8 +7,8 @@ function getBreadcrumbsLinks(element: HTMLElement): HTMLLinkElement[] {
  return [].slice.call(element.querySelectorAll('a'));
 }
 
-function getAssistiveText(element: HTMLElement): HTMLElement[] {
-  return [].slice.call(element.querySelectorAll('.slds-assistive-text'));
+function getAssistiveText(element: HTMLElement): HTMLElement {
+  return <HTMLElement>element.querySelector('.slds-assistive-text');
 }
 
 describe('Breadcrumbs Component', () => {
@@ -30,6 +30,13 @@ describe('Breadcrumbs Component', () => {
     done();
   }, `<ngl-breadcrumbs [assistiveText]="text"></ngl-breadcrumbs>`));
 
+  it('should set `aria-labelledby`', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+    const assistiveText = getAssistiveText(fixture.nativeElement);
+    const breadcrumbEl = fixture.nativeElement.querySelector('.slds-breadcrumb');
+    expect(assistiveText.id).toEqual(breadcrumbEl.getAttribute('aria-labelledby'));
+    done();
+  }));
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`

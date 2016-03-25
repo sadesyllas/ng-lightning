@@ -1,4 +1,4 @@
 nav(role="navigation")
-  p.slds-assistive-text {{assistiveText}}
-  .slds-breadcrumb(class="slds-list--horizontal")
+  p.slds-assistive-text([id]="labelId") {{assistiveText}}
+  .slds-breadcrumb(class="slds-list--horizontal", [attr.aria-labelledby]="labelId")
     ng-content
