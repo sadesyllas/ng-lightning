@@ -1,7 +1,10 @@
 # `[nglPick]`
 
 ### Input
-  * `selected`: option that will be selected when the group is initialized
+  * `nglPick`: currently selected option value.
+
+### Output
+  * `nglPickChange`: the value that is going to be selected when a `nglPickOption` is clicked.
 
 
 # `[nglPickOption]`

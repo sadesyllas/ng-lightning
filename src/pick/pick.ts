@@ -9,9 +9,9 @@ export class NglPick {
   selected: string;
   values = new BehaviorSubject(null);
 
-  @Output() selectedChange = new EventEmitter(false);
+  @Output() nglPickChange = new EventEmitter(false);
 
-  @Input('selected') set setSelected(selected: string) {
+  @Input('nglPick') set setSelected(selected: string) {
     this.selected = selected;
     this.ngAfterContentInit();
   }
@@ -24,6 +24,6 @@ export class NglPick {
 
   optionRemoved(value: any) {
     if (this.selected !== value) return;
-    setTimeout(() => this.selectedChange.emit(undefined));
+    setTimeout(() => this.nglPickChange.emit(undefined));
   }
 }

@@ -20,7 +20,7 @@ export class NglPickOption {
 
   @HostListener('click')
   onSelectChange() {
-    this.pick.selectedChange.emit(this.value);
+    this.pick.nglPickChange.emit(this.value);
   }
 
   ngOnInit() {
