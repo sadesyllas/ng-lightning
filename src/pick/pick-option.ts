@@ -1,13 +1,13 @@
 import { Directive, Input, HostListener, ElementRef, Renderer } from 'angular2/core';
 import { Subscription } from 'rxjs/Subscription';
-import { NglButtonGroup } from './button-group';
+import { NglPick } from './pick';
 
 @Directive({
-  selector: '[nglButtonRadio]',
+  selector: '[nglPickOption]',
 })
-export class NglButtonRadio {
+export class NglPickOption {
 
-  @Input('nglButtonRadio') set setValue(value: any) {
+  @Input('nglPickOption') set setValue(value: any) {
     this.value = value;
   }
 
@@ -16,21 +16,21 @@ export class NglButtonRadio {
   private value: any;
   private _subscription: Subscription;
 
-  constructor(private element: ElementRef, private renderer: Renderer, public group: NglButtonGroup) {}
+  constructor(private element: ElementRef, private renderer: Renderer, public pick: NglPick) {}
 
   @HostListener('click')
   onSelectChange() {
-    this.group.selectedChange.emit(this.value);
+    this.pick.selectedChange.emit(this.value);
   }
 
   ngOnInit() {
-    this._subscription = this.group.values.subscribe((_value) => {
+    this._subscription = this.pick.values.subscribe((_value) => {
       this.renderer.setElementClass(this.element.nativeElement, this.activeClass, this.value === _value);
     });
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
-    this.group.optionRemoved(this.value);
+    this.pick.optionRemoved(this.value);
   }
 }

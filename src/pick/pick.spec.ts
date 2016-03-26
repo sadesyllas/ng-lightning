@@ -1,7 +1,7 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
-import {NglButtonGroup} from './button-group';
-import {NglButtonRadio} from './button-radio';
+import {NglPick} from './pick';
+import {NglPickOption} from './pick-option';
 
 function getOptionElements(element: HTMLElement): HTMLButtonElement[] {
   return [].slice.call(element.querySelectorAll('button'));
@@ -13,7 +13,7 @@ function expectState(element: HTMLElement, state: boolean[], activeClass = 'slds
   expect(options.map(o => o.classList.contains(activeClass))).toEqual(state);
 }
 
-describe('`ButtonGroup`', () => {
+describe('`Pick`', () => {
 
   it('should have proper option selected based on input', testAsync(({fixture, done}) => {
     fixture.detectChanges();
@@ -50,13 +50,13 @@ describe('`ButtonGroup`', () => {
     expect(elements[1]).toHaveCssClass('another-class');
     expect(elements[0]).not.toHaveCssClass('slds-button--brand');
     done();
-  }, `<div nglButtonGroup [selected]="selected" (selectedChange)="selectedChange($event)">
-        <button type="button" nglButtonRadio="op1" activeClass="my-active-class"></button>
-        <button type="button" nglButtonRadio="op2" activeClass="another-class"></button>
+  }, `<div nglPick [selected]="selected" (selectedChange)="selectedChange($event)">
+        <button type="button" nglPickOption="op1" activeClass="my-active-class"></button>
+        <button type="button" nglPickOption="op2" activeClass="another-class"></button>
       </div>
   `));
 
-  it('should have proper selected value when `nglButtonRadio` is clicked', testAsync(({fixture, done}) => {
+  it('should have proper selected value when `nglPickOption` is clicked', testAsync(({fixture, done}) => {
     fixture.detectChanges();
     const elements = getOptionElements(fixture.nativeElement);
     elements[2].click();
@@ -102,11 +102,11 @@ function testAsync(fn: Function, html: string = null) {
 }
 
 @Component({
-  directives: [NglButtonGroup, NglButtonRadio],
+  directives: [NglPick, NglPickOption],
   template: `
-    <div nglButtonGroup [selected]="selected" (selectedChange)="selectedChange($event)">
-      <button type="button" nglButtonRadio="op1"></button>
-      <button type="button" *ngFor="#option of options" [nglButtonRadio]="option"></button>
+    <div nglPick [selected]="selected" (selectedChange)="selectedChange($event)">
+      <button type="button" nglPickOption="op1"></button>
+      <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
     </div>
   `,
 })

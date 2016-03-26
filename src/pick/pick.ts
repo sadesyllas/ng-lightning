@@ -2,9 +2,9 @@ import { Directive, Input, Output, EventEmitter, ElementRef, Renderer } from 'an
 import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
 
 @Directive({
-  selector: '[nglButtonGroup]',
+  selector: '[nglPick]',
 })
-export class NglButtonGroup {
+export class NglPick {
 
   selected: string;
   values = new BehaviorSubject(null);

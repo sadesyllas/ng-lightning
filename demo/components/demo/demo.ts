@@ -5,12 +5,12 @@ import {Plunker} from './playground/plunker';
 import {DemoBadges} from './components/badges/badges';
 import {DemoBreadcrumbs} from './components/breadcrumbs/breadcrumbs';
 import {DemoButtons} from './components/buttons/buttons';
-import {DemoButtonGroups} from './components/button-groups/button-groups';
 import {DemoIcons} from './components/icons/icons';
 import {DemoAvatars} from './components/images/images';
 import {DemoMenus} from './components/menus/menus';
 import {DemoModals} from './components/modals/modals';
 import {DemoPaginations} from './components/paginations/paginations';
+import {DemoPick} from './components/pick/pick';
 import {DemoPopovers} from './components/popovers/popovers';
 import {DemoRatings} from './components/ratings/ratings';
 import {DemoSections} from './components/sections/sections';
@@ -33,12 +33,12 @@ const components: any[] = [
   { key: 'badges', component: DemoBadges },
   { key: 'breadcrumbs', component: DemoBreadcrumbs },
   { key: 'buttons', component: DemoButtons },
-  { key: 'button-groups', component: DemoButtonGroups },
   { key: 'icons', component: DemoIcons },
   { key: 'images', component: DemoAvatars },
   { key: 'menus', component: DemoMenus },
   { key: 'modals', component: DemoModals },
   { key: 'paginations', component: DemoPaginations },
+  { key: 'pick', component: DemoPick },
   { key: 'popovers', component: DemoPopovers },
   { key: 'ratings', component: DemoRatings },
   { key: 'sections', component: DemoSections },
