@@ -39,7 +39,9 @@ export class NglTabs {
     this.selectedChange.emit(tab);
   }
 
-  move(moves: number) {
+  move(evt: Event, moves: number) {
+    evt.preventDefault();
+
     const tabs = this.tabs.toArray();
     const selectedIndex = tabs.indexOf( this.findTab() );
     this.select( tabs[(tabs.length + selectedIndex + moves) % tabs.length] );

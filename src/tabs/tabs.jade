@@ -1,4 +1,4 @@
-ul([ngClass]="'slds-tabs--' + type + '__nav'", role="tablist", (keyup.ArrowLeft)="move(-1)", (keyup.ArrowRight)="move(1)")
+ul([ngClass]="'slds-tabs--' + type + '__nav'", role="tablist", (keydown.ArrowLeft)="move($event, -1)", (keydown.ArrowRight)="move($event, 1)")
   li.slds-text-heading--label(*ngFor="var tab of tabs", [ngClass]="'slds-tabs--' + type + '__item'", (click)="select(tab)", [class.slds-active]="tab.active", role="presentation")
     a([tabindex]="tab.active ? 0 : -1", [attr.aria-selected]="tab.active", [ngClass]="'slds-tabs--' + type + '__link'", role="tab") {{tab.heading}}
 div([ngClass]="'slds-tabs--' + type + '__content'", role="tabpanel")
