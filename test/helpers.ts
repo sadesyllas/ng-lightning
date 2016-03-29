@@ -12,3 +12,7 @@ export function dispatchKeyEvent(target: HTMLElement, key: string) {
   }
   target.dispatchEvent(event);
 }
+
+export function selectElements(element: HTMLElement, selector: string): HTMLElement[] {
+  return [].slice.call(element.querySelectorAll(selector));
+}

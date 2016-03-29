@@ -8,4 +8,9 @@ import { NGL_DIRECTIVES } from '../../../../../dist/ng-lightning';
 })
 export class DemoPick {
   selected = 'middle';
+  multiple = ['middle', 'right'];
+  multipleObject = {
+    left: true,
+    middle: true,
+  };
 }
