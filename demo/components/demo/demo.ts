@@ -7,6 +7,7 @@ import {DemoBreadcrumbs} from './components/breadcrumbs/breadcrumbs';
 import {DemoButtons} from './components/buttons/buttons';
 import {DemoIcons} from './components/icons/icons';
 import {DemoAvatars} from './components/images/images';
+import {DemoLookups} from './components/lookups/lookups';
 import {DemoMenus} from './components/menus/menus';
 import {DemoModals} from './components/modals/modals';
 import {DemoPaginations} from './components/paginations/paginations';
@@ -35,6 +36,7 @@ const components: any[] = [
   { key: 'buttons', component: DemoButtons },
   { key: 'icons', component: DemoIcons },
   { key: 'images', component: DemoAvatars },
+  { key: 'lookups', component: DemoLookups },
   { key: 'menus', component: DemoMenus },
   { key: 'modals', component: DemoModals },
   { key: 'paginations', component: DemoPaginations },

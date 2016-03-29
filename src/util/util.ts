@@ -22,6 +22,12 @@ export function isInt(value: any): boolean {
   return (x | 0) === x;
 }
 
+// Similar to `lodash.isobject`
+export function isObject(value: any): boolean {
+  const type = typeof value;
+  return !!value && (type === 'object' || type === 'function');
+}
+
 // Generate a unique id (unique within the entire client session).
 // Useful for temporary DOM ids.
 let idCounter = 0;

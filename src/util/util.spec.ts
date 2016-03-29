@@ -24,6 +24,16 @@ describe('utility', () => {
     expect(util.isInt(undefined)).toBe(false);
   });
 
+  it('`isObject`', () => {
+    expect(util.isObject({})).toBe(true);
+    expect(util.isObject([1, 2, 3])).toBe(true);
+    expect(util.isObject(function(){})).toBe(true);
+
+    expect(util.isObject(null)).toBe(false);
+    expect(util.isObject('string')).toBe(false);
+    expect(util.isObject(10)).toBe(false);
+  });
+
   it('uniqueId', () => {
     const [ id, count] = util.uniqueId('pr1').split('_');
     expect(id).toBe('pr1');

@@ -8,6 +8,7 @@ import {NglButtonState} from './buttons/button-state';
 import {NglButtonIcon} from './buttons/button-icon';
 import {NglIconButton} from './buttons/icon';
 import {NglIcon} from './icons/icon';
+import {NglLookup} from './lookups/lookup';
 import {NglDropdownTrigger} from './menus/dropdown-trigger';
 import {NglDropdown} from './menus/dropdown';
 import {NglDropdownItem} from './menus/dropdown-item';
@@ -32,6 +33,7 @@ export {NglButtonState} from './buttons/button-state';
 export {NglButtonIcon} from './buttons/button-icon';
 export {NglIconButton} from './buttons/icon';
 export {NglIcon} from './icons/icon';
+export {NglLookup} from './lookups/lookup';
 export {NglDropdownTrigger} from './menus/dropdown-trigger';
 export {NglDropdown} from './menus/dropdown';
 export {NglDropdownItem} from './menus/dropdown-item';
@@ -54,6 +56,7 @@ export const NGL_DIRECTIVES = [
   NglBreadcrumbs, NglBreadcrumb,
   NglButton, NglButtonState, NglButtonIcon, NglIconButton,
   NglIcon,
+  NglLookup,
   NglDropdownTrigger, NglDropdown, NglDropdownItem,
   NglModal,
   NglPagination,
