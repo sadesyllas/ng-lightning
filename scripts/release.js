@@ -6,7 +6,6 @@ const semver = require('semver');
 const root = require('app-root-path').path;
 const git = require('simple-git')( root );
 const conventionalChangelog = require('conventional-changelog');
-const fs = require('fs');
 const child_process = require('child_process');
 
 const packageFile = `${root}/package.json`;
@@ -108,15 +107,8 @@ function push() {
 }
 
 function changelog( version ) {
-  const wstream = fs.createWriteStream(changelogFile);
-
-  conventionalChangelog({
-    preset: 'angular',
-    releaseCount: 0,
-  })
-  .pipe(wstream);
-
-  return q.when( version );
+  const shell = require('shelljs');
+  shell.exec(`${root}/node_modules/.bin/conventional-changelog -p angular -i ${changelogFile} -s`);
 }
 
 // Start
