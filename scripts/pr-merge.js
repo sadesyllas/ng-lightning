@@ -3,23 +3,48 @@ const request = require('request');
 const inquirer = require('inquirer');
 const q = require('q');
 
-const patchUrl = 'http://patch-diff.githubusercontent.com/raw/ng-lightning/ng-lightning/pull/';
+const GITHUB_REPOSITORY = 'ng-lightning/ng-lightning';
 
 function requestConfig() {
   var deferred = q.defer();
-  inquirer.prompt([
-    {
-      type: 'input',
-      name: 'prno',
-      message: 'Which PR number would you like to merge?'
-    },
-    {
-      type: 'confirm',
-      name: 'append',
-      message: `Append "Closes #PR" to commit message?`
-    },
-  ], function (answers) {
-    deferred.resolve(answers);
+
+  inquirer.prompt({
+    type: 'list',
+    name: 'type',
+    message: 'What kind of patch you want to apply?',
+    choices: [ 'Pull Request', 'Commit'],
+  }, function(response) {
+    if (response.type === 'Pull Request') {
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'prno',
+          message: 'Which PR number would you like to merge?'
+        },
+        {
+          type: 'confirm',
+          name: 'append',
+          message: `Append "Closes #PR" to commit message?`
+        },
+      ], function (answers) {
+        answers.patchUrl = `http://patch-diff.githubusercontent.com/raw/${GITHUB_REPOSITORY}/pull/${answers.prno}.patch`;
+        deferred.resolve(answers);
+      });
+    } else if (response.type === 'Commit') {
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'hash',
+          message: 'Which commit hash would you like to merge?'
+        },
+      ], function (response) {
+        deferred.resolve({
+          append: false,
+          patchUrl: `http://github.com/${GITHUB_REPOSITORY}/commit/${response.hash}.patch`,
+          prno: response.hash.substring(0, 7),
+        });
+      });
+    }
   });
   return deferred.promise;
 }
@@ -34,17 +59,15 @@ function createBranch(config) {
 }
 
 function applyPatch(config) {
-  const prno = config.prno;
-
   var deferred = q.defer();
   console.log('Requesting patch content...');
-  request(`${patchUrl}${prno}.patch`, (err, res, body) => {
+  request(config.patchUrl, (err, res, body) => {
     if (err || res.statusCode !== 200) {
       console.log('Error while getting patch:', err);
       return deferred.reject(err);
     }
 
-    const patchFile = `${shell.tempdir()}/gh-${prno}-${+new Date()}`;
+    const patchFile = `${shell.tempdir()}/gh-${config.prno}-${+new Date()}`;
     body.to(patchFile);
     console.log(`Wrote to file: ${patchFile}`);
 
