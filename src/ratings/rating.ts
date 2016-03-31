@@ -7,6 +7,9 @@ import {NglIcon} from '../icons/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [NglIcon],
   templateUrl: './rating.jade',
+  host: {
+    'style': 'white-space: nowrap;',
+  },
 })
 export class NglRating {
 

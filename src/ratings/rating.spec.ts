@@ -33,6 +33,12 @@ describe('Rating Component', () => {
     done();
   }));
 
+  it('prevents stars from wrapping', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.firstElementChild).toHaveCssStyle({'white-space': 'nowrap', 'background': 'red'});
+    done();
+  }, `<ngl-rating [(rate)]="value" style="background: red;"></ngl-rating>`));
+
   it('should change rate based on click', testAsync(({fixture, done}) => {
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
