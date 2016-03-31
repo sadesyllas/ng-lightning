@@ -57,6 +57,7 @@ const config = {
         now: dateFormat(new Date(), 'dd mmm yyyy'),
         version: pkg.version,
         production: isProduction,
+        pkg,
       }),
     }),
     new CopyWebpackPlugin([
