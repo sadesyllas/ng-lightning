@@ -35,7 +35,7 @@ describe('Rating Component', () => {
 
   it('prevents stars from wrapping', testAsync(({fixture, done}) => {
     fixture.detectChanges();
-    expect(fixture.nativeElement.firstElementChild).toHaveCssStyle({'white-space': 'nowrap', 'background': 'red'});
+    expect(fixture.nativeElement.firstElementChild).toHaveCssStyle({'white-space': 'nowrap', 'background-color': 'red'});
     done();
   }, `<ngl-rating [(rate)]="value" style="background: red;"></ngl-rating>`));
 
@@ -148,6 +148,30 @@ describe('Rating Component', () => {
     }));
   });
 
+  it('should change icons size based on input', testAsync(({fixture, done}) => {
+    const { nativeElement, componentInstance } = fixture;
+    componentInstance.size = 'small';
+    fixture.detectChanges();
+
+    const icons = getICons(nativeElement);
+    icons.forEach(icon => expect(icon).toHaveCssClass('slds-icon--small'));
+
+    componentInstance.size = 'large';
+    fixture.detectChanges();
+    icons.forEach(icon => {
+      expect(icon).not.toHaveCssClass('slds-icon--small');
+      expect(icon).toHaveCssClass('slds-icon--large');
+    });
+
+    componentInstance.size = null;
+    fixture.detectChanges();
+    icons.forEach(icon => {
+      expect(icon).not.toHaveCssClass('slds-icon--small');
+      expect(icon).not.toHaveCssClass('slds-icon--large');
+    });
+    done();
+  }, `<ngl-rating [(rate)]="value" [size]="size"></ngl-rating>`));
+
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
@@ -167,5 +191,6 @@ function testAsync(fn: Function, html: string = null) {
 export class TestComponent {
   value = 2;
   readonly = false;
+  size: string;
   change() {}
 }

@@ -17,6 +17,7 @@ export class NglRating {
   currentRate: number;
 
   @Input() icon = 'favorite';
+  @Input() size: 'x-small' | 'small' | 'large';
   @Input() set isReadonly(readonly: any) {
     this.readonly = toBoolean(readonly);
   }

@@ -9,4 +9,11 @@ import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
 export class DemoRatings {
   value = 4;
   readonly = false;
+  size = 'small';
+
+  private sizes = ['x-small', 'small', '', 'large'];
+
+  changeSize() {
+    this.size = this.sizes[(this.sizes.indexOf(this.size) + 1) % this.sizes.length];
+  }
 }
