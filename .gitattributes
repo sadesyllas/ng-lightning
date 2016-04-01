@@ -1,0 +1,6 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Always use LF for tools to work
+*.ts eol=lf
+*.js eol=lf
