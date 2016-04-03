@@ -1,0 +1,4 @@
+.slds-tree_container(role="application", (register)="registerChild($event)", (unregister)="unregisterChild($event)")
+  ng-content(select="[nglTreeHeading]")
+  .slds-tree(role="tree", tabindex="-1", [attr.aria-labelledby]="'ngl-tree-heading-' + uniqueId")
+    ng-content(select="[nglTreeBranch], [nglSubTree]")

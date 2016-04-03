@@ -19,6 +19,7 @@ import {DemoRatings} from './components/ratings/ratings';
 import {DemoSections} from './components/sections/sections';
 import {DemoSpinners} from './components/spinners/spinners';
 import {DemoTabs} from './components/tabs/tabs';
+import {DemoTrees} from './components/trees/trees';
 
 export interface IComponent {
   key: string;
@@ -33,6 +34,7 @@ export interface IComponent {
 };
 
 const components: any[] = [
+  { key: 'trees', component: DemoTrees },
   { key: 'badges', component: DemoBadges },
   { key: 'breadcrumbs', component: DemoBreadcrumbs },
   { key: 'buttons', component: DemoButtons },

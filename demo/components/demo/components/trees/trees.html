@@ -1,0 +1,28 @@
+<ngl-tree>
+  <h4 class="slds-text-heading--label" nglTreeHeading>Tree Heading</h4>
+  <div nglTreeBranch>
+    <a class="slds-truncate" nglTreeHeading>Item 1</a>
+  </div>
+  <div nglSubTree expanded="true" disabled>
+    <a class="slds-truncate" nglTreeHeading>Branch 1</a>
+    <div nglTreeBranch>
+      <a class="slds-truncate" nglTreeHeading>
+        Item 2
+        <span class="slds-pill slds-shrink-none slds-align-middle slds-m-left--small">
+          <span class="slds-pill__label">Label 1</span>
+        </span>
+      </a>
+    </div>
+    <div nglSubTree>
+      <a class="slds-truncate" nglTreeHeading>
+        Branch 2
+        <span class="slds-pill slds-shrink-none slds-align-middle slds-m-left--small">
+          <span class="slds-pill__label">Label 2</span>
+        </span>
+      </a>
+      <div nglTreeBranch>
+        <a class="slds-truncate" nglTreeHeading>Item 3</a>
+      </div>
+    </div>
+  </div>
+</ngl-tree>

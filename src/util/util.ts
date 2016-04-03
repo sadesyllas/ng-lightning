@@ -1,9 +1,9 @@
 import {ElementRef, Renderer} from 'angular2/core';
 
-export function toBoolean(value: any): boolean {
+export function toBoolean(value: any, allowEmpty = true): boolean {
   switch (value) {
     case '':
-      return true;
+      return allowEmpty;
 
     case 'false':
     case '0':
