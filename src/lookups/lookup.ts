@@ -8,6 +8,13 @@ import {uniqueId, isObject} from '../util/util';
   selector: 'ngl-lookup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './lookup.jade',
+  styles: [
+    `.slds-dropdown__item--active > a {
+        outline: 0;
+        text-decoration: none;
+        background-color: #f4f6f9;
+    }`,
+  ],
 })
 export class NglLookup {
 
@@ -35,9 +42,12 @@ export class NglLookup {
         this.globalClickHandler($event);
         this.detector.markForCheck();
       });
-    } else if (this.globalClickUnsubscriber) {
-      this.globalClickUnsubscriber();
-      this.globalClickUnsubscriber = null;
+    } else {
+      this.activeIndex = -1;
+      if (this.globalClickUnsubscriber) {
+        this.globalClickUnsubscriber();
+        this.globalClickUnsubscriber = null;
+      }
     }
     this._open = _open;
   }
@@ -45,8 +55,10 @@ export class NglLookup {
     return this._open;
   }
   private input = new Control();
-  private suggestions$: Observable<any[]>;
+  private suggestions: any[];
   private noResults: boolean = false;
+  private activeIndex: number = -1;
+  private lastUserInput: string;
 
   constructor(private element: ElementRef, private renderer: Renderer, private detector: ChangeDetectorRef,
               @Attribute('debounce') private debounce: number) {
@@ -63,23 +75,29 @@ export class NglLookup {
 
   ngOnInit() {
     let valueStream = this.input.valueChanges
-      .do((value: string) => this.valueChange.emit(value));
+      .do((value: string) => {
+        this.lastUserInput = value;
+        this.activeIndex = -1;
+        this.valueChange.emit(value);
+      });
 
     if (this.debounce > 0) {
       valueStream = valueStream.debounceTime(this.debounce);
     }
 
-    this.suggestions$ = valueStream
+    const suggestions$ = valueStream
       .distinctUntilChanged()
       .switchMap((value: string) => {
         const suggestions = this.lookup(value);
         return suggestions instanceof Observable ? suggestions : Observable.of(suggestions);
       })
-      .publish().refCount();
+      .publish().refCount(); // Single instance
 
-    this.suggestions$.subscribe((suggestions: any) => {
+    suggestions$.subscribe((suggestions: any[]) => {
+      this.suggestions = suggestions;
       this.noResults = Array.isArray(suggestions) && !suggestions.length;
       this.open = !!suggestions;
+      this.detector.markForCheck();
     });
   }
 
@@ -98,6 +116,26 @@ export class NglLookup {
       return;
     }
     this.open = false;
+  }
+
+  optionId(index: number) {
+    return index < 0 ? null : `${this.inputId}_active_${index}`;
+  }
+
+  pickActive(evt: KeyboardEvent) {
+    if (this.activeIndex < 0) return;
+    this.handlePick(this.suggestions[this.activeIndex]);
+  }
+
+  moveActive(evt: KeyboardEvent, moves: number) {
+    evt.preventDefault();
+    if (!this.open) return;
+
+    this.activeIndex = Math.max(-1, Math.min(this.activeIndex + moves, this.suggestions.length - 1));
+
+    // Update input value based on active option
+    const value = this.activeIndex === -1 ? this.lastUserInput : this.resolveLabel(this.suggestions[this.activeIndex]);
+    this.input.updateValue(value, {emitEvent: false});
   }
 
   ngOnDestroy() {

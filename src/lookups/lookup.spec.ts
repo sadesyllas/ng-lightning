@@ -193,6 +193,55 @@ describe('Lookup Component', () => {
       options[1].click();
     });
   }, `<ngl-lookup [value]="value" [lookup]="filterObject" field="name" (pick)="onSelect($event)" debounce="0"></ngl-lookup>`));
+
+  it('should support keyboard navigation and selection', testAsync(({fixture, done}) => {
+    const { nativeElement, componentInstance } = fixture;
+    fixture.detectChanges();
+
+    const { input } = getElements(nativeElement);
+
+    function expectActiveOption(keyEvent: string, option: HTMLElement = null) {
+      dispatchKeyEvent(input, keyEvent);
+      fixture.detectChanges();
+
+      if (option) {
+        expect(input.getAttribute('aria-activedescendant')).toBe(option.children[0].id);
+        expect(input.value).toBe(option.children[0].textContent);
+      } else {
+        expect(input.getAttribute('aria-activedescendant')).toBeNull();
+      }
+    }
+
+    expect(input.getAttribute('aria-activedescendant')).toBeNull();
+
+    spyOn(componentInstance, 'onSelect').and.callFake(() => {
+      expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
+      setTimeout(() => {
+        fixture.detectChanges();
+        expect(input.value).toBe('ABCDE');
+        expectMenuExpanded(nativeElement, false);
+        done();
+      });
+    });
+
+    componentInstance.value = 'DE';
+    fixture.detectChanges();
+    expectOptions(fixture, ['ABCDE', 'DEFGH'], () => {
+      const { options } = getElements(nativeElement);
+
+      expectActiveOption('ArrowDown', options[0]);
+      expectActiveOption('ArrowDown', options[1]);
+      expectActiveOption('ArrowDown', options[1]);
+
+      expectActiveOption('ArrowUp', options[0]);
+      expectActiveOption('ArrowUp', null);
+      expectActiveOption('ArrowUp', null);
+
+      expectActiveOption('ArrowDown', options[0]);
+
+      dispatchKeyEvent(input, 'Enter');
+    });
+  }));
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
