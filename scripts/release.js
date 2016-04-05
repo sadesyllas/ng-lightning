@@ -5,7 +5,6 @@ const replace = require('replace');
 const semver = require('semver');
 const root = require('app-root-path').path;
 const git = require('simple-git')( root );
-const conventionalChangelog = require('conventional-changelog');
 const child_process = require('child_process');
 
 const packageFile = `${root}/package.json`;
