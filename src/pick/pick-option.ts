@@ -16,26 +16,27 @@ export class NglPickOption {
   private value: any;
   private _subscription: Subscription;
 
-  constructor(private element: ElementRef, private renderer: Renderer, public pick: NglPick) {}
+  constructor(private element: ElementRef, private renderer: Renderer, private nglPick: NglPick) {}
 
   @HostListener('click')
-  onSelectChange() {
-    this.pick.selectOption(this.value);
+  pick() {
+    this.nglPick.selectOption(this.value);
   }
 
   ngOnInit() {
-    this._subscription = this.pick.values.subscribe((_value) => {
-      this.renderer.setElementClass(this.element.nativeElement, this.activeClass, this.isSelected(_value));
+    this._subscription = this.nglPick.values.subscribe(value => {
+      const active = this._isActive(value);
+      this.renderer.setElementClass(this.element.nativeElement, this.activeClass, active);
     });
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
-    this.pick.optionRemoved(this.value);
+    this.nglPick.optionRemoved(this.value);
   }
 
-  private isSelected(value: any) {
-    if (this.pick.isMultiple) {
+  private _isActive(value: any) {
+    if (this.nglPick.isMultiple) {
       return Array.isArray(value) ? value.indexOf(this.value) > -1 : !!value[this.value];
     } else {
       return this.value === value;
