@@ -14,7 +14,7 @@ let HTML: string;
 
 describe('Pick multiple array', () => {
   HTML = `
-    <div [(nglPick)]="selected" nglPickMultiple>
+    <div [(nglPick)]="selected" nglPickMultiple nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1"></button>
       <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
     </div>
@@ -61,7 +61,7 @@ describe('Pick multiple array', () => {
 
 describe('Pick multiple object', () => {
   HTML = `
-    <div [(nglPick)]="selectedObject" nglPickMultiple>
+    <div [(nglPick)]="selectedObject" nglPickMultiple nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1"></button>
       <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
     </div>

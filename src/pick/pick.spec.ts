@@ -51,8 +51,8 @@ describe('`Pick`', () => {
     expect(elements[0]).not.toHaveCssClass('slds-button--brand');
     done();
   }, `<div [nglPick]="selected" (nglPickChange)="selectedChange($event)">
-        <button type="button" nglPickOption="op1" activeClass="my-active-class"></button>
-        <button type="button" nglPickOption="op2" activeClass="another-class"></button>
+        <button type="button" nglPickOption="op1" nglPickActiveClass="my-active-class"></button>
+        <button type="button" nglPickOption="op2" nglPickActiveClass="another-class"></button>
       </div>
   `));
 
@@ -104,7 +104,7 @@ function testAsync(fn: Function, html: string = null) {
 @Component({
   directives: [NglPick, NglPickOption],
   template: `
-    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)">
+    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1"></button>
       <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
     </div>

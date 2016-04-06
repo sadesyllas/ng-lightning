@@ -16,6 +16,8 @@ export class NglPick {
     this.ngAfterContentInit();
   }
 
+  @Input() nglPickActiveClass: string;
+
   @Output() private nglPickChange = new EventEmitter(false);
 
   @Input('nglPickMultiple') set setIsMultiple(isMultiple: any) {

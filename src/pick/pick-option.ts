@@ -11,7 +11,7 @@ export class NglPickOption {
     this.value = value;
   }
 
-  @Input() activeClass = 'slds-button--brand';
+  @Input() nglPickActiveClass: string;
 
   private value: any;
   private _subscription: Subscription;
@@ -26,7 +26,11 @@ export class NglPickOption {
   ngOnInit() {
     this._subscription = this.nglPick.values.subscribe(value => {
       const active = this._isActive(value);
-      this.renderer.setElementClass(this.element.nativeElement, this.activeClass, active);
+
+      const activeClass = this.nglPickActiveClass || this.nglPick.nglPickActiveClass;
+      if (activeClass) {
+        this.renderer.setElementClass(this.element.nativeElement, activeClass, active);
+      }
     });
   }
 
