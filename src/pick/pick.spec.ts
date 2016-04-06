@@ -1,16 +1,19 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
+import {selectElements, dispatchKeyEvent} from '../../test/helpers';
 import {NglPick} from './pick';
 import {NglPickOption} from './pick-option';
 
-function getOptionElements(element: HTMLElement): HTMLButtonElement[] {
-  return [].slice.call(element.querySelectorAll('button'));
+function getElements(element: HTMLElement): any {
+  return {
+    options: <HTMLButtonElement[]>selectElements(element, 'button'),
+  };
 }
 
 function expectState(element: HTMLElement, state: boolean[], activeClass = 'slds-button--brand') {
-  const options = getOptionElements(element);
+  const { options } = getElements(element);
   expect(options.length).toBe(state.length);
-  expect(options.map(o => o.classList.contains(activeClass))).toEqual(state);
+  expect(options.map((o: HTMLElement) => o.classList.contains(activeClass))).toEqual(state);
 }
 
 describe('`Pick`', () => {
@@ -25,6 +28,12 @@ describe('`Pick`', () => {
     done();
   }));
 
+  it('should render options with the appropriate aria role', testAsync(({fixture, done}) => {
+    const { options } = getElements(fixture.nativeElement);
+    options.forEach((o: HTMLElement) => expect(o.getAttribute('role')).toBe('button'));
+    done();
+  }));
+
   it('should have proper option selected even if selected value is object', testAsync(({fixture, done}) => {
     const {nativeElement, componentInstance} = fixture;
     componentInstance.selected = componentInstance.options[2];
@@ -34,21 +43,21 @@ describe('`Pick`', () => {
   }));
 
   it('should handle different active class', testAsync(({fixture, done}) => {
-    const elements = getOptionElements(fixture.nativeElement);
+    const { options } = getElements(fixture.nativeElement);
 
     fixture.componentInstance.selected = 'op1';
     fixture.detectChanges();
-    expect(elements[0]).toHaveCssClass('my-active-class');
-    expect(elements[0]).not.toHaveCssClass('slds-button--brand');
-    expect(elements[1]).not.toHaveCssClass('another-class');
-    expect(elements[0]).not.toHaveCssClass('slds-button--brand');
+    expect(options[0]).toHaveCssClass('my-active-class');
+    expect(options[0]).not.toHaveCssClass('slds-button--brand');
+    expect(options[1]).not.toHaveCssClass('another-class');
+    expect(options[0]).not.toHaveCssClass('slds-button--brand');
 
     fixture.componentInstance.selected = 'op2';
     fixture.detectChanges();
-    expect(elements[0]).not.toHaveCssClass('my-active-class');
-    expect(elements[0]).not.toHaveCssClass('slds-button--brand');
-    expect(elements[1]).toHaveCssClass('another-class');
-    expect(elements[0]).not.toHaveCssClass('slds-button--brand');
+    expect(options[0]).not.toHaveCssClass('my-active-class');
+    expect(options[0]).not.toHaveCssClass('slds-button--brand');
+    expect(options[1]).toHaveCssClass('another-class');
+    expect(options[0]).not.toHaveCssClass('slds-button--brand');
     done();
   }, `<div [nglPick]="selected" (nglPickChange)="selectedChange($event)">
         <button type="button" nglPickOption="op1" nglPickActiveClass="my-active-class"></button>
@@ -58,8 +67,20 @@ describe('`Pick`', () => {
 
   it('should have proper selected value when `nglPickOption` is clicked', testAsync(({fixture, done}) => {
     fixture.detectChanges();
-    const elements = getOptionElements(fixture.nativeElement);
-    elements[2].click();
+    const { options } = getElements(fixture.nativeElement);
+    options[2].click();
+    expect(fixture.componentInstance.selected).toBe('op3');
+    done();
+  }));
+
+  it('should have proper selected value when `nglPickOption` is used with keyboard', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+    const { options } = getElements(fixture.nativeElement);
+    dispatchKeyEvent(options[1], 'Enter');
+    expect(fixture.componentInstance.selected).toBe('op2');
+    dispatchKeyEvent(options[2], 'Space');
+    expect(fixture.componentInstance.selected).toBe('op3');
+    dispatchKeyEvent(options[1], 'ArrowDown');
     expect(fixture.componentInstance.selected).toBe('op3');
     done();
   }));

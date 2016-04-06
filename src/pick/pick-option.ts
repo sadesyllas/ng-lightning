@@ -4,6 +4,9 @@ import { NglPick } from './pick';
 
 @Directive({
   selector: '[nglPickOption]',
+  host: {
+    'role': 'button',
+  },
 })
 export class NglPickOption {
 
@@ -19,7 +22,12 @@ export class NglPickOption {
   constructor(private element: ElementRef, private renderer: Renderer, private nglPick: NglPick) {}
 
   @HostListener('click')
-  pick() {
+  @HostListener('keydown.Space', ['$event'])
+  @HostListener('keydown.Enter', ['$event'])
+  pick(evt: Event) {
+    if (evt) {
+      evt.preventDefault();
+    }
     this.nglPick.selectOption(this.value);
   }
 
