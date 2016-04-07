@@ -108,6 +108,26 @@ describe('`Pick`', () => {
     fixture.componentInstance.options.splice(0, 1);
     fixture.detectChanges();
   }));
+
+  it('should allow picking from outside and expose state', testAsync(({fixture, done}) => {
+    const spanEl = <HTMLSpanElement>fixture.nativeElement.querySelector('span');
+    const triggerEl = <HTMLButtonElement>fixture.nativeElement.querySelector('button.outside');
+
+    fixture.detectChanges();
+    expect(spanEl.textContent).toBe('true-false');
+
+    spyOn(fixture.componentInstance, 'selectedChange');
+    triggerEl.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.selectedChange).toHaveBeenCalledWith('op2');
+    done();
+  }, `<div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickActiveClass="slds-button--brand">
+      <button type="button" nglPickOption="op1" #opt1="nglPickOption"></button>
+      <button type="button" nglPickOption="op2" #opt2="nglPickOption"></button>
+    </div>
+    <button type="button" (click)="opt2.pick()" class="outside">Trigger</button>
+    <span>{{opt1.active}}-{{opt2.active}}</span>`
+  ));
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
