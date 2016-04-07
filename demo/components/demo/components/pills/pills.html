@@ -1,0 +1,25 @@
+<div class="slds-text-heading--label slds-m-bottom--small">Pill examples</div>
+
+<a href="javascript:void(0)" nglPill removable="false">Default</a>
+<a href="javascript:void(0)" nglPill removable="false">
+  <svg aria-hidden="true" class="slds-icon slds-icon-standard-account" nglPillImage>
+    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+  </svg> With icon
+</a>
+<a href="javascript:void(0)" nglPill removable="false">
+  <span class="slds-avatar slds-avatar--circle" nglPillImage>
+    <img src="assets/images/avatar2.jpg" alt="">
+  </span>  With portrait
+</a>
+<span nglPill removable="false">Unlinked</span>
+
+
+<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Removable pills</div>
+<button type="button" nglButton="brand" (click)="add()">Add</button>
+<div class="slds-clearfix slds-p-vertical--xx-small"></div>
+
+<a href="javascript:void(0)" *ngFor="#pill of pills" nglPill (remove)="remove(pill)">
+  <svg aria-hidden="true" class="slds-icon slds-icon-standard-account" nglPillImage>
+    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+  </svg> {{pill}}
+</a>

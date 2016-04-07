@@ -2,6 +2,7 @@
 
 import {NglAvatar} from './images/avatar';
 import {NglBadge} from './badges/badge';
+import {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
 import {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 import {NglButton} from './buttons/button';
 import {NglButtonState} from './buttons/button-state';
@@ -16,6 +17,8 @@ import {NglModal} from './modals/modal';
 import {NglPagination} from './paginations/pagination';
 import {NglPick} from './pick/pick';
 import {NglPickOption} from './pick/pick-option';
+import {NglPill} from './pills/pill';
+import {NglPillImage} from './pills/pill-image';
 import {NglPopover} from './popovers/popover';
 import {NglPopoverTrigger} from './popovers/trigger';
 import {NglRating} from './ratings/rating';
@@ -23,10 +26,10 @@ import {NglSection} from './sections/section';
 import {NglSpinner} from './spinners/spinner';
 import {NglTabs} from './tabs/tabs';
 import {NglTab} from './tabs/tab';
-import {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
 
 export {NglAvatar} from './images/avatar';
 export {NglBadge} from './badges/badge';
+export {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
 export {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 export {NglButton} from './buttons/button';
 export {NglButtonState} from './buttons/button-state';
@@ -41,6 +44,8 @@ export {NglModal} from './modals/modal';
 export {NglPagination} from './paginations/pagination';
 export {NglPick} from './pick/pick';
 export {NglPickOption} from './pick/pick-option';
+export {NglPill} from './pills/pill';
+export {NglPillImage} from './pills/pill-image';
 export {NglPopover} from './popovers/popover';
 export {NglPopoverTrigger} from './popovers/trigger';
 export {NglRating} from './ratings/rating';
@@ -48,7 +53,6 @@ export {NglSection} from './sections/section';
 export {NglSpinner} from './spinners/spinner';
 export {NglTabs} from './tabs/tabs';
 export {NglTab} from './tabs/tab';
-export {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
 
 export const NGL_DIRECTIVES = [
   NglAvatar,
@@ -66,6 +70,7 @@ export const NGL_DIRECTIVES = [
   NglSection,
   NglSpinner,
   NglTabs, NglTab,
+  NglPill, NglPillImage,
 ];
 
 export {provideNglConfig} from './config/config';
