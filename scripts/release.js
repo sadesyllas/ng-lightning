@@ -86,7 +86,7 @@ function publish(version) {
 
 function postVersion( version ) {
   var deferred = q.defer();
-  bump( version, 'prerelease').then(() => {
+  bump(semver.inc(version, 'prerelease')).then(() => {
     git.commit(`chore(release): starting new releace cycle`, [ packageFile ], deferred.resolve());
   });
   return deferred.promise;
