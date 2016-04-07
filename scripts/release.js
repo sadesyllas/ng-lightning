@@ -10,33 +10,32 @@ const child_process = require('child_process');
 const packageFile = `${root}/package.json`;
 const changelogFile = `${root}/CHANGELOG.md`;
 
-function requestReleaseType() {
+function requestReleaseType(current) {
   var deferred = q.defer();
   inquirer.prompt([
     {
       type: 'list',
       name: 'type',
       message: 'What type of release would you like?',
-      choices: ['patch', 'minor', 'major'],
+      choices: ['patch', 'minor', 'major'].map(type => `${type} (${semver.inc( current, type )})`),
       default: 0
     }
   ], function( answers ) {
-      deferred.resolve( answers.type );
+      deferred.resolve( answers.type.match(/\(.*\)/g)[0].slice(1, -1) );
   });
   return deferred.promise;
 }
 
-function bump( current, type) {
-  const next = semver.inc( current, type );
+function bump( version ) {
 
   replace({
     regex: /"version": "[^"]+"/m,
-    replacement: `"version": "${next}"`,
+    replacement: `"version": "${version}"`,
     paths: [ packageFile ],
     recursive: false,
   });
 
-  return q.when( next );
+  return q.when( version );
 }
 
 function preVersion( version ) {
@@ -54,6 +53,11 @@ function preVersion( version ) {
 }
 
 function runVersion( version ) {
+  if (!version) {
+    console.log('No valid version!');
+    process.exit(1);
+  }
+
   var deferred = q.defer();
 
   console.log('Committing...');
@@ -107,12 +111,19 @@ function push() {
 
 function changelog( version ) {
   const shell = require('shelljs');
-  shell.exec(`${root}/node_modules/.bin/conventional-changelog -p angular -i ${changelogFile} -s`);
+
+  var deferred = q.defer();
+  shell.exec(`${root}/node_modules/.bin/conventional-changelog -p angular -i ${changelogFile} -s`, (code) => {
+    deferred.resolve(version);
+  });
+  return deferred.promise;
 }
 
 // Start
-requestReleaseType()
-.then(type => bump(require(packageFile).version, type))
+const currentVersion = require(packageFile).version;
+
+requestReleaseType(currentVersion)
+.then(bump)
 .then(changelog)
 .then(preVersion)
 .then(runVersion, () => q.reject())
