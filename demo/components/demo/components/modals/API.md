@@ -14,4 +14,4 @@
 
 ### Output
 
-  * `openChange: EventEmitter<NglTab>`: emmited when modal's visibility is going to change to `false`
+  * `openChange: EventEmitter<boolean>`: emitted when modal's visibility is going to change to `false`
