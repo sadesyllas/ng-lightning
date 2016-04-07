@@ -8,6 +8,7 @@ import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
 })
 export class DemoMenus {
   open: boolean;
+  picks: any[] = [];
 
   items = [
     { value: 'Item 1', icon: 'kanban' },
