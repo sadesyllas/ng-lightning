@@ -8,7 +8,7 @@ import {NGL_CONFIG, IConfig} from '../config/config';
 })
 export class NglIcon {
   @Input() icon: string;
-  @Input() type: 'default' | 'warning' | 'error';
+  @Input() type: 'default' | 'warning' | 'error' = 'default';
   @Input() size: 'x-small' | 'small' | 'large';
   @Input() alt: string;
   @Input() svgClass: string | string[] = '';
@@ -21,7 +21,10 @@ export class NglIcon {
     if (this.size) {
       classes.push(`slds-icon--${this.size}`);
     }
-    classes.push(`slds-icon-text-${this.type || 'default'}`);
+
+    if (this.type) {
+      classes.push(`slds-icon-text-${this.type}`);
+    }
 
     return classes;
   }

@@ -28,6 +28,28 @@ describe('Icon Component', () => {
     done();
   }));
 
+  it('should set type based on input', testAsync(`<ngl-icon icon="warning" [type]="type"></ngl-icon>`, ({fixture, done}) => {
+    const { nativeElement, componentInstance } = fixture;
+    const icon = getIconElement(nativeElement);
+
+    componentInstance.type = 'warning';
+    fixture.detectChanges();
+    expect(icon).toHaveCssClass('slds-icon-text-warning');
+    expect(icon).not.toHaveCssClass('slds-icon-text-default');
+
+    componentInstance.type = 'error';
+    fixture.detectChanges();
+    expect(icon).toHaveCssClass('slds-icon-text-error');
+    expect(icon).not.toHaveCssClass('slds-icon-text-warning');
+
+    componentInstance.type = '';
+    fixture.detectChanges();
+    expect(icon).not.toHaveCssClass('slds-icon-text-error');
+    expect(icon).not.toHaveCssClass('slds-icon-text-warning');
+    expect(icon).not.toHaveCssClass('slds-icon-text-default');
+    done();
+  }));
+
   it('should set size based on input', testAsync(`<ngl-icon icon="warning" [size]="size"></ngl-icon>`, ({fixture, done}) => {
     fixture.detectChanges();
 
@@ -85,5 +107,6 @@ function testAsync(html: string, fn: Function) {
 })
 export class TestComponent {
   size = 'small';
+  type: string;
   svgClass = 'anextra fancy one';
 }
