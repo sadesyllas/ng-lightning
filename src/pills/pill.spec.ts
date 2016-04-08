@@ -2,10 +2,11 @@ import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/
 import {Component} from 'angular2/core';
 import {NglPill} from './pill';
 import {NglPillImage} from './pill-image';
+import {NglPillRemove} from './pill-remove';
 import {provideNglConfig} from '../config/config';
 
 function getPill(root: HTMLElement): any {
-  return root.childNodes[1];
+  return root.firstElementChild;
 }
 
 function getIcon(pill: HTMLElement): any {
@@ -17,7 +18,7 @@ function getText(pill: HTMLElement): any {
 }
 
 function getRemoveButton(pill: HTMLElement): any {
-   return pill.childNodes[4];
+   return <HTMLButtonElement>pill.querySelector('button');
 }
 
 describe('NglPill', () => {
@@ -32,17 +33,36 @@ describe('NglPill', () => {
     expect(icon).toHaveCssClass('slds-pill__icon');
     expect(text.textContent.trim()).toBe('I am a pill!');
     expect(removeButton).toHaveCssClass('slds-pill__remove');
+    expect(removeButton).toBe(pill.childNodes[4]);
     done();
   }));
 
-  it('should not render the remove button when [removable] is falsy', testAsync(({fixture, done}) => {
-    fixture.componentInstance.removable = false;
+  it('should not render the remove button without `nglPillRemove`', testAsync(({fixture, done}) => {
     fixture.detectChanges();
     const pill = getPill(fixture.nativeElement);
-    const removeButton = getRemoveButton(pill);
-    expect(removeButton.childNodes.length).toBe(0);
+    expect(getRemoveButton(pill)).toBeNull();
     done();
-  }));
+  }, `<span nglPill></span>`));
+
+  it('should not render the remove button without `nglPillRemove` even with `nglPillRemovable`', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+    const pill = getPill(fixture.nativeElement);
+    expect(getRemoveButton(pill)).toBeNull();
+    done();
+  }, `<span nglPill nglPillRemovable="true"></span>`));
+
+  it('should toggle the remove button based on `nglPillRemovable`', testAsync(({fixture, done}) => {
+    const pill = getPill(fixture.nativeElement);
+
+    fixture.componentInstance.removable = false;
+    fixture.detectChanges();
+    expect(getRemoveButton(pill)).toBeNull();
+
+    fixture.componentInstance.removable = true;
+    fixture.detectChanges();
+    expect(getRemoveButton(pill)).not.toBeNull();
+    done();
+  }, `<span nglPill (nglPillRemove)="onRemove()" [nglPillRemovable]="removable"></span>`));
 
   it('should trigger the remove event whenever the remove button is clicked', testAsync(({fixture, done}) => {
     fixture.detectChanges();
@@ -69,9 +89,9 @@ function testAsync(fn: Function, html: string = null) {
 }
 
 @Component({
-  directives: [NglPill, NglPillImage],
+  directives: [NglPill, NglPillImage, NglPillRemove],
   template: `
-    <span nglPill (remove)="onRemove()" [removable]="removable">
+    <span nglPill (nglPillRemove)="onRemove()">
       <svg aria-hidden="true" class="slds-icon slds-icon-standard-account" nglPillImage>
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
       </svg>

@@ -1,7 +1,6 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Output, EventEmitter} from 'angular2/core';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIconButton} from '../buttons/icon';
-import {toBoolean} from '../util/util';
 
 @Component({
   selector: '[nglPill]',
@@ -12,15 +11,11 @@ import {toBoolean} from '../util/util';
   },
 })
 export class NglPill {
-  @Input('removable') set setRemovable(removable: any) {
-    this.removable = toBoolean(removable);
-  }
+  removable: boolean;
 
-  @Output('remove') private _remove = new EventEmitter(false);
-
-  private removable = true;
+  @Output() nglPillRemove = new EventEmitter(false);
 
   remove() {
-    this._remove.emit(null);
+    this.nglPillRemove.emit(null);
   }
 }
