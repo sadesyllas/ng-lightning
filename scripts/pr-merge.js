@@ -6,16 +6,14 @@ const q = require('q');
 const GITHUB_REPOSITORY = 'ng-lightning/ng-lightning';
 
 function requestConfig() {
-  var deferred = q.defer();
-
-  inquirer.prompt({
+  return inquirer.prompt({
     type: 'list',
     name: 'type',
     message: 'What kind of patch you want to apply?',
     choices: [ 'Pull Request', 'Commit'],
-  }, function(response) {
+  }).then(function(response) {
     if (response.type === 'Pull Request') {
-      inquirer.prompt([
+      return inquirer.prompt([
         {
           type: 'input',
           name: 'prno',
@@ -26,27 +24,26 @@ function requestConfig() {
           name: 'append',
           message: `Append "Closes #PR" to commit message?`
         },
-      ], function (answers) {
+      ]).then(function (answers) {
         answers.patchUrl = `http://patch-diff.githubusercontent.com/raw/${GITHUB_REPOSITORY}/pull/${answers.prno}.patch`;
-        deferred.resolve(answers);
+        return answers;
       });
     } else if (response.type === 'Commit') {
-      inquirer.prompt([
+      return inquirer.prompt([
         {
           type: 'input',
           name: 'hash',
           message: 'Which commit hash would you like to merge?'
         },
-      ], function (response) {
-        deferred.resolve({
+      ]).then(function (response) {
+        return {
           append: false,
           patchUrl: `http://github.com/${GITHUB_REPOSITORY}/commit/${response.hash}.patch`,
           prno: response.hash.substring(0, 7),
-        });
+        };
       });
     }
   });
-  return deferred.promise;
 }
 
 function createBranch(config) {
@@ -75,7 +72,7 @@ function applyPatch(config) {
       if (code !== 0) {
         console.log(`Couldn't apply patch from file: ${patchFile}`);
         return deferred.reject();
-      };
+      }
       console.log(`Patch applied!`);
       shell.rm(patchFile);
       deferred.resolve(config);

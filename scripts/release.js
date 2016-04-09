@@ -1,4 +1,3 @@
-const path = require('path');
 const q = require('q');
 const inquirer = require('inquirer');
 const replace = require('replace');
@@ -11,8 +10,7 @@ const packageFile = `${root}/package.json`;
 const changelogFile = `${root}/CHANGELOG.md`;
 
 function requestReleaseType(current) {
-  var deferred = q.defer();
-  inquirer.prompt([
+  return inquirer.prompt([
     {
       type: 'list',
       name: 'type',
@@ -20,10 +18,9 @@ function requestReleaseType(current) {
       choices: ['patch', 'minor', 'major'].map(type => `${type} (${semver.inc( current, type )})`),
       default: 0
     }
-  ], function( answers ) {
-      deferred.resolve( answers.type.match(/\(.*\)/g)[0].slice(1, -1) );
+  ]).then(function( answers ) {
+      return answers.type.match(/\(.*\)/g)[0].slice(1, -1);
   });
-  return deferred.promise;
 }
 
 function bump( version ) {
@@ -39,17 +36,17 @@ function bump( version ) {
 }
 
 function preVersion( version ) {
-  var deferred = q.defer();
-  inquirer.prompt([
+  return inquirer.prompt([
     { type: 'confirm', name: 'continue', message: `Continue with release of ${version}? (Last chance to edit CHANGELOG!)`, default: true },
-  ], function( answer ) {
+  ]).then(function( answer ) {
     if (answer.continue) {
-      deferred.resolve(version);
+      return version;
     } else {
-      git.reset('hard', () => deferred.reject(new Error()));
+      console.log('Resetting hard...');
+      git.reset('hard');
+      return q.reject();
     }
   });
-  return deferred.promise;
 }
 
 function runVersion( version ) {
@@ -93,20 +90,16 @@ function postVersion( version ) {
 }
 
 function push() {
-  var deferred = q.defer();
-  inquirer.prompt({
+  return inquirer.prompt({
     type: 'confirm',
     name: 'push',
     message: 'Push to origin?',
     default: true,
-  }, function(response) {
+  }).then(function(response) {
     if (response.push) {
-      git.push('origin', 'master', () => git.pushTags('origin', () => deferred.resolve(true)));
-      return;
+      git.push('origin', 'master', () => git.pushTags('origin'));
     }
-    deferred.resolve(false);
   });
-  return deferred.promise;
 }
 
 function changelog( version ) {
