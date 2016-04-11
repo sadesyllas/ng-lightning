@@ -24,7 +24,7 @@ export class NglPick {
     this.isMultiple = toBoolean(isMultiple);
   }
 
-  constructor(private element: ElementRef, private renderer: Renderer) { }
+  constructor(public element: ElementRef, private renderer: Renderer) {}
 
   ngAfterContentInit() {
     this.values.next(this.selected);

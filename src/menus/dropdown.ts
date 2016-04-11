@@ -1,5 +1,6 @@
-import {Directive, Input, Output, EventEmitter, HostBinding, HostListener, ElementRef, OnInit, OnDestroy, ContentChildren, QueryList, Renderer} from 'angular2/core';
+import {Directive, Input, Output, EventEmitter, HostBinding, HostListener, ElementRef, OnInit, OnDestroy, ContentChildren, QueryList, Renderer, Optional} from 'angular2/core';
 import {NglDropdownItem} from './dropdown-item';
+import {NglPick} from '../pick/pick';
 import {toBoolean} from '../util/util';
 
 const openEventEmitter = new EventEmitter<any>(false);
@@ -7,7 +8,9 @@ const openEventEmitter = new EventEmitter<any>(false);
 @Directive({
   selector: '[nglDropdown]',
   host: {
+    '[class.slds-dropdown-trigger]': 'true',
     '[class.slds-dropdown-trigger--click]': 'true',
+    '[class.slds-picklist]': 'isPicklist',
   },
 })
 export class NglDropdown implements OnInit, OnDestroy {
@@ -34,6 +37,7 @@ export class NglDropdown implements OnInit, OnDestroy {
     return this.isOpen;
   }
   triggerFocusEventEmitter = new EventEmitter(false);
+  isPicklist = false;
 
   private handleGlobalClickEvents = true;
   private _isOpen = false;
@@ -55,7 +59,9 @@ export class NglDropdown implements OnInit, OnDestroy {
     this.focusItem(direction);
   }
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer) {}
+  constructor(private elementRef: ElementRef, private renderer: Renderer, @Optional() private pick: NglPick) {
+    this.isPicklist = this.pick && this.pick.element === this.elementRef;
+  }
 
   ngOnInit() {
     this.openEventSubscription = openEventEmitter.subscribe(this.handleDropdownOpenEvent.bind(this));

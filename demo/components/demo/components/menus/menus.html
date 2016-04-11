@@ -1,5 +1,5 @@
 <div class="slds-text-heading--label slds-m-bottom--small">Dropdown</div>
-<span class="slds-dropdown-trigger" nglDropdown [(open)]="open">
+<span nglDropdown [(open)]="open">
   <button class="slds-button slds-button--neutral" nglDropdownTrigger>
     <span class="slds-truncate">Select an item</span>
     <ngl-icon icon="down" size="x-small"></ngl-icon>
@@ -23,7 +23,7 @@
 
 
 <div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Picklist Multi select</div>
-<span class="slds-picklist slds-dropdown-trigger" nglDropdown [(open)]="open2" [(nglPick)]="picks" nglPickMultiple>
+<span nglDropdown [(open)]="open2" [(nglPick)]="picks" nglPickMultiple>
   <button class="slds-button slds-button--neutral" nglDropdownTrigger>
     <span class="slds-truncate">{{picks.length ? picks.length + ' options selected' : 'Select an Option'}}</span>
     <ngl-icon icon="down" size="x-small"></ngl-icon>

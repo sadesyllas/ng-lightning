@@ -2,6 +2,7 @@ import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/
 import {Component} from 'angular2/core';
 import {NglDropdown} from './dropdown';
 import {NglDropdownTrigger} from './dropdown-trigger';
+import {NglPick} from '../pick/pick';
 import {dispatchKeyEvent} from '../../test/helpers';
 
 function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {
@@ -9,6 +10,13 @@ function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {
 }
 
 describe('`nglDropdownTrigger`', () => {
+
+  it('should have the attribute `aria-haspopup` set to `true`', testAsync(({fixture, done}) => {
+    const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
+    fixture.detectChanges();
+    expect(dropdownTrigger.getAttribute('aria-haspopup')).toBe('true');
+    done();
+  }));
 
   it('should toggle the dropdown when it is clicked', testAsync(({fixture, done}) => {
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
@@ -42,6 +50,13 @@ describe('`nglDropdownTrigger`', () => {
     fixture.detectChanges();
   }));
 
+  it('should have the `slds-picklist__label` class when belonging to a picklist', testAsync(({fixture, done}) => {
+    const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
+    fixture.detectChanges();
+    expect(dropdownTrigger).toHaveCssClass('slds-picklist__label');
+    done();
+  }, '<div nglDropdown nglPick><button type="button" nglDropdownTrigger></button></div>'));
+
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
@@ -57,7 +72,7 @@ function testAsync(fn: Function, html: string = null) {
 }
 
 @Component({
-  directives: [NglDropdown, NglDropdownTrigger],
+  directives: [NglDropdown, NglDropdownTrigger, NglPick],
   template: ['<div nglDropdown [open]="open" (openChange)="setOpen($event)">',
     '<button type="button" nglDropdownTrigger></button>',
     '</div>',

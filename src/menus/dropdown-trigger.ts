@@ -3,6 +3,10 @@ import {NglDropdown} from './dropdown';
 
 @Directive({
   selector: '[nglDropdownTrigger]',
+  host: {
+    'aria-haspopup': 'true',
+    '[class.slds-picklist__label]': 'dropdown.isPicklist',
+  },
 })
 export class NglDropdownTrigger implements OnDestroy {
   private parentFocusEventSubscription: any;
