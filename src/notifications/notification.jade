@@ -1,0 +1,5 @@
+span.slds-assistive-text {{assistiveText || severity || 'Info'}}
+button.slds-notify__close(*ngIf="showClose", type="button", nglButtonIcon="inverse", (click)="close('button', $event)")
+  ngl-icon(icon="close")
+  span.slds-assistive-text {{closeAssistiveText || 'Close'}}
+ng-content

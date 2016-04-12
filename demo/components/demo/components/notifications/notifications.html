@@ -1,0 +1,16 @@
+<div class="slds-notify_container">
+  <ngl-notification *ngIf="showAlert" type="alert" severity="error" (nglNotificationClose)="showAlert = false;" class="slds-theme--alert-texture">
+    <h2>This is an alert!</h2>
+  </ngl-notification>
+</div>
+
+<ngl-notification type="toast">
+  <div class="slds-grid">
+    <ngl-icon category="action" icon="info" size="small" class="slds-col slds-m-right--small slds-no-flex"></ngl-icon>
+    <div class="slds-col slds-align-middle">
+      <h2 class="slds-text-heading--small">This is a toast with an icon next to its message.</h2>
+    </div>
+  </div>
+</ngl-notification>
+
+<button type="button" nglButton="destructive" class="slds-m-top--large" (click)="showAlert = true;">Show alert</button>

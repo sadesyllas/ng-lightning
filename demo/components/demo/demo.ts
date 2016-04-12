@@ -10,6 +10,7 @@ import {DemoAvatars} from './components/images/images';
 import {DemoLookups} from './components/lookups/lookups';
 import {DemoMenus} from './components/menus/menus';
 import {DemoModals} from './components/modals/modals';
+import {DemoNotifications} from './components/notifications/notifications';
 import {DemoPaginations} from './components/paginations/paginations';
 import {DemoPick} from './components/pick/pick';
 import {DemoPills} from './components/pills/pills';
@@ -40,6 +41,7 @@ const components: any[] = [
   { key: 'lookups', component: DemoLookups },
   { key: 'menus', component: DemoMenus },
   { key: 'modals', component: DemoModals },
+  { key: 'notifications', component: DemoNotifications },
   { key: 'paginations', component: DemoPaginations },
   { key: 'pick', component: DemoPick },
   { key: 'pills', component: DemoPills },
