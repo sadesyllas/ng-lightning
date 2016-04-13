@@ -7,7 +7,6 @@ import {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 import {NglButton} from './buttons/button';
 import {NglButtonState} from './buttons/button-state';
 import {NglButtonIcon} from './buttons/button-icon';
-import {NglIconButton} from './buttons/icon';
 import {NglIcon} from './icons/icon';
 import {NglLookup} from './lookups/lookup';
 import {NglDropdownTrigger} from './menus/dropdown-trigger';
@@ -35,7 +34,6 @@ export {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 export {NglButton} from './buttons/button';
 export {NglButtonState} from './buttons/button-state';
 export {NglButtonIcon} from './buttons/button-icon';
-export {NglIconButton} from './buttons/icon';
 export {NglIcon} from './icons/icon';
 export {NglLookup} from './lookups/lookup';
 export {NglDropdownTrigger} from './menus/dropdown-trigger';
@@ -60,7 +58,7 @@ export const NGL_DIRECTIVES = [
   NglAvatar,
   NglBadge,
   NglBreadcrumbs, NglBreadcrumb,
-  NglButton, NglButtonState, NglButtonIcon, NglIconButton,
+  NglButton, NglButtonState, NglButtonIcon,
   NglIcon,
   NglLookup,
   NglDropdownTrigger, NglDropdown, NglDropdownItem,

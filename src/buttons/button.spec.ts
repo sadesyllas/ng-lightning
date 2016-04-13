@@ -1,6 +1,7 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglButton} from './button';
+import {NglIcon} from '../icons/icon';
 
 function getButtonElement(element: Element): HTMLButtonElement {
   return <HTMLButtonElement>element.querySelector('button');
@@ -8,7 +9,7 @@ function getButtonElement(element: Element): HTMLButtonElement {
 
 describe('`nglButton`', () => {
 
-  it('should render the default button', testAsync(`<button nglButton>Go</button>`, ({fixture, done}) => {
+  it('should render the default button', testAsync(({fixture, done}) => {
     fixture.detectChanges();
 
     const button = getButtonElement(fixture.nativeElement);
@@ -16,7 +17,17 @@ describe('`nglButton`', () => {
     done();
   }));
 
-  it('should render dynamic style', testAsync(`<button [nglButton]="style">Go</button>`, ({fixture, done}) => {
+  it('should render icon correctly', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+
+    const button = getButtonElement(fixture.nativeElement);
+    const icon = button.querySelector('svg');
+    expect(icon).toHaveCssClass('slds-button__icon');
+    expect(icon).toHaveCssClass('slds-button__icon--left');
+    done();
+  }, `<button [nglButton]="style"><ngl-icon icon="download" align="left"></ngl-icon> Download</button>`));
+
+  it('should render dynamic style', testAsync(({fixture, done}) => {
     const { componentInstance } = fixture;
     fixture.detectChanges();
 
@@ -41,17 +52,20 @@ describe('`nglButton`', () => {
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(html: string, fn: Function) {
+function testAsync(fn: Function, html: string = null) {
   return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
     return new Promise((done: Function) => {
-      tcb.overrideTemplate(TestComponent, html).createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
+      if (html) {
+        tcb = tcb.overrideTemplate(TestComponent, html);
+      }
+      tcb.createAsync(TestComponent).then(fixture => fn({ fixture, done})).catch(err => console.error(err.stack || err));
     });
   });
 }
 
 @Component({
-  directives: [NglButton],
-  template: '',
+  directives: [NglButton, NglIcon],
+  template: `<button [nglButton]="style">Go <</button>`,
 })
 export class TestComponent {
   style: string = 'brand';

@@ -1,11 +1,11 @@
 import {Component, Output, EventEmitter} from 'angular2/core';
 import {NglButtonIcon} from '../buttons/button-icon';
-import {NglIconButton} from '../buttons/icon';
+import {NglIcon} from '../icons/icon';
 
 @Component({
   selector: '[nglPill]',
   templateUrl: './pill.ng.jade',
-  directives: [NglButtonIcon, NglIconButton],
+  directives: [NglButtonIcon, NglIcon],
   host: {
     '[class.slds-pill]': 'true',
   },

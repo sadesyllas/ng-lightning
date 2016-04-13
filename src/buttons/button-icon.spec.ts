@@ -1,6 +1,7 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglButtonIcon} from './button-icon';
+import {NglIcon} from '../icons/icon';
 
 function getButtonElement(element: Element): HTMLButtonElement {
   return <HTMLButtonElement>element.querySelector('button');
@@ -30,6 +31,14 @@ describe('`nglButtonIcon`', () => {
     fixture.detectChanges();
     expect(button).toHaveCssClass('slds-button--icon-border');
     expect(button).not.toHaveCssClass('slds-button--icon-container');
+    done();
+  }));
+
+  it('should render the appropriate icon', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+    const button = getButtonElement(fixture.nativeElement);
+    const icon = button.querySelector('svg');
+    expect(icon).toHaveCssClass('slds-button__icon');
     done();
   }));
 
@@ -75,8 +84,8 @@ function testAsync(fn: Function, html: string = null ) {
 }
 
 @Component({
-  directives: [NglButtonIcon],
-  template: `<button [nglButtonIcon]="style"></button>`,
+  directives: [NglButtonIcon, NglIcon],
+  template: `<button [nglButtonIcon]="style"><ngl-icon icon="add"></ngl-icon></button>`,
 })
 export class TestComponent {
   style: string;

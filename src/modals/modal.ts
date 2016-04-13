@@ -1,11 +1,11 @@
 import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter} from 'angular2/core';
 import {toBoolean, uniqueId} from '../util/util';
 import {NglButtonIcon} from '../buttons/button-icon';
-import {NglIconButton} from '../buttons/icon';
+import {NglIcon} from '../icons/icon';
 
 @Component({
   selector: 'ngl-modal',
-  directives: [NglButtonIcon, NglIconButton],
+  directives: [NglButtonIcon, NglIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './modal.jade',
 })

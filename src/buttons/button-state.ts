@@ -3,6 +3,9 @@ import {toBoolean} from '../util/util';
 
 @Directive({
   selector: '[nglButtonState]',
+  host: {
+    'aria-live': 'assertive',
+  },
 })
 export class NglButtonState {
 

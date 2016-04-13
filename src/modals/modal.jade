@@ -4,7 +4,7 @@ div(*ngIf="open", (click)="$event.stopPropagation()", tabindex="0", (keyup.esc)=
     .slds-modal__container
       .slds-modal__header
         button.slds-modal__close(type="button", nglButtonIcon="inverse", (click)="close()")
-          ngl-icon-button(icon="close", size="large", alt="Close")
+          ngl-icon(icon="close", size="large", alt="Close")
         h2.slds-text-heading--medium([id]="headingId") {{header}}
         ng-content(select="[tagline]")
       .slds-modal__content.slds-p-around--medium

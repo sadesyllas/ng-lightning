@@ -1,12 +1,12 @@
 import {Component, Input, Output, EventEmitter, ElementRef, Renderer, HostBinding, ChangeDetectionStrategy} from 'angular2/core';
 import {NglButtonIcon} from '../buttons/button-icon';
-import {NglIconButton} from '../buttons/icon';
+import {NglIcon} from '../icons/icon';
 
 @Component({
   selector: 'ngl-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './section.jade',
-  directives: [NglButtonIcon, NglIconButton],
+  directives: [NglButtonIcon, NglIcon],
 })
 export class NglSection {
 
