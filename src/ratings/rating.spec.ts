@@ -1,7 +1,6 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglRating} from './rating';
-import {provideNglConfig} from '../config/config';
 import {dispatchKeyEvent} from '../../test/helpers';
 
 function getStars(element: HTMLElement): HTMLElement[] {
@@ -186,7 +185,6 @@ function testAsync(fn: Function, html: string = null) {
 @Component({
   directives: [NglRating],
   template: `<ngl-rating [rate]="value" (rateChange)="change($event)" [isReadonly]="readonly"></ngl-rating>`,
-  providers: [provideNglConfig()],
 })
 export class TestComponent {
   value = 2;

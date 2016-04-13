@@ -2,6 +2,12 @@
  * Testing helpers
  */
 
+import {beforeEachProviders} from 'angular2/testing';
+import {provideNglConfig} from '../src/config/config';
+
+// Default configuration for every TestComponent
+beforeEachProviders(() => [provideNglConfig()]);
+
 export function dispatchKeyEvent(target: HTMLElement, key: string) {
   let event: KeyboardEvent;
   if (navigator.userAgent.search('Firefox') > -1) {

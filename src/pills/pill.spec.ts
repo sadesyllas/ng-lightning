@@ -3,7 +3,6 @@ import {Component} from 'angular2/core';
 import {NglPill} from './pill';
 import {NglPillImage} from './pill-image';
 import {NglPillRemove} from './pill-remove';
-import {provideNglConfig} from '../config/config';
 
 function getPill(root: HTMLElement): any {
   return root.firstElementChild;
@@ -98,7 +97,6 @@ function testAsync(fn: Function, html: string = null) {
       I am a pill!
     </span>
   `,
-  providers: [provideNglConfig()],
 })
 export class TestComponent {
   removable = true;

@@ -23,7 +23,7 @@ describe('Icon Component', () => {
 
     expect(icon).toHaveCssClass('slds-icon');
     expect(icon).toHaveCssClass('slds-icon-text-default');
-    expect(use.getAttribute('xlink:href')).toContain('#warning');
+    expect(use.getAttribute('xlink:href')).toBe('/mypath/symbols.svg#warning');
     expect(getAssistiveText(nativeElement)).toEqual('Help!');
     done();
   }));
@@ -103,7 +103,7 @@ function testAsync(html: string, fn: Function) {
 @Component({
   directives: [NglIcon],
   template: '',
-  providers: [provideNglConfig()],
+  providers: [provideNglConfig({svgPath: '/mypath'})],
 })
 export class TestComponent {
   size = 'small';

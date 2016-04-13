@@ -1,7 +1,6 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglSection} from './section';
-import {provideNglConfig} from '../config/config';
 
 function getSectionEl(element: HTMLElement) {
   return element.firstElementChild;
@@ -70,7 +69,6 @@ function testAsync(fn: Function, html: string = null) {
 @Component({
   directives: [NglSection],
   template: `<ngl-section [(open)]="open" title="Section title">Body</ngl-section>`,
-  providers: [provideNglConfig()],
 })
 export class TestComponent {
   open = false;
