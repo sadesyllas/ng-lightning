@@ -34,6 +34,6 @@ export class NglModal {
   }
 
   focusFirst() {
-    this.element.nativeElement.children[0].focus();
+    this.renderer.invokeElementMethod(this.element.nativeElement.children[0], 'focus', []);
   }
 };

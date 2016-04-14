@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener} from 'angular2/core';
+import {Directive, ElementRef, Renderer, HostListener} from 'angular2/core';
 
 @Directive({
   selector: '[nglDropdownItem]',
@@ -16,13 +16,13 @@ export class NglDropdownItem {
     this.isFocused = false;
   }
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private element: ElementRef, private renderer: Renderer) {}
 
   hasFocus() {
     return this.isFocused;
   }
 
   focus() {
-    this.elementRef.nativeElement.focus();
+    this.renderer.invokeElementMethod(this.element.nativeElement, 'focus', []);
   }
 }

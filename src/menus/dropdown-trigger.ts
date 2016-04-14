@@ -1,4 +1,4 @@
-import {Directive, HostListener, ElementRef, OnDestroy} from 'angular2/core';
+import {Directive, HostListener, ElementRef, Renderer, OnDestroy} from 'angular2/core';
 import {NglDropdown} from './dropdown';
 
 @Directive({
@@ -11,7 +11,7 @@ import {NglDropdown} from './dropdown';
 export class NglDropdownTrigger implements OnDestroy {
   private parentFocusEventSubscription: any;
 
-  constructor(private elementRef: ElementRef, private dropdown: NglDropdown) {
+  constructor(private element: ElementRef, private renderer: Renderer, private dropdown: NglDropdown) {
     this.parentFocusEventSubscription = this.dropdown.triggerFocusEventEmitter.subscribe(this.focus.bind(this));
   }
 
@@ -29,6 +29,6 @@ export class NglDropdownTrigger implements OnDestroy {
   }
 
   focus() {
-    this.elementRef.nativeElement.focus();
+    this.renderer.invokeElementMethod(this.element.nativeElement, 'focus', []);
   }
 }

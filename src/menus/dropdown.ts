@@ -59,8 +59,8 @@ export class NglDropdown implements OnInit, OnDestroy {
     this.focusItem(direction);
   }
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer, @Optional() private pick: NglPick) {
-    this.isPicklist = this.pick && this.pick.element === this.elementRef;
+  constructor(public element: ElementRef, public renderer: Renderer, @Optional() private pick: NglPick) {
+    this.isPicklist = this.pick && this.pick.element === this.element;
   }
 
   ngOnInit() {
@@ -87,7 +87,7 @@ export class NglDropdown implements OnInit, OnDestroy {
 
   handleGlobalClickEvent($event: Event) {
     if (!this.handlePageEvents || !this.handleGlobalClickEvents ||
-        $event.target === this.elementRef.nativeElement || this.elementRef.nativeElement.contains($event.target)) {
+        $event.target === this.element.nativeElement || this.element.nativeElement.contains($event.target)) {
       return;
     }
     this.toggle(false);
@@ -115,7 +115,7 @@ export class NglDropdown implements OnInit, OnDestroy {
     if (activeElementIndex === items.length || activeElementIndex < 0) {
       return;
     }
-    items[activeElementIndex].focus();
+    this.renderer.invokeElementMethod(items[activeElementIndex], 'focus', []);
   }
 
   private handleDropdownOpenEvent(dropdown: NglDropdown) {
