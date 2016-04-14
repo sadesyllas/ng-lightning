@@ -1,5 +1,5 @@
-import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Inject, Attribute, Optional} from 'angular2/core';
-import {NGL_CONFIG, IConfig} from '../config/config';
+import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Attribute, Optional} from 'angular2/core';
+import {NglConfig} from '../config/config';
 import {toBoolean} from '../util/util';
 import {NglButton} from '../buttons/button';
 import {NglButtonIcon} from '../buttons/button-icon';
@@ -19,7 +19,7 @@ export class NglIcon {
 
   private button: boolean;
 
-  constructor(@Inject(NGL_CONFIG) public config: IConfig, element: ElementRef, renderer: Renderer,
+  constructor(private config: NglConfig, element: ElementRef, renderer: Renderer,
               @Attribute('state') private state: 'not-selected' | 'selected' | 'selected-focus',
               @Attribute('button') button: 'not-selected' | 'selected' | 'selected-focus',
               @Optional() private nglButton: NglButton, @Optional() private nglButtonIcon: NglButtonIcon ) {
