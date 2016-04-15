@@ -91,9 +91,7 @@ function testAsync(fn: Function, html: string = null) {
   directives: [NglPill, NglPillImage, NglPillRemove],
   template: `
     <span nglPill (nglPillRemove)="onRemove()">
-      <svg aria-hidden="true" class="slds-icon slds-icon-standard-account" nglPillImage>
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
-      </svg>
+      <svg nglPillImage></svg>
       I am a pill!
     </span>
   `,

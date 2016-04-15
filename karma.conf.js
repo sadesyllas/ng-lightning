@@ -42,7 +42,11 @@ module.exports = function(config) {
     ],
 
     proxies: {
-      '/assets/icons/utility-sprite/svg/symbols.svg': '/base/test/fixtures/fake.svg',
+      // Avoid 404 warnings for images during testing
+      '/assets/icons/utility-sprite/svg/symbols.svg': '/base/test/fixtures/fake',
+      '/mypath/symbols.svg': '/base/test/fixtures/fake',
+      '/image1.jpg': '/base/test/fixtures/fake',
+
       '/tether': '/base/node_modules/tether/dist/js/tether.min.js'
     },
 
