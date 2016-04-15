@@ -23,7 +23,7 @@ describe('Icon Component', () => {
 
     expect(icon).toHaveCssClass('slds-icon');
     expect(icon).toHaveCssClass('slds-icon-text-default');
-    expect(use.getAttribute('xlink:href')).toBe('/mypath/symbols.svg#warning');
+    expect(use.getAttribute('xlink:href')).toBe('/mypath/utility-sprite/svg/symbols.svg#warning');
     expect(getAssistiveText(nativeElement)).toEqual('Help!');
     done();
   }));

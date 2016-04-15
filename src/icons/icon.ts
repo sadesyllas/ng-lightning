@@ -30,7 +30,11 @@ export class NglIcon {
     }
   }
 
-  protected svgClasses() {
+  iconPath() {
+    return `${this.config.svgPath}/utility-sprite/svg/symbols.svg#${this.icon}`;
+  }
+
+  svgClasses() {
     const classes = Array.isArray(this.svgClass) ? <string[]>this.svgClass : [this.svgClass || ''];
 
     const prefix = this.button ? 'slds-button__icon' : 'slds-icon';

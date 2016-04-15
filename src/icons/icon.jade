@@ -1,4 +1,4 @@
 svg(aria-hidden="true", [ngClass]="svgClasses()")
-  use([attr.xlink:href]="config.svgPath + '/symbols.svg#' + icon")
+  use([attr.xlink:href]="iconPath()", xmlns:xlink="http://www.w3.org/1999/xlink")
 span.slds-assistive-text(*ngIf="alt") {{alt}}
 ng-content

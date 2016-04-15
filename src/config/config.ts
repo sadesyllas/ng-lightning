@@ -1,7 +1,7 @@
 import {provide, Provider} from 'angular2/core';
 
 export class NglConfig {
-  svgPath = 'assets/icons/utility-sprite/svg';
+  svgPath = 'assets/icons';
 }
 
 const defaultConfig = new NglConfig();
