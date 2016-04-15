@@ -39,10 +39,10 @@ export interface IReplaceClass {
   renderer: Renderer;
   element: ElementRef;
 };
-export function replaceClass(instance: IReplaceClass, oldClass: string, newClass: string = null) {
-  if (oldClass === newClass) return;
-
-  instance.renderer.setElementClass(instance.element.nativeElement, oldClass, false);
+export function replaceClass(instance: IReplaceClass, oldClass: string, newClass?: string) {
+  if (oldClass && oldClass !== newClass) {
+    instance.renderer.setElementClass(instance.element.nativeElement, oldClass, false);
+  }
   if (newClass) {
     instance.renderer.setElementClass(instance.element.nativeElement, newClass, true);
   }

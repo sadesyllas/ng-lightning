@@ -44,4 +44,29 @@ describe('utility', () => {
     expect(util.uniqueId()).toBe(`uid_${+count + 3}`);
   });
 
+  describe('replaceClass', () => {
+    let instance: any, { replaceClass } = util;
+
+    beforeEach(() => {
+      instance = {
+        renderer: { setElementClass: jasmine.createSpy('setElementClass') },
+        element: { nativeElement: null },
+      };
+    });
+
+    it('will replace classes if supplied', () => {
+      replaceClass(instance, null, null);
+      expect(instance.renderer.setElementClass).not.toHaveBeenCalled();
+
+      replaceClass(instance, 'c1', 'c2');
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'c1', false);
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'c2', true);
+    });
+
+    it('will not remove class if not needed', () => {
+      replaceClass(instance, 'c3', 'c3');
+      expect(instance.renderer.setElementClass).not.toHaveBeenCalledWith(null, 'c3', false);
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'c3', true);
+    });
+  });
 });
