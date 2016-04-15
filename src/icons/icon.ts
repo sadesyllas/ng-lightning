@@ -1,8 +1,10 @@
 import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Attribute, Optional} from 'angular2/core';
 import {NglConfig} from '../config/config';
-import {toBoolean} from '../util/util';
+import {toBoolean, replaceClass} from '../util/util';
 import {NglButton} from '../buttons/button';
 import {NglButtonIcon} from '../buttons/button-icon';
+
+export type NglIconCategory = 'action' | 'custom' | 'doctype' | 'standard' | 'utility';
 
 @Component({
   selector: 'ngl-icon',
@@ -11,15 +13,20 @@ import {NglButtonIcon} from '../buttons/button-icon';
 })
 export class NglIcon {
   @Input() icon: string;
-  @Input() type: 'default' | 'warning' | 'error' = 'default';
+  @Input('category') set setCategory(category: NglIconCategory) {
+    this.category = category || 'utility';
+  }
+  @Input() type: 'default' | 'warning' | 'error';
   @Input() align: 'left' | 'right';
   @Input() size: 'x-small' | 'small' | 'large';
   @Input() alt: string;
   @Input() svgClass: string | string[];
 
+  private category: NglIconCategory = 'utility';
   private button: boolean;
+  private _containerClass: string[];
 
-  constructor(private config: NglConfig, element: ElementRef, renderer: Renderer,
+  constructor(private config: NglConfig, public element: ElementRef, public renderer: Renderer,
               @Attribute('state') private state: 'not-selected' | 'selected' | 'selected-focus',
               @Attribute('button') button: 'not-selected' | 'selected' | 'selected-focus',
               @Optional() private nglButton: NglButton, @Optional() private nglButtonIcon: NglButtonIcon ) {
@@ -31,7 +38,14 @@ export class NglIcon {
   }
 
   iconPath() {
-    return `${this.config.svgPath}/utility-sprite/svg/symbols.svg#${this.icon}`;
+    const icon = this.category === 'custom' ? `custom${this.icon}` : this.icon;
+    return `${this.config.svgPath}/${this.category}-sprite/svg/symbols.svg#${icon}`;
+  }
+
+  ngOnChanges() {
+    const { containerClass } = this;
+    replaceClass(this, this._containerClass, containerClass);
+    this._containerClass = containerClass;
   }
 
   svgClasses() {
@@ -44,8 +58,8 @@ export class NglIcon {
       classes.push(`${prefix}--${this.size}`);
     }
 
-    if (!this.button && this.type) {
-      classes.push(`slds-icon-text-${this.type}`);
+    if (this.type || (this.category === 'utility' && !this.button)) {
+      classes.push(`slds-icon-text-${this.type || 'default'}`);
     }
 
     if (this.align || this.state) {
@@ -53,5 +67,11 @@ export class NglIcon {
     }
 
     return classes;
+  }
+
+  private get containerClass() {
+    return /^(action|custom|standard)$/.test(this.category)
+            ? ['slds-icon_container', `slds-icon-${this.category}-${this.icon.replace('_', '-')}`]
+            : null;
   }
 };
