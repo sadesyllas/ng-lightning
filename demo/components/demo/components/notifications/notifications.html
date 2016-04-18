@@ -1,6 +1,6 @@
 <div class="slds-notify_container">
-  <ngl-notification *ngIf="showAlert" type="alert" severity="error" (nglNotificationClose)="showAlert = false;" class="slds-theme--alert-texture">
-    <h2>This is an alert!</h2>
+  <ngl-notification *ngIf="showAlert" type="alert" severity="error" (nglNotificationClose)="onClose($event)" timeout="5000" class="slds-theme--alert-texture">
+    <h2>This is an alert! (I will close automatically after 5 seconds if you don't click on the close button)</h2>
   </ngl-notification>
 </div>
 
@@ -13,4 +13,4 @@
   </div>
 </ngl-notification>
 
-<button type="button" nglButton="destructive" class="slds-m-top--large" (click)="showAlert = true;">Show alert</button>
+<button type="button" [disabled]="showAlert" nglButton="destructive" class="slds-m-top--large" (click)="show()">Show alert</button>

@@ -2,7 +2,7 @@ import {Component, Input, Output, EventEmitter, OnChanges, ElementRef, Renderer,
 import {NglNotificationClose} from './notification-close';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';
-import {replaceClass} from '../util/util';
+import {replaceClass, isInt} from '../util/util';
 
 @Component({
   selector: 'ngl-notification',
@@ -27,11 +27,18 @@ export class NglNotification implements OnChanges {
   }
   @Input() assistiveText: string;
   @Input() closeAssistiveText: string;
+  @Input() set timeout(timeout: number) {
+    this.clearTimeout();
+    if (isInt(timeout) && timeout >= 0) {
+      this.currentTimeout = setTimeout(() => this.close('timeout'), timeout);
+    }
+  }
 
   @Output('nglNotificationClose') closeEventEmitter = new EventEmitter<string>(false);
 
   private severity: string;
   private showClose = false;
+  private currentTimeout: any = null;
 
   constructor(public element: ElementRef, public renderer: Renderer, @Optional() notificationClose: NglNotificationClose) {
     this.showClose = !!notificationClose;
@@ -50,10 +57,18 @@ export class NglNotification implements OnChanges {
   }
 
   close(reason?: string, $event?: Event) {
+    this.clearTimeout();
     if ($event) {
       $event.preventDefault();
       $event.stopPropagation();
     }
     this.closeEventEmitter.emit(reason);
+  }
+
+  private clearTimeout() {
+    if (this.currentTimeout !== null) {
+      clearTimeout(this.currentTimeout);
+      this.currentTimeout = null;
+    }
   }
 }

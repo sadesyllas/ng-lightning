@@ -17,3 +17,8 @@ in markup. For *fixed-to-the-top* notifications just place the
 
 You can bind to `(nglNotificationClose)` to be apprised of when the close
 button has been clicked.
+
+You can set the `[timeout]` attribute to a positive integer (in milliseconds,
+including 0) to set a timeout for automatically closing the notification. If the
+binding changes, any previous timeout is canceled and if the new binding is
+valid as described above, a new timeout is set to that number.

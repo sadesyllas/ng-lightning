@@ -83,6 +83,58 @@ describe('`nglNotification`', () => {
     externalCloseButton.click();
   }));
 
+  it('should emit a close event when the specified timeout has passed', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+
+    spyOn(fixture.componentInstance, 'onClose').and.callFake((reason: string) => {
+      expect(reason).toBe('timeout');
+      done();
+    });
+
+    fixture.componentInstance.timeout = 500;
+    fixture.detectChanges();
+  }));
+
+  it('should set the timeout anew when the binding changes', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+
+    spyOn(fixture.componentInstance, 'onClose');
+
+    fixture.componentInstance.timeout = 500;
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      fixture.componentInstance.timeout = null;
+      fixture.detectChanges();
+    }, 300);
+
+    setTimeout(() => {
+      expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
+      done();
+    }, 600);
+  }));
+
+  it('should cancel the active timeout after the close button has been clicked', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+
+    const closeButton = getCloseButton(fixture);
+
+    spyOn(fixture.componentInstance, 'onClose');
+
+    fixture.componentInstance.timeout = 500;
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      closeButton.click();
+    }, 300);
+
+    setTimeout(() => {
+      expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
+      expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
+      done();
+    }, 600);
+  }));
+
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
@@ -102,6 +154,7 @@ function testAsync(fn: Function, html: string = null) {
   template: `
     <ngl-notification [type]="type" [severity]="severity" (nglNotificationClose)="onClose($event)"
       [assistiveText]="assistiveText" [closeAssistiveText]="closeAssistiveText"
+      [timeout]="timeout"
       #notification="nglNotification">
       <h2>Base System Alert</h2>
     </ngl-notification>
@@ -114,5 +167,6 @@ export class TestComponent {
   severity = 'error';
   assistiveText: '';
   closeAssistiveText: '';
+  timeout: any = null;
   onClose($event: Event) {}
 }
