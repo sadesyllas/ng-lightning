@@ -2,14 +2,10 @@
 
 <a href="javascript:void(0)" nglPill>Default</a>
 <a href="javascript:void(0)" nglPill>
-  <svg aria-hidden="true" class="slds-icon slds-icon-standard-account" nglPillImage>
-    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/standard-sprite/svg/symbols.svg#account"></use>
-  </svg> With icon
+  <ngl-icon icon="add" nglPillImage></ngl-icon> With icon
 </a>
 <a href="javascript:void(0)" nglPill>
-  <span class="slds-avatar slds-avatar--circle" nglPillImage>
-    <img src="assets/images/avatar2.jpg" alt="">
-  </span>  With portrait
+  <ngl-avatar nglPillImage type="circle" src="assets/images/avatar2.jpg"></ngl-avatar> With portrait
 </a>
 <span nglPill removable="false">Unlinked</span>
 
@@ -19,7 +15,5 @@
 <div class="slds-clearfix slds-p-vertical--xx-small"></div>
 
 <a href="javascript:void(0)" *ngFor="#pill of pills" nglPill (nglPillRemove)="remove(pill)">
-  <svg aria-hidden="true" class="slds-icon slds-icon-standard-account" nglPillImage>
-    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/standard-sprite/svg/symbols.svg#account"></use>
-  </svg> {{pill}}
+  <ngl-icon category="standard" icon="account" nglPillImage></ngl-icon> {{pill}}
 </a>

@@ -1,6 +1,7 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder, FunctionWithParamTokens} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglAvatar} from './avatar';
+import {NglPillImage} from '../pills/pill-image';
 
 function getAvatarElement(element: Element): HTMLElement {
   return <HTMLElement>element.firstElementChild;
@@ -70,6 +71,17 @@ describe('Avatar Component', () => {
       expect(image.getAttribute('alt')).toEqual('assistive text');
     });
   }));
+
+  it('should be able to render as a pill image', testAsync((tcb: TestComponentBuilder) => {
+    return createFixture(tcb, `<ngl-avatar src="image1.jpg" nglPillImage></ngl-avatar>`).then((fixture) => {
+      fixture.detectChanges();
+
+      const avatar = getAvatarElement(fixture.nativeElement);
+      expect(avatar).toHaveCssClass('slds-pill__icon');
+      expect(avatar).not.toHaveCssClass('slds-avatar--medium');
+    });
+  }));
+
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
@@ -82,7 +94,7 @@ function createFixture(tcb: TestComponentBuilder, html: string) {
 }
 
 @Component({
-  directives: [NglAvatar],
+  directives: [NglAvatar, NglPillImage],
   template: ``,
 })
 export class TestComponent {

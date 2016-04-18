@@ -1,5 +1,6 @@
-import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer, Optional} from 'angular2/core';
 import {replaceClass} from '../util/util';
+import {NglPillImage} from '../pills/pill-image';
 
 export type AvatarSize = 'x-small' | 'small' | 'medium' | 'large';
 export type AvatarType = 'rectangle' | 'circle';
@@ -26,7 +27,7 @@ export class NglAvatar {
   private _type: AvatarType;
   private _size: AvatarSize;
 
-  constructor(public element: ElementRef, public renderer: Renderer) {
+  constructor(public element: ElementRef, public renderer: Renderer, @Optional() private nglPillImage: NglPillImage) {
     renderer.setElementClass(element.nativeElement, 'slds-avatar', true);
   }
 
@@ -35,7 +36,7 @@ export class NglAvatar {
       this.renderer.setElementClass(this.element.nativeElement, 'slds-avatar--rectangle', true);
     }
 
-    if (!this._size) {
+    if (!this._size && !this.nglPillImage) {
       this.renderer.setElementClass(this.element.nativeElement, 'slds-avatar--medium', true);
     }
   }

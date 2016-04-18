@@ -1,6 +1,7 @@
 import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglIcon} from './icon';
+import {NglPillImage} from '../pills/pill-image';
 import {provideNglConfig} from '../config/config';
 
 
@@ -140,6 +141,17 @@ describe('Icon Component', () => {
     done();
   }));
 
+  it('should be able to render as a pill image', testAsync(`<ngl-icon icon="add" category="standard" nglPillImage></ngl-icon>`, ({fixture, done}) => {
+    fixture.detectChanges();
+
+    const { host, icon } = getElements(fixture.nativeElement);
+    expect(host).not.toHaveCssClass('slds-pill__icon');
+    expect(icon).toHaveCssClass('slds-pill__icon');
+
+    expect(host).not.toHaveCssClass('slds-icon-standard-add');
+    expect(icon).toHaveCssClass('slds-icon-standard-add');
+    done();
+  }));
 });
 
 // Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
@@ -152,7 +164,7 @@ function testAsync(html: string, fn: Function) {
 }
 
 @Component({
-  directives: [NglIcon],
+  directives: [NglIcon, NglPillImage],
   template: '',
   providers: [provideNglConfig({svgPath: '/mypath'})],
 })
