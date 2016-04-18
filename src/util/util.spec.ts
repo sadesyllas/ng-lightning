@@ -68,5 +68,17 @@ describe('utility', () => {
       expect(instance.renderer.setElementClass).not.toHaveBeenCalledWith(null, 'c3', false);
       expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'c3', true);
     });
+
+    it('will add multiple classes if array is passed', () => {
+      replaceClass(instance, null, ['c5', 'c6']);
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'c5', true);
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'c6', true);
+    });
+
+    it('will remove multiple classes if array is passed', () => {
+      replaceClass(instance, ['r1', 'r2'], null);
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'r1', false);
+      expect(instance.renderer.setElementClass).toHaveBeenCalledWith(null, 'r2', false);
+    });
   });
 });

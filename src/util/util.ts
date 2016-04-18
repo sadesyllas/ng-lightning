@@ -39,11 +39,19 @@ export interface IReplaceClass {
   renderer: Renderer;
   element: ElementRef;
 };
-export function replaceClass(instance: IReplaceClass, oldClass: string, newClass?: string) {
+export function replaceClass(instance: IReplaceClass, oldClass: string | string[], newClass?: string | string[]) {
   if (oldClass && oldClass !== newClass) {
-    instance.renderer.setElementClass(instance.element.nativeElement, oldClass, false);
+    setClass(instance, oldClass, false);
   }
   if (newClass) {
-    instance.renderer.setElementClass(instance.element.nativeElement, newClass, true);
+    setClass(instance, newClass, true);
+  }
+}
+
+function setClass(instance: IReplaceClass, klasses: string | string[], isAdd: boolean) {
+  if (klasses) {
+    (Array.isArray(klasses) ? klasses : [klasses]).forEach(k => {
+      instance.renderer.setElementClass(instance.element.nativeElement, k, isAdd);
+    });
   }
 }
