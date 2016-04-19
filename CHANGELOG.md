@@ -1,3 +1,41 @@
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/ng-lightning/ng-lightning/compare/v0.6.0...v0.7.0) (2016-04-19)
+
+
+### Bug Fixes
+
+* **app:** deprecate `ngl-icon-button` in favour of `ngl-icon` ([339f867](https://github.com/ng-lightning/ng-lightning/commit/339f867)), closes [#70](https://github.com/ng-lightning/ng-lightning/issues/70)
+* **nglPillImage:** handle `ngl-icon` and `ngl-avatar` ([4be9e09](https://github.com/ng-lightning/ng-lightning/commit/4be9e09)), closes [#74](https://github.com/ng-lightning/ng-lightning/issues/74)
+
+### Code Refactoring
+
+* **NglIcon:** move sprite definition into component from `NglConfig` ([62c3eec](https://github.com/ng-lightning/ng-lightning/commit/62c3eec))
+
+### Features
+
+* **app:** add notification component ([2b94946](https://github.com/ng-lightning/ng-lightning/commit/2b94946)), closes [#65](https://github.com/ng-lightning/ng-lightning/issues/65)
+* **NglIcon:** support all available sprites ([04e6f64](https://github.com/ng-lightning/ng-lightning/commit/04e6f64)), closes [#73](https://github.com/ng-lightning/ng-lightning/issues/73)
+* **NglNotification:** add timeout support ([78e0e6b](https://github.com/ng-lightning/ng-lightning/commit/78e0e6b)), closes [#75](https://github.com/ng-lightning/ng-lightning/issues/75)
+
+
+### BREAKING CHANGES
+
+* NglIcon: Don't include `utility-sprite` into `svgPath` of `NglConfig`
+* app: Rename `<ngl-icon-button>` to `<ngl-icon>`
+
+  Before:
+
+  ```html
+  <ngl-icon-button icon="add" ...></ngl-icon-button>
+  ```
+
+  After:
+  ```html
+  <ngl-icon icon="add" ...></ngl-icon>
+  ```
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/ng-lightning/ng-lightning/compare/v0.5.0...v0.6.0) (2016-04-11)
 
