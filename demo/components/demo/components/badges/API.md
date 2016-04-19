@@ -2,4 +2,4 @@
 
 ### Input
 
-  * `type?: 'default' | 'shade' | 'inverse'`: Define badges theme.
+  * `type?: string`: Define badges [theme](https://www.lightningdesignsystem.com/components/utilities/themes/#color).

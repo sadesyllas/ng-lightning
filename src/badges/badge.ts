@@ -6,5 +6,5 @@ import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglBadge {
-  @Input() type: 'default' | 'shade' | 'inverse';
+  @Input() type: string;
 };
