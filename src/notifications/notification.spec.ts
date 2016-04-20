@@ -1,4 +1,4 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
+import {it, describe, expect, injectAsync, fakeAsync, tick, TestComponentBuilder} from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {NglNotification} from './notification';
 import {NglNotificationClose} from './notification-close';
@@ -83,57 +83,52 @@ describe('`nglNotification`', () => {
     externalCloseButton.click();
   }));
 
-  it('should emit a close event when the specified timeout has passed', testAsync(({fixture, done}) => {
-    fixture.detectChanges();
-
-    spyOn(fixture.componentInstance, 'onClose').and.callFake((reason: string) => {
-      expect(reason).toBe('timeout');
-      done();
-    });
-
+  it('should emit a close event when the specified timeout has passed', testAsync(fakeAsync(({fixture, done}) => {
     fixture.componentInstance.timeout = 500;
-    fixture.detectChanges();
-  }));
-
-  it('should set the timeout anew when the binding changes', testAsync(({fixture, done}) => {
     fixture.detectChanges();
 
     spyOn(fixture.componentInstance, 'onClose');
 
+    tick(400);
+    expect(fixture.componentInstance.onClose).not.toHaveBeenCalled();
+
+    tick(100);
+    expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
+    done();
+  })));
+
+  it('should set the timeout anew when the binding changes', testAsync(fakeAsync(({fixture, done}) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
-
-    setTimeout(() => {
-      fixture.componentInstance.timeout = null;
-      fixture.detectChanges();
-    }, 300);
-
-    setTimeout(() => {
-      expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
-      done();
-    }, 600);
-  }));
-
-  it('should cancel the active timeout after the close button has been clicked', testAsync(({fixture, done}) => {
-    fixture.detectChanges();
-
-    const closeButton = getCloseButton(fixture);
 
     spyOn(fixture.componentInstance, 'onClose');
 
+    tick(400);
+    fixture.componentInstance.timeout = 300;
+    fixture.detectChanges();
+
+    tick(100);
+    expect(fixture.componentInstance.onClose).not.toHaveBeenCalled();
+
+    tick(200);
+    expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
+    done();
+  })));
+
+  it('should cancel the active timeout after the close button has been clicked', testAsync(fakeAsync(({fixture, done}) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
-    setTimeout(() => {
-      closeButton.click();
-    }, 300);
+    spyOn(fixture.componentInstance, 'onClose');
 
-    setTimeout(() => {
-      expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
-      expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
-      done();
-    }, 600);
-  }));
+    tick(400);
+    getCloseButton(fixture).click();
+
+    tick(100);
+    expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
+    expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
+    done();
+  })));
 
 });
 
