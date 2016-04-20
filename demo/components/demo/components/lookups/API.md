@@ -2,6 +2,7 @@
 
 ### Input
 
+  * `pick: any`: currently selected
   * `lookup: (value: string): Observable<any[]> | any[]`: callback to invoke to search for suggestions
   * `value?: string`: input filter value
   * `field?: string`: field of a suggested object to use as label
@@ -10,4 +11,4 @@
 ### Output
 
   * `valueChange: EventEmitter<string>`: current input value
-  * `pick: EventEmitter<any>`: callback when a suggestion is selected
+  * `pickChange: EventEmitter<any>`: callback when a suggestion is selected

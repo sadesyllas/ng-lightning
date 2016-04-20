@@ -1,12 +1,15 @@
-import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef} from 'angular2/core';
+import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from 'angular2/core';
 import {Control} from 'angular2/common';
 import {Observable} from 'rxjs/Rx';
+import {NglPill} from '../pills/pill';
+import {NglPillRemove} from '../pills/pill-remove';
 import {uniqueId, isObject} from '../util/util';
 
 @Component({
   selector: 'ngl-lookup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './lookup.jade',
+  directives: [NglPill, NglPillRemove],
   styles: [
     `.slds-dropdown__item--active > a {
         outline: 0;
@@ -28,7 +31,15 @@ export class NglLookup {
 
   @Input() lookup: Function;
   @Input() field: string;
-  @Output() pick = new EventEmitter(false);
+
+  pick: any;
+  @Input('pick') set setPick(pick: any) {
+    this.input.updateValue(this.resolveLabel(pick), {emitEvent: false});
+    this.pick = pick;
+  }
+  @Output() pickChange = new EventEmitter(false);
+
+  @ViewChild('lookupInput') inputEl: ElementRef;
 
   inputId = uniqueId('lookup_input');
 
@@ -58,6 +69,7 @@ export class NglLookup {
   private noResults: boolean = false;
   private activeIndex: number = -1;
   private lastUserInput: string;
+  private pendingFocus = false;
 
   constructor(private element: ElementRef, private renderer: Renderer, private detector: ChangeDetectorRef,
               @Attribute('debounce') private debounce: number) {
@@ -67,9 +79,7 @@ export class NglLookup {
   }
 
   handlePick(item: any) {
-    this.pick.emit(item);
-    this.open = false;
-    this.input.updateValue(this.resolveLabel(item), {emitEvent: false});
+    this.pickChange.emit(item);
   }
 
   ngOnInit() {
@@ -128,13 +138,34 @@ export class NglLookup {
 
   moveActive(evt: KeyboardEvent, moves: number) {
     evt.preventDefault();
-    if (!this.open) return;
+    if (!this.expanded) return;
 
     this.activeIndex = Math.max(-1, Math.min(this.activeIndex + moves, this.suggestions.length - 1));
 
     // Update input value based on active option
     const value = this.activeIndex === -1 ? this.lastUserInput : this.resolveLabel(this.suggestions[this.activeIndex]);
     this.input.updateValue(value, {emitEvent: false});
+  }
+
+  ngAfterViewChecked() {
+    if (this.pendingFocus && !this.pick) {
+      this.focus();
+    }
+    this.pendingFocus = false;
+  }
+
+  clear() {
+    this.pickChange.emit(null);
+    this.pendingFocus = true;
+  }
+
+  focus() {
+    this.renderer.invokeElementMethod(this.inputEl.nativeElement, 'focus', []);
+  }
+
+  // Whether menu is expanded
+  get expanded(): boolean {
+    return this.open && !this.pick;
   }
 
   ngOnDestroy() {

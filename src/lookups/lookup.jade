@@ -1,14 +1,16 @@
-.slds-lookup
+.slds-lookup(data-select="single")
   .slds-form-element
     label.slds-form-element__label([attr.for]="inputId")
       ng-content(select="[nglLookupLabel]")
-    .slds-form-element__control
-      input.slds-input([id]="inputId", type="text", aria-autocomplete="list", role="combobox", 
-                       [attr.aria-expanded]="open", [attr.aria-activedescendant]="optionId(activeIndex)",
+    .slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right
+      .slds-pill_container.slds-show(*ngIf="pick")
+        a(href="javascript:void(0)", nglPill, (nglPillRemove)="clear()") {{resolveLabel(pick)}}
+      input.slds-input(#lookupInput, [id]="inputId", type="text", [ngClass]="{'slds-hide': pick}", aria-autocomplete="list", role="combobox", 
+                       [attr.aria-expanded]="expanded", [attr.aria-activedescendant]="optionId(activeIndex)",
                        [ngFormControl]="input", (keydown.Esc)="close($event)", [placeholder]="placeholder || ''",
                        (keydown.ArrowDown)="moveActive($event, 1)", (keydown.ArrowUp)="moveActive($event, -1)", (keydown.Enter)="pickActive($event)")
 
-  .slds-lookup__menu([ngClass]="{'slds-hide': !open}", role="listbox")
+  .slds-lookup__menu([ngClass]="{'slds-hide': !expanded}", role="listbox")
     ul.slds-lookup__list(role="presentation")
       li.slds-lookup__item(*ngIf="noResults"): a No results found
       li.slds-lookup__item(*ngFor="#item of suggestions; #i=index", (click)="handlePick(item)", [ngClass]="{'slds-dropdown__item--active': i === activeIndex }")

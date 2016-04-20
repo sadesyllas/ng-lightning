@@ -9,7 +9,17 @@ function getElements(element: HTMLElement) {
     input: <HTMLInputElement>element.querySelector('input'),
     menu: <HTMLInputElement>element.querySelector('.slds-lookup__menu'),
     options: selectElements(element, '.slds-lookup__item'),
+    pill: getPill(element),
   };
+}
+
+function getPill(element: HTMLElement) {
+  return <HTMLAnchorElement>element.querySelector('a');
+}
+
+function clickRemove(element: HTMLElement) {
+  const button = <HTMLButtonElement>element.querySelector('button');
+  button.click();
 }
 
 function expectOptions(fixture: any, expectedOptions: any[], cb = function() {}) {
@@ -37,12 +47,13 @@ describe('Lookup Component', () => {
   it('should render correctly', testAsync(({fixture, done}) => {
     fixture.detectChanges();
 
-    const { label, input, options } = getElements(fixture.nativeElement);
+    const { label, input, options, pill } = getElements(fixture.nativeElement);
     expect(label.textContent.trim()).toEqual('Lookup:');
     expect(label.getAttribute('for')).toEqual(input.id);
 
     expect(input.value).toBe('');
     expect(input.placeholder).toBe('');
+    expect(pill).toBeFalsy();
 
     expectMenuExpanded(fixture.nativeElement, false);
     expect(options.length).toBe(0);
@@ -59,7 +70,59 @@ describe('Lookup Component', () => {
     fixture.detectChanges();
     expect(input.placeholder).toBe('my placeholder');
     done();
-  }, `<ngl-lookup [lookup]="filter" [placeholder]="placeholder">`));
+  }, `<ngl-lookup [lookup]="filter" [placeholder]="placeholder"></ngl-lookup>`));
+
+  it('should toggle pill and input based on input', testAsync(({fixture, done}) => {
+    fixture.detectChanges();
+
+    const { input } = getElements(fixture.nativeElement);
+    expect(input).not.toHaveCssClass('slds-hide');
+    expect(getPill(fixture.nativeElement)).toBeFalsy();
+
+    fixture.componentInstance.selection = 'my selection';
+    fixture.detectChanges();
+
+    expect(input).toHaveCssClass('slds-hide');
+    expect(getPill(fixture.nativeElement).textContent.trim()).toBe('my selection');
+
+    fixture.componentInstance.selection = null;
+    fixture.detectChanges();
+    expect(input).not.toHaveCssClass('slds-hide');
+    expect(input.value).toBe('');
+    expect(getPill(fixture.nativeElement)).toBeFalsy();
+    done();
+  }, `<ngl-lookup [lookup]="filter" [pick]="selection"></ngl-lookup>`));
+
+  it('should remove selection when clicking on pill button', testAsync(({fixture, done}) => {
+    fixture.componentInstance.selection = 'my selection';
+    fixture.detectChanges();
+
+    const { input } = getElements(fixture.nativeElement);
+
+    spyOn(input, 'focus').and.callFake(done);
+
+    clickRemove(fixture.nativeElement);
+    expect(fixture.componentInstance.selection).toBe(null);
+
+    fixture.detectChanges();
+  }, `<ngl-lookup [lookup]="filter" [(pick)]="selection"></ngl-lookup>`));
+
+  it('should close menu when there is selection', testAsync(({fixture, done}) => {
+    const { nativeElement, componentInstance } = fixture;
+    fixture.detectChanges();
+
+    componentInstance.value = 'DE';
+    fixture.detectChanges();
+    setTimeout(() => {
+      fixture.detectChanges();
+      expectMenuExpanded(nativeElement, true);
+
+      fixture.componentInstance.selection = 'my selection';
+      fixture.detectChanges();
+      expectMenuExpanded(nativeElement, false);
+      done();
+    });
+  }, `<ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" debounce="0"></ngl-lookup>`));
 
   it('should trigger lookup function when value changes', testAsync(({fixture, done}) => {
     const { componentInstance } = fixture;
@@ -105,23 +168,15 @@ describe('Lookup Component', () => {
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
 
-    const { input } = getElements(nativeElement);
-
-    spyOn(componentInstance, 'onSelect').and.callFake(() => {
-      expect(componentInstance.onSelect).toHaveBeenCalledWith('DEFGH');
-      setTimeout(() => {
-        fixture.detectChanges();
-        expect(input.value).toBe('DEFGH');
-        expectMenuExpanded(nativeElement, false);
-        done();
-      });
-    });
+    spyOn(componentInstance, 'onSelect');
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
     expectOptions(fixture, ['ABCDE', 'DEFGH'], () => {
       const { options } = getElements(nativeElement);
       options[1].click();
+      expect(componentInstance.onSelect).toHaveBeenCalledWith('DEFGH');
+      done();
     });
   }));
 
@@ -175,24 +230,17 @@ describe('Lookup Component', () => {
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
 
-    const { input } = getElements(nativeElement);
-
-    spyOn(componentInstance, 'onSelect').and.callFake(() => {
-      expect(componentInstance.onSelect).toHaveBeenCalledWith({id: 2, name: 'DEFGH'});
-      setTimeout(() => {
-        fixture.detectChanges();
-        expect(input.value).toBe('DEFGH');
-        done();
-      });
-    });
+    spyOn(componentInstance, 'onSelect');
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
     expectOptions(fixture, ['ABCDE', 'DEFGH'], () => {
       const { options } = getElements(nativeElement);
       options[1].click();
+      expect(componentInstance.onSelect).toHaveBeenCalledWith({id: 2, name: 'DEFGH'});
+      done();
     });
-  }, `<ngl-lookup [value]="value" [lookup]="filterObject" field="name" (pick)="onSelect($event)" debounce="0"></ngl-lookup>`));
+  }, `<ngl-lookup [value]="value" [lookup]="filterObject" field="name" (pickChange)="onSelect($event)" debounce="0"></ngl-lookup>`));
 
   it('should support keyboard navigation and selection', testAsync(({fixture, done}) => {
     const { nativeElement, componentInstance } = fixture;
@@ -214,15 +262,7 @@ describe('Lookup Component', () => {
 
     expect(input.getAttribute('aria-activedescendant')).toBeNull();
 
-    spyOn(componentInstance, 'onSelect').and.callFake(() => {
-      expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
-      setTimeout(() => {
-        fixture.detectChanges();
-        expect(input.value).toBe('ABCDE');
-        expectMenuExpanded(nativeElement, false);
-        done();
-      });
-    });
+    spyOn(componentInstance, 'onSelect');
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
@@ -237,9 +277,14 @@ describe('Lookup Component', () => {
       expectActiveOption('ArrowUp', null);
       expectActiveOption('ArrowUp', null);
 
+      dispatchKeyEvent(input, 'Enter');
+      expect(componentInstance.onSelect).not.toHaveBeenCalled();
+
       expectActiveOption('ArrowDown', options[0]);
 
       dispatchKeyEvent(input, 'Enter');
+      expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
+      done();
     });
   }));
 });
@@ -259,11 +304,13 @@ function testAsync(fn: Function, html: string = null) {
 @Component({
   directives: [NglLookup],
   template: `
-    <ngl-lookup [value]="value" [lookup]="filter" (pick)="onSelect($event)" debounce="0">
+    <ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0">
       <span nglLookupLabel>Lookup:</span>
     </ngl-lookup>`,
 })
 export class TestComponent {
+
+  selection: any;
 
   value = '';
 
@@ -281,5 +328,7 @@ export class TestComponent {
     return data.filter((d: any) => d.name.indexOf(value) > -1);
   }
 
-  onSelect(selection: any) {}
+  onSelect(selection: any) {
+    this.selection = selection;
+  }
 }

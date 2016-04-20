@@ -11,8 +11,6 @@ import {Observable} from 'rxjs/Observable';
   providers: [HTTP_PROVIDERS],
 })
 export class DemoLookups {
-  superhero: string;
-  address: Object;
 
   constructor(public http: Http) {
     // Important if you want your `lookupAsync` function to use `Http`.
@@ -28,10 +26,6 @@ export class DemoLookups {
     return superheroes.filter((d: string) => d.toLowerCase().indexOf(query.toLowerCase()) > -1);
   }
 
-  onHeroPick(item: string) {
-    this.superhero = item;
-  }
-
   lookupAsync(query: string): Observable<any[]> {
     if (!query) {
       return null;
@@ -40,9 +34,5 @@ export class DemoLookups {
     return this.http.get(`//maps.googleapis.com/maps/api/geocode/json?address=${query}`)
       .map((res: Response) => res.json())
       .map((response: any) => response.results);
-  }
-
-  onAddressPick(item: Object) {
-    this.address = item;
   }
 }
