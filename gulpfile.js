@@ -22,7 +22,7 @@ var inlineTemplatesTask = lazypipe()
     base: '/src',
     useRelativePaths: true,
     templateProcessor: function(path, file) {
-      return jade.render(file);
+      return jade.render(file, {doctype: 'html'});
     },
     templateExtension: '.jade',
   });

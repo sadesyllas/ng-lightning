@@ -4,7 +4,7 @@ import {NglIcon} from '../icons/icon';
 
 @Component({
   selector: '[nglPill]',
-  templateUrl: './pill.ng.jade',
+  templateUrl: './pill.jade',
   directives: [NglButtonIcon, NglIcon],
   host: {
     '[class.slds-pill]': 'true',
