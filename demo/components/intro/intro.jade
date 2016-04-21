@@ -1,3 +1,7 @@
+mixin prism(html) 
+  pre.language-bash
+    code.language-bash(ngNonBindable)!= html
+
 #banner(style="background: #111111; color: #ccc; tex-align: center;")
   .slds-container--large.slds-container--center
     .slds-grid.slds-grid--align-center.slds-p-around--x-large
@@ -35,9 +39,16 @@
       | Install through 
       code npm
       | :
-    pre.language-bash
-      code.language-bash(ngNonBindable)!= install
+    +prism(install)
       
+    p.slds-m-vertical--small 
+      | If you use&nbsp;
+      strong SystemJS
+      | &nbsp;to load your files, you may want to use our bundle file through&nbsp;
+      a(href="https://npmcdn.com/") npmcdn
+      | .
+    +prism(bundle)
+
   .slds-p-vertical--large
     .slds-text-heading--large.slds-m-bottom--large Reading the documentation
     p 
@@ -51,8 +62,7 @@
       | Configure&nbsp;
       code ng-lightning
       | &nbsp;when your Angular 2 application is bootstraping:
-    pre.language-typescript
-      code.language-typescript(ngNonBindable)!= usageApp
+    +prism(usageApp)
       
     p.slds-m-top--small Currently available options:
     ul.slds-list--dotted
@@ -65,5 +75,4 @@
       | Then, you can use all the&nbsp;
       code ng-lightning
       | &nbsp;directives in your own components like this:
-    pre.language-typescript
-      code.language-typescript(ngNonBindable)!= usageCmp
+    +prism(usageCmp)

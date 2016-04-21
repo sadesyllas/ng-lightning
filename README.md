@@ -9,6 +9,19 @@ This library contains native [Angular 2](https://angular.io/) components and dir
 
 **This release is a developer preview.** We are looking for community help to find and fix bugs, improve demo site and create new components.
 
+## Installation
+
+Install through `npm`:
+
+```bash
+npm install --save ng-lightning
+```
+
+If you use **SystemJS** to load your files, you may want to use our bundle file through [npmcdn](https://npmcdn.com/)
+
+```html
+<script src="https://npmcdn.com/ng-lightning@x.x.x/ng-lightning.bundle.js"></script>
+```
 
 ## Usage & Demo
 http://ng-lightning.github.io/ng-lightning/
