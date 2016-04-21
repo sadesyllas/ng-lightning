@@ -5,6 +5,7 @@ var tsProject = ts.createProject('tsconfig.json');
 var lazypipe = require('lazypipe');
 var jade = require('jade');
 var inlineTemplates = require('gulp-inline-ng2-template');
+var cache = require('gulp-cached');
 var argv = require('yargs').argv;
 var bundle = require('./scripts/bundle');
 
@@ -35,6 +36,7 @@ gulp.task('lint:ts', function() {
   var tslint = require('gulp-tslint');
 
   return gulp.src( PATHS.spec )
+    .pipe(cache('lint:ts'))
     .pipe(tslint())
     .pipe(tslint.report('prose', {
       summarizeFailureOutput: true,
@@ -97,6 +99,7 @@ gulp.task('test:build', function() {
 
   return tsResult.js
     .pipe(sourcemaps.write('.'))
+    .pipe(cache('test:build'))
     .pipe(gulp.dest(PATHS.temp));
 });
 
