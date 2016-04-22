@@ -12,11 +12,11 @@ import {replaceClass, isInt} from '../util/util';
     '[class.slds-notify]': 'true',
     'role': 'alert',
   },
-  styles: [`
-    :host.slds-notify--alert {
+  styles: [
+    `:host.slds-notify--alert {
       display: block;
-    }
-  `, ],
+    }`,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'nglNotification',
 })
