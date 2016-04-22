@@ -1,7 +1,6 @@
 import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef} from 'angular2/core';
 import {Control} from 'angular2/common';
-import 'rxjs/Rx';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs/Rx';
 import {uniqueId, isObject} from '../util/util';
 
 @Component({
