@@ -1,0 +1,6 @@
+<div class="slds-text-heading--label slds-m-bottom--small">Inline {{date}}</div>
+
+<button type="button" nglButton="neutral" (click)="date = '2005/11/09'" class="slds-m-bottom--large">09 November 2005</button>
+<button type="button" nglButton="destructive" (click)="date = null" class="slds-m-bottom--large">Clear</button>
+
+<ngl-datepicker [(date)]="date" class="slds-box slds-box--x-small"></ngl-datepicker>

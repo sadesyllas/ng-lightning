@@ -23,6 +23,9 @@ module.exports = function(config) {
         'node_modules/es6-shim/es6-shim.js',
         'node_modules/reflect-metadata/Reflect.js',
 
+        // Intl pollyfill
+        'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
+
         // Typescript helpers polyfill
         'node_modules/ts-helpers/index.js',
 

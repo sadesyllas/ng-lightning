@@ -1,0 +1,19 @@
+.slds-datepicker__filter.slds-grid
+  .slds-datepicker__filter--month.slds-grid.slds-grid--align-spread.slds-grow
+    .slds-align-middle
+      button(type="button", nglButtonIcon="container", (click)="keyboardHandler($event, 'MoveMonth', -1)")
+        ngl-icon(icon="left", size="small", alt="Previous Month")
+    h2.slds-align-middle([id]="uid + '_month'", aria-live="assertive", aria-atomic="true") {{ monthLabel }}
+    .slds-align-middle
+      button(type="button", nglButtonIcon="container", (click)="keyboardHandler($event, 'MoveMonth', 1)")
+        ngl-icon(icon="right", size="small", alt="Next Month")
+
+  ngl-date-year.slds-shrink-none([year]="current.year", (yearChange)="moveYear($event)")
+
+table.datepicker__month(role="grid", [attr.aria-labelledby]="uid + '_month'")
+  thead
+    tr(nglWeekdays)
+  tbody
+    tr(*ngFor="let week of weeks; trackBy:indexTrackBy")
+      td(*ngFor="let date of week", (click)="select(date)", [class.slds-is-today]="isActive(date)",
+         [nglDay]="date.day", [nglDaySelected]="isSelected(date)", [nglDayDisabled]="date.disabled")
