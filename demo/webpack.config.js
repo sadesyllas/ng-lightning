@@ -42,7 +42,6 @@ const config = {
       declaration: false,
     },
   },
-  noParse: [ /.+zone\.js\/dist\/.+/, /.+angular2\/bundles\/.+/ ],
   plugins: [
     new CleanWebpackPlugin(['dist'], {
       root: __dirname,

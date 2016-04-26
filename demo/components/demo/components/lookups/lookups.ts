@@ -1,8 +1,7 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
-import {HTTP_PROVIDERS, Http, Response} from 'angular2/http';
-import 'rxjs/Rx';
-import {Observable} from 'rxjs/Observable';
+import {HTTP_PROVIDERS, Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'demo-lookups',

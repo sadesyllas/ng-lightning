@@ -1,4 +1,4 @@
-import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter} from '@angular/core';
 import {toBoolean, uniqueId} from '../util/util';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';

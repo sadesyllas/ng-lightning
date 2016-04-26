@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglPill} from './pill';
 import {NglPillImage} from './pill-image';
 import {NglPillRemove} from './pill-remove';
@@ -22,7 +23,7 @@ function getRemoveButton(pill: HTMLElement): any {
 
 describe('NglPill', () => {
 
-  it('should have the proper css classes and text content', testAsync(({fixture, done}) => {
+  it('should have the proper css classes and text content', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const pill = getPill(fixture.nativeElement);
     const icon = getIcon(pill);
@@ -33,24 +34,21 @@ describe('NglPill', () => {
     expect(text.textContent.trim()).toBe('I am a pill!');
     expect(removeButton).toHaveCssClass('slds-pill__remove');
     expect(removeButton).toBe(pill.childNodes[4]);
-    done();
   }));
 
-  it('should not render the remove button without `nglPillRemove`', testAsync(({fixture, done}) => {
+  it('should not render the remove button without `nglPillRemove`', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const pill = getPill(fixture.nativeElement);
     expect(getRemoveButton(pill)).toBeNull();
-    done();
   }, `<span nglPill></span>`));
 
-  it('should not render the remove button without `nglPillRemove` even with `nglPillRemovable`', testAsync(({fixture, done}) => {
+  it('should not render the remove button without `nglPillRemove` even with `nglPillRemovable`', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const pill = getPill(fixture.nativeElement);
     expect(getRemoveButton(pill)).toBeNull();
-    done();
   }, `<span nglPill nglPillRemovable="true"></span>`));
 
-  it('should toggle the remove button based on `nglPillRemovable`', testAsync(({fixture, done}) => {
+  it('should toggle the remove button based on `nglPillRemovable`', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const pill = getPill(fixture.nativeElement);
 
     fixture.componentInstance.removable = false;
@@ -60,31 +58,27 @@ describe('NglPill', () => {
     fixture.componentInstance.removable = true;
     fixture.detectChanges();
     expect(getRemoveButton(pill)).not.toBeNull();
-    done();
   }, `<span nglPill (nglPillRemove)="onRemove()" [nglPillRemovable]="removable"></span>`));
 
-  it('should trigger the remove event whenever the remove button is clicked', testAsync(({fixture, done}) => {
+  it('should trigger the remove event whenever the remove button is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const pill = getPill(fixture.nativeElement);
     const removeButton = getRemoveButton(pill);
-    spyOn(fixture.componentInstance, 'onRemove').and.callFake(function() {
-      done();
-    });
+    spyOn(fixture.componentInstance, 'onRemove');
+    expect(fixture.componentInstance.onRemove).not.toHaveBeenCalled();
     removeButton.click();
+    expect(fixture.componentInstance.onRemove).toHaveBeenCalled();
   }));
-
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({

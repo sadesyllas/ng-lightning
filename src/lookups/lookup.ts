@@ -1,5 +1,5 @@
-import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from 'angular2/core';
-import {Control} from 'angular2/common';
+import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from '@angular/core';
+import {Control} from '@angular/common';
 import {Observable} from 'rxjs/Rx';
 import {NglPill} from '../pills/pill';
 import {NglPillRemove} from '../pills/pill-remove';

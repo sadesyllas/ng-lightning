@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {selectElements, dispatchKeyEvent} from '../../test/helpers';
 import {NglPick} from './pick';
 import {NglPickOption} from './pick-option';
@@ -18,31 +19,28 @@ function expectState(element: HTMLElement, state: boolean[], activeClass = 'slds
 
 describe('`Pick`', () => {
 
-  it('should have proper option selected based on input', testAsync(({fixture, done}) => {
+  it('should have proper option selected based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     expectState(fixture.nativeElement, [true, false, false, false]);
 
     fixture.componentInstance.selected = 'op2';
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, true, false, false]);
-    done();
   }));
 
-  it('should render options with the appropriate aria role', testAsync(({fixture, done}) => {
+  it('should render options with the appropriate aria role', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { options } = getElements(fixture.nativeElement);
     options.forEach((o: HTMLElement) => expect(o.getAttribute('role')).toBe('button'));
-    done();
   }));
 
-  it('should have proper option selected even if selected value is object', testAsync(({fixture, done}) => {
+  it('should have proper option selected even if selected value is object', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const {nativeElement, componentInstance} = fixture;
     componentInstance.selected = componentInstance.options[2];
     fixture.detectChanges();
     expectState(nativeElement, [false, false, false, true]);
-    done();
   }));
 
-  it('should handle different active class', testAsync(({fixture, done}) => {
+  it('should handle different active class', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { options } = getElements(fixture.nativeElement);
 
     fixture.componentInstance.selected = 'op1';
@@ -58,22 +56,20 @@ describe('`Pick`', () => {
     expect(options[0]).not.toHaveCssClass('slds-button--brand');
     expect(options[1]).toHaveCssClass('another-class');
     expect(options[0]).not.toHaveCssClass('slds-button--brand');
-    done();
   }, `<div [nglPick]="selected" (nglPickChange)="selectedChange($event)">
         <button type="button" nglPickOption="op1" nglPickActiveClass="my-active-class"></button>
         <button type="button" nglPickOption="op2" nglPickActiveClass="another-class"></button>
       </div>
   `));
 
-  it('should have proper selected value when `nglPickOption` is clicked', testAsync(({fixture, done}) => {
+  it('should have proper selected value when `nglPickOption` is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const { options } = getElements(fixture.nativeElement);
     options[2].click();
     expect(fixture.componentInstance.selected).toBe('op3');
-    done();
   }));
 
-  it('should have proper selected value when `nglPickOption` is used with keyboard', testAsync(({fixture, done}) => {
+  it('should have proper selected value when `nglPickOption` is used with keyboard', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const { options } = getElements(fixture.nativeElement);
     dispatchKeyEvent(options[1], 'Enter');
@@ -82,10 +78,9 @@ describe('`Pick`', () => {
     expect(fixture.componentInstance.selected).toBe('op3');
     dispatchKeyEvent(options[1], 'ArrowDown');
     expect(fixture.componentInstance.selected).toBe('op3');
-    done();
   }));
 
-  it('should have proper option selected when a new option is added', testAsync(({fixture, done}) => {
+  it('should have proper option selected when a new option is added', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.selected = 'op5';
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false]);
@@ -93,23 +88,21 @@ describe('`Pick`', () => {
     fixture.componentInstance.options.push('op5');
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
-    done();
   }));
 
-  it('emit `undefined` when a selected option is removed', testAsync(({fixture, done}) => {
+  it('emit `undefined` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.selected = 'op2';
     fixture.detectChanges();
 
-    spyOn(fixture.componentInstance, 'selectedChange').and.callFake((event: any) => {
-      expect(event).toBeUndefined();
-      done();
+    spyOn(fixture.componentInstance, 'selectedChange').and.callFake(() => {
+      expect(fixture.componentInstance.selectedChange).toHaveBeenCalledWith(undefined);
     });
 
     fixture.componentInstance.options.splice(0, 1);
     fixture.detectChanges();
   }));
 
-  it('should allow picking from outside and expose state', testAsync(({fixture, done}) => {
+  it('should allow picking from outside and expose state', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const spanEl = <HTMLSpanElement>fixture.nativeElement.querySelector('span');
     const triggerEl = <HTMLButtonElement>fixture.nativeElement.querySelector('button.outside');
 
@@ -120,7 +113,6 @@ describe('`Pick`', () => {
     triggerEl.click();
     fixture.detectChanges();
     expect(fixture.componentInstance.selectedChange).toHaveBeenCalledWith('op2');
-    done();
   }, `<div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1" #opt1="nglPickOption"></button>
       <button type="button" nglPickOption="op2" #opt2="nglPickOption"></button>
@@ -130,16 +122,14 @@ describe('`Pick`', () => {
   ));
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({
@@ -147,7 +137,7 @@ function testAsync(fn: Function, html: string = null) {
   template: `
     <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1"></button>
-      <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
+      <button type="button" *ngFor="let option of options" [nglPickOption]="option"></button>
     </div>
   `,
 })

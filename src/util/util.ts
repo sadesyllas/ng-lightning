@@ -1,4 +1,4 @@
-import {ElementRef, Renderer} from 'angular2/core';
+import {ElementRef, Renderer} from '@angular/core';
 
 export function toBoolean(value: any): boolean {
   switch (value) {

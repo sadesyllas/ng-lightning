@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from '@angular/core';
 import {replaceClass} from '../util/util';
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';

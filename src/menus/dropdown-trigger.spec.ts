@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglDropdown} from './dropdown';
 import {NglDropdownTrigger} from './dropdown-trigger';
 import {NglPick} from '../pick/pick';
@@ -11,14 +12,13 @@ function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {
 
 describe('`nglDropdownTrigger`', () => {
 
-  it('should have the attribute `aria-haspopup` set to `true`', testAsync(({fixture, done}) => {
+  it('should have the attribute `aria-haspopup` set to `true`', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     fixture.detectChanges();
     expect(dropdownTrigger.getAttribute('aria-haspopup')).toBe('true');
-    done();
   }));
 
-  it('should toggle the dropdown when it is clicked', testAsync(({fixture, done}) => {
+  it('should toggle the dropdown when it is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     fixture.detectChanges();
 
@@ -32,43 +32,35 @@ describe('`nglDropdownTrigger`', () => {
 
     dropdownTrigger.click();
     expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(false);
-
-    done();
   }));
 
-  it('should open the dropdown when the down arrow key is pressed while it is focused', testAsync(({fixture, done}) => {
+  it('should open the dropdown when the down arrow key is pressed while it is focused', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     fixture.detectChanges();
 
     spyOn(fixture.componentInstance, 'setOpen').and.callFake((isOpen: boolean) => {
       expect(isOpen).toBe(true);
-
-      done();
     });
 
     dispatchKeyEvent(dropdownTrigger, 'ArrowDown');
     fixture.detectChanges();
   }));
 
-  it('should have the `slds-picklist__label` class when belonging to a picklist', testAsync(({fixture, done}) => {
+  it('should have the `slds-picklist__label` class when belonging to a picklist', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     fixture.detectChanges();
     expect(dropdownTrigger).toHaveCssClass('slds-picklist__label');
-    done();
   }, '<div nglDropdown nglPick><button type="button" nglDropdownTrigger></button></div>'));
-
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then(fixture => fn({ fixture, done})).catch(err => console.error(err.stack));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({

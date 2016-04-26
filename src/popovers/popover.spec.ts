@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglPopover} from './popover';
 import {NglPopoverTrigger} from './trigger';
 
@@ -9,17 +10,16 @@ function getPopoverElement(element: HTMLElement): HTMLElement {
 
 describe('Popovers', () => {
 
-  it('should render the popover correctly', testAsync(({fixture, done}) => {
+  it('should render the popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const popoverEl = getPopoverElement(fixture.nativeElement);
 
     fixture.detectChanges();
     expect(popoverEl).toHaveCssClass('slds-popover');
     expect(popoverEl).toHaveCssClass('slds-nubbin--bottom'); // Top placement
     expect(popoverEl.textContent.trim()).toBe('I am a tooltip');
-    done();
   }));
 
-  it('should change visibility based on trigger', testAsync(({fixture, done}) => {
+  it('should change visibility based on trigger', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     const popoverEl = getPopoverElement(nativeElement);
 
@@ -29,11 +29,9 @@ describe('Popovers', () => {
     componentInstance.open = true;
     fixture.detectChanges();
     expect(popoverEl).not.toHaveCssClass('slds-hide');
-
-    done();
   }));
 
-  it('should change nubbin based on placement', testAsync(({fixture, done}) => {
+  it('should change nubbin based on placement', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     const popoverEl = getPopoverElement(nativeElement);
 
@@ -48,10 +46,9 @@ describe('Popovers', () => {
     fixture.detectChanges();
     expect(popoverEl).toHaveCssClass('slds-nubbin--top');
     expect(popoverEl).not.toHaveCssClass('slds-nubbin--right');
-    done();
   }));
 
-  it('should change theme based on input', testAsync(({fixture, done}) => {
+  it('should change theme based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     const popoverEl = getPopoverElement(nativeElement);
 
@@ -70,20 +67,17 @@ describe('Popovers', () => {
     componentInstance.theme = null;
     fixture.detectChanges();
     expect(popoverEl).not.toHaveCssClass('slds-theme--error');
-    done();
   }, '<ngl-popover [theme]="theme">I am a tooltip</ngl-popover>'));
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({

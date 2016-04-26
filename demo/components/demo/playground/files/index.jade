@@ -1,0 +1,62 @@
+doctype html
+html
+  head
+    title ng-lightning
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
+    link(rel="stylesheet", href="https://npmcdn.com/@salesforce-ux/design-system@#{pkg.devDependencies['@salesforce-ux/design-system']}/assets/styles/salesforce-lightning-design-system.min.css")
+    link(rel="stylesheet", href="styles.css")
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/#{pkg.devDependencies['es6-shim'].replace('^', '')}/es6-shim.min.js")
+    script(src="https://npmcdn.com/zone.js@#{pkg.devDependencies['zone.js']}")
+    script(src="https://npmcdn.com/reflect-metadata@#{pkg.devDependencies['reflect-metadata']}")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.27/system.js")
+    script(src="https://npmcdn.com/typescript@#{pkg.devDependencies.typescript}/lib/typescript.js")
+
+    - var url = production ? 'https://npmcdn.com/ng-lightning@' + pkg.version + '/ng-lightning.bundle.js' : 'ng-lightning.js';
+    script(src="#{url}")
+
+    script.
+      var  map = {
+        'app': 'app', // 'dist',
+        'rxjs': 'https://npmcdn.com/rxjs@#{pkg.devDependencies.rxjs}',
+      };
+
+      var packages = {
+        'app': { defaultExtension: 'ts' },
+        'rxjs': { defaultExtension: 'js' },
+      };
+
+      var packageNames = [
+          '@angular/common',
+          '@angular/compiler',
+          '@angular/core',
+          '@angular/http',
+          '@angular/platform-browser',
+          '@angular/platform-browser-dynamic',
+      ];
+
+      packageNames.forEach(function(pkgName) {
+        map[pkgName] = 'https://npmcdn.com/' + pkgName + '@#{pkg.devDependencies['@angular/core']}';
+      });
+
+      packageNames.forEach(function(pkgName) {
+        packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
+      });
+
+      var config = {
+        transpiler: 'typescript',
+        typescriptOptions: {
+          emitDecoratorMetadata: true
+        },
+        map: map,
+        packages: packages,
+        paths: {
+          'tether': 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.js'
+        },
+      }
+      System.config(config);
+      System.import('app/demo').then(null, console.error.bind(console));
+  body
+    demo Loading...

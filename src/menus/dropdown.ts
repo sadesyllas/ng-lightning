@@ -1,4 +1,4 @@
-import {Directive, Input, Output, EventEmitter, HostBinding, HostListener, ElementRef, OnInit, OnDestroy, ContentChildren, QueryList, Renderer, Optional} from 'angular2/core';
+import {Directive, Input, Output, EventEmitter, HostBinding, HostListener, ElementRef, OnInit, OnDestroy, ContentChildren, QueryList, Renderer, Optional} from '@angular/core';
 import {NglDropdownItem} from './dropdown-item';
 import {NglPick} from '../pick/pick';
 import {toBoolean} from '../util/util';
@@ -29,7 +29,7 @@ export class NglDropdown implements OnInit, OnDestroy {
     return this._isOpen;
   }
   @Input() handlePageEvents = true;
-  @ContentChildren(NglDropdownItem) items = new QueryList<NglDropdownItem>();
+  @ContentChildren(NglDropdownItem, {descendants: true}) items: QueryList<NglDropdownItem>;
   @Output('openChange') isOpenChange = new EventEmitter<boolean>(false);
   @HostBinding('class.slds-is-open')
   @HostBinding('attr.aria-expanded')
@@ -60,7 +60,7 @@ export class NglDropdown implements OnInit, OnDestroy {
   }
 
   constructor(public element: ElementRef, public renderer: Renderer, @Optional() private pick: NglPick) {
-    this.isPicklist = this.pick && this.pick.element === this.element;
+    this.isPicklist = this.pick && this.pick.element.nativeElement === this.element.nativeElement;
   }
 
   ngOnInit() {

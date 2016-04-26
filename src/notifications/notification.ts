@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges, ElementRef, Renderer, Optional, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, OnChanges, ElementRef, Renderer, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NglNotificationClose} from './notification-close';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';

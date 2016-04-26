@@ -1,4 +1,4 @@
-import {Component, Input, QueryList, ContentChildren, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, QueryList, ContentChildren, Output, EventEmitter} from '@angular/core';
 import {isInt} from '../util/util';
 import {NglTab} from './tab';
 
@@ -26,7 +26,7 @@ export class NglTabs {
   get selected() {
     return this._selected;
   }
-  @Output() selectedChange: EventEmitter<NglTab> = new EventEmitter();
+  @Output() selectedChange = new EventEmitter<NglTab>();
 
   ngAfterContentInit() {
     // if there is no active tab yet, activate first one

@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglSection} from './section';
 
 function getSectionEl(element: HTMLElement) {
@@ -12,7 +13,7 @@ function getTitleEl(element: HTMLElement) {
 
 describe('Section Component', () => {
 
-  it('should render correctly', testAsync(({fixture, done}) => {
+  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement } = fixture;
     const sectionEl = getSectionEl(nativeElement);
 
@@ -21,10 +22,9 @@ describe('Section Component', () => {
     expect(sectionEl).not.toHaveCssClass('slds-is-open');
     expect(getTitleEl(nativeElement).textContent.trim()).toBe('Section title');
     expect(nativeElement.querySelector('.slds-section__content').textContent).toBe('Body');
-    done();
   }));
 
-  it('should toggle based on input', testAsync(({fixture, done}) => {
+  it('should toggle based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     const sectionEl = getSectionEl(nativeElement);
 
@@ -35,10 +35,9 @@ describe('Section Component', () => {
     componentInstance.open = false;
     fixture.detectChanges();
     expect(sectionEl).not.toHaveCssClass('slds-is-open');
-    done();
   }));
 
-  it('should toggle when clicking on title', testAsync(({fixture, done}) => {
+  it('should toggle when clicking on title', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const sectionEl = getSectionEl(fixture.nativeElement);
     const titleEl = getTitleEl(fixture.nativeElement);
 
@@ -49,21 +48,18 @@ describe('Section Component', () => {
     titleEl.click();
     fixture.detectChanges();
     expect(sectionEl).not.toHaveCssClass('slds-is-open');
-    done();
   }));
 
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({

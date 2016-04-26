@@ -1,4 +1,4 @@
-import {Directive, Input, Output, EventEmitter, HostListener, ElementRef, Renderer} from 'angular2/core';
+import {Directive, Input, Output, EventEmitter, HostListener, ElementRef, Renderer} from '@angular/core';
 import {toBoolean} from '../util/util';
 
 @Directive({
@@ -8,8 +8,6 @@ import {toBoolean} from '../util/util';
   },
 })
 export class NglButtonState {
-
-  constructor(public element: ElementRef, public renderer: Renderer) {}
 
   _selected: boolean;
   @Input('nglButtonState') set selected(_selected) {
@@ -21,7 +19,9 @@ export class NglButtonState {
   get selected() {
     return this._selected;
   }
-  @Output('nglButtonStateChange') selectedChange: EventEmitter<boolean> = new EventEmitter(false);
+  @Output('nglButtonStateChange') selectedChange = new EventEmitter<boolean>(false);
+
+  constructor(public element: ElementRef, public renderer: Renderer) {}
 
   @HostListener('click', ['$event.target'])
   onSelectChange() {

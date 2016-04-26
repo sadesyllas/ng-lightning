@@ -1,4 +1,4 @@
-import {Directive, Input} from 'angular2/core';
+import {Directive, Input} from '@angular/core';
 import {toBoolean} from '../util/util';
 import {NglPill} from './pill';
 

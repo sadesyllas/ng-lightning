@@ -1,6 +1,7 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {selectElements} from '../../test/helpers';
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {NglPick} from './pick';
 import {NglPickOption} from './pick-option';
 
@@ -10,27 +11,24 @@ function expectState(element: HTMLElement, state: boolean[], activeClass = 'slds
   expect(state).toEqual(options.map(o => o.classList.contains(activeClass)));
 }
 
-let HTML: string;
-
 describe('Pick multiple array', () => {
-  HTML = `
+  let HTML = `
     <div [(nglPick)]="selected" nglPickMultiple nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1"></button>
-      <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
+      <button type="button" *ngFor="let option of options" [nglPickOption]="option"></button>
     </div>
   `;
 
-  it('should have proper options selected based on input', testAsync(({fixture, done}) => {
+  it('should have proper options selected based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     expectState(fixture.nativeElement, [true, false, true, false]);
 
     fixture.componentInstance.selected = ['op2', 'op3'];
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, true, true, false]);
-    done();
-  }));
+  }, HTML));
 
-  it('should have proper selected value when `nglPickOption` is clicked', testAsync(({fixture, done}) => {
+  it('should have proper selected value when `nglPickOption` is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const elements = selectElements(fixture.nativeElement, 'button');
 
@@ -44,10 +42,9 @@ describe('Pick multiple array', () => {
     fixture.detectChanges();
     elements[1].click();
     expect(fixture.componentInstance.selected).toEqual(['op1', 'op3', 'op2']);
-    done();
-  }));
+  }, HTML));
 
-  it('should have proper option selected when a new option is added', testAsync(({fixture, done}) => {
+  it('should have proper option selected when a new option is added', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.selected = ['op5'];
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false]);
@@ -55,29 +52,27 @@ describe('Pick multiple array', () => {
     fixture.componentInstance.options.push('op5');
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
-    done();
-  }));
+  }, HTML));
 });
 
 describe('Pick multiple object', () => {
-  HTML = `
+  let HTML = `
     <div [(nglPick)]="selectedObject" nglPickMultiple nglPickActiveClass="slds-button--brand">
       <button type="button" nglPickOption="op1"></button>
-      <button type="button" *ngFor="#option of options" [nglPickOption]="option"></button>
+      <button type="button" *ngFor="let option of options" [nglPickOption]="option"></button>
     </div>
   `;
 
-  it('should have proper options selected based on input', testAsync(({fixture, done}) => {
+  it('should have proper options selected based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     expectState(fixture.nativeElement, [true, false, true, false]);
 
     fixture.componentInstance.selectedObject = {op2: true, op3: true};
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, true, true, false]);
-    done();
-  }));
+  }, HTML));
 
-  it('should have proper selected value when `nglPickOption` is clicked', testAsync(({fixture, done}) => {
+  it('should have proper selected value when `nglPickOption` is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const elements = selectElements(fixture.nativeElement, 'button');
 
@@ -92,10 +87,9 @@ describe('Pick multiple object', () => {
     fixture.detectChanges();
     elements[1].click();
     expect(fixture.componentInstance.selectedObject).toEqual({ op1: true, op2: true, op3: true, op4: false });
-    done();
-  }));
+  }, HTML));
 
-  it('should have proper option selected when a new option is added', testAsync(({fixture, done}) => {
+  it('should have proper option selected when a new option is added', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.selectedObject = {op5: true};
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false]);
@@ -103,20 +97,17 @@ describe('Pick multiple object', () => {
     fixture.componentInstance.options.push('op5');
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
-    done();
-  }));
+  }, HTML));
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = HTML) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({

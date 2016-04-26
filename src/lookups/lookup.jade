@@ -13,5 +13,5 @@
   .slds-lookup__menu([ngClass]="{'slds-hide': !expanded}", role="listbox")
     ul.slds-lookup__list(role="presentation")
       li.slds-lookup__item(*ngIf="noResults"): a No results found
-      li.slds-lookup__item(*ngFor="#item of suggestions; #i=index", (click)="handlePick(item)", [ngClass]="{'slds-dropdown__item--active': i === activeIndex }")
+      li.slds-lookup__item(*ngFor="let item of suggestions; let i=index", (click)="handlePick(item)", [ngClass]="{'slds-dropdown__item--active': i === activeIndex }")
         a([id]="optionId(i)", role="option") {{resolveLabel(item)}}

@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, HostListener} from 'angular2/core';
+import {Directive, ElementRef, Renderer, HostListener} from '@angular/core';
 
 @Directive({
   selector: '[nglDropdownItem]',

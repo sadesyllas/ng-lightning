@@ -1,4 +1,4 @@
-import {Directive, Input, ElementRef, Renderer} from 'angular2/core';
+import {Directive, Input, ElementRef, Renderer} from '@angular/core';
 import {replaceClass} from '../util/util';
 
 @Directive({

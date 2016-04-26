@@ -2,7 +2,7 @@
   <template ngl-tab heading="Overview">
     You have {{details.length}} details.
   </template>
-  <template *ngFor="#detail of details" ngl-tab [heading]="detail.title"
+  <template *ngFor="let detail of details" ngl-tab [heading]="detail.title"
             (onActivate)="tabChange(detail, 'add')"
             (onDeactivate)="tabChange(detail, 'remove')">
     {{detail.text}}

@@ -1,4 +1,4 @@
-import {Component, ElementRef} from 'angular2/core';
+import {Component, ElementRef} from '@angular/core';
 
 declare const __ENV__: any;
 
@@ -12,7 +12,7 @@ export class Plunker {
 
   index() {
     if (!this.component) return '';
-    return require('!!jade?pretty=true!./plunker-html.jade')(__ENV__);
+    return require('!!jade?pretty=true!./files/index.jade')(__ENV__);
   }
 
   ts() {
@@ -24,7 +24,7 @@ export class Plunker {
                 .replace(/selector: '(.*)'/, 'selector: \'demo\'')
                 .replace(/template: require(.*)/, 'templateUrl: \'app/demo.html\'')
                 .replace(/class Demo(.*) {/, 'class Demo {');
-    return `import {bootstrap}  from 'angular2/platform/browser';\n${ts}\nbootstrap(Demo, [provideNglConfig()]);`;
+    return `import {bootstrap}  from '@angular/platform-browser-dynamic';\n${ts}\nbootstrap(Demo, [provideNglConfig()]);`;
   }
 
   html() {

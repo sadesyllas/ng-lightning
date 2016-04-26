@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, ElementRef, Renderer } from 'angular2/core';
+import { Directive, Input, HostListener, ElementRef, Renderer } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { NglPick } from './pick';
 

@@ -14,6 +14,6 @@
 <button type="button" nglButton="brand" (click)="add()">Add</button>
 <div class="slds-clearfix slds-p-vertical--xx-small"></div>
 
-<a href="javascript:void(0)" *ngFor="#pill of pills" nglPill (nglPillRemove)="remove(pill)">
+<a href="javascript:void(0)" *ngFor="let pill of pills" nglPill (nglPillRemove)="remove(pill)">
   <ngl-icon category="standard" icon="account" nglPillImage></ngl-icon> {{pill}}
 </a>

@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ElementRef, Renderer, Attribute} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ElementRef, Renderer, Attribute} from '@angular/core';
 import {toBoolean} from '../util/util';
 import {NglIcon} from '../icons/icon';
 

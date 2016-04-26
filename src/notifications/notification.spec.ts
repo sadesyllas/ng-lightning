@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, fakeAsync, tick, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async, fakeAsync, tick}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglNotification} from './notification';
 import {NglNotificationClose} from './notification-close';
 import {provideNglConfig} from '../config/config';
@@ -10,7 +11,7 @@ function getCloseButton(fixture: any): HTMLElement {
 
 describe('`nglNotification`', () => {
 
-  it('should have the proper classes and attributes', testAsync(({fixture, done}) => {
+  it('should have the proper classes and attributes', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     const notificationElement = fixture.nativeElement.querySelector('.slds-notify');
@@ -33,10 +34,9 @@ describe('`nglNotification`', () => {
 
     const closeButton = getCloseButton(fixture);
     expect(closeButton).toHaveCssClass('slds-notify__close');
-    done();
   }));
 
-  it('should have the proper assistive texts', testAsync(({fixture, done}) => {
+  it('should have the proper assistive texts', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.assistiveText = 'Test of assistive text';
     fixture.componentInstance.closeAssistiveText = 'Test of close assistive text';
 
@@ -46,44 +46,35 @@ describe('`nglNotification`', () => {
     expect(assistiveTexts.length).toBe(2);
     expect(assistiveTexts[0].textContent).toBe(fixture.componentInstance.assistiveText);
     expect(assistiveTexts[1].textContent).toBe(fixture.componentInstance.closeAssistiveText);
-    done();
   }));
 
-  it('should not have a close button when the nglNotificationClose attribute is absent', testAsync(({fixture, done}) => {
+  it('should not have a close button when the nglNotificationClose attribute is absent', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
-
     const closeButton = getCloseButton(fixture);
     expect(closeButton).toBeFalsy();
-    done();
   }, '<ngl-notification [type]="type" [severity]="severity">'));
 
-  it('should emit a close event when the close button is clicked', testAsync(({fixture, done}) => {
+  it('should emit a close event when the close button is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     const closeButton = getCloseButton(fixture);
-
-    spyOn(fixture.componentInstance, 'onClose').and.callFake((reason: string) => {
-      expect(reason).toBe('button');
-      done();
-    });
+    spyOn(fixture.componentInstance, 'onClose');
 
     closeButton.click();
+    expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
   }));
 
-  it('should emit a close event when its `close` method is called', testAsync(({fixture, done}) => {
+  it('should emit a close event when its `close` method is called', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     const externalCloseButton = fixture.nativeElement.querySelector('.boundVarCloser');
-
-    spyOn(fixture.componentInstance, 'onClose').and.callFake((reason: string) => {
-      expect(reason).toBe('api');
-      done();
-    });
+    spyOn(fixture.componentInstance, 'onClose');
 
     externalCloseButton.click();
+    expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('api');
   }));
 
-  it('should emit a close event when the specified timeout has passed', testAsync(fakeAsync(({fixture, done}) => {
+  it('should emit a close event when the specified timeout has passed', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -94,10 +85,9 @@ describe('`nglNotification`', () => {
 
     tick(100);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
-    done();
-  })));
+  }, null, true));
 
-  it('should set the timeout anew when the binding changes', testAsync(fakeAsync(({fixture, done}) => {
+  it('should set the timeout anew when the binding changes', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -107,15 +97,14 @@ describe('`nglNotification`', () => {
     fixture.componentInstance.timeout = 300;
     fixture.detectChanges();
 
-    tick(100);
+    tick(299);
     expect(fixture.componentInstance.onClose).not.toHaveBeenCalled();
 
-    tick(200);
+    tick(1);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
-    done();
-  })));
+  }, null, true));
 
-  it('should cancel the active timeout after the close button has been clicked', testAsync(fakeAsync(({fixture, done}) => {
+  it('should cancel the active timeout after the close button has been clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -127,21 +116,19 @@ describe('`nglNotification`', () => {
     tick(100);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
     expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
-    done();
-  })));
+  }, null, true));
 
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then(fixture => fn({ fixture, done})).catch(err => console.error(err.stack || err));
-    });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null, fake = false) {
+  const injectFn = inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
   });
+  return fake ? fakeAsync(injectFn) : async(injectFn);
 }
 
 @Component({

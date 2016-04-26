@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async} from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglButtonState} from './button-state';
 import {NglIcon} from '../icons/icon';
 import {selectElements} from '../../test/helpers';
@@ -10,7 +11,7 @@ function getButtonElement(element: Element): HTMLButtonElement {
 
 describe('`nglButtonState`', () => {
 
-  it('should render correctly', testAsync(({ fixture, done }) => {
+  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     const button = getButtonElement(fixture.nativeElement);
@@ -24,10 +25,9 @@ describe('`nglButtonState`', () => {
       expect(icon).not.toHaveCssClass('slds-button__icon');
       expect(icon).toHaveCssClass('slds-button__icon--left');
     });
-    done();
   }));
 
-  it('should toggle state based on input', testAsync(({ fixture, done }) => {
+  it('should toggle state based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     const { componentInstance } = fixture;
@@ -43,33 +43,27 @@ describe('`nglButtonState`', () => {
     fixture.detectChanges();
     expect(button).toHaveCssClass('slds-not-selected');
     expect(button).not.toHaveCssClass('slds-is-selected');
-    done();
   }));
 
-  it('should emit the appopriate state on click', testAsync(({ fixture, done }) => {
+  it('should emit the appopriate state on click', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
-
-    spyOn(componentInstance, 'change').and.callFake(() => {
-      expect(componentInstance.change).toHaveBeenCalledWith(true);
-      done();
-    });
+    spyOn(componentInstance, 'change');
 
     const button = getButtonElement(nativeElement);
     button.click();
+    expect(componentInstance.change).toHaveBeenCalledWith(true);
   }));
 
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      if (html) {
-        tcb = tcb.overrideTemplate(TestComponent, html);
-      }
-      tcb.createAsync(TestComponent).then(fixture => fn({ fixture, done})).catch(err => console.error(err.stack || err));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({

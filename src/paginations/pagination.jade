@@ -1,5 +1,5 @@
 .slds-button-group(role="group")
   button.slds-button.slds-button--neutral([disabled]="!hasPrevious()", (click)="goto(current - 1)") Previous
-  button.slds-button.slds-button--neutral(*ngFor="#pageNumber of pages", [class.slds-button--brand]="pageNumber === current", (click)="goto(pageNumber)")
+  button.slds-button.slds-button--neutral(*ngFor="let pageNumber of pages", [class.slds-button--brand]="pageNumber === current", (click)="goto(pageNumber)")
     | {{pageNumber}}
   button.slds-button.slds-button--neutral([disabled]="!hasNext()", (click)="goto(current + 1)") Next

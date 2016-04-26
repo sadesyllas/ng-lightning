@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer, Optional} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer, Optional} from '@angular/core';
 import {replaceClass} from '../util/util';
 import {NglPillImage} from '../pills/pill-image';
 

@@ -6,7 +6,7 @@
   </button>
   <div class="slds-dropdown slds-dropdown--left">
     <ul class="dropdown__list" role="menu">
-      <li class="slds-dropdown__item" *ngFor="#item of items;">
+      <li class="slds-dropdown__item" *ngFor="let item of items;">
         <a role="menuitem" nglDropdownItem (click)="selected = item.value; open = false;">
           <p class="slds-truncate">{{item.value}}</p>
           <ngl-icon [icon]="item.icon" size="x-small"></ngl-icon>
@@ -30,7 +30,7 @@
   </button>
   <div class="slds-dropdown slds-dropdown--left">
     <ul class="dropdown__list" role="menu">
-      <li class="slds-dropdown__item" *ngFor="#item of items;" [nglPickOption]="item" nglPickActiveClass="slds-is-selected">
+      <li class="slds-dropdown__item" *ngFor="let item of items;" [nglPickOption]="item" nglPickActiveClass="slds-is-selected">
         <a role="menuitem" nglDropdownItem>
           <p class="slds-truncate">
             <ngl-icon icon="check" size="x-small" svgClass="slds-icon--selected slds-m-right--small"></ngl-icon>

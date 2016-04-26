@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglPagination} from './pagination';
 
 function getPageElements(element: HTMLElement): HTMLButtonElement[] {
@@ -35,15 +36,13 @@ function expectPages(element: HTMLElement, definitions: string[]): void {
 describe('Pagination Component', () => {
 
   describe('with default settings', () => {
-    let html = `<ngl-pagination [page]="page" [total]="total"></ngl-pagination>`;
 
-    it('should render the pages correctly', testAsync(html, ({fixture, done}) => {
+    it('should render the pages correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ 'Previous', '1', '+2', '3', '4', 'Next' ]);
-      done();
     }));
 
-    it('should disbale pages correctly when on limits', testAsync(html, ({fixture, done}) => {
+    it('should disbale pages correctly when on limits', testAsync((fixture: ComponentFixture<TestComponent>) => {
       fixture.componentInstance.page = 1;
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ '-Previous', '+1', '2', '3', '4', 'Next' ]);
@@ -51,20 +50,18 @@ describe('Pagination Component', () => {
       fixture.componentInstance.page = 4;
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '3', '+4', '-Next' ]);
-      done();
     }));
   });
 
   describe('with limit settings', () => {
     let html = `<ngl-pagination [page]="page" [total]="total" limit="2"></ngl-pagination>`;
 
-    it('should render the pages correctly', testAsync(html, ({fixture, done}) => {
+    it('should render the pages correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ 'Previous', '1', '+2', 'Next' ]);
-      done();
-    }));
+    }, html));
 
-    it('should disbale pages correctly when on limits', testAsync(html, ({fixture, done}) => {
+    it('should disbale pages correctly when on limits', testAsync((fixture: ComponentFixture<TestComponent>) => {
       fixture.componentInstance.page = 1;
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ '-Previous', '+1', '2', 'Next' ]);
@@ -72,24 +69,24 @@ describe('Pagination Component', () => {
       fixture.componentInstance.page = 4;
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ 'Previous', '3', '+4', '-Next' ]);
-      done();
-    }));
+    }, html));
   });
 
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(html: string, fn: Function) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      tcb.overrideTemplate(TestComponent, html).createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({
   directives: [NglPagination],
-  template: '',
+  template: `<ngl-pagination [page]="page" [total]="total"></ngl-pagination>`,
 })
 export class TestComponent {
   page = 2;

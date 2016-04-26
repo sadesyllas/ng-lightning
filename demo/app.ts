@@ -1,7 +1,8 @@
 import './vendor';
-import {Component, provide, enableProdMode} from 'angular2/core';
-import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, LocationStrategy, HashLocationStrategy} from 'angular2/router';
-import {bootstrap} from 'angular2/platform/browser';
+import {Component, enableProdMode} from '@angular/core';
+import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig} from '@angular/router-deprecated';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {bootstrap} from '@angular/platform-browser-dynamic';
 
 import {provideNglConfig} from '../dist/ng-lightning';
 
@@ -28,6 +29,6 @@ export class App {}
 
 bootstrap(App, [
   ROUTER_PROVIDERS,
-  provide(LocationStrategy, {useClass: HashLocationStrategy}),
+  { provide: LocationStrategy, useClass: HashLocationStrategy },
   provideNglConfig(),
 ]);

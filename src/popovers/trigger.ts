@@ -1,4 +1,4 @@
-import {Directive, Input, ElementRef} from 'angular2/core';
+import {Directive, Input, ElementRef} from '@angular/core';
 import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';

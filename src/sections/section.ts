@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, ElementRef, Renderer, HostBinding, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, ElementRef, Renderer, HostBinding, ChangeDetectionStrategy} from '@angular/core';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';
 

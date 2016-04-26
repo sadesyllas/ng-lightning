@@ -1,4 +1,4 @@
-import { Directive, Input, Output, EventEmitter, ElementRef, Renderer } from 'angular2/core';
+import { Directive, Input, Output, EventEmitter, ElementRef, Renderer } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
 import {toBoolean} from '../util/util';
 

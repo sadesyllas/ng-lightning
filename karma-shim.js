@@ -8,47 +8,48 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 __karma__.loaded = function() {};
 
 System.config({
-    packages: {
-        'base/temp': {
-            defaultExtension: false,
-            format: 'cjs',
-            map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
-        }
-    }
+  baseURL: '/base',
+  map: {
+    'rxjs': 'node_modules/rxjs',
+    '@angular': 'node_modules/@angular',
+    'temp': 'temp'
+  },
+  packages: {
+    'temp': {defaultExtension: 'js'},
+    '@angular/core': {main: 'index.js', defaultExtension: 'js'},
+    '@angular/compiler': {main: 'index.js', defaultExtension: 'js'},
+    '@angular/common': {main: 'index.js', defaultExtension: 'js'},
+    '@angular/platform-browser': {main: 'index.js', defaultExtension: 'js'},
+    '@angular/platform-browser-dynamic': {main: 'index.js', defaultExtension: 'js'},
+    'rxjs': {defaultExtension: 'js'},
+  },
+  paths: {
+    'tether': 'node_modules/tether/dist/js/tether.min.js'
+  },
 });
 
-System.import('angular2/testing')
-    .then(function(testing) {
-        return System.import('angular2/platform/testing/browser').then(function(testing_platform_browser) {
-            testing.setBaseTestProviders(
-                testing_platform_browser.TEST_BROWSER_PLATFORM_PROVIDERS,
-                testing_platform_browser.TEST_BROWSER_APPLICATION_PROVIDERS);
-        });
-    })
-    .then(function() { return Promise.all(resolveTestFiles()); })
-    .then(function() { __karma__.start(); }, function(error) { __karma__.error(error.stack || error); });
+Promise.all([System.import('@angular/core/testing'), System.import('@angular/platform-browser-dynamic/testing')])
+  .then(function(providers) {
+    var testing = providers[0];
+    var testingBrowser = providers[1];
 
-function createPathRecords(pathsMapping, appPath) {
-    // creates local module name mapping to global path with karma's fingerprint in path
-    var moduleName = appPath.replace('/base/temp/', './').replace(/\.js$/, '');
-    pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
-    return pathsMapping;
-}
-
-function onlyAppFiles(filePath) {
-    return /\/base\/temp\/(?!.*\.spec\.js$).*\.js$/.test(filePath);
-}
+    testing.setBaseTestProviders(
+      testingBrowser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+      testingBrowser.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
+  })
+  .then(function() {
+    return Promise.all(resolveTestFiles());
+  })
+  .then(__karma__.start, __karma__.error);
 
 function onlySpecFiles(path) {
-    return /\.spec\.js$/.test(path);
+  return /\.spec\.js$/.test(path);
 }
 
 function resolveTestFiles() {
-    return Object
-        .keys(window.__karma__.files)  // All files served by Karma.
-        .filter(onlySpecFiles)
-        .map(function(moduleName) {
-            // loads all spec files via their global module names
-            return System.import(moduleName);
-        });
+  return Object.keys(window.__karma__.files)
+    .filter(onlySpecFiles)
+    .map(function(moduleName) {
+      return System.import(moduleName);
+    });
 }

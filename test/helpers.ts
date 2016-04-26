@@ -2,7 +2,7 @@
  * Testing helpers
  */
 
-import {beforeEachProviders} from 'angular2/testing';
+import {beforeEachProviders} from '@angular/core/testing';
 import {provideNglConfig} from '../src/config/config';
 
 // Default configuration for every TestComponent

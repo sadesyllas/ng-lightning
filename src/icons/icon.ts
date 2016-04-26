@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Attribute, Optional} from 'angular2/core';
+import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Attribute, Optional} from '@angular/core';
 import {NglConfig} from '../config/config';
 import {toBoolean, replaceClass} from '../util/util';
 import {NglButton} from '../buttons/button';

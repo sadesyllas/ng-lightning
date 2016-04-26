@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, HostBinding} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, HostBinding} from '@angular/core';
 import {toBoolean} from '../util/util';
 
 @Component({

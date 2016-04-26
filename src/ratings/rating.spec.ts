@@ -1,5 +1,6 @@
-import {it, describe, expect, injectAsync, TestComponentBuilder} from 'angular2/testing';
-import {Component} from 'angular2/core';
+import {it, describe, expect, inject, async}  from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {NglRating} from './rating';
 import {dispatchKeyEvent} from '../../test/helpers';
 
@@ -21,7 +22,7 @@ function expectState(element: HTMLElement, state: string) {
 
 describe('Rating Component', () => {
 
-  it('should render the stars correctly', testAsync(({fixture, done}) => {
+  it('should render the stars correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
     expectState(nativeElement, '**---');
@@ -29,16 +30,14 @@ describe('Rating Component', () => {
     componentInstance.value = 4;
     fixture.detectChanges();
     expectState(nativeElement, '****-');
-    done();
   }));
 
-  it('prevents stars from wrapping', testAsync(({fixture, done}) => {
+  it('prevents stars from wrapping', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     expect(fixture.nativeElement.firstElementChild).toHaveCssStyle({'white-space': 'nowrap', 'background-color': 'red'});
-    done();
   }, `<ngl-rating [(rate)]="value" style="background: red;"></ngl-rating>`));
 
-  it('should change rate based on click', testAsync(({fixture, done}) => {
+  it('should change rate based on click', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
 
@@ -51,10 +50,9 @@ describe('Rating Component', () => {
 
     stars[3].click();
     expect(componentInstance.change).toHaveBeenCalledWith(4);
-    done();
   }));
 
-  it('should notify when hovering over a specific rate', testAsync(({fixture, done}) => {
+  it('should notify when hovering over a specific rate', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
 
@@ -67,18 +65,16 @@ describe('Rating Component', () => {
 
     stars[0].dispatchEvent(new Event('mouseenter'));
     expect(componentInstance.change).toHaveBeenCalledWith(1);
-    done();
   }, `<ngl-rating [rate]="value" (hover)="change($event)"></ngl-rating>`));
 
   describe(`max`, () => {
-    it('defines the available stars', testAsync(({fixture, done}) => {
+    it('defines the available stars', testAsync((fixture: ComponentFixture<TestComponent>) => {
       fixture.detectChanges();
       expectState(fixture.nativeElement, '*****-----');
-      done();
     }, '<ngl-rating rate="5" max="10"></ngl-rating>'));
   });
 
-  it('should not change when is readonly', testAsync(({fixture, done}) => {
+  it('should not change when is readonly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     componentInstance.readonly = true;
     fixture.detectChanges();
@@ -89,10 +85,9 @@ describe('Rating Component', () => {
 
     stars[3].click();
     expect(componentInstance.change).not.toHaveBeenCalled();
-    done();
   }));
 
-  it('should not change when is readonly', testAsync(({fixture, done}) => {
+  it('should not change when is readonly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     componentInstance.readonly = true;
     fixture.detectChanges();
@@ -103,11 +98,10 @@ describe('Rating Component', () => {
 
     stars[3].click();
     expect(componentInstance.change).not.toHaveBeenCalled();
-    done();
   }));
 
   describe('keyboard interaction', () => {
-    it('will change value apropriately', testAsync(({fixture, done}) => {
+    it('will change value apropriately', testAsync((fixture: ComponentFixture<TestComponent>) => {
       const { nativeElement, componentInstance } = fixture;
       const ratingElement = nativeElement.firstElementChild;
       fixture.detectChanges();
@@ -126,10 +120,9 @@ describe('Rating Component', () => {
       expect(componentInstance.change).toHaveBeenCalledWith(3);
       dispatchKeyEvent(ratingElement, 'ArrowLeft');
       expect(componentInstance.change).toHaveBeenCalledWith(1);
-      done();
     }));
 
-    it('will keep value in limits', testAsync(({fixture, done}) => {
+    it('will keep value in limits', testAsync((fixture: ComponentFixture<TestComponent>) => {
       const { nativeElement, componentInstance } = fixture;
       const ratingElement = nativeElement.firstElementChild;
       componentInstance.value = 5;
@@ -143,11 +136,10 @@ describe('Rating Component', () => {
       fixture.detectChanges();
       dispatchKeyEvent(ratingElement, 'ArrowDown');
       expect(componentInstance.change).not.toHaveBeenCalled();
-      done();
     }));
   });
 
-  it('should change icons size based on input', testAsync(({fixture, done}) => {
+  it('should change icons size based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { nativeElement, componentInstance } = fixture;
     componentInstance.size = 'small';
     fixture.detectChanges();
@@ -168,18 +160,18 @@ describe('Rating Component', () => {
       expect(icon).not.toHaveCssClass('slds-icon--small');
       expect(icon).not.toHaveCssClass('slds-icon--large');
     });
-    done();
   }, `<ngl-rating [(rate)]="value" [size]="size"></ngl-rating>`));
 
 });
 
-// Shortcut function to use instead of `injectAsync` for less boilerplate on each `it`
-function testAsync(fn: Function, html: string = null) {
-  return injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return new Promise((done: Function) => {
-      tcb.overrideTemplate(TestComponent, html).createAsync(TestComponent).then((fixture) => fn({ fixture, done}));
-    });
-  });
+// Shortcut function for less boilerplate on each `it`
+function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
+  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    if (html) {
+      tcb = tcb.overrideTemplate(TestComponent, html);
+    }
+    return tcb.createAsync(TestComponent).then(fn);
+  }));
 }
 
 @Component({
