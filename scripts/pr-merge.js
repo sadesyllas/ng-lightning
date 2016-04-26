@@ -2,6 +2,7 @@ const shell = require('shelljs');
 const request = require('request');
 const inquirer = require('inquirer');
 const q = require('q');
+const fs = require('fs');
 
 const GITHUB_REPOSITORY = 'ng-lightning/ng-lightning';
 
@@ -65,7 +66,7 @@ function applyPatch(config) {
     }
 
     const patchFile = `${shell.tempdir()}/gh-${config.prno}-${+new Date()}`;
-    body.to(patchFile);
+    fs.writeFileSync(patchFile, body);
     console.log(`Wrote to file: ${patchFile}`);
 
     shell.exec(`git am -3 ${patchFile}`, (code) => {
@@ -90,7 +91,7 @@ function editCommitMessage(config) {
 
     const commitmsg = `${out}\n\nCloses #${config.prno}`;
     const patchFile = `${shell.tempdir()}/gh-${config.prno}-msg-${+new Date()}`;
-    commitmsg.to(patchFile);
+    fs.writeFileSync(patchFile, commitmsg);
     shell.exec(`git commit --amend -F ${patchFile}`, () => {
       shell.rm(patchFile);
       deferred.resolve(config);
