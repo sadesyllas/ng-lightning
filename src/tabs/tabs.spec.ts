@@ -54,6 +54,23 @@ describe('Tabs Component', () => {
     headers[2].click();
   }));
 
+
+  it('should allow activating tab from outside', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    const { componentInstance, nativeElement } = fixture;
+    const button = nativeElement.querySelector('button');
+
+    spyOn(componentInstance, 'change').and.callFake((tab: NglTab) => {
+      expect(tab.id).toBe('another');
+    });
+    button.click();
+  }, `
+    <ngl-tabs [selected]="selectedTab" (selectedChange)="change($event)">
+      <template ngl-tab></template>
+      <template ngl-tab="another" #anotherTab="nglTab"></template>
+    </ngl-tabs>
+    <button (click)="selectedTab = anotherTab"></button>
+  `));
+
 });
 
 // Shortcut function for less boilerplate on each `it`

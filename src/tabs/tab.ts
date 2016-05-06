@@ -2,6 +2,7 @@ import {Directive, Input, Attribute, ViewContainerRef, TemplateRef, Output, Even
 
 @Directive({
   selector: '[ngl-tab]',
+  exportAs: 'nglTab',
 })
 export class NglTab {
   @Input() heading: string = '';
