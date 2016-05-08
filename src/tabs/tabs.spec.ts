@@ -3,13 +3,14 @@ import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing'
 import {Component} from '@angular/core';
 import {NglTabs} from './tabs';
 import {NglTab} from './tab';
+import {selectElements} from '../../test/helpers';
 
 function getTabsElement(element: Element): HTMLUListElement {
   return <HTMLUListElement>element.querySelector('ul');
 }
 
-function getTabHeaders(element: Element): HTMLLIElement[] {
-  return [].slice.call(element.querySelectorAll('li'));
+function getTabHeaders(element: HTMLElement): HTMLElement[] {
+  return selectElements(element, 'li > a');
 }
 
 describe('Tabs Component', () => {
@@ -30,6 +31,16 @@ describe('Tabs Component', () => {
     expect(headers.length).toBe(3);
     expect(headers.map((h: HTMLElement) => h.textContent.trim())).toEqual(['First', 'Second',  'Third tab']);
   }));
+
+  it('should render tab header based on template', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const headers = getTabHeaders(fixture.nativeElement);
+    expect(headers[0].innerHTML).toContain('<b>My header</b>');
+  }, `<ngl-tabs [(selected)]="selectedTab">
+        <template #h><b>My header</b></template>
+        <template ngl-tab [heading]="h"></template>
+      </ngl-tabs>`));
 
   it('should activate tab based on id', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { componentInstance } = fixture;

@@ -8,7 +8,8 @@
     {{detail.text}}
     <button type="button" nglButton="destructive" (click)="removeDetail(detail)">Remove</button>
   </template>
-  <template ngl-tab="sum" #summaryTab="nglTab" heading="Summary">
+  <template #heading>Summary</template>
+  <template ngl-tab="sum" #summaryTab="nglTab" [heading]="heading">
     Next last ID is {{id}}.
   </template>
 </ngl-tabs>

@@ -5,7 +5,7 @@ import {Directive, Input, Attribute, ViewContainerRef, TemplateRef, Output, Even
   exportAs: 'nglTab',
 })
 export class NglTab {
-  @Input() heading: string = '';
+  @Input() heading: string | TemplateRef<any>;
   @Output() onActivate = new EventEmitter<NglTab>(false);
   @Output() onDeactivate = new EventEmitter<NglTab>(false);
 
