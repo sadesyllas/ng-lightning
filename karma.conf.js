@@ -23,6 +23,9 @@ module.exports = function(config) {
         'node_modules/es6-shim/es6-shim.js',
         'node_modules/reflect-metadata/Reflect.js',
 
+        // Typescript helpers polyfill
+        'node_modules/ts-helpers/index.js',
+
         // System.js for module loading
         'node_modules/systemjs/dist/system-polyfills.js',
         'node_modules/systemjs/dist/system.src.js',

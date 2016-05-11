@@ -99,6 +99,7 @@
     "systemjs": "^0.19.27",
     "systemjs-builder": "^0.15.16",
     "tether": "^1.2.4",
+    "ts-helpers": "^1.1.1",
     "ts-loader": "^0.8.2",
     "tslint": "^3.8.0",
     "typescript": "^1.8.10",

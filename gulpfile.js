@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
+var tsBuildProject = ts.createProject('tsconfig.json', { noEmitHelpers: false });
 var lazypipe = require('lazypipe');
 var jade = require('jade');
 var inlineTemplates = require('gulp-inline-ng2-template');
@@ -49,7 +50,7 @@ gulp.task('build:ts', ['lint:ts'], function() {
 
   var tsResult = gulp.src(PATHS.src, {base: 'src'})
     .pipe(inlineTemplatesTask())
-    .pipe(ts(tsProject));
+    .pipe(ts(tsBuildProject));
 
   return merge([
     tsResult.dts.pipe(replace(/^\/{3}.*$/gm, '')),
