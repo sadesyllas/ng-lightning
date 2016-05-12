@@ -1,3 +1,36 @@
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/ng-lightning/ng-lightning/compare/v0.7.0...v0.8.0) (2016-05-12)
+
+
+### Bug Fixes
+
+* **build:** import from `rxjs/Rx` to avoid SystemJS issues ([2cd7f96](https://github.com/ng-lightning/ng-lightning/commit/2cd7f96)), closes [#80](https://github.com/ng-lightning/ng-lightning/issues/80)
+
+
+### Features
+
+* **NglLookup:** support single selection ([b5f1013](https://github.com/ng-lightning/ng-lightning/commit/b5f1013)), closes [#79](https://github.com/ng-lightning/ng-lightning/issues/79)
+* **NglTab:** add `exportAs` ([f63646b](https://github.com/ng-lightning/ng-lightning/commit/f63646b)), closes [#84](https://github.com/ng-lightning/ng-lightning/issues/84)
+* **NglTab:** support template as heading ([93fa880](https://github.com/ng-lightning/ng-lightning/commit/93fa880)), closes [#85](https://github.com/ng-lightning/ng-lightning/issues/85)
+
+
+### BREAKING CHANGES
+
+* NglLookup: `pick` is now two way binded
+
+  Before:
+
+  ```html
+  <ngl-lookup (pick)="selected = $event" ...></ngl-lookup>
+  ```
+
+  After:
+  ```html
+  <ngl-lookup [(pick)]="selected" ...></ngl-lookup>
+  ```
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/ng-lightning/ng-lightning/compare/v0.6.0...v0.7.0) (2016-04-19)
 
