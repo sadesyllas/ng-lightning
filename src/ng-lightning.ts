@@ -1,5 +1,7 @@
 /// <reference path="../typings/main.d.ts"/>
 
+import 'ts-helpers';
+
 import {NglAvatar} from './images/avatar';
 import {NglBadge} from './badges/badge';
 import {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
