@@ -33,6 +33,31 @@ describe('Pagination Component', () => {
       expectPages(fixture.nativeElement, [ 'Previous', '1', '+2', '3', '4', 'Next' ]);
     }));
 
+    it('should move to the requested page when clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.detectChanges();
+      const pages = getPageElements(fixture.nativeElement);
+
+      pages[2].click();
+      expect(fixture.componentInstance.pageChange).not.toHaveBeenCalled();
+
+      pages[4].click();
+      expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(4);
+
+      pages[1].click();
+      expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(1);
+    }));
+
+    it('should move to the requested page when clicking on `Previous` and `Next`', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.detectChanges();
+      const pages = getPageElements(fixture.nativeElement);
+      expect(fixture.componentInstance.pageChange).not.toHaveBeenCalled();
+      pages[0].click();
+      expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(1);
+
+      pages[5].click();
+      expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(3);
+    }));
+
     it('should disbale pages correctly when on limits', testAsync((fixture: ComponentFixture<TestComponent>) => {
       fixture.componentInstance.page = 1;
       fixture.detectChanges();
@@ -41,6 +66,27 @@ describe('Pagination Component', () => {
       fixture.componentInstance.page = 4;
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '3', '+4', '-Next' ]);
+    }));
+
+    it('should move to first if none defined', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.detectChanges();
+      expect(fixture.componentInstance.pageChange).not.toHaveBeenCalled();
+      fixture.whenStable().then(() => {
+        expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(1);
+      });
+    }, `<ngl-pagination [page]="unknown" [total]="total" (pageChange)="pageChange($event)"></ngl-pagination>`));
+
+    it('should keep current page inside limits when total page changes', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.componentInstance.page = 4;
+      fixture.detectChanges();
+
+      fixture.componentInstance.total = 12;
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.pageChange).not.toHaveBeenCalled();
+      setTimeout(() => {
+        expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(2);
+      });
     }));
   });
 
@@ -126,9 +172,10 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 
 @Component({
   directives: [NglPagination],
-  template: `<ngl-pagination [page]="page" [total]="total"></ngl-pagination>`,
+  template: `<ngl-pagination [page]="page" [total]="total" (pageChange)="pageChange($event)"></ngl-pagination>`,
 })
 export class TestComponent {
   page = 2;
   total = 33;
+  pageChange = jasmine.createSpy('pageChange');
 }

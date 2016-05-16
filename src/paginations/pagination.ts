@@ -12,7 +12,7 @@ export class NglPagination implements OnChanges {
   pages: NglPage[] = [];
 
   @Input('page') current: number | string;
-  @Output() pageChange = new EventEmitter();
+  @Output() pageChange = new EventEmitter<number>(false);
 
   @Input() total: number | string;
   @Input() perPage: number | string = 10;
@@ -31,9 +31,7 @@ export class NglPagination implements OnChanges {
 
   goto(page: number) {
     if (page === this.current) return;
-
-    this.current = page;
-    this.pageChange.emit(this.current);
+    this.pageChange.emit(+page);
   }
 
   ngOnChanges() {
@@ -64,9 +62,9 @@ export class NglPagination implements OnChanges {
     }
 
     if (this.current > this.totalPages) {
-      this.goto(this.totalPages);
+      setTimeout(() => this.goto(this.totalPages));
     } else if (!this.current && this.totalPages > 0) {
-      this.goto(1);
+      setTimeout(() => this.goto(1));
     }
   }
 
