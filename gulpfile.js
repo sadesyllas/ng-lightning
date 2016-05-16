@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var runSequence = require('run-sequence');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 var lazypipe = require('lazypipe');
@@ -33,7 +32,7 @@ gulp.task('clean', function() {
   return require('del')(BUILD);
 });
 
-gulp.task('lint:ts', function() {
+gulp.task('lint:ts', function lint_ts_impl() {
   var tslint = require('gulp-tslint');
 
   return gulp.src( PATHS.spec )
@@ -44,7 +43,7 @@ gulp.task('lint:ts', function() {
     }));
 });
 
-gulp.task('build:ts', ['lint:ts'], function() {
+gulp.task('build:ts', gulp.series('lint:ts', function build_ts_impl() {
   var merge = require('merge2');
 
   var tsResult = gulp.src(PATHS.src.concat(PATHS.typings), {base: 'src'})
@@ -53,7 +52,7 @@ gulp.task('build:ts', ['lint:ts'], function() {
 
   return merge([tsResult.dts, tsResult.js])
     .pipe(gulp.dest(BUILD));
-});
+}));
 
 gulp.task('bundle', function() {
   return bundle({mangle: false});
@@ -63,16 +62,10 @@ gulp.task('bundle:min', function() {
   return bundle({minify: true, sourceMaps: true, mangle: false});
 });
 
-gulp.task('build', function(done) {
-  runSequence('clean', 'build:ts', ['bundle', 'bundle:min'], done);
-});
-
-gulp.task('build:continuous', function(done) {
-  runSequence('build:ts', 'bundle', done);
-});
+gulp.task('build', gulp.series('clean', 'build:ts', gulp.parallel('bundle', 'bundle:min')));
 
 gulp.task('build:watch', function() {
-  gulp.watch([ PATHS.src, PATHS.templates ], ['build:continuous']);
+  gulp.watch([ PATHS.src, PATHS.templates ], gulp.series('build:ts', 'bundle'));
 });
 
 function startKarmaServer(isTddMode, done) {
@@ -101,30 +94,28 @@ gulp.task('test:build', function() {
     .pipe(gulp.dest(PATHS.temp));
 });
 
-gulp.task('test:clean-build', function(done) {
-  runSequence('test:clean', 'test:build', done);
-});
+gulp.task('test:clean-build', gulp.series('test:clean', 'test:build'));
 
-gulp.task('test', ['test:clean-build'], function(done) {
+gulp.task('test', gulp.series('test:clean-build', function test_impl(done) {
   startKarmaServer(false, done)
-});
+}));
 
-gulp.task('tdd', ['test:clean-build'], function(done) {
+gulp.task('tdd', gulp.series('test:clean-build', function tdd_impl(done) {
   startKarmaServer(true, function(err) {
     done(err);
     process.exit(1);
   });
 
-  gulp.watch([PATHS.spec, PATHS.templates], ['test:build']);
-});
+  gulp.watch([PATHS.spec, PATHS.templates], gulp.series('test:build'));
+}));
 
-gulp.task('prepublish', ['build'], function(done) {
+gulp.task('prepublish', gulp.series('build', function prepublish_impl() {
   return gulp.src(['package.json', '*.md', 'LICENSE'])
     .pipe(gulp.dest(BUILD));
-});
+}));
 
 gulp.task('typings:clean', function() {
   return require('del')('typings');
 });
 
-gulp.task('default', ['build']);
+gulp.task('default', gulp.series('build'));
