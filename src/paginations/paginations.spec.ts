@@ -8,29 +8,20 @@ function getPageElements(element: HTMLElement): HTMLButtonElement[] {
 }
 
 function expectPages(element: HTMLElement, definitions: string[]): void {
-  const pages = getPageElements(element);
   const activeClass = 'slds-button--brand';
 
-  expect(pages.length).toEqual(definitions.length);
-
-  definitions.forEach((definition, i) => {
-    const indicator = definition.charAt(0);
-    const pageElement = pages[i];
-    const text = ['+', '-'].indexOf(indicator) > -1 ? definition.substr(1) : definition;
-
-    if (indicator === '+') {
-      expect(pageElement).toHaveCssClass(activeClass);
-      expect(pageElement.disabled).toBeFalsy();
-    } else if (indicator === '-') {
-      expect(pageElement).not.toHaveCssClass(activeClass);
-      expect(pageElement.disabled).toBeTruthy();
-    } else {
-      expect(pageElement).not.toHaveCssClass(activeClass);
-      expect(pageElement.disabled).toBeFalsy();
+  const pages = getPageElements(element).map((el: HTMLButtonElement) => {
+    let text = el.textContent.trim();
+    if (el.classList.contains(activeClass)) {
+      text = '+' + text;
     }
-
-    expect(pageElement.textContent.trim()).toEqual(text);
+    if (el.disabled) {
+      text = '-' + text;
+    }
+    return text;
   });
+
+  expect(pages).toEqual(definitions);
 }
 
 describe('Pagination Component', () => {
@@ -69,6 +60,55 @@ describe('Pagination Component', () => {
       fixture.componentInstance.page = 4;
       fixture.detectChanges();
       expectPages(fixture.nativeElement, [ 'Previous', '3', '+4', '-Next' ]);
+    }, html));
+  });
+
+  describe('with `boundaryNumbers`', () => {
+    let html = `<ngl-pagination [page]="page" boundaryNumbers="2" total="102" limit="3"></ngl-pagination>`;
+
+    it('should render the pages correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.componentInstance.page = 6;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '-...', '5', '+6', '7', '-...', '10', '11', 'Next' ]);
+    }, html));
+
+    it('should render gaps on start correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '+2', '3', '-...', '10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 3;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '+3', '4', '-...', '10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 4;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '3', '+4', '5', '-...', '10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 5;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '3', '4', '+5', '6', '-...', '10', '11', 'Next' ]);
+    }, html));
+
+    it('should render gaps on end correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.componentInstance.page = 7;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '-...', '6', '+7', '8', '9', '10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 8;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '-...', '7', '+8', '9', '10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 9;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '-...', '8', '+9', '10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 10;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '-...', '9', '+10', '11', 'Next' ]);
+
+      fixture.componentInstance.page = 11;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '-...', '9', '10', '+11', '-Next' ]);
     }, html));
   });
 

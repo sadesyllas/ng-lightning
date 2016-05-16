@@ -7,5 +7,5 @@ import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
     template: require('./paginations.html'),
 })
 export class DemoPaginations {
-  total = 62;
+  total = 172;
 }

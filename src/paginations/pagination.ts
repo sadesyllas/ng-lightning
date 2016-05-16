@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnChanges, ChangeDetectionStrategy} from '@angular/core';
 
+export type NglPage = { number: number | string, disabled?: boolean };
+
 @Component({
   selector: 'ngl-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -7,7 +9,7 @@ import {Component, EventEmitter, Input, Output, OnChanges, ChangeDetectionStrate
 })
 export class NglPagination implements OnChanges {
 
-  pages: number[] = [];
+  pages: NglPage[] = [];
 
   @Input('page') current: number | string;
   @Output() pageChange = new EventEmitter();
@@ -15,6 +17,7 @@ export class NglPagination implements OnChanges {
   @Input() total: number | string;
   @Input() perPage: number | string = 10;
   @Input() limit: number | string = 0;
+  @Input() boundaryNumbers: number = 0;
 
   private totalPages: number;
 
@@ -38,13 +41,46 @@ export class NglPagination implements OnChanges {
 
     const { start, end } = this.limits();
 
-    this.pages = Array.apply(null, {length: end - start + 1}).map((value: any, index: number) => start + index);
+    this.pages = this.getPageArray(start, end);
+
+    if (this.boundaryNumbers > 0) {
+      if (start > 1) {
+        const preGap = this.getPageArray(1, Math.min(start - 1, this.boundaryNumbers));
+        const lastGapNumber = +preGap[preGap.length - 1].number;
+        if (lastGapNumber < start - 1) {
+          this.pages.unshift(this.getGapPage(lastGapNumber, start));
+        }
+        this.pages.unshift(...preGap);
+      }
+
+      if (end < this.totalPages) {
+        const postGap = this.getPageArray(Math.max(this.totalPages - this.boundaryNumbers + 1, end + 1), this.totalPages);
+        const firstGapNumber = +postGap[0].number;
+        if (firstGapNumber > end + 1) {
+          this.pages.push(this.getGapPage(end, firstGapNumber));
+        }
+        this.pages.push(...postGap);
+      }
+    }
 
     if (this.current > this.totalPages) {
       this.goto(this.totalPages);
     } else if (!this.current && this.totalPages > 0) {
       this.goto(1);
     }
+  }
+
+  private getPageArray(start: number, end: number) {
+    return Array.apply(null, {length: end - start + 1}).map((value: any, index: number) => this.getPage(start + index));
+  }
+
+  private getPage(number: string | number, disabled = false): NglPage {
+    return { number, disabled };
+  }
+
+  private getGapPage(before: number, after: number) {
+    const isConsecutive = before + 1 === after - 1;
+    return this.getPage(isConsecutive ? before + 1 : '...', !isConsecutive);
   }
 
   /**

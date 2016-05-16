@@ -1,4 +1,7 @@
-<ngl-pagination [(page)]="page" [total]="total"></ngl-pagination>
-<ngl-pagination [(page)]="page" [total]="total" limit="5"></ngl-pagination>
+<div class="slds-text-heading--label slds-m-bottom--small">Default</div>
+<ngl-pagination [(page)]="pageDefault" total="62"></ngl-pagination>
+
+<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--large">Limited visible options</div>
+<ngl-pagination [(page)]="page" [total]="total" limit="5" boundaryNumbers="1"></ngl-pagination>
 
 Total: <input [(ngModel)]="total">
