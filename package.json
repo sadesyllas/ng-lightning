@@ -12,7 +12,7 @@
   "main": "./ng-lightning.js",
   "typings": "./ng-lightning.d.ts",
   "scripts": {
-    "postinstall": "typings install",
+    "typings": "typings install",
     "test": "gulp test",
     "tdd": "gulp tdd",
     "lint": "gulp lint:ts",

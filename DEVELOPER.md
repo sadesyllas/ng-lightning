@@ -28,6 +28,7 @@ Get all the necessary dependencies needed to build, test and run demo page by ru
 
 ```bash
 npm install
+npm run typings
 ```
 
 ## Commands
