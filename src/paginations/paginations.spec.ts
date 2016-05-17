@@ -158,6 +158,36 @@ describe('Pagination Component', () => {
     }, html));
   });
 
+  describe('with `boundaryLinks`', () => {
+    const html = `<ngl-pagination [page]="page" boundaryLinks [total]="total"></ngl-pagination>`;
+
+    it('should render the `First` / `Last` buttons', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'First', 'Previous', '1', '+2', '3', '4', 'Next', 'Last' ]);
+    }, html));
+
+    it('should disable the `First` / `Last` buttons correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.componentInstance.page = 1;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ '-First', '-Previous', '+1', '2', '3', '4', 'Next', 'Last' ]);
+
+      fixture.componentInstance.page = 4;
+      fixture.detectChanges();
+      expectPages(fixture.nativeElement, [ 'First', 'Previous', '1', '2', '3', '+4', '-Next', '-Last' ]);
+    }, html));
+
+    it('should move to the correct page when clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      fixture.detectChanges();
+      const pages = getPageElements(fixture.nativeElement);
+      expect(fixture.componentInstance.pageChange).not.toHaveBeenCalled();
+
+      pages[0].click();
+      expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(1);
+
+      pages[7].click();
+      expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(4);
+    }, `<ngl-pagination [page]="page" [total]="total" (pageChange)="pageChange($event)" boundaryLinks></ngl-pagination>`));
+  });
 });
 
 // Shortcut function for less boilerplate on each `it`
