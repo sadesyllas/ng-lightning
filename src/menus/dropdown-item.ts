@@ -4,9 +4,16 @@ import {Directive, ElementRef, Renderer, HostListener} from '@angular/core';
   selector: '[nglDropdownItem]',
   host: {
     'tabindex': '0',
+    '[hidden]': 'isHidden',
   },
 })
 export class NglDropdownItem {
+  isHidden = false;
+
+  get text() {
+    return this.element.nativeElement.textContent;
+  }
+
   private isFocused = false;
 
   @HostListener('focus') onFocus() {

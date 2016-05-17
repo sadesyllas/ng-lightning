@@ -21,6 +21,7 @@ export class NglDropdownTrigger implements OnDestroy {
 
   @HostListener('click') toggleOpen() {
     this.dropdown.toggle();
+    setTimeout(() => this.dropdown.focusFilter());
   }
   @HostListener('keydown.arrowdown', ['$event'])
   onKeyDownOpen($event: Event) {

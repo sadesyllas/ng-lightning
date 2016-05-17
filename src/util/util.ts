@@ -57,3 +57,7 @@ function setClass(instance: IReplaceClass, klasses: string | string[], isAdd: bo
     });
   }
 }
+
+export function escapeRegExp(value: string) {
+  return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+}

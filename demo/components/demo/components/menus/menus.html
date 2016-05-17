@@ -6,8 +6,8 @@
   </button>
   <div class="slds-dropdown slds-dropdown--left">
     <ul class="dropdown__list" role="menu">
-      <li class="slds-dropdown__item" *ngFor="let item of items;">
-        <a role="menuitem" nglDropdownItem (click)="selected = item.value; open = false;">
+      <li class="slds-dropdown__item" *ngFor="let item of items;" nglDropdownItem>
+        <a role="menuitem" (click)="selected = item.value; open = false;">
           <p class="slds-truncate">{{item.value}}</p>
           <ngl-icon [icon]="item.icon" size="x-small"></ngl-icon>
         </a>
@@ -28,10 +28,11 @@
     <span class="slds-truncate">{{picks.length ? picks.length + ' options selected' : 'Select an Option'}}</span>
     <ngl-icon icon="down" size="x-small"></ngl-icon>
   </button>
-  <div class="slds-dropdown slds-dropdown--left">
+  <div class="slds-dropdown slds-dropdown--left slds-p-top--none">
+    <input id="text-input-01" class="slds-input" type="text" placeholder="Filter options" nglDropdownFilter />
     <ul class="dropdown__list" role="menu">
-      <li class="slds-dropdown__item" *ngFor="let item of items;" [nglPickOption]="item" nglPickActiveClass="slds-is-selected">
-        <a role="menuitem" nglDropdownItem>
+      <li class="slds-dropdown__item" *ngFor="let item of items;" [nglPickOption]="item" nglPickActiveClass="slds-is-selected" nglDropdownItem>
+        <a role="menuitem">
           <p class="slds-truncate">
             <ngl-icon icon="check" size="x-small" svgClass="slds-icon--selected slds-m-right--small"></ngl-icon>
             {{item.value}}

@@ -10,6 +10,9 @@ a dropdown item.
 
 You can easily create a `Picklist` just by combining with the `nglPick` directive.
 
+Add the `nglDropdownFilter` directive to an input element inside the dropdown
+to be able to filter out specific elements.
+
 **Accessibility and Keyboard interactions**:
 
   * `Space` and `Enter` on an `nglDropdownTrigger` toggle the dropdown's open status
