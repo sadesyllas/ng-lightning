@@ -15,6 +15,7 @@ var PATHS = {
   src: ['src/**/*.ts','!src/**/*.spec.ts'],
   templates: ['src/**/*.jade'],
   spec: ['src/**/*.ts', 'test/helpers.ts'],
+  typings: 'typings/index.d.ts',
   temp: 'temp/',
 };
 
@@ -44,17 +45,14 @@ gulp.task('lint:ts', function() {
 });
 
 gulp.task('build:ts', ['lint:ts'], function() {
-  var replace = require('gulp-replace');
   var merge = require('merge2');
 
-  var tsResult = gulp.src(PATHS.src, {base: 'src'})
+  var tsResult = gulp.src(PATHS.src.concat(PATHS.typings), {base: 'src'})
     .pipe(inlineTemplatesTask())
     .pipe(ts(tsProject));
 
-  return merge([
-    tsResult.dts.pipe(replace(/^\/{3}.*$/gm, '')),
-    tsResult.js
-  ]).pipe(gulp.dest(BUILD));
+  return merge([tsResult.dts, tsResult.js])
+    .pipe(gulp.dest(BUILD));
 });
 
 gulp.task('bundle', function() {
@@ -92,7 +90,7 @@ gulp.task('test:clean', function() {
 gulp.task('test:build', function() {
   var sourcemaps = require('gulp-sourcemaps');
 
-  var tsResult = gulp.src(PATHS.spec)
+  var tsResult = gulp.src(PATHS.spec.concat(PATHS.typings))
     .pipe(sourcemaps.init())
     .pipe(inlineTemplatesTask())
     .pipe(ts(tsProject));
@@ -123,6 +121,10 @@ gulp.task('tdd', ['test:clean-build'], function(done) {
 gulp.task('prepublish', ['build'], function(done) {
   return gulp.src(['package.json', '*.md', 'LICENSE'])
     .pipe(gulp.dest(BUILD));
+});
+
+gulp.task('typings:clean', function() {
+  return require('del')('typings');
 });
 
 gulp.task('default', ['build']);

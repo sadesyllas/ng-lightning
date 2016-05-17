@@ -1,10 +1,8 @@
 {
-  "ambientDependencies": {
-    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2",
-    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#20e1eb9616922d382d918cc5a21870a9dbe255f5",
-    "tether": "github:DefinitelyTyped/DefinitelyTyped/tether/tether.d.ts#bc8c22045f4a2ba149636a98af48dfc2edd440e1"
-  },
-  "ambientDevDependencies": {
-    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4"
+  "globalDependencies": {
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
+    "node": "registry:dt/node#6.0.0+20160514165920",
+    "tether": "registry:dt/tether#1.1.0+20160316155526"
   }
 }
