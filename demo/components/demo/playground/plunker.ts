@@ -1,7 +1,5 @@
 import {Component, ElementRef} from '@angular/core';
 
-declare const __ENV__: any;
-
 @Component({
   selector: 'plunker',
   template: require('./plunker.jade')(__ENV__),

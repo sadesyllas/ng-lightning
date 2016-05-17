@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
-declare const __ENV__ : any;
-
 const install = require('!!prismjs?lang=bash!./install.md');
 const bundle = require('!!prismjs?lang=markup!./bundle.md').replace('x.x.x', __ENV__.version);
 const usageApp = require('!!prismjs?lang=typescript!./usage-app.md');

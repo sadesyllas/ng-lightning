@@ -10,7 +10,6 @@ import {IntroRoute} from './components/intro/intro';
 import {DemoRoute} from './components/demo/demo';
 import {SupportRoute} from './components/support/support';
 
-declare const __ENV__: any;
 if (__ENV__.production) {
   enableProdMode();
 }
