@@ -11,12 +11,9 @@ import {Observable} from 'rxjs/Rx';
 })
 export class DemoLookups {
 
-  constructor(public http: Http) {
-    // Important if you want your `lookupAsync` function to use `Http`.
-    this.lookupAsync = this.lookupAsync.bind(this);
-  }
+  constructor(public http: Http) {}
 
-  lookup(query: string): string[] {
+  lookup = (query: string): string[] => {
     const superheroes = ['Hulk', 'Flash', 'Superman', 'Batman', 'Spiderman', 'Iron Man', 'Thor', 'Wolverine', 'Deadpool'];
     if (!query) {
       return null;
@@ -25,7 +22,8 @@ export class DemoLookups {
     return superheroes.filter((d: string) => d.toLowerCase().indexOf(query.toLowerCase()) > -1);
   }
 
-  lookupAsync(query: string): Observable<any[]> {
+  // This function is now safe to pass around
+  lookupAsync = (query: string): Observable<any[]> => {
     if (!query) {
       return null;
     }
