@@ -13,26 +13,25 @@ export class NglTabs {
 
   @ContentChildren(NglTab) tabs: QueryList<NglTab>;
 
-  _selected: string | number | NglTab;
-  @Input() set selected(_selected: string | number | NglTab) {
-    if (_selected === this.selected) return;
+  activeTab: NglTab;
+  selected: string | number | NglTab;
+  @Input('selected') set setSelected(selected: string | number | NglTab) {
+    if (selected === this.selected) return;
 
-    this._selected = _selected;
+    this.selected = selected;
 
     if (!this.tabs) return; // Wait for content to initialize
 
-    const tab = this.findTab();
-    this.tabs.forEach((t: NglTab) => t.active = t === tab);
+    this.activate();
   }
-  get selected() {
-    return this._selected;
-  }
-  @Output() selectedChange = new EventEmitter<NglTab>();
+
+  @Output() selectedChange = new EventEmitter<NglTab>(false);
 
   ngAfterContentInit() {
-    // if there is no active tab yet, activate first one
-    if (!this.tabs.toArray().some((tab: NglTab) => tab.active)) {
-      this.select(this.selected ? this.findTab() : this.tabs.first);
+    // Initial selection after all tabs are created
+    this.activate();
+    if (!this.activeTab) {
+      setTimeout(() => this.select(this.tabs.first));
     }
   }
 
@@ -44,8 +43,13 @@ export class NglTabs {
     evt.preventDefault();
 
     const tabs = this.tabs.toArray();
-    const selectedIndex = tabs.indexOf( this.findTab() );
+    const selectedIndex = tabs.indexOf( this.activeTab );
     this.select( tabs[(tabs.length + selectedIndex + moves) % tabs.length] );
+  }
+
+  private activate() {
+    this.activeTab = this.findTab();
+    this.tabs.forEach((t: NglTab) => t.active = (t === this.activeTab));
   }
 
   private findTab(value: any = this.selected): NglTab {

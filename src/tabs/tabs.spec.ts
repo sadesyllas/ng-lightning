@@ -13,6 +13,10 @@ function getTabHeaders(element: HTMLElement): HTMLElement[] {
   return selectElements(element, 'li > a');
 }
 
+function getTabContent(element: HTMLElement): string {
+  return element.querySelector('.slds-tabs--default__content').textContent.trim();
+}
+
 describe('Tabs Component', () => {
 
   it('should render the tabs container', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -43,41 +47,37 @@ describe('Tabs Component', () => {
       </ngl-tabs>`));
 
   it('should activate tab based on id', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const { componentInstance } = fixture;
-
-    spyOn(componentInstance, 'change').and.callFake((tab: NglTab) => {
-      expect(tab.id).toBe('two');
-    });
-
     fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(getTabContent(fixture.nativeElement)).toBe('Tab 2');
+    });
   }));
 
   it('should request tab activation on header click', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
 
-    spyOn(componentInstance, 'change').and.callFake((tab: NglTab) => {
-      if (componentInstance.change.calls.count() !== 2) return;
-      expect(tab.id).toBe('three');
+    fixture.whenStable().then(() => {
+      const headers = getTabHeaders(fixture.nativeElement);
+      headers[2].click();
+      fixture.detectChanges();
+      expect(getTabContent(fixture.nativeElement)).toBe('Tab 3');
     });
-
-    const headers = getTabHeaders(nativeElement);
-    headers[2].click();
   }));
 
-
   it('should allow activating tab from outside', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const { componentInstance, nativeElement } = fixture;
-    const button = nativeElement.querySelector('button');
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('button');
 
-    spyOn(componentInstance, 'change').and.callFake((tab: NglTab) => {
-      expect(tab.id).toBe('another');
+    fixture.whenStable().then(() => {
+      expect(getTabContent(fixture.nativeElement)).not.toBe('Another tab');
+      button.click();
+      fixture.detectChanges();
+      expect(getTabContent(fixture.nativeElement)).toBe('Another tab');
     });
-    button.click();
   }, `
     <ngl-tabs [selected]="selectedTab" (selectedChange)="change($event)">
       <template ngl-tab></template>
-      <template ngl-tab="another" #anotherTab="nglTab"></template>
+      <template ngl-tab="another" #anotherTab="nglTab">Another tab</template>
     </ngl-tabs>
     <button (click)="selectedTab = anotherTab"></button>
   `));
@@ -106,5 +106,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 })
 export class TestComponent {
   selectedTab = 'two';
-  change() {}
+  change = jasmine.createSpy('selectedChange').and.callFake(($event: any) => {
+    this.selectedTab = $event;
+  });
 }
