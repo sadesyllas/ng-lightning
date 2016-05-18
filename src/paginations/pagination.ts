@@ -76,6 +76,10 @@ export class NglPagination implements OnChanges {
     }
   }
 
+  pageTrackBy(index: number, page: NglPage) {
+    return page.number;
+  }
+
   private getPageArray(start: number, end: number) {
     return Array.apply(null, {length: end - start + 1}).map((value: any, index: number) => this.getPage(start + index));
   }
