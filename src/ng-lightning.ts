@@ -28,6 +28,7 @@ import {NglSection} from './sections/section';
 import {NglSpinner} from './spinners/spinner';
 import {NglTabs} from './tabs/tabs';
 import {NglTab} from './tabs/tab';
+import {NglTabVerbose, NglTabContent, NglTabHeading} from './tabs/tab-verbose';
 
 export {NglAvatar} from './images/avatar';
 export {NglBadge} from './badges/badge';
@@ -57,6 +58,7 @@ export {NglSection} from './sections/section';
 export {NglSpinner} from './spinners/spinner';
 export {NglTabs} from './tabs/tabs';
 export {NglTab} from './tabs/tab';
+export {NglTabVerbose, NglTabContent, NglTabHeading} from './tabs/tab-verbose';
 
 export const NGL_DIRECTIVES = [
   NglAvatar,
@@ -75,7 +77,7 @@ export const NGL_DIRECTIVES = [
   NglRating,
   NglSection,
   NglSpinner,
-  NglTabs, NglTab,
+  NglTabs, NglTab, NglTabVerbose, NglTabContent, NglTabHeading,
 ];
 
 export {provideNglConfig} from './config/config';

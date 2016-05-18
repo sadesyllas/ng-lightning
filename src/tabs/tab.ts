@@ -1,17 +1,23 @@
-import {Directive, Input, Attribute, TemplateRef, Output, EventEmitter} from '@angular/core';
+import {Directive, Input, TemplateRef, Output, EventEmitter} from '@angular/core';
 
+/*
+ * <template ngl-tab heading="...">
+ *    Content goes here...
+ * </template>
+ */
 @Directive({
   selector: 'template[ngl-tab]',
   exportAs: 'nglTab',
 })
 export class NglTab {
+  @Input('nglTabId') id: string;
   @Input() heading: string | TemplateRef<any>;
   @Output() onActivate = new EventEmitter<NglTab>(false);
   @Output() onDeactivate = new EventEmitter<NglTab>(false);
 
   private _active: boolean = false;
 
-  constructor(@Attribute('ngl-tab') public id: string, public templateRef: TemplateRef<any>) {}
+  constructor(public templateRef: TemplateRef<any>) {}
 
   set active(active: boolean) {
     if (active ===  this._active) return;

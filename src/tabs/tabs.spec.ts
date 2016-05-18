@@ -3,6 +3,7 @@ import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing'
 import {Component} from '@angular/core';
 import {NglTabs} from './tabs';
 import {NglTab} from './tab';
+import {NglTabVerbose, NglTabContent, NglTabHeading} from './tab-verbose';
 import {selectElements} from '../../test/helpers';
 
 function getTabsElement(element: Element): HTMLUListElement {
@@ -15,6 +16,11 @@ function getTabHeaders(element: HTMLElement): HTMLElement[] {
 
 function getTabContent(element: HTMLElement): string {
   return element.querySelector('.slds-tabs--default__content').textContent.trim();
+}
+
+function expectHeaders(element: HTMLElement, expected: string[]) {
+  const headers = getTabHeaders(element);
+  expect(headers.map((h: HTMLElement) => h.innerHTML.replace(/<!--[\s\S]*?-->/g, '').trim())).toEqual(expected);
 }
 
 describe('Tabs Component', () => {
@@ -30,20 +36,22 @@ describe('Tabs Component', () => {
 
   it('should render the tab headers', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
-
-    const headers = getTabHeaders(fixture.nativeElement);
-    expect(headers.length).toBe(3);
-    expect(headers.map((h: HTMLElement) => h.textContent.trim())).toEqual(['First', 'Second',  'Third tab']);
+    expectHeaders(fixture.nativeElement, ['First', 'Second',  'Third tab', 'Fourth tab']);
   }));
 
-  it('should render tab header based on template', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should render tab headers based on template', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
-
-    const headers = getTabHeaders(fixture.nativeElement);
-    expect(headers[0].innerHTML).toContain('<b>My header</b>');
+    expectHeaders(fixture.nativeElement, ['<b>My header</b>', 'Simple', '<i>Another</i> header']);
   }, `<ngl-tabs [(selected)]="selectedTab">
         <template #h><b>My header</b></template>
         <template ngl-tab [heading]="h"></template>
+        <ngl-tab heading="Simple">
+          <template ngl-tab-content></template>
+        </ngl-tab>
+        <ngl-tab>
+          <template ngl-tab-heading><i>Another</i> header</template>
+          <template ngl-tab-content></template>
+        </ngl-tab>
       </ngl-tabs>`));
 
   it('should activate tab based on id', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -56,12 +64,14 @@ describe('Tabs Component', () => {
   it('should request tab activation on header click', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    fixture.whenStable().then(() => {
-      const headers = getTabHeaders(fixture.nativeElement);
-      headers[2].click();
-      fixture.detectChanges();
-      expect(getTabContent(fixture.nativeElement)).toBe('Tab 3');
-    });
+    const headers = getTabHeaders(fixture.nativeElement);
+    headers[2].click();
+    fixture.detectChanges();
+    expect(getTabContent(fixture.nativeElement)).toBe('Tab 3');
+
+    headers[3].click();
+    fixture.detectChanges();
+    expect(getTabContent(fixture.nativeElement)).toBe('Tab 4');
   }));
 
   it('should call activate/deactivate methods accordingly', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -74,9 +84,14 @@ describe('Tabs Component', () => {
       fixture.detectChanges();
       expect(componentInstance.activate).toHaveBeenCalledWith(true);
 
-      componentInstance.selectedTab = 'two';
+      componentInstance.selectedTab = 3; // index based
       fixture.detectChanges();
       expect(componentInstance.activate).toHaveBeenCalledWith(false);
+      expect(componentInstance.activate).toHaveBeenCalledWith(4, true);
+
+      componentInstance.selectedTab = 'two';
+      fixture.detectChanges();
+      expect(componentInstance.activate).toHaveBeenCalledWith(4, false);
     });
   }));
 
@@ -93,7 +108,7 @@ describe('Tabs Component', () => {
   }, `
     <ngl-tabs [selected]="selectedTab" (selectedChange)="change($event)">
       <template ngl-tab></template>
-      <template ngl-tab="another" #anotherTab="nglTab">Another tab</template>
+      <template ngl-tab nglTabId="another" #anotherTab="nglTab">Another tab</template>
     </ngl-tabs>
     <button (click)="selectedTab = anotherTab"></button>
   `));
@@ -111,13 +126,17 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglTabs, NglTab],
+  directives: [NglTabs, NglTab, NglTabVerbose, NglTabContent, NglTabHeading],
   template: `
     <ngl-tabs [selected]="selectedTab" (selectedChange)="change($event)">
       <template ngl-tab heading="First">Tab 1</template>
-      <template ngl-tab="two" heading="Second">Tab 2</template>
-      <template ngl-tab="three" heading="Third tab" (onActivate)="activate(true)"
+      <template ngl-tab nglTabId="two" heading="Second">Tab 2</template>
+      <template ngl-tab nglTabId="three" heading="Third tab" (onActivate)="activate(true)"
             (onDeactivate)="activate(false)">Tab 3</template>
+      <ngl-tab (onActivate)="activate(4, true)" (onDeactivate)="activate(4, false)">
+        <template ngl-tab-heading>Fourth tab</template>
+        <template ngl-tab-content>Tab 4</template>
+      </ngl-tab>
     </ngl-tabs>
   `,
 })

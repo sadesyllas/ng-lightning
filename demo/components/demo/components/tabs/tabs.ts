@@ -11,23 +11,21 @@ export class DemoTabs {
     type: string = 'scoped';
     id: number = 0;
     selectedTab: any = 'sum';
-    private details: Object[] = [];
+    private details: number[] = [];
 
     change() {
       this.type = this.type === 'scoped' ? 'default' : 'scoped';
     }
 
     addDetail() {
-      const text = `Some detail text for ${this.id++}...`;
-      const title = `Detail ${this.id}`;
-      this.details.push({ title, text });
+      this.details.push(this.id++);
     }
 
     isDisabled() {
       return this.selectedTab === 'sum' || this.selectedTab.id === 'sum';
     }
 
-    protected tabChange(detail: Object, event: string) {
+    protected tabChange(detail: number, event: string) {
       console.log('detail', detail, event);
     }
 

@@ -2,14 +2,15 @@
   <template ngl-tab heading="Overview">
     You have {{details.length}} details.
   </template>
-  <template *ngFor="let detail of details" ngl-tab [heading]="detail.title"
-            (onActivate)="tabChange(detail, 'add')"
-            (onDeactivate)="tabChange(detail, 'remove')">
-    {{detail.text}}
-    <button type="button" nglButton="destructive" (click)="removeDetail(detail)">Remove</button>
-  </template>
+  <ngl-tab *ngFor="let detail of details" (onActivate)="tabChange(detail, 'active')" (onDeactivate)="tabChange(detail, 'inactive')">
+    <template ngl-tab-heading>Detail <i>{{ detail }}</i></template>
+    <template ngl-tab-content>
+      <p>Some detail text for <b>{{detail}}</b>.</p>
+      <button type="button" nglButton="destructive" (click)="removeDetail(detail)">Remove</button>
+    </template>
+  </ngl-tab>
   <template #heading>Summary</template>
-  <template ngl-tab="sum" #summaryTab="nglTab" [heading]="heading">
+  <template ngl-tab nglTabId="sum" #summaryTab="nglTab" [heading]="heading">
     Next last ID is {{id}}.
   </template>
 </ngl-tabs>
