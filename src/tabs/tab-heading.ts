@@ -2,13 +2,13 @@ import {Component, Input, HostBinding, TemplateRef, ChangeDetectionStrategy} fro
 import {NglTab} from './tab';
 
 @Component({
-  selector: '[nglTabHeading]',
+  selector: '[nglTabHeadingLabel]',
   templateUrl: './tab-heading.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`:host { cursor: pointer; }`],
 })
-export class NglTabHeading {
-  @Input('nglTabHeading') tab: NglTab;
+export class NglTabHeadingLabel {
+  @Input('nglTabHeadingLabel') tab: NglTab;
 
   @HostBinding('attr.aria-selected')
   get active() {

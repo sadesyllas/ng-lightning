@@ -1,12 +1,12 @@
 import {Component, Input, QueryList, ContentChildren, Output, EventEmitter} from '@angular/core';
 import {isInt} from '../util/util';
 import {NglTab} from './tab';
-import {NglTabHeading} from './tab-heading';
+import {NglTabHeadingLabel} from './tab-heading';
 
 @Component({
   selector: 'ngl-tabs',
   templateUrl: './tabs.jade',
-  directives: [NglTabHeading],
+  directives: [NglTabHeadingLabel],
 })
 export class NglTabs {
   @Input() type: 'default' | 'scoped' = 'default';
