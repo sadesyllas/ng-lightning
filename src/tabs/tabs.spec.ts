@@ -64,6 +64,22 @@ describe('Tabs Component', () => {
     });
   }));
 
+  it('should call activate/deactivate methods accordingly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    const { componentInstance } = fixture;
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      expect(componentInstance.activate).not.toHaveBeenCalled();
+      componentInstance.selectedTab = 'three';
+      fixture.detectChanges();
+      expect(componentInstance.activate).toHaveBeenCalledWith(true);
+
+      componentInstance.selectedTab = 'two';
+      fixture.detectChanges();
+      expect(componentInstance.activate).toHaveBeenCalledWith(false);
+    });
+  }));
+
   it('should allow activating tab from outside', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('button');
@@ -100,7 +116,8 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
     <ngl-tabs [selected]="selectedTab" (selectedChange)="change($event)">
       <template ngl-tab heading="First">Tab 1</template>
       <template ngl-tab="two" heading="Second">Tab 2</template>
-      <template ngl-tab="three" heading="Third tab">Tab 3</template>
+      <template ngl-tab="three" heading="Third tab" (onActivate)="activate(true)"
+            (onDeactivate)="activate(false)">Tab 3</template>
     </ngl-tabs>
   `,
 })
@@ -109,4 +126,5 @@ export class TestComponent {
   change = jasmine.createSpy('selectedChange').and.callFake(($event: any) => {
     this.selectedTab = $event;
   });
+  activate = jasmine.createSpy('activate');
 }
