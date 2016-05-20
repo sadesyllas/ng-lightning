@@ -9,6 +9,7 @@ export class NglPillRemove {
 
   @Input() set nglPillRemovable(removable: any) {
     this.pill.removable = toBoolean(removable);
+    this.pill.detector.markForCheck();
   }
 
   constructor(private pill: NglPill) {}
