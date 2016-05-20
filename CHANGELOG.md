@@ -1,3 +1,37 @@
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/ng-lightning/ng-lightning/compare/v0.8.0...v0.9.0) (2016-05-20)
+
+
+### Bug Fixes
+
+* **NglPagination:** add `trackBy` on page elements ([0491b1e](https://github.com/ng-lightning/ng-lightning/commit/0491b1e)), closes [#98](https://github.com/ng-lightning/ng-lightning/issues/98)
+* **NglPagination:** don't keep internal state of current page ([87eb763](https://github.com/ng-lightning/ng-lightning/commit/87eb763)), closes [#93](https://github.com/ng-lightning/ng-lightning/issues/93)
+
+
+### Features
+
+* **build:** improve SystemJS bundle size ([91f9d54](https://github.com/ng-lightning/ng-lightning/commit/91f9d54)), closes [#89](https://github.com/ng-lightning/ng-lightning/issues/89)
+* **NglPagination:** support always visible boundary numbers ([ede3bf1](https://github.com/ng-lightning/ng-lightning/commit/ede3bf1)), closes [#92](https://github.com/ng-lightning/ng-lightning/issues/92)
+* **NglPagination:** support First/Last buttons ([6d04c1b](https://github.com/ng-lightning/ng-lightning/commit/6d04c1b)), closes [#95](https://github.com/ng-lightning/ng-lightning/issues/95)
+* **NglTabs:** support more verbose syntax for "richer" heading ([c195d52](https://github.com/ng-lightning/ng-lightning/commit/c195d52)), closes [#103](https://github.com/ng-lightning/ng-lightning/issues/103)
+
+
+### BREAKING CHANGES
+
+* NglTabs: `nglTabId` is now a separate input
+  Before:
+
+  ```html
+  <template ngl-tab="myid" ...></ngl-tab>
+  ```
+
+  After:
+  ```html
+  <template ngl-tab nglTabId="myid" ...></ngl-tab>
+  ```
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/ng-lightning/ng-lightning/compare/v0.7.0...v0.8.0) (2016-05-12)
 
