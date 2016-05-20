@@ -19,15 +19,16 @@
 ### BREAKING CHANGES
 
 * NglTabs: `nglTabId` is now a separate input
+
   Before:
 
   ```html
-  <template ngl-tab="myid" ...></ngl-tab>
+  <template ngl-tab="myid" ...></template>
   ```
 
   After:
   ```html
-  <template ngl-tab nglTabId="myid" ...></ngl-tab>
+  <template ngl-tab nglTabId="myid" ...></template>
   ```
 
 
