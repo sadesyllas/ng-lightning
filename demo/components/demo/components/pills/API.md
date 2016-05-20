@@ -1,10 +1,10 @@
 # `[nglPill]`
 
 ### Input
-  * `removable?: boolean = true`: Whether or not to show the remove button (`X`).
+  * `nglPillRemovable?: boolean`: Whether or not to override the remove button's visibility, if `nglPillRemove` is set.
 
 ### Output
-  * `remove`: The event emitted when the remove button (`X`) is clicked.
+  * `nglPillRemove`: The event emitted when the remove button is clicked.
 
 
 # `[nglPillImage]`
