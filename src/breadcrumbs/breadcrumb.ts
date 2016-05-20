@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
 
 @Component({
   selector: 'ngl-breadcrumb',
@@ -6,6 +6,7 @@ import {Component, Input} from '@angular/core';
   host: {
     '[class.slds-list__item]': 'true',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglBreadcrumb {
   @Input() href: string;
