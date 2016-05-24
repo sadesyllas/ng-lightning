@@ -15,7 +15,7 @@
     "typings": "gulp typings:clean && typings install",
     "test": "gulp test",
     "tdd": "gulp tdd",
-    "lint": "gulp lint:ts",
+    "lint": "gulp lint:ts --failOnError=true",
     "build": "gulp",
     "start": "npm run build && gulp build:watch",
     "demo": "webpack --config ./demo/webpack.config.js --watch",

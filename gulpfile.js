@@ -5,7 +5,9 @@ var lazypipe = require('lazypipe');
 var jade = require('jade');
 var inlineTemplates = require('gulp-inline-ng2-template');
 var cache = require('gulp-cached');
-var argv = require('yargs').argv;
+var argv = require('yargs')
+            .boolean('failOnError').default('failOnError', false) // tslint
+            .argv;
 var bundle = require('./scripts/bundle');
 
 var BUILD = tsProject.options.outDir;
@@ -39,6 +41,7 @@ gulp.task('lint:ts', function lint_ts_impl() {
     .pipe(cache('lint:ts'))
     .pipe(tslint())
     .pipe(tslint.report('prose', {
+      emitError: argv.failOnError,
       summarizeFailureOutput: true,
     }));
 });
