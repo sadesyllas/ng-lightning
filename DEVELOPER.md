@@ -41,7 +41,7 @@ npm run build
 
 If you want to watch your source files for changes and build every time use:
 ```bash
-npm run build:watch
+npm start
 ```
 
 **Note**: Generated output is placed into the `dist` folder.
@@ -77,10 +77,10 @@ The setup assumes that eiter `process.env.SAUCE_USERNAME` and `process.env.SAUCE
 
 The best way to see your changes in action, is to use our demo page locally. Run:
 ```bash
-npm start
+npm run demo
 ```
 which will create a development server accessible through `http:localhost:1111`.
-In conjunction with `npm run build:watch` in another command tab you have a fully working environment!
+In conjunction with `npm start` in another command tab you have a fully working environment!
 
 All demo resources can be found in the `/demo` folder.
 
