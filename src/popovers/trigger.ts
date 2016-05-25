@@ -1,38 +1,47 @@
-import {Directive, Input, ElementRef} from '@angular/core';
+import {Directive, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, ComponentResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
 import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';
 
 @Directive({
-  selector: '[nglPopoverTrigger]',
+  selector: '[nglPopover]',
 })
 export class NglPopoverTrigger {
 
-  private popover: NglPopover;
-  private placement: Direction = 'top';
-  private tether: Tether;
+  @Input('nglPopover') template: TemplateRef<any>;
 
-  constructor(public element: ElementRef) {}
-
-  @Input() set nglPopoverTrigger(_popover: NglPopover) {
-    this.popover = _popover;
-    this.setTether(true);
-  }
-
-  @Input() set nglPlacement(_placement: Direction) {
+  @Input() set nglPopoverPlacement(_placement: Direction) {
     this.placement = _placement || 'top';
     this.setTether();
   }
 
+  @Input() set nglPopoverTheme(theme: string) {
+    this.theme = theme;
+    this.setPopover();
+  }
+
+  @Input() nglTooltip: string | boolean;
+
   @Input() set nglOpen(_open: boolean) {
-    this.popover.open = _open;
     if (_open) {
-      setTimeout(() => this.tether.position());
+      this.show();
+    } else {
+      this.destroy();
     }
   }
 
+  private popover: NglPopover;
+  private compRef: ComponentRef<any>;
+  private placement: Direction = 'top';
+  private theme: string;
+  private tether: Tether;
+
+  constructor(private element: ElementRef, private _vcRef: ViewContainerRef, private _cr: ComponentResolver, private _injector: Injector) {}
+
   private setTether(create = false) {
-    const { attachment, targetAttachment, offset, opposite } = placement(this.placement);
+    if (!this.tether && !create) return;
+
+    const { attachment, targetAttachment, offset } = placement(this.placement);
     const options = {
       element: this.popover.element.nativeElement,
       target: this.element.nativeElement,
@@ -47,6 +56,33 @@ export class NglPopoverTrigger {
       this.tether.setOptions(options);
     }
 
+    this.setPopover();
+  }
+
+  private setPopover() {
+    if (!this.popover) return;
+
+    const { opposite } = placement(this.placement);
     this.popover.nubbin = opposite;
+    this.popover.theme = this.theme;
+    this.popover.nglTooltip = this.nglTooltip;
+  }
+
+  private show() {
+    this._cr.resolveComponent(NglPopover).then((cf: ComponentFactory<NglPopover>) => {
+      const view: EmbeddedViewRef<any> = this._vcRef.createEmbeddedView(this.template);
+      this.compRef = this._vcRef.createComponent(cf, 0, this._injector, [view.rootNodes]);
+      this.popover = this.compRef.instance;
+      this.setTether(true);
+    });
+  }
+
+  private destroy() {
+    if (!this.compRef) return;
+
+    this.tether.destroy();
+    this.tether = null;
+    this.compRef.destroy();
+    this.compRef = null;
   }
 };

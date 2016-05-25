@@ -1,5 +1,5 @@
 import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from '@angular/core';
-import {replaceClass} from '../util/util';
+import {replaceClass, toBoolean} from '../util/util';
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
 
@@ -7,17 +7,18 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
   selector: 'ngl-popover',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './popover.jade',
+  styles: [`:host { position: absolute; }`], // Prevent position changes of "close" elements
 })
 export class NglPopover {
 
-  theme: 'info' | 'success' | 'warning' | 'error';
-  @Input('theme') set setTheme(theme: any) {
-    replaceClass(this, `slds-theme--${this.theme}`, theme ? `slds-theme--${theme}` : '');
-    this.theme = theme;
+  private _theme: string;
+  @Input() set theme(theme: any) {
+    replaceClass(this, `slds-theme--${this._theme}`, theme ? `slds-theme--${theme}` : '');
+    this._theme = theme;
   }
 
-  set open(isOpen: boolean) {
-    this.renderer.setElementClass(this.element.nativeElement, 'slds-hide', !isOpen);
+  @Input() set nglTooltip(isTooltip: any) {
+    this.renderer.setElementClass(this.element.nativeElement, 'slds-popover--tooltip', toBoolean(isTooltip));
   }
 
   private _nubbin: Direction;
@@ -28,7 +29,5 @@ export class NglPopover {
 
   constructor(public element: ElementRef, public renderer: Renderer) {
     this.renderer.setElementClass(this.element.nativeElement, 'slds-popover', true);
-    this.open = false;
   }
-
 }

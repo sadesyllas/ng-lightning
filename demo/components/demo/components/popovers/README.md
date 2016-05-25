@@ -2,4 +2,4 @@ Add non-modal overlays of content next to any element. Popovers can be used to s
 
 The popover directives support multiple placements.
 
-Use `<ngl-popover #ref>` to host your popover's content. `#` reference will be later used to "connect" with the desired `nglPopoverTrigger` directive.
+Use a `<template #ref>` to host your popover's content. `#` reference will be later used to "connect" with the desired `nglPopover` directive.
