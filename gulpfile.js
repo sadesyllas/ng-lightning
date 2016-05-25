@@ -54,6 +54,7 @@ gulp.task('build:ts', gulp.series('lint:ts', function build_ts_impl() {
     .pipe(ts(tsProject));
 
   return merge([tsResult.dts, tsResult.js])
+    .pipe(cache('build:ts'))
     .pipe(gulp.dest(BUILD));
 }));
 

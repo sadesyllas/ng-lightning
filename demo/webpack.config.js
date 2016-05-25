@@ -15,6 +15,7 @@ var ENV = process.env.npm_lifecycle_event;
 const isProduction = ENV === 'demo:build';
 
 const config = {
+  cache: false,
   entry: path.resolve(__dirname, 'app.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -72,8 +73,8 @@ const config = {
       server: {
         baseDir: [path.resolve(__dirname, 'dist')]
       },
-      reloadDelay: 200,
-      reloadDebounce: 200,
+      reloadDelay: 100,
+      reloadDebounce: 300,
     })
   ],
 };
