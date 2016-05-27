@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
 import {DatePipe} from '@angular/common';
-import {uniqueId} from '../util/util';
+import {uniqueId, toBoolean} from '../util/util';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';
 import {NglDatepickerWeekdays} from './weekdays';
@@ -33,6 +33,12 @@ export class NglDatepicker {
     }
     this.render();
   }
+
+  showToday = true;
+  @Input('showToday') set _showToday(showToday: boolean) {
+    this.showToday = toBoolean(showToday);
+  }
+
   @Output() dateChange = new EventEmitter(false);
 
   weeks: NglInternalDate[];
@@ -99,6 +105,10 @@ export class NglDatepicker {
 
   indexTrackBy(index: number) {
     return index;
+  }
+
+  selectToday() {
+    this.dateChange.emit(new Date());
   }
 
   private parseDate(date: Date): NglInternalDate {

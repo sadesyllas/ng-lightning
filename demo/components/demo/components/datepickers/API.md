@@ -3,6 +3,7 @@
 ### Input
 
   * `date: Date`: Currently selected date.
+  * `showToday: boolean = true`: Whether to show `Today` option.
 
 ### Output
 

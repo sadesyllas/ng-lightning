@@ -40,8 +40,12 @@ function dispatchKey(fixture: ComponentFixture<any>, key: string) {
   fixture.detectChanges();
 }
 
+function getTableRows(element: HTMLElement) {
+  return selectElements(element, 'tbody > tr');
+}
+
 function expectCalendar(element: HTMLElement, expectedDates: any[], expectedMonth: string, expectedYear: string) {
-  const dates = selectElements(element, 'tbody > tr').map((trElement: HTMLElement, row: number) => {
+  const dates = getTableRows(element).map((trElement: HTMLElement, row: number) => {
     return selectElements(trElement, 'td').map((td: HTMLElement, column: number) => {
       let text = td.textContent.trim();
       if (td.classList.contains('slds-is-selected')) {
@@ -294,6 +298,27 @@ describe('`Datepicker` Component', () => {
       expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith(new Date(2010, 9, 5));
     }));
   });
+
+  it('should render `Today` based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    const currentDate = new Date(2014, 9, 23); // 23 October 2014
+    jasmine.clock().mockDate(currentDate);
+
+    fixture.componentInstance.showToday = true;
+    fixture.detectChanges();
+    let rows = getTableRows(fixture.nativeElement);
+    expect(rows.length).toBe(6);
+
+    const todayEl = <HTMLAnchorElement>rows[5].querySelector('a');
+    expect(fixture.componentInstance.dateChange).not.toHaveBeenCalled();
+    todayEl.click();
+    expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith(currentDate);
+
+    fixture.componentInstance.showToday = false;
+    fixture.detectChanges();
+    expect(getTableRows(fixture.nativeElement).length).toBe(5);
+
+    jasmine.clock().uninstall();
+  }, `<ngl-datepicker [date]="date" (dateChange)="dateChange($event)" [showToday]="showToday"></ngl-datepicker>`));
 });
 
 
@@ -309,7 +334,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 
 @Component({
   directives: [NglDatepicker],
-  template: `<ngl-datepicker [date]="date" (dateChange)="dateChange($event)"></ngl-datepicker>`,
+  template: `<ngl-datepicker [date]="date" (dateChange)="dateChange($event)" showToday="false"></ngl-datepicker>`,
 })
 export class TestComponent {
   date = new Date(2010, 8, 30); // 30 September 2010

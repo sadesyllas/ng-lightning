@@ -17,3 +17,6 @@ table.datepicker__month(role="grid", [attr.aria-labelledby]="uid + '_month'")
     tr(*ngFor="let week of weeks; trackBy:indexTrackBy")
       td(*ngFor="let date of week", (click)="select(date)", [class.slds-is-today]="isActive(date)",
          [nglDay]="date.day", [nglDaySelected]="isSelected(date)", [nglDayDisabled]="date.disabled")
+    tr(*ngIf="showToday")
+      td(colspan="7", role="gridcell")
+        a.slds-show--inline-block.slds-p-bottom--x-small(href="javascript:void(0)", (click)="selectToday()") Today
