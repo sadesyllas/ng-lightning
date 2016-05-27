@@ -2,8 +2,8 @@
 
 ### Input
 
-  * `date: string`: Date in `yyyy/mm/dd` format.
+  * `date: Date`: Currently selected date.
 
 ### Output
 
-  * `dateChange: EventEmitter<string>`: Selected date in `yyyy/mm/dd` format.
+  * `dateChange: EventEmitter<Date>`: Selected date.

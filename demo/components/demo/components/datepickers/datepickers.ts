@@ -8,5 +8,9 @@ import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
   styles: [`ngl-datepicker { width: 310px; }`],
 })
 export class DemoDatepickers {
-  date: string;
+  date: Date;
+
+  gotoDate() {
+    this.date = new Date(2005, 10, 9);
+  }
 }

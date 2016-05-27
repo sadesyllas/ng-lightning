@@ -26,7 +26,7 @@ export class NglDatepicker {
   date: NglInternalDate;
   current: NglInternalDate;
 
-  @Input('date') set setDate(date: string) {
+  @Input('date') set _date(date: Date) {
     this.date = this.parseDate(date);
     if (this.date) {
       this.current = Object.assign({}, this.date);
@@ -94,22 +94,16 @@ export class NglDatepicker {
     if (date.disabled) return;
 
     const {year, month, day} = date;
-    this.dateChange.emit(this.formatDate(year, month, day));
+    this.dateChange.emit(new Date(year, month, day));
   }
 
   indexTrackBy(index: number) {
     return index;
   }
 
-  private parseDate(date: string): NglInternalDate {
+  private parseDate(date: Date): NglInternalDate {
     if (!date) return null;
-
-    const [year, month, day] = date.split('/').map(Number);
-    return { year, month: month - 1, day };
-  }
-
-  private formatDate(year: number, month: number, day: number) {
-    return `${year}/${month + 1}/${day}`;
+    return { year: date.getFullYear(), month: date.getMonth(), day: date.getDate() };
   }
 
   private isEqualDate(d1: NglInternalDate, d2: NglInternalDate) {

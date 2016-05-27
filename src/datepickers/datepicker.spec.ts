@@ -87,7 +87,7 @@ describe('`Datepicker` Component', () => {
   it('should change view when input date is changing', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    fixture.componentInstance.date = '2013/08/11';
+    fixture.componentInstance.date = new Date(2013, 7, 11); // 11 August 2013
     fixture.detectChanges();
     expectCalendar(fixture.nativeElement, [
       [ '28-', '29-', '30-', '31-', '01', '02', '03' ],
@@ -97,7 +97,7 @@ describe('`Datepicker` Component', () => {
       [ '25', '26', '27', '28', '29', '30', '31' ],
     ], 'August', '2013');
 
-    fixture.componentInstance.date = '2014/10/23';
+    fixture.componentInstance.date = new Date(2014, 9, 23); // 23 October 2014
     fixture.detectChanges();
     expectCalendar(fixture.nativeElement, [
       [ '28-', '29-', '30-', '01', '02', '03', '04' ],
@@ -144,7 +144,7 @@ describe('`Datepicker` Component', () => {
     fixture.detectChanges();
     const days = getDayElements(fixture.nativeElement);
     days[25].click();
-    expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith('2010/9/23');
+    expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith(new Date(2010, 8, 23));
   }));
 
   it('do nothing when a disabled day is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -184,7 +184,7 @@ describe('`Datepicker` Component', () => {
   }));
 
   it('should not "jump" months and keep current day in limits', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.componentInstance.date = '2016/01/30';
+    fixture.componentInstance.date = new Date(2016, 0, 30);
     fixture.detectChanges();
     clickButton(fixture.nativeElement, true);
     fixture.detectChanges();
@@ -291,7 +291,7 @@ describe('`Datepicker` Component', () => {
       dispatchKey(fixture, 'ArrowLeft');
       expect(fixture.componentInstance.dateChange).not.toHaveBeenCalled();
       dispatchKey(fixture, 'Enter');
-      expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith('2010/10/5');
+      expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith(new Date(2010, 9, 5));
     }));
   });
 });
@@ -312,6 +312,6 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
   template: `<ngl-datepicker [date]="date" (dateChange)="dateChange($event)"></ngl-datepicker>`,
 })
 export class TestComponent {
-  date = '2010/09/30';
+  date = new Date(2010, 8, 30); // 30 September 2010
   dateChange = jasmine.createSpy('dateChange');
 }
