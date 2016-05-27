@@ -31,12 +31,13 @@ export class NglPopoverTrigger {
   }
 
   private popover: NglPopover;
-  private compRef: ComponentRef<any>;
+  private componentRef: ComponentRef<any>;
   private placement: Direction = 'top';
   private theme: string;
   private tether: Tether;
 
-  constructor(private element: ElementRef, private _vcRef: ViewContainerRef, private _cr: ComponentResolver, private _injector: Injector) {}
+  constructor(private element: ElementRef, private viewContainer: ViewContainerRef,
+              private componentResolver: ComponentResolver, private injector: Injector) {}
 
   private setTether(create = false) {
     if (!this.tether && !create) return;
@@ -69,20 +70,21 @@ export class NglPopoverTrigger {
   }
 
   private show() {
-    this._cr.resolveComponent(NglPopover).then((cf: ComponentFactory<NglPopover>) => {
-      const view: EmbeddedViewRef<any> = this._vcRef.createEmbeddedView(this.template);
-      this.compRef = this._vcRef.createComponent(cf, 0, this._injector, [view.rootNodes]);
-      this.popover = this.compRef.instance;
+    this.componentResolver.resolveComponent(NglPopover).then((cf: ComponentFactory<NglPopover>) => {
+      const view: EmbeddedViewRef<any> = this.viewContainer.createEmbeddedView(this.template);
+      this.componentRef = this.viewContainer.createComponent(cf, 0, this.injector, [view.rootNodes]);
+      this.popover = this.componentRef.instance;
       this.setTether(true);
     });
   }
 
   private destroy() {
-    if (!this.compRef) return;
+    if (!this.componentRef) return;
 
     this.tether.destroy();
     this.tether = null;
-    this.compRef.destroy();
-    this.compRef = null;
+    this.componentRef.destroy();
+    this.componentRef = null;
+    this.popover = null;
   }
 };
