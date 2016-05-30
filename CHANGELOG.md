@@ -1,3 +1,48 @@
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/ng-lightning/ng-lightning/compare/v0.9.0...v0.10.0) (2016-05-30)
+
+
+### Bug Fixes
+
+* **NglDatepicker:** input/output Date object instead of string ([aec4e07](https://github.com/ng-lightning/ng-lightning/commit/aec4e07))
+* **NglPopover:** fix memory leak when hiding ([b869c03](https://github.com/ng-lightning/ng-lightning/commit/b869c03)), closes [#107](https://github.com/ng-lightning/ng-lightning/issues/107)
+
+
+### Features
+
+* **app:** add datepicker component ([c77afde](https://github.com/ng-lightning/ng-lightning/commit/c77afde)), closes [#86](https://github.com/ng-lightning/ng-lightning/issues/86)
+* **NglDatepicker:** add option to show "Today" button ([c26bdf4](https://github.com/ng-lightning/ng-lightning/commit/c26bdf4)), closes [#108](https://github.com/ng-lightning/ng-lightning/issues/108)
+* **NglPopover:** support reusable `<template>` elements ([6b49cc0](https://github.com/ng-lightning/ng-lightning/commit/6b49cc0)), closes [#106](https://github.com/ng-lightning/ng-lightning/issues/106)
+
+
+### Performance Improvements
+
+* **NglBreadcrumbs:** use `onPush` as change detection strategy ([3d9053f](https://github.com/ng-lightning/ng-lightning/commit/3d9053f))
+* **NglPill:** use `onPush` as change detection strategy ([e0fb26c](https://github.com/ng-lightning/ng-lightning/commit/e0fb26c)), closes [#104](https://github.com/ng-lightning/ng-lightning/issues/104)
+
+
+### BREAKING CHANGES
+
+* NglPopover:   
+  * `nglPopoverTrigger` renamed to `nglPopover`
+  * `nglPlacement` renamed to `nglPopoverPlacement`
+  * Theme and tooltip declarations are now input of `nglPopover`
+
+  Before:
+
+  ```html
+  <ngl-popover #tip theme="success">my text</ngl-popover>
+  <span [nglPopoverTrigger]="tip" [nglPlacement]="placement" ...>here</span>
+  ```
+
+  After:
+  ```html
+  <template #tip>my text</template>
+  <span [nglPopover]="tip" [nglPopoverPlacement]="placement" nglPopoverTheme="success" ...>here</span>
+  ```
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/ng-lightning/ng-lightning/compare/v0.8.0...v0.9.0) (2016-05-20)
 
