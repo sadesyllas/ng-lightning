@@ -7,7 +7,9 @@ import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@
 })
 export class NglDatepickerYear {
 
-  @Input() size = 15;
+  // How many years before and after the current one are selectable in dropdown
+  @Input() numYearsBefore: number = 100;
+  @Input() numYearsAfter: number = 10;
 
   year: number;
   @Input('year') set setYear(year: string | number) {
@@ -16,7 +18,10 @@ export class NglDatepickerYear {
   @Output() yearChange = new EventEmitter(false);
 
   get range(): number[] {
-    return Array.apply(null, {length: this.size}).map((value: any, index: number) => +this.year - Math.floor(this.size / 2) + index);
+    const currentYear = (new Date()).getFullYear();
+    const firstYear = Math.min(currentYear - this.numYearsBefore, this.year);
+    const size = Math.max(currentYear + this.numYearsAfter, this.year) - firstYear;
+    return Array.apply(null, {length: size + 1}).map((value: any, index: number) => firstYear + index);
   }
 
   change($event: string) {

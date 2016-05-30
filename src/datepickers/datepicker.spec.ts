@@ -21,6 +21,14 @@ function getYearOptions(element: HTMLElement) {
   return selectElements(element, 'option');
 }
 
+function buildArray(start: number, end: number) {
+  const arr: string[] = [];
+  while (start <= end) {
+    arr.push(start++ + '');
+  }
+  return arr;
+}
+
 function chooseYear(element: HTMLElement, year: number) {
   const select = <HTMLSelectElement>element.querySelector('select');
   select.value = '' + year;
@@ -76,6 +84,9 @@ function expectYearOptions(element: HTMLElement, expectedYears: any[]) {
 describe('`Datepicker` Component', () => {
 
   it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    const currentDate = new Date(2005, 10, 9); // 9 November 2005
+    jasmine.clock().mockDate(currentDate);
+
     fixture.detectChanges();
     expectCalendar(fixture.nativeElement, [
       ['29-', '30-', '31-', '01', '02', '03', '04'],
@@ -85,7 +96,9 @@ describe('`Datepicker` Component', () => {
       ['26', '27', '28', '29', '*30+', '01-', '02-'],
     ], 'September', '2010');
     expect(getDayHeaders(fixture.nativeElement)).toEqual([ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]);
-    expectYearOptions(fixture.nativeElement, ['2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017' ]);
+    expectYearOptions(fixture.nativeElement, buildArray(1905, 2015));
+
+    jasmine.clock().uninstall();
   }));
 
   it('should change view when input date is changing', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -127,7 +140,7 @@ describe('`Datepicker` Component', () => {
   }));
 
   it('should show current date if none is set', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    var currentDate = new Date(2013, 7, 11); // 11 August 2013
+    const currentDate = new Date(2013, 7, 11); // 11 August 2013
     jasmine.clock().mockDate(currentDate);
 
     fixture.componentInstance.date = null;
@@ -201,12 +214,10 @@ describe('`Datepicker` Component', () => {
     ], 'February', '2016');
   }));
 
-  it('should change year based on selection', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('moves to selected year from dropdown', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     chooseYear(fixture.nativeElement, 2014);
-
-    fixture.detectChanges();
     setTimeout(() => {
       fixture.detectChanges();
       expectCalendar(fixture.nativeElement, [
@@ -216,8 +227,17 @@ describe('`Datepicker` Component', () => {
         [ '21', '22', '23', '24', '25', '26', '27' ],
         [ '28', '29', '30+', '01-', '02-', '03-', '04-' ],
       ], 'September', '2014');
-      expectYearOptions(fixture.nativeElement, ['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021']);
     });
+  }));
+
+  it('should change year range based on selection', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    const currentDate = new Date(1983, 10, 7); // 7 November 1983
+    jasmine.clock().mockDate(currentDate);
+
+    fixture.detectChanges();
+    expectYearOptions(fixture.nativeElement, buildArray(1883, 2010));
+
+    jasmine.clock().uninstall();
   }));
 
   describe('keyboard navigation', () => {
