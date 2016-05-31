@@ -39,6 +39,10 @@ export class NglPopoverTrigger {
   constructor(private element: ElementRef, private viewContainer: ViewContainerRef,
               private componentResolver: ComponentResolver, private injector: Injector) {}
 
+  ngOnDestroy() {
+    this.destroy();
+  }
+
   private setTether(create = false) {
     if (!this.tether && !create) return;
 

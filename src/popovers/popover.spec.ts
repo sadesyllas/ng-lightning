@@ -85,6 +85,19 @@ describe('Popovers', () => {
       expect(popoverEl).toHaveCssClass('slds-popover--tooltip');
     });
   }, `<template #tip></template><span [nglPopover]="tip" nglOpen="true" nglTooltip></span>`));
+
+  it('should destroy popover when host is destroyed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.exists = true;
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+      fixture.componentInstance.exists = false;
+      fixture.detectChanges();
+      expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+    });
+  }, `<template #tip></template><span *ngIf="exists" [nglPopover]="tip" nglOpen="true"></span>`));
 });
 
 // Shortcut function for less boilerplate on each `it`
