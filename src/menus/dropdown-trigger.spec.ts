@@ -5,6 +5,7 @@ import {NglDropdown} from './dropdown';
 import {NglDropdownTrigger} from './dropdown-trigger';
 import {NglPick} from '../pick/pick';
 import {dispatchKeyEvent} from '../../test/helpers';
+import {By} from '@angular/platform-browser';
 
 function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {
   return <HTMLElement>fixtureElement.childNodes[0].childNodes[0];
@@ -35,14 +36,13 @@ describe('`nglDropdownTrigger`', () => {
   }));
 
   it('should open the dropdown when the down arrow key is pressed while it is focused', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     fixture.detectChanges();
 
     spyOn(fixture.componentInstance, 'setOpen').and.callFake((isOpen: boolean) => {
       expect(isOpen).toBe(true);
     });
 
-    dispatchKeyEvent(dropdownTrigger, 'ArrowDown');
+    dispatchKeyEvent(fixture, By.directive(NglDropdownTrigger), 'keydown.ArrowDown');
     fixture.detectChanges();
   }));
 

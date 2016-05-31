@@ -3,20 +3,16 @@
  */
 
 import {beforeEachProviders} from '@angular/core/testing';
+import {ComponentFixture} from '@angular/compiler/testing';
 import {provideNglConfig} from '../src/config/config';
 
 // Default configuration for every TestComponent
 beforeEachProviders(() => [provideNglConfig()]);
 
-export function dispatchKeyEvent(target: HTMLElement, key: string) {
-  let event: KeyboardEvent;
-  if (navigator.userAgent.search('Firefox') > -1) {
-    event = new KeyboardEvent('keydown', { key });
-  } else {
-    event = document.createEvent('KeyboardEvent');
-    event.initKeyboardEvent('keydown', true, true, window, key, 0, '', false, '');
-  }
-  target.dispatchEvent(event);
+export function dispatchKeyEvent(fixture: ComponentFixture<any>, predicate: any, key: string, indexOf: number = -1) {
+  const { debugElement} = fixture;
+  const _debugElement = indexOf > -1 ? debugElement.queryAll(predicate)[indexOf] : debugElement.query(predicate);
+  _debugElement.triggerEventHandler(key, new Event(''));
 }
 
 export function selectElements(element: HTMLElement, selector: string): HTMLElement[] {

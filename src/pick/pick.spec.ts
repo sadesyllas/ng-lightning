@@ -2,6 +2,7 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {selectElements, dispatchKeyEvent} from '../../test/helpers';
+import {By} from '@angular/platform-browser';
 import {NglPick} from './pick';
 import {NglPickOption} from './pick-option';
 
@@ -70,13 +71,16 @@ describe('`Pick`', () => {
   }));
 
   it('should have proper selected value when `nglPickOption` is used with keyboard', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    function dispatchKey(key: string, index: number) {
+      dispatchKeyEvent(fixture, By.css('button'), `keydown.${key}`, index);
+    }
+
     fixture.detectChanges();
-    const { options } = getElements(fixture.nativeElement);
-    dispatchKeyEvent(options[1], 'Enter');
+    dispatchKey('Enter', 1);
     expect(fixture.componentInstance.selected).toBe('op2');
-    dispatchKeyEvent(options[2], 'Space');
+    dispatchKey('Space', 2);
     expect(fixture.componentInstance.selected).toBe('op3');
-    dispatchKeyEvent(options[1], 'ArrowDown');
+    dispatchKey('ArrowDown', 1);
     expect(fixture.componentInstance.selected).toBe('op3');
   }));
 

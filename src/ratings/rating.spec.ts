@@ -3,6 +3,7 @@ import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing'
 import {Component} from '@angular/core';
 import {NglRating} from './rating';
 import {dispatchKeyEvent} from '../../test/helpers';
+import {By} from '@angular/platform-browser';
 
 function getStars(element: HTMLElement): HTMLElement[] {
   return [].slice.call(element.querySelectorAll('ngl-icon'));
@@ -10,6 +11,10 @@ function getStars(element: HTMLElement): HTMLElement[] {
 
 function getICons(element: HTMLElement): SVGElement[] {
   return [].slice.call(element.querySelectorAll('svg'));
+}
+
+function dispatchKey(fixture: ComponentFixture<any>, key: string) {
+  dispatchKeyEvent(fixture, By.directive(NglRating), `keydown.${key}`);
 }
 
 function expectState(element: HTMLElement, state: string) {
@@ -102,39 +107,37 @@ describe('Rating Component', () => {
 
   describe('keyboard interaction', () => {
     it('will change value apropriately', testAsync((fixture: ComponentFixture<TestComponent>) => {
-      const { nativeElement, componentInstance } = fixture;
-      const ratingElement = nativeElement.firstElementChild;
+      const { componentInstance } = fixture;
       fixture.detectChanges();
 
       spyOn(componentInstance, 'change');
       expect(componentInstance.change).not.toHaveBeenCalled();
 
-      dispatchKeyEvent(ratingElement, 'ArrowUp');
+      dispatchKey(fixture, 'ArrowUp');
       expect(componentInstance.change).toHaveBeenCalledWith(3);
-      dispatchKeyEvent(ratingElement, 'ArrowDown');
+      dispatchKey(fixture, 'ArrowDown');
       expect(componentInstance.change).toHaveBeenCalledWith(1);
 
       componentInstance.change.calls.reset();
 
-      dispatchKeyEvent(ratingElement, 'ArrowRight');
+      dispatchKey(fixture, 'ArrowRight');
       expect(componentInstance.change).toHaveBeenCalledWith(3);
-      dispatchKeyEvent(ratingElement, 'ArrowLeft');
+      dispatchKey(fixture, 'ArrowLeft');
       expect(componentInstance.change).toHaveBeenCalledWith(1);
     }));
 
     it('will keep value in limits', testAsync((fixture: ComponentFixture<TestComponent>) => {
-      const { nativeElement, componentInstance } = fixture;
-      const ratingElement = nativeElement.firstElementChild;
+      const { componentInstance } = fixture;
       componentInstance.value = 5;
       fixture.detectChanges();
       spyOn(componentInstance, 'change');
 
-      dispatchKeyEvent(ratingElement, 'ArrowUp');
+      dispatchKey(fixture, 'ArrowUp');
       expect(componentInstance.change).not.toHaveBeenCalled();
 
       componentInstance.value = 1;
       fixture.detectChanges();
-      dispatchKeyEvent(ratingElement, 'ArrowDown');
+      dispatchKey(fixture, 'ArrowDown');
       expect(componentInstance.change).not.toHaveBeenCalled();
     }));
   });

@@ -6,6 +6,7 @@ import {NglDropdownTrigger} from './dropdown-trigger';
 import {NglDropdownItem} from './dropdown-item';
 import {NglPick} from '../pick/pick';
 import {dispatchKeyEvent} from '../../test/helpers';
+import {By} from '@angular/platform-browser';
 
 function getDropdownElement(fixtureElement: HTMLElement): HTMLElement {
   return <HTMLElement>fixtureElement.childNodes[0];
@@ -65,7 +66,6 @@ describe('`nglDropdown`', () => {
   }));
 
   it('should be closed when the ESC key is pressed', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const dropdown = getDropdownElement(fixture.nativeElement);
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     fixture.componentInstance.open = true;
     fixture.detectChanges();
@@ -75,13 +75,12 @@ describe('`nglDropdown`', () => {
     expect(fixture.componentInstance.setOpen).not.toHaveBeenCalled();
     expect(dropdownTrigger).not.toEqual(document.activeElement);
 
-    dispatchKeyEvent(dropdown, 'Escape');
+    dispatchKeyEvent(fixture, By.directive(NglDropdown), 'keydown.esc');
     expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(false);
     expect(dropdownTrigger).toEqual(document.activeElement);
   }));
 
   it('should focus on the first item onced opened and the down arrow key is pressed', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const dropdown = getDropdownElement(fixture.nativeElement);
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
     const dropdownItem = getDropdownItem(fixture.nativeElement);
     fixture.detectChanges();
@@ -91,7 +90,7 @@ describe('`nglDropdown`', () => {
     dropdownTrigger.click();
     expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(true);
 
-    dispatchKeyEvent(dropdown, 'ArrowDown');
+    dispatchKeyEvent(fixture, By.directive(NglDropdown), 'keydown.arrowdown');
     expect(dropdownItem).toEqual(document.activeElement);
   }));
 

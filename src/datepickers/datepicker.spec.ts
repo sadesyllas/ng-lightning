@@ -2,6 +2,7 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {selectElements, dispatchKeyEvent} from '../../test/helpers';
+import {By} from '@angular/platform-browser';
 import {NglDatepicker} from './datepicker';
 
 // Microsoft Edge hack
@@ -44,7 +45,7 @@ function clickButton(element: HTMLElement, isNext = false) {
 }
 
 function dispatchKey(fixture: ComponentFixture<any>, key: string) {
-  dispatchKeyEvent(fixture.nativeElement.firstElementChild, key);
+  dispatchKeyEvent(fixture, By.directive(NglDatepicker), `keydown.${key}`);
   fixture.detectChanges();
 }
 
