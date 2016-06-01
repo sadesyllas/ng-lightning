@@ -1,3 +1,14 @@
+<a name="0.10.1"></a>
+## [0.10.1](https://github.com/ng-lightning/ng-lightning/compare/v0.10.0...v0.10.1) (2016-06-01)
+
+
+### Bug Fixes
+
+* **build:** define `ts-helpers` as dependency ([7a5bde3](https://github.com/ng-lightning/ng-lightning/commit/7a5bde3))
+* **NglPopover:** explicitly destroy popover when host is destroyed ([fb4f325](https://github.com/ng-lightning/ng-lightning/commit/fb4f325)), closes [#111](https://github.com/ng-lightning/ng-lightning/issues/111)
+
+
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/ng-lightning/ng-lightning/compare/v0.9.0...v0.10.0) (2016-05-30)
 
