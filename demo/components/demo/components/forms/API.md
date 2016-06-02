@@ -6,4 +6,4 @@
 
 ### Content
 
-  * `<input>`: Native element. `required` value will be used to toggle label's indicator.
+  * `<input> | <textarea>`: Native element. `required` value will be used to toggle label's indicator.

@@ -9,6 +9,7 @@ import {NglFormInput} from './input';
   host: {
     '[class.slds-form-element]': 'true',
   },
+  styles: [`:host { display: block; }`],
 })
 export class NglFormElement {
   @ContentChild(NglFormInput) contentEl: NglFormInput;

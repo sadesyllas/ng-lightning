@@ -3,7 +3,7 @@ import {toBoolean} from '../../util/util';
 import {NglFormElement} from './element';
 
 @Directive({
-  selector: 'ngl-form-element input[required]',
+  selector: 'ngl-form-element input[required], ngl-form-element textarea[required]',
 })
 export class NglFormElementRequired {
 

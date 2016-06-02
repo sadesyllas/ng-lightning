@@ -10,3 +10,12 @@ export class NglFormInput {
   @HostBinding('attr.aria-describedby') describedBy: string;
   @HostBinding('attr.id') id: string;
 };
+
+@Directive({
+  selector: 'ngl-form-element textarea',
+  host: {
+    '[class.slds-textarea]': 'true',
+  },
+  providers: [ {provide: NglFormInput, useExisting: NglFormTextarea} ],
+})
+export class NglFormTextarea extends NglFormInput {}

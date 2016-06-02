@@ -2,7 +2,7 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {NglFormElement} from './element';
-import {NglFormInput} from './input';
+import {NglFormTextarea} from './input';
 import {NglFormElementRequired} from './required';
 
 function getLabelElement(element: Element): HTMLLabelElement {
@@ -10,18 +10,14 @@ function getLabelElement(element: Element): HTMLLabelElement {
 }
 
 function getInputElement(element: Element): HTMLInputElement {
-  return <HTMLInputElement>element.querySelector('input');
-}
-
-function getErrorElement(element: Element): HTMLDivElement {
-  return <HTMLDivElement>element.querySelector('.slds-form-element__help');
+  return <HTMLInputElement>element.querySelector('textarea');
 }
 
 function getRequiredElement(element: Element): HTMLDivElement {
   return <HTMLDivElement>element.querySelector('abbr');
 }
 
-describe('`NglFormInput`', () => {
+describe('`NglFormTextarea`', () => {
 
   it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
@@ -33,39 +29,12 @@ describe('`NglFormInput`', () => {
     expect(labelEl.textContent).toBe('My label');
 
     const inputEl = getInputElement(element);
-    expect(inputEl).toHaveCssClass('slds-input');
+    expect(inputEl).toHaveCssClass('slds-textarea');
 
     const inputId = inputEl.getAttribute('id');
     expect(inputId).toMatch(/form_element_/);
     expect(inputId).toEqual(labelEl.getAttribute('for'));
   }));
-
-  it('should be able to change label', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
-    fixture.componentInstance.label = 'Another label';
-    fixture.detectChanges();
-
-    const labelEl = getLabelElement(fixture.nativeElement);
-    expect(labelEl.textContent).toBe('Another label');
-  }));
-
-  it('should render error message', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
-    const element = fixture.nativeElement.firstElementChild;
-
-    expect(element).not.toHaveCssClass('slds-has-error');
-    expect(getErrorElement(element)).toBeFalsy();
-    fixture.componentInstance.error = 'This is an error!';
-    fixture.detectChanges();
-
-    const errorEl = getErrorElement(element);
-    const inputEl = getInputElement(element);
-    expect(element).toHaveCssClass('slds-has-error');
-    expect(errorEl.id).toEqual(inputEl.getAttribute('aria-describedby'));
-    expect(errorEl.textContent).toBe('This is an error!');
-  }, `<ngl-form-element [error]="error"><input type="text"></ngl-form-element>`));
 
   it('should hook label indication on input required', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
@@ -79,7 +48,7 @@ describe('`NglFormInput`', () => {
     fixture.componentInstance.required = false;
     fixture.detectChanges();
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-  }, `<ngl-form-element><input type="text" [required]="required"></ngl-form-element>`));
+  }, `<ngl-form-element><textarea [required]="required"></textarea></ngl-form-element>`));
 
 });
 
@@ -95,10 +64,10 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglFormElement, NglFormInput, NglFormElementRequired],
+  directives: [NglFormElement, NglFormTextarea, NglFormElementRequired],
   template: `
     <ngl-form-element [label]="label">
-      <input type="text">
+      <textarea></textarea>
     </ngl-form-element>
   `,
 })
