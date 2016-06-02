@@ -1,6 +1,6 @@
 import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, ContentChild, HostBinding} from '@angular/core';
 import {uniqueId} from '../../util/util';
-import {NglFormInput} from './input';
+import {NglFormInput, NglFormCheckbox} from './input';
 
 @Component({
   selector: 'ngl-form-element',
@@ -28,6 +28,10 @@ export class NglFormElement {
   @HostBinding('class.slds-has-error')
   get error() {
     return this._error;
+  }
+
+  get isCheckbox() {
+    return this.contentEl instanceof NglFormCheckbox;
   }
 
   @Input('_required') required: boolean;

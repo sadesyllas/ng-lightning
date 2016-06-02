@@ -28,3 +28,7 @@
     <option>Option Three</option>
   </select>
 </ngl-form-element>
+
+<ngl-form-element label="Checkbox Label" [error]="hasError ? error : null" class="slds-m-top--small">
+  <input type="checkbox" [required]="required" />
+</ngl-form-element>

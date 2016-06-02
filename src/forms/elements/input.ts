@@ -1,7 +1,7 @@
 import {Directive, HostBinding} from '@angular/core';
 
 @Directive({
-  selector: 'ngl-form-element input',
+  selector: 'ngl-form-element input:not([type=checkbox])',
   host: {
     '[class.slds-input]': 'true',
   },
@@ -28,3 +28,9 @@ export class NglFormTextarea extends NglFormInput {}
   providers: [ {provide: NglFormInput, useExisting: NglFormSelect} ],
 })
 export class NglFormSelect extends NglFormInput {}
+
+@Directive({
+  selector: 'ngl-form-element input[type=checkbox]',
+  providers: [ {provide: NglFormInput, useExisting: NglFormCheckbox} ],
+})
+export class NglFormCheckbox extends NglFormInput {}
