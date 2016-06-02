@@ -19,3 +19,12 @@ export class NglFormInput {
   providers: [ {provide: NglFormInput, useExisting: NglFormTextarea} ],
 })
 export class NglFormTextarea extends NglFormInput {}
+
+@Directive({
+  selector: 'ngl-form-element select',
+  host: {
+    '[class.slds-select]': 'true',
+  },
+  providers: [ {provide: NglFormInput, useExisting: NglFormSelect} ],
+})
+export class NglFormSelect extends NglFormInput {}

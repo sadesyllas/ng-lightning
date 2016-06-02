@@ -2,15 +2,15 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {NglFormElement} from './element';
-import {NglFormTextarea} from './input';
+import {NglFormSelect} from './input';
 import {NglFormElementRequired} from './required';
 import {getLabelElement, getRequiredElement} from './input.spec';
 
 function getInputElement(element: Element): HTMLInputElement {
-  return <HTMLInputElement>element.querySelector('textarea');
+  return <HTMLInputElement>element.querySelector('select');
 }
 
-describe('`NglFormTextarea`', () => {
+describe('`NglFormSelect`', () => {
 
   it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
@@ -22,7 +22,7 @@ describe('`NglFormTextarea`', () => {
     expect(labelEl.textContent).toBe('My label');
 
     const inputEl = getInputElement(element);
-    expect(inputEl).toHaveCssClass('slds-textarea');
+    expect(inputEl).toHaveCssClass('slds-select');
 
     const inputId = inputEl.getAttribute('id');
     expect(inputId).toMatch(/form_element_/);
@@ -41,7 +41,7 @@ describe('`NglFormTextarea`', () => {
     fixture.componentInstance.required = false;
     fixture.detectChanges();
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-  }, `<ngl-form-element><textarea [required]="required"></textarea></ngl-form-element>`));
+  }, `<ngl-form-element><select [required]="required"></select></ngl-form-element>`));
 
 });
 
@@ -57,10 +57,10 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglFormElement, NglFormTextarea, NglFormElementRequired],
+  directives: [NglFormElement, NglFormSelect, NglFormElementRequired],
   template: `
     <ngl-form-element [label]="label">
-      <textarea></textarea>
+      <select></select>
     </ngl-form-element>
   `,
 })

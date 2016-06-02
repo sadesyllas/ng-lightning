@@ -20,3 +20,11 @@
 <ngl-form-element label="Textarea Label" [error]="hasError ? error : null" class="slds-m-top--small">
   <textarea placeholder="Placeholder Text" [required]="required"></textarea>
 </ngl-form-element>
+
+<ngl-form-element label="Select Label" [error]="hasError ? error : null" class="slds-m-top--small">
+  <select class="slds-select" [required]="required">
+    <option>Option One</option>
+    <option>Option Two</option>
+    <option>Option Three</option>
+  </select>
+</ngl-form-element>

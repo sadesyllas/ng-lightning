@@ -5,7 +5,7 @@ import {NglFormElement} from './element';
 import {NglFormInput} from './input';
 import {NglFormElementRequired} from './required';
 
-function getLabelElement(element: Element): HTMLLabelElement {
+export function getLabelElement(element: Element): HTMLLabelElement {
   return <HTMLLabelElement>element.querySelector('label');
 }
 
@@ -17,7 +17,7 @@ function getErrorElement(element: Element): HTMLDivElement {
   return <HTMLDivElement>element.querySelector('.slds-form-element__help');
 }
 
-function getRequiredElement(element: Element): HTMLDivElement {
+export function getRequiredElement(element: Element): HTMLDivElement {
   return <HTMLDivElement>element.querySelector('abbr');
 }
 
