@@ -34,7 +34,7 @@ export function isObject(value: any): boolean {
 // Useful for temporary DOM ids.
 let idCounter = 0;
 export function uniqueId(prefix = 'uid') {
-  return `${prefix}_${++idCounter}`;
+  return `ngl_${prefix}_${++idCounter}`;
 }
 
 export interface IReplaceClass {

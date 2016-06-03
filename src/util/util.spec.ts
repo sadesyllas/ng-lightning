@@ -47,13 +47,14 @@ describe('utility', () => {
   });
 
   it('uniqueId', () => {
-    const [ id, count] = util.uniqueId('pr1').split('_');
+    const [prefix, id, count] = util.uniqueId('pr1').split('_');
+    expect(prefix).toBe('ngl');
     expect(id).toBe('pr1');
     expect(count).toBeGreaterThan(0);
 
-    expect(util.uniqueId('pr1')).toBe(`pr1_${+count + 1}`);
-    expect(util.uniqueId('pr2')).toBe(`pr2_${+count + 2}`);
-    expect(util.uniqueId()).toBe(`uid_${+count + 3}`);
+    expect(util.uniqueId('pr1')).toBe(`ngl_pr1_${+count + 1}`);
+    expect(util.uniqueId('pr2')).toBe(`ngl_pr2_${+count + 2}`);
+    expect(util.uniqueId()).toBe(`ngl_uid_${+count + 3}`);
   });
 
   describe('replaceClass', () => {
