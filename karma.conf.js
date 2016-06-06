@@ -20,32 +20,32 @@ module.exports = function(config) {
 
     files: [
         // Polyfills
-        'node_modules/es6-shim/es6-shim.js',
-        'node_modules/reflect-metadata/Reflect.js',
+        {pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: false},
+        {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false},
 
         // Intl pollyfill
         'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
 
         // Typescript helpers polyfill
-        'node_modules/ts-helpers/index.js',
+        {pattern: 'node_modules/ts-helpers/index.js', included: true, watched: false},
 
         // System.js for module loading
-        'node_modules/systemjs/dist/system-polyfills.js',
-        'node_modules/systemjs/dist/system.src.js',
+        {pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: true, watched: false},
+        {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
 
         // Zone.js
-        'node_modules/zone.js/dist/zone.js',
-        'node_modules/zone.js/dist/jasmine-patch.js',
-        'node_modules/zone.js/dist/async-test.js',
-        'node_modules/zone.js/dist/fake-async-test.js',
+        {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: false},
+        {pattern: 'node_modules/zone.js/dist/jasmine-patch.js', included: true, watched: false},
+        {pattern: 'node_modules/zone.js/dist/async-test.js', included: true, watched: false},
+        {pattern: 'node_modules/zone.js/dist/fake-async-test.js', included: true, watched: false},
 
         // RxJS
         {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
         {pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false},
 
         // Angular
-        {pattern: 'node_modules/@angular/**/*.js', included: false, watched: true},
-        {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: true},
+        {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
+        {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
         // Other libraries
         {pattern: 'node_modules/tether/dist/js/tether.min.js', included: true, watched: false},
