@@ -59,7 +59,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 @Component({
   directives: [NglFormElement, NglFormSelect, NglFormElementRequired],
   template: `
-    <ngl-form-element [label]="label">
+    <ngl-form-element [nglFormLabel]="label">
       <select></select>
     </ngl-form-element>
   `,

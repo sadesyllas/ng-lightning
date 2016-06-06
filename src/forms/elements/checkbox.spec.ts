@@ -51,7 +51,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 @Component({
   directives: [NglFormElement, NglFormCheckbox, NglFormElementRequired],
   template: `
-    <ngl-form-element [label]="label">
+    <ngl-form-element [nglFormLabel]="label">
       <input type="checkbox" />
     </ngl-form-element>
   `,

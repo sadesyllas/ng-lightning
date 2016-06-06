@@ -1,8 +1,8 @@
 # `<ngl-form-element>`
 
 ### Input
-  * `label: string`: Input label.
-  * `error?: string`: Error message.
+  * `nglFormLabel: string`: Input label.
+  * `nglFormError?: string`: Error message.
 
 ### Content
 

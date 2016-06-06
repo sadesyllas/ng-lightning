@@ -65,7 +65,7 @@ describe('`NglFormInput`', () => {
     expect(element).toHaveCssClass('slds-has-error');
     expect(errorEl.id).toEqual(inputEl.getAttribute('aria-describedby'));
     expect(errorEl.textContent).toBe('This is an error!');
-  }, `<ngl-form-element [error]="error"><input type="text"></ngl-form-element>`));
+  }, `<ngl-form-element [nglFormError]="error"><input type="text"></ngl-form-element>`));
 
   it('should hook label indication on input required', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
@@ -97,7 +97,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 @Component({
   directives: [NglFormElement, NglFormInput, NglFormElementRequired],
   template: `
-    <ngl-form-element [label]="label">
+    <ngl-form-element [nglFormLabel]="label">
       <input type="text">
     </ngl-form-element>
   `,

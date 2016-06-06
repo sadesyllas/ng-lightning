@@ -14,29 +14,24 @@ import {NglFormInput, NglFormCheckbox} from './input';
 export class NglFormElement {
   @ContentChild(NglFormInput) contentEl: NglFormInput;
 
-  uid = uniqueId('form_element');
+  @Input('nglFormLabel') label: string;
 
-  @Input() label: string;
-
-  @Input('error') set setError(error: string) {
-    this._error = error;
+  @Input('nglFormError') set setError(error: string) {
+    this.error = error;
     if (this.contentEl) {
       this.setInputErrorId();
     }
   }
 
-  @HostBinding('class.slds-has-error')
-  get error() {
-    return this._error;
-  }
+  @HostBinding('class.slds-has-error') error: string;
+
+  uid = uniqueId('form_element');
+
+  required = false;
 
   get isCheckbox() {
     return this.contentEl instanceof NglFormCheckbox;
   }
-
-  @Input('_required') required: boolean;
-
-  private _error: string;
 
   constructor(public detector: ChangeDetectorRef) {}
 

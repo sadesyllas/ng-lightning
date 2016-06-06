@@ -1,27 +1,19 @@
-<div class="slds-form-element slds-m-bottom--small">
-  <div class="slds-form-element__control">
-    <label class="slds-checkbox">
-      <input type="checkbox" [(ngModel)]="required" />
-      <span class="slds-checkbox--faux"></span>
-      <span class="slds-form-element__label">Required</span>
-    </label>
-    <label class="slds-checkbox">
-      <input type="checkbox" [(ngModel)]="hasError" />
-      <span class="slds-checkbox--faux"></span>
-      <span class="slds-form-element__label">Error</span>
-    </label>
-  </div>
-</div>
+<ngl-form-element nglFormLabel="Required" style="display: inline-block;">
+  <input type="checkbox" [(ngModel)]="required" />
+</ngl-form-element>
+<ngl-form-element nglFormLabel="Error" style="display: inline-block;">
+  <input type="checkbox" [(ngModel)]="hasError" />
+</ngl-form-element>
 
-<ngl-form-element label="Input Label" [error]="hasError ? error : null">
+<ngl-form-element nglFormLabel="Input Label" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
   <input type="text" placeholder="My input" [required]="required">
 </ngl-form-element>
 
-<ngl-form-element label="Textarea Label" [error]="hasError ? error : null" class="slds-m-top--small">
+<ngl-form-element nglFormLabel="Textarea Label" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
   <textarea placeholder="Placeholder Text" [required]="required"></textarea>
 </ngl-form-element>
 
-<ngl-form-element label="Select Label" [error]="hasError ? error : null" class="slds-m-top--small">
+<ngl-form-element nglFormLabel="Select Label" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
   <select class="slds-select" [required]="required">
     <option>Option One</option>
     <option>Option Two</option>
@@ -29,6 +21,6 @@
   </select>
 </ngl-form-element>
 
-<ngl-form-element label="Checkbox Label" [error]="hasError ? error : null" class="slds-m-top--small">
+<ngl-form-element nglFormLabel="Checkbox Label" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
   <input type="checkbox" [required]="required" />
 </ngl-form-element>
