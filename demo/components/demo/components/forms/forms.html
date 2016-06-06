@@ -24,3 +24,13 @@
 <ngl-form-element nglFormLabel="Checkbox Label" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
   <input type="checkbox" [required]="required" />
 </ngl-form-element>
+
+<fieldset ngl-form-group nglFormLabel="Radio Group Label" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+  <ngl-form-group-element nglFormLabel="Radio Label One"><input type="radio" /></ngl-form-group-element>
+  <ngl-form-group-element nglFormLabel="Radio Label Two"><input type="radio" /></ngl-form-group-element>
+</fieldset>
+
+<fieldset ngl-form-group nglFormLabel="Checkbox Group Label" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+  <ngl-form-group-element nglFormLabel="Checkbox Label One"><input type="checkbox" /></ngl-form-group-element>
+  <ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="checkbox" /></ngl-form-group-element>
+</fieldset>
