@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
-import {uniqueId} from '../util/util';
 
 @Component({
  selector: 'ngl-breadcrumbs',
@@ -7,6 +6,5 @@ import {uniqueId} from '../util/util';
  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglBreadcrumbs {
-  labelId = uniqueId('breadcrumb');
   @Input() assistiveText: string;
 }

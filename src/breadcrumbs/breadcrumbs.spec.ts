@@ -8,8 +8,9 @@ function getBreadcrumbsLinks(element: HTMLElement): HTMLLinkElement[] {
  return [].slice.call(element.querySelectorAll('a'));
 }
 
-function getAssistiveText(element: HTMLElement): HTMLElement {
-  return <HTMLElement>element.querySelector('.slds-assistive-text');
+function getAssistiveText(element: HTMLElement): string {
+  const el = <HTMLElement>element.querySelector('nav');
+  return el.getAttribute('aria-label');
 }
 
 describe('Breadcrumbs Component', () => {
@@ -24,17 +25,9 @@ describe('Breadcrumbs Component', () => {
   }));
 
   it('should render assistive text correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const assistiveText = getAssistiveText(fixture.nativeElement);
     fixture.detectChanges();
-    expect(assistiveText).toHaveText('Here you are:');
+    expect(getAssistiveText(fixture.nativeElement)).toEqual('Here you are:');
   }, `<ngl-breadcrumbs [assistiveText]="text"></ngl-breadcrumbs>`));
-
-  it('should set `aria-labelledby`', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-    const assistiveText = getAssistiveText(fixture.nativeElement);
-    const breadcrumbEl = fixture.nativeElement.querySelector('.slds-breadcrumb');
-    expect(assistiveText.id).toEqual(breadcrumbEl.getAttribute('aria-labelledby'));
-  }));
 });
 
 // Shortcut function for less boilerplate on each `it`
