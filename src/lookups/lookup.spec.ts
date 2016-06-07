@@ -7,16 +7,17 @@ import {NglLookup} from './lookup';
 
 function getElements(element: HTMLElement) {
   return {
+    lookup: <HTMLDivElement>element.querySelector('.slds-lookup'),
     label: <HTMLLabelElement>element.querySelector('label'),
     input: <HTMLInputElement>element.querySelector('input'),
     menu: <HTMLInputElement>element.querySelector('.slds-lookup__menu'),
-    options: selectElements(element, '.slds-lookup__item'),
+    options: selectElements(element, '.slds-lookup__list > li'),
     pill: getPill(element),
   };
 }
 
 function getPill(element: HTMLElement) {
-  return <HTMLAnchorElement>element.querySelector('a');
+  return <HTMLAnchorElement>element.querySelector('.slds-pill_container');
 }
 
 function clickRemove(element: HTMLElement) {
@@ -35,12 +36,14 @@ function expectOptions(fixture: any, expectedOptions: any[], cb = function() {})
 }
 
 function expectMenuExpanded(element: HTMLElement, isOpen: boolean) {
-  const { menu, input } = getElements(element);
+  const { lookup, menu, input } = getElements(element);
   expect(input.getAttribute('aria-expanded')).toBe(isOpen.toString());
   if (isOpen) {
-    expect(menu).not.toHaveCssClass('slds-hide');
+    expect(lookup).toHaveCssClass('slds-is-open');
+    expect(menu).toBeTruthy();
   } else {
-    expect(menu).toHaveCssClass('slds-hide');
+    expect(lookup).not.toHaveCssClass('slds-is-open');
+    expect(menu).toBeFalsy();
   }
 }
 
