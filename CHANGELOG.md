@@ -1,3 +1,22 @@
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/ng-lightning/ng-lightning/compare/v0.10.1...v0.11.0) (2016-06-07)
+
+
+### Bug Fixes
+
+* **util:** namespace automatically generated IDs ([3ca0956](https://github.com/ng-lightning/ng-lightning/commit/3ca0956))
+
+
+### Features
+
+* **app:** add checkbox form component ([b7a4673](https://github.com/ng-lightning/ng-lightning/commit/b7a4673)), closes [#115](https://github.com/ng-lightning/ng-lightning/issues/115)
+* **app:** add input form component ([f159037](https://github.com/ng-lightning/ng-lightning/commit/f159037)), closes [#112](https://github.com/ng-lightning/ng-lightning/issues/112)
+* **app:** add radio & checkbox group component ([5b306ec](https://github.com/ng-lightning/ng-lightning/commit/5b306ec)), closes [#117](https://github.com/ng-lightning/ng-lightning/issues/117)
+* **app:** add select form component ([5489cb6](https://github.com/ng-lightning/ng-lightning/commit/5489cb6)), closes [#114](https://github.com/ng-lightning/ng-lightning/issues/114)
+* **app:** add textarea form component ([9d14331](https://github.com/ng-lightning/ng-lightning/commit/9d14331)), closes [#113](https://github.com/ng-lightning/ng-lightning/issues/113)
+
+
+
 <a name="0.10.1"></a>
 ## [0.10.1](https://github.com/ng-lightning/ng-lightning/compare/v0.10.0...v0.10.1) (2016-06-01)
 
