@@ -77,7 +77,10 @@ function startKarmaServer(isTddMode, done) {
   if (argv.logLevel) config.logLevel = argv.logLevel;
 
   var karmaServer = require('karma').Server;
-  new karmaServer(config, done).start();
+  var server = new karmaServer(config, done);
+  server.start();
+
+  return server;
 }
 
 gulp.task('test:clean', function() {
@@ -101,16 +104,16 @@ gulp.task('test:build', function() {
 gulp.task('test:clean-build', gulp.series('test:clean', 'test:build'));
 
 gulp.task('test', gulp.series('test:clean-build', function test_impl(done) {
-  startKarmaServer(false, done)
+  startKarmaServer(false, done);
 }));
 
 gulp.task('tdd', gulp.series('test:clean-build', function tdd_impl(done) {
   startKarmaServer(true, function(err) {
     done(err);
     process.exit(1);
+  }).on('browser_register', function(browser) {
+    gulp.watch([PATHS.spec, PATHS.templates], gulp.series('test:build'));
   });
-
-  gulp.watch([PATHS.spec, PATHS.templates], gulp.series('test:build'));
 }));
 
 gulp.task('prepublish', gulp.series('build', function prepublish_impl() {
