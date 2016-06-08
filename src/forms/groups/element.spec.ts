@@ -53,6 +53,13 @@ describe('`NglFormGroupElement`', () => {
         <ngl-form-group-element [nglFormLabel]="label"><input type="radio" /></ngl-form-group-element>
         <ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="radio" /></ngl-form-group-element>
       </fieldset>`));
+
+  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const inputEl = fixture.nativeElement.querySelector('input');
+    expect(inputEl.getAttribute('name')).toBeNull();
+  }, `<input type="radio" />`));
 });
 
 

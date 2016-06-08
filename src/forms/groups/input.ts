@@ -1,15 +1,15 @@
-import {Directive, HostBinding} from '@angular/core';
+import {Directive, HostBinding, Optional} from '@angular/core';
 import {NglFormGroup} from './group';
 
 @Directive({
-  selector: 'ngl-form-group-element input([type=checkbox])',
+  selector: 'input([type=checkbox])',
 })
 export class NglFormGroupCheckbox {
   type = 'checkbox';
 }
 
 @Directive({
-  selector: 'ngl-form-group-element input([type=radio])',
+  selector: 'input([type=radio])',
   providers: [ {provide: NglFormGroupCheckbox, useExisting: NglFormGroupRadio} ],
 })
 export class NglFormGroupRadio {
@@ -17,7 +17,8 @@ export class NglFormGroupRadio {
 
   @HostBinding('attr.name') name: string;
 
-  constructor(formGroup: NglFormGroup) {
+  constructor(@Optional() formGroup: NglFormGroup) {
+    if (!formGroup) return;
     this.name = `name_${formGroup.uid}`;
   }
 }

@@ -36,7 +36,7 @@ export class NglFormElement {
   constructor(public detector: ChangeDetectorRef) {}
 
   ngAfterContentInit() {
-    this.contentEl.id = this.uid;
+    this.contentEl.setup(this.uid);
     this.setInputErrorId();
   }
 

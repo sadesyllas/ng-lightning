@@ -43,6 +43,12 @@ describe('`NglFormTextarea`', () => {
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
   }, `<ngl-form-element><textarea [required]="required"></textarea></ngl-form-element>`));
 
+  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-textarea');
+    expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-textarea');
+  }, `<textarea class="out"></textarea><ngl-form-element><textarea class="in"></textarea></ngl-form-element>`));
+
 });
 
 

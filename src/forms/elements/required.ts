@@ -1,15 +1,17 @@
-import {Directive, Input} from '@angular/core';
+import {Directive, Input, Optional} from '@angular/core';
 import {toBoolean} from '../../util/util';
 import {NglFormElement} from './element';
 
 @Directive({
-  selector: 'ngl-form-element input[required], ngl-form-element textarea[required], ngl-form-element select[required]',
+  selector: 'input[required], textarea[required], select[required]',
 })
 export class NglFormElementRequired {
 
-  constructor(private nglFormElement: NglFormElement) {}
+  constructor(@Optional() private nglFormElement: NglFormElement) {}
 
   @Input() set required(required: string | boolean) {
+    if (!this.nglFormElement) return;
+
     this.nglFormElement.required = toBoolean(required);
     this.nglFormElement.detector.markForCheck();
   }

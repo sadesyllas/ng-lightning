@@ -43,6 +43,12 @@ describe('`NglFormSelect`', () => {
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
   }, `<ngl-form-element><select [required]="required"></select></ngl-form-element>`));
 
+  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-select');
+    expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-select');
+  }, `<select class="out"></select><ngl-form-element><select class="in"></select></ngl-form-element>`));
+
 });
 
 

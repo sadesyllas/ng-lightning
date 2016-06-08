@@ -3,7 +3,6 @@ import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing'
 import {Component} from '@angular/core';
 import {NglFormElement} from './element';
 import {NglFormInput} from './input';
-import {NglFormElementRequired} from './required';
 
 export function getLabelElement(element: Element): HTMLLabelElement {
   return <HTMLLabelElement>element.querySelector('label');
@@ -67,19 +66,11 @@ describe('`NglFormInput`', () => {
     expect(errorEl.textContent).toBe('This is an error!');
   }, `<ngl-form-element [nglFormError]="error"><input type="text"></ngl-form-element>`));
 
-  it('should hook label indication on input required', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
-    expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-
-    fixture.componentInstance.required = true;
-    fixture.detectChanges();
-    const abbrEl = getRequiredElement(fixture.nativeElement);
-    expect(abbrEl).toHaveCssClass('slds-required');
-
-    fixture.componentInstance.required = false;
-    fixture.detectChanges();
-    expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-  }, `<ngl-form-element><input type="text" [required]="required"></ngl-form-element>`));
+    expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-input');
+    expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-input');
+  }, `<input class="out"><ngl-form-element><input class="in"></ngl-form-element>`));
 
 });
 
@@ -95,7 +86,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglFormElement, NglFormInput, NglFormElementRequired],
+  directives: [NglFormElement, NglFormInput],
   template: `
     <ngl-form-element [nglFormLabel]="label">
       <input type="text">

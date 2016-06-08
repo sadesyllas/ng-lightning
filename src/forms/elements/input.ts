@@ -1,36 +1,56 @@
-import {Directive, HostBinding} from '@angular/core';
+import {Directive, HostBinding, ElementRef, Renderer} from '@angular/core';
 
 @Directive({
-  selector: 'ngl-form-element input:not([type=checkbox])',
-  host: {
-    '[class.slds-input]': 'true',
-  },
+  selector: 'input:not([type=checkbox]), input:not([type=radio])',
 })
 export class NglFormInput {
   @HostBinding('attr.aria-describedby') describedBy: string;
-  @HostBinding('attr.id') id: string;
+
+  protected hostClass = 'slds-input';
+
+  constructor(protected element: ElementRef, protected renderer: Renderer) {}
+
+  setup(id: string) {
+    this.renderer.setElementAttribute(this.element.nativeElement, 'id', id);
+
+    if (this.hostClass) {
+      this.renderer.setElementClass(this.element.nativeElement, this.hostClass, true);
+    }
+  }
 };
 
 @Directive({
-  selector: 'ngl-form-element textarea',
-  host: {
-    '[class.slds-textarea]': 'true',
-  },
+  selector: 'textarea',
   providers: [ {provide: NglFormInput, useExisting: NglFormTextarea} ],
 })
-export class NglFormTextarea extends NglFormInput {}
+export class NglFormTextarea extends NglFormInput {
+  protected hostClass = 'slds-textarea';
+
+  constructor(protected element: ElementRef, protected renderer: Renderer) {
+    super(element, renderer);
+  }
+}
 
 @Directive({
-  selector: 'ngl-form-element select',
-  host: {
-    '[class.slds-select]': 'true',
-  },
+  selector: 'select',
   providers: [ {provide: NglFormInput, useExisting: NglFormSelect} ],
 })
-export class NglFormSelect extends NglFormInput {}
+export class NglFormSelect extends NglFormInput {
+  protected hostClass = 'slds-select';
+
+  constructor(protected element: ElementRef, protected renderer: Renderer) {
+    super(element, renderer);
+  }
+}
 
 @Directive({
-  selector: 'ngl-form-element input[type=checkbox]',
+  selector: 'input[type=checkbox]',
   providers: [ {provide: NglFormInput, useExisting: NglFormCheckbox} ],
 })
-export class NglFormCheckbox extends NglFormInput {}
+export class NglFormCheckbox extends NglFormInput {
+  protected hostClass: string = null;
+
+  constructor(protected element: ElementRef, protected renderer: Renderer) {
+    super(element, renderer);
+  }
+}
