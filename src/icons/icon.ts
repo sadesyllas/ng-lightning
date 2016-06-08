@@ -13,7 +13,14 @@ export type NglIconCategory = 'action' | 'custom' | 'doctype' | 'standard' | 'ut
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglIcon {
-  @Input() icon: string;
+  _icon: string;
+  @Input('icon') set setIcon(icon: string) {
+    this._icon = icon;
+  }
+  get icon() {
+    return this.category === 'custom' ? `custom${this._icon}` : this._icon;
+  }
+
   @Input('category') set setCategory(category: NglIconCategory) {
     this.category = category || 'utility';
   }
@@ -43,8 +50,7 @@ export class NglIcon {
   }
 
   iconPath() {
-    const icon = this.category === 'custom' ? `custom${this.icon}` : this.icon;
-    return `${this.config.svgPath}/${this.category}-sprite/svg/symbols.svg#${icon}`;
+    return `${this.config.svgPath}/${this.category}-sprite/svg/symbols.svg#${this.icon}`;
   }
 
   ngOnChanges() {

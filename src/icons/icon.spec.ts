@@ -130,7 +130,7 @@ describe('Icon Component', () => {
 
     const { host, icon } = getElements(fixture.nativeElement);
     const use = icon.querySelector('use');
-    expect(host).toHaveCssClass('slds-icon-custom-1');
+    expect(host).toHaveCssClass('slds-icon-custom-custom1');
     expect(use.getAttribute('xlink:href')).toBe('/mypath/custom-sprite/svg/symbols.svg#custom1');
   }, `<ngl-icon category="custom" icon="1"></ngl-icon>`));
 
