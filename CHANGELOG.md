@@ -1,3 +1,13 @@
+<a name="0.11.1"></a>
+## [0.11.1](https://github.com/ng-lightning/ng-lightning/compare/v0.11.0...v0.11.1) (2016-06-08)
+
+
+### Bug Fixes
+
+* **NglFormElement:** don't let form directives leak on whole app ([4be0c3c](https://github.com/ng-lightning/ng-lightning/commit/4be0c3c)), closes [#120](https://github.com/ng-lightning/ng-lightning/issues/120)
+
+
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/ng-lightning/ng-lightning/compare/v0.10.1...v0.11.0) (2016-06-07)
 
