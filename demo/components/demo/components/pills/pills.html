@@ -1,19 +1,22 @@
 <div class="slds-text-heading--label slds-m-bottom--small">Pill examples</div>
 
-<a href="javascript:void(0)" nglPill>Default</a>
-<a href="javascript:void(0)" nglPill>
-  <ngl-icon category="standard" icon="feedback" nglPillImage></ngl-icon> With icon
-</a>
-<a href="javascript:void(0)" nglPill>
-  <ngl-avatar nglPillImage type="circle" src="assets/images/avatar2.jpg"></ngl-avatar> With portrait
-</a>
-<span nglPill>Unlinked</span>
+<ngl-pill><a href="javascript:void(0)">Default</a></ngl-pill>
+<ngl-pill>
+  <ngl-icon category="standard" icon="feedback" nglPillImage></ngl-icon>
+  <a href="javascript:void(0)">With icon</a>
+</ngl-pill>
+<ngl-pill>
+  <ngl-avatar type="circle" src="assets/images/avatar2.jpg" nglPillImage></ngl-avatar>
+  <a href="javascript:void(0)">With portrait</a>
+</ngl-pill>
+<ngl-pill>Unlinked</ngl-pill>
 
 
 <div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Removable pills</div>
 <button type="button" nglButton="brand" (click)="add()">Add</button>
 <div class="slds-clearfix slds-p-vertical--xx-small"></div>
 
-<a href="javascript:void(0)" *ngFor="let pill of pills" nglPill (nglPillRemove)="remove(pill)">
-  <ngl-icon category="standard" icon="account" nglPillImage></ngl-icon> {{pill}}
-</a>
+<ngl-pill (nglPillRemove)="remove(pill)" *ngFor="let pill of pills">
+  <ngl-icon category="standard" icon="account" nglPillImage></ngl-icon>
+  <a href="javascript:void(0)">{{pill}}</a>
+</ngl-pill>

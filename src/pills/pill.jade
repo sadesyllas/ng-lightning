@@ -1,5 +1,6 @@
 ng-content(select="[nglPillImage]")
-span.slds-pill__label
+ng-content(select="a")
+span.slds-pill__label(*ngIf="unlinked")
   ng-content
 button.slds-pill__remove(*ngIf="removable", type="button", nglButtonIcon="bare", (click)="remove()")
   ngl-icon(icon="close")

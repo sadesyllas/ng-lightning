@@ -22,6 +22,7 @@ import {NglPick} from './pick/pick';
 import {NglPickOption} from './pick/pick-option';
 import {NglPill} from './pills/pill';
 import {NglPillImage} from './pills/pill-image';
+import {NglPillLink} from './pills/pill-link';
 import {NglPillRemove} from './pills/pill-remove';
 import {NglPopover} from './popovers/popover';
 import {NglPopoverTrigger} from './popovers/trigger';
@@ -54,6 +55,7 @@ export {NglPick} from './pick/pick';
 export {NglPickOption} from './pick/pick-option';
 export {NglPill} from './pills/pill';
 export {NglPillImage} from './pills/pill-image';
+export {NglPillLink} from './pills/pill-link';
 export {NglPillRemove} from './pills/pill-remove';
 export {NglPopover} from './popovers/popover';
 export {NglPopoverTrigger} from './popovers/trigger';
@@ -78,7 +80,7 @@ export const NGL_DIRECTIVES = [
   NglNotification, NglNotificationClose,
   NglPagination,
   NglPick, NglPickOption,
-  NglPill, NglPillImage, NglPillRemove,
+  NglPill, NglPillImage, NglPillLink, NglPillRemove,
   NglPopover, NglPopoverTrigger,
   NglRating,
   NglSection,

@@ -2,7 +2,6 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {NglIcon} from './icon';
-import {NglPillImage} from '../pills/pill-image';
 import {provideNglConfig} from '../config/config';
 
 
@@ -133,17 +132,6 @@ describe('Icon Component', () => {
     expect(host).toHaveCssClass('slds-icon-custom-custom1');
     expect(use.getAttribute('xlink:href')).toBe('/mypath/custom-sprite/svg/symbols.svg#custom1');
   }, `<ngl-icon category="custom" icon="1"></ngl-icon>`));
-
-  it('should be able to render as a pill image', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
-    const { host, icon } = getElements(fixture.nativeElement);
-    expect(host).not.toHaveCssClass('slds-pill__icon');
-    expect(icon).toHaveCssClass('slds-pill__icon');
-
-    expect(host).not.toHaveCssClass('slds-icon-standard-add');
-    expect(icon).toHaveCssClass('slds-icon-standard-add');
-  }, `<ngl-icon icon="add" category="standard" nglPillImage></ngl-icon>`));
 });
 
 // Shortcut function for less boilerplate on each `it`
@@ -154,7 +142,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglIcon, NglPillImage],
+  directives: [NglIcon],
   template: '',
   providers: [provideNglConfig({svgPath: '/mypath'})],
 })

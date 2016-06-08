@@ -2,7 +2,6 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {NglAvatar} from './avatar';
-import {NglPillImage} from '../pills/pill-image';
 
 function getAvatarElement(element: Element): HTMLElement {
   return <HTMLElement>element.firstElementChild;
@@ -64,14 +63,6 @@ describe('Avatar Component', () => {
     const image = getImageElement(avatar);
     expect(image.getAttribute('alt')).toEqual('assistive text');
   }, `<ngl-avatar alt="assistive text" src="image1.jpg"></ngl-avatar>`));
-
-  it('should be able to render as a pill image', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
-    const avatar = getAvatarElement(fixture.nativeElement);
-    expect(avatar).toHaveCssClass('slds-pill__icon');
-    expect(avatar).not.toHaveCssClass('slds-avatar--medium');
-  }, `<ngl-avatar src="image1.jpg" nglPillImage></ngl-avatar>`));
 });
 
 
@@ -83,7 +74,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglAvatar, NglPillImage],
+  directives: [NglAvatar],
   template: ``,
 })
 export class TestComponent {

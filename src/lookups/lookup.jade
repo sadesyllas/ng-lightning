@@ -3,7 +3,7 @@
     ng-content(select="[nglLookupLabel]")
   .slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right
     .slds-pill_container(*ngIf="pick")
-      span(nglPill, (nglPillRemove)="clear()") {{resolveLabel(pick)}}
+      ngl-pill((nglPillRemove)="clear()") {{resolveLabel(pick)}}
     input.slds-input.slds-lookup__search-input(#lookupInput, [id]="inputId", type="text", [ngClass]="{'slds-hide': pick}", aria-autocomplete="list", role="combobox", 
                      [attr.aria-expanded]="expanded", [attr.aria-activedescendant]="optionId(activeIndex)",
                      [ngFormControl]="input", (keydown.Esc)="close($event)", [placeholder]="placeholder || ''",

@@ -3,7 +3,6 @@ import {NglConfig} from '../config/config';
 import {toBoolean, replaceClass} from '../util/util';
 import {NglButton} from '../buttons/button';
 import {NglButtonIcon} from '../buttons/button-icon';
-import {NglPillImage} from '../pills/pill-image';
 
 export type NglIconCategory = 'action' | 'custom' | 'doctype' | 'standard' | 'utility';
 
@@ -37,15 +36,11 @@ export class NglIcon {
   constructor(private config: NglConfig, public element: ElementRef, public renderer: Renderer,
               @Attribute('state') private state: 'not-selected' | 'selected' | 'selected-focus',
               @Attribute('button') button: 'not-selected' | 'selected' | 'selected-focus',
-              @Optional() private nglButton: NglButton, @Optional() private nglButtonIcon: NglButtonIcon,
-              @Optional() private nglPillImage: NglPillImage) {
+              @Optional() private nglButton: NglButton, @Optional() private nglButtonIcon: NglButtonIcon) {
 
     this.button = button === null ? !!(this.nglButton || this.nglButtonIcon) : toBoolean(button);
     if (state) {
       renderer.setElementClass(element.nativeElement, `slds-text-${state}`, true);
-    }
-    if (this.nglPillImage) {
-      this.nglPillImage.applyClass = false;
     }
   }
 
@@ -54,11 +49,9 @@ export class NglIcon {
   }
 
   ngOnChanges() {
-    if (!this.nglPillImage) {
-      const { containerClass } = this;
-      replaceClass(this, this._containerClass, containerClass);
-      this._containerClass = containerClass;
-    }
+    const { containerClass } = this;
+    replaceClass(this, this._containerClass, containerClass);
+    this._containerClass = containerClass;
   }
 
   svgClasses() {
@@ -77,11 +70,6 @@ export class NglIcon {
 
     if (this.align || this.state) {
       classes.push(`slds-button__icon--${this.align || 'left'}`);
-    }
-
-    if (this.nglPillImage) {
-      classes.push('slds-pill__icon');
-      Array.prototype.push.apply(classes, this.containerClass);
     }
 
     return classes;

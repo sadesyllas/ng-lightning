@@ -3,7 +3,7 @@ import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';
 
 @Component({
-  selector: '[nglPill]',
+  selector: 'ngl-pill',
   templateUrl: './pill.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [NglButtonIcon, NglIcon],
@@ -13,6 +13,7 @@ import {NglIcon} from '../icons/icon';
 })
 export class NglPill {
   removable: boolean;
+  unlinked: boolean = true;
 
   @Output() nglPillRemove = new EventEmitter(false);
 
