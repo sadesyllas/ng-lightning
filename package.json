@@ -35,7 +35,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/core": "2.0.0-rc.1",
-    "@salesforce-ux/design-system": "^1.0.0",
+    "@salesforce-ux/design-system": "^2.0.1",
     "tether": "^1.2.0"
   },
   "dependencies": {
@@ -49,7 +49,7 @@
     "@angular/platform-browser": "2.0.0-rc.1",
     "@angular/platform-browser-dynamic": "2.0.0-rc.1",
     "@angular/router-deprecated": "2.0.0-rc.1",
-    "@salesforce-ux/design-system": "^1.0.4",
+    "@salesforce-ux/design-system": "^2.0.1",
     "app-root-path": "^1.0.0",
     "browser-sync": "^2.13.0",
     "browser-sync-webpack-plugin": "^1.0.3",
