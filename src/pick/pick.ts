@@ -9,6 +9,7 @@ export class NglPick {
 
   selected: any;
   values = new BehaviorSubject(null);
+  pickAllEvent = new EventEmitter<boolean>();
   isMultiple = false;
 
   @Input('nglPick') set setSelected(selected: string) {
@@ -48,6 +49,10 @@ export class NglPick {
     }
 
     this.nglPickChange.emit(next);
+  }
+
+  pickAll(pick: boolean) {
+    this.pickAllEvent.next(pick);
   }
 
   optionRemoved(value: any) {

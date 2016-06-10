@@ -1,4 +1,4 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {iit, inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {NglPicklist} from './picklist';
 import {NglPicklistItemTemplate} from './item';
@@ -36,6 +36,27 @@ describe('`NglPicklist`', () => {
     expect(trigger.textContent.trim()).toBe('Select option(s)');
 
     expectOptions(fixture.nativeElement, [ 'Item 1', 'Item 2', 'Item 3' ]);
+  }));
+
+  iit('should render the select all/none controls correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const controls = selectElements(fixture.nativeElement, 'ngl-picklist [nglPickAll]');
+
+    expect(controls.length).toBe(2);
+    expect(controls[0].textContent.trim()).toBe('All Items');
+    expect(controls[1].textContent.trim()).toBe('Select None');
+    expect(selectElements(controls[0], 'ngl-icon').length).toBe(1);
+    expect(selectElements(controls[1], 'ngl-icon').length).toBe(0);
+
+    fixture.componentInstance.multiple = false;
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      fixture.detectChanges();
+      console.log(selectElements(fixture.nativeElement, 'ngl-picklist [nglPickAll]'));
+      expect(selectElements(fixture.nativeElement, 'ngl-picklist [nglPickAll]').length).toBe(0);
+    });
   }));
 
   it('should open based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -141,7 +162,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 @Component({
   directives: [NglPicklist, NglPicklistItemTemplate, NglPick],
   template: `
-    <ngl-picklist [data]="items" [(nglPick)]="picks" [(open)]="open" [nglPickMultiple]="multiple">
+    <ngl-picklist [data]="items" [(nglPick)]="picks" [(open)]="open" [nglPickMultiple]="multiple" nglPickAll="All Items" [nglPickNone]="{ 'icon': null }">
       <span class="slds-truncate">{{picks.length ? picks.length + ' options selected' : 'Select option(s)'}}</span>
       <template nglPicklistItem let-item>{{item.value}}</template>
     </ngl-picklist>

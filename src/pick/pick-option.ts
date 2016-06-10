@@ -25,6 +25,7 @@ export class NglPickOption {
   private _value: any;
   private _active = false;
   private _subscription: Subscription;
+  private _pickAllSubscription: Subscription;
 
   constructor(private element: ElementRef, private renderer: Renderer, private nglPick: NglPick) {}
 
@@ -47,10 +48,18 @@ export class NglPickOption {
         this.renderer.setElementClass(this.element.nativeElement, activeClass, this.active);
       }
     });
+
+    this._pickAllSubscription = this.nglPick.pickAllEvent.subscribe((pick: boolean) => {
+      if ((pick && this._active) || (!pick && !this._active)) {
+        return;
+      }
+      setTimeout(() => this.nglPick.selectOption(this._value));
+    });
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
+    this._pickAllSubscription.unsubscribe();
     this.nglPick.optionRemoved(this._value);
   }
 

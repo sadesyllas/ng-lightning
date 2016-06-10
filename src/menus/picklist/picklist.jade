@@ -3,6 +3,16 @@
     ng-content
     ngl-icon(icon="down", size="x-small")
   .slds-dropdown.slds-dropdown--left
+    .slds-p-horizontal--small.slds-p-bottom--large(*ngIf="pick.isMultiple")
+      a.slds-float--left(nglPickAll)
+        p.slds-truncate
+          ngl-icon(*ngIf="nglPickAll.icon", [icon]="nglPickAll.icon", size="x-small", svgClass="slds-m-right--xx-small")
+          span(style="vertical-align: middle;") {{nglPickAll.label}}
+      a.slds-float--right(nglPickAll="false")
+        p.slds-truncate
+          ngl-icon(*ngIf="nglPickNone.icon", [icon]="nglPickNone.icon", size="x-small", svgClass="slds-m-right--xx-small")
+          span(style="vertical-align: middle;") {{nglPickNone.label}}
+    hr.slds-m-around--none
     ul.dropdown__list(role="menu", [ngClass]="dropdownListClass")
       li.slds-dropdown__item(*ngFor="let item of data;", [nglPickOption]="item", nglPickActiveClass="slds-is-selected")
         a(role="menuitem", nglDropdownItem)
