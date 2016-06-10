@@ -1,0 +1,7 @@
+legend.slds-form-element__label
+  abbr.slds-required(*ngIf="required", title="required") *
+  | {{label}}
+.slds-form-element__control
+  div([ngClass]="'slds-' + type + '--button-group'")
+    ng-content
+.slds-form-element__help(*ngIf="error") {{error}}

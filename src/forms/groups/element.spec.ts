@@ -20,7 +20,7 @@ describe('`NglFormGroupElement`', () => {
     fixture.detectChanges();
 
     const labelEls = getLabelElements(fixture.nativeElement);
-    expect(labelEls.map(e => e.textContent)).toEqual(['Checkbox Label One', 'Checkbox Label Two']);
+    expect(labelEls.map(e => e.textContent.trim())).toEqual(['Checkbox Label One', 'Checkbox Label Two']);
 
     labelEls.forEach(e => {
       expect(e).toHaveCssClass('slds-checkbox');
@@ -29,15 +29,15 @@ describe('`NglFormGroupElement`', () => {
       expect(fauxEl).toBeTruthy();
     });
   }, `<fieldset ngl-form-group>
-        <ngl-form-group-element [nglFormLabel]="label"><input type="checkbox" /></ngl-form-group-element>
-        <ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="checkbox" /></ngl-form-group-element>
+        <label ngl-form-group-element [nglFormLabel]="label"><input type="checkbox" /></label>
+        <label ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="checkbox" /></label>
       </fieldset>`));
 
   it('should render radio group correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     const labelEls = getLabelElements(fixture.nativeElement);
-    expect(labelEls.map(e => e.textContent)).toEqual(['Checkbox Label One', 'Checkbox Label Two']);
+    expect(labelEls.map(e => e.textContent.trim())).toEqual(['Checkbox Label One', 'Radio Label Two']);
 
     labelEls.forEach(e => {
       expect(e).toHaveCssClass('slds-radio');
@@ -50,8 +50,8 @@ describe('`NglFormGroupElement`', () => {
     expect(names[0]).toMatch(/form_group_/);
     expect(names[0]).toEqual(names[1]);
   }, `<fieldset ngl-form-group>
-        <ngl-form-group-element [nglFormLabel]="label"><input type="radio" /></ngl-form-group-element>
-        <ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="radio" /></ngl-form-group-element>
+        <label ngl-form-group-element [nglFormLabel]="label"><input type="radio" /></label>
+        <label ngl-form-group-element nglFormLabel="Radio Label Two"><input type="radio" /></label>
       </fieldset>`));
 
   it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {

@@ -1,4 +1,4 @@
-label([ngClass]="'slds-' + contentEl?.type")
-  ng-content
-  span([ngClass]="'slds-' + contentEl?.type + '--faux'")
-  span.slds-form-element__label {{label}}
+ng-content
+span([ngClass]="'slds-' + contentEl?.type + '--faux'")
+  span(*ngIf="groupAlt") {{label}}
+span.slds-form-element__label(*ngIf="!groupAlt") {{label}}

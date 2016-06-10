@@ -26,11 +26,19 @@
 </ngl-form-element>
 
 <fieldset ngl-form-group nglFormLabel="Radio Group Label" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
-  <ngl-form-group-element nglFormLabel="Radio Label One"><input type="radio" /></ngl-form-group-element>
-  <ngl-form-group-element nglFormLabel="Radio Label Two"><input type="radio" /></ngl-form-group-element>
+  <label ngl-form-group-element nglFormLabel="Radio Label One"><input type="radio" /></label>
+  <label ngl-form-group-element nglFormLabel="Radio Label Two"><input type="radio" /></label>
+</fieldset>
+
+<fieldset ngl-form-group-alt nglFormLabel="Alternate Radio Group" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+  <label ngl-form-group-element *ngFor="let day of days" [nglFormLabel]="day"><input type="radio" /></label>
 </fieldset>
 
 <fieldset ngl-form-group nglFormLabel="Checkbox Group Label" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
-  <ngl-form-group-element nglFormLabel="Checkbox Label One"><input type="checkbox" /></ngl-form-group-element>
-  <ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="checkbox" /></ngl-form-group-element>
+  <label ngl-form-group-element nglFormLabel="Checkbox Label One"><input type="checkbox" /></label>
+  <label ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="checkbox" /></label>
+</fieldset>
+
+<fieldset ngl-form-group-alt nglFormLabel="Alternate Checkbox Group" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+  <label ngl-form-group-element *ngFor="let day of days" [nglFormLabel]="day"><input type="checkbox" /></label>
 </fieldset>
