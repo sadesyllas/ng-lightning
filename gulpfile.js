@@ -24,8 +24,15 @@ var inlineTemplatesTask = lazypipe()
   .pipe(inlineTemplates, {
     base: '/src',
     useRelativePaths: true,
-    templateProcessor: function(path, file, cb) {
-      const rendered = jade.render(file, {doctype: 'html'});
+    customFilePath: function(ext, file) {
+      inlineTemplatesTask.filepath = file;
+      return file;
+    },
+    templateProcessor: function(ext, file, cb) {
+      const rendered = jade.render(file, {
+        doctype: 'html',
+        filename: inlineTemplatesTask.filepath,
+      });
       cb(null, rendered);
     },
     templateExtension: '.jade',
