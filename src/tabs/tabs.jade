@@ -1,5 +1,6 @@
 ul([ngClass]="'slds-tabs--' + type + '__nav'", role="tablist", (keydown.ArrowLeft)="move($event, -1)", (keydown.ArrowRight)="move($event, 1)")
   li.slds-text-heading--label(*ngFor="let tab of tabs", [ngClass]="'slds-tabs--' + type + '__item'", (click)="select(tab)", [class.slds-active]="tab.active", role="presentation")
-    a([nglTabHeadingLabel]="tab", [ngClass]="'slds-tabs--' + type + '__link'", role="tab")
+    a([nglInternalOutlet]="tab.heading", [ngClass]="'slds-tabs--' + type + '__link'", role="tab",
+      [attr.aria-selected]="tab.active", [attr.tabindex]="tab.active ? 0 : 1")
 div([ngClass]="'slds-tabs--' + type + '__content'", role="tabpanel")
   template([ngTemplateOutlet]="activeTab?.templateRef")

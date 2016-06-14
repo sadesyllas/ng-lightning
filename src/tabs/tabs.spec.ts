@@ -15,7 +15,7 @@ function getTabHeaders(element: HTMLElement): HTMLElement[] {
 }
 
 function getTabContent(element: HTMLElement): string {
-  return element.querySelector('.slds-tabs--default__content').textContent.trim();
+  return element.querySelector('.slds-tabs--default__content').textContent;
 }
 
 function expectHeaders(element: HTMLElement, expected: string[]) {
