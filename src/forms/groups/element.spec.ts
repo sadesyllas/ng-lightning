@@ -20,7 +20,7 @@ describe('`NglFormGroupElement`', () => {
     fixture.detectChanges();
 
     const labelEls = getLabelElements(fixture.nativeElement);
-    expect(labelEls.map(e => e.textContent.trim())).toEqual(['Checkbox Label One', 'Checkbox Label Two']);
+    expect(labelEls.map(e => e.textContent.trim())).toEqual(['Label One', 'Checkbox Label Two']);
 
     labelEls.forEach(e => {
       expect(e).toHaveCssClass('slds-checkbox');
@@ -37,7 +37,7 @@ describe('`NglFormGroupElement`', () => {
     fixture.detectChanges();
 
     const labelEls = getLabelElements(fixture.nativeElement);
-    expect(labelEls.map(e => e.textContent.trim())).toEqual(['Checkbox Label One', 'Radio Label Two']);
+    expect(labelEls.map(e => e.textContent.trim())).toEqual(['Label One', 'Radio Label Two']);
 
     labelEls.forEach(e => {
       expect(e).toHaveCssClass('slds-radio');
@@ -78,5 +78,5 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
   template: '',
 })
 export class TestComponent {
-  label: string = 'Checkbox Label One';
+  label: string = 'Label One';
 }

@@ -9,7 +9,8 @@
   <input type="text" placeholder="My input" [required]="required">
 </ngl-form-element>
 
-<ngl-form-element nglFormLabel="Textarea Label" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+<ngl-form-element [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+  <template nglFormLabel><i>Textarea Label</i> <span *ngIf="required">(<b>required</b>!)</span></template>
   <textarea placeholder="Placeholder Text" [required]="required"></textarea>
 </ngl-form-element>
 
@@ -30,8 +31,9 @@
   <label ngl-form-group-element nglFormLabel="Radio Label Two"><input type="radio" /></label>
 </fieldset>
 
-<fieldset ngl-form-group-alt nglFormLabel="Alternate Radio Group" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
-  <label ngl-form-group-element *ngFor="let day of days" [nglFormLabel]="day"><input type="radio" /></label>
+<fieldset ngl-form-group-alt [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">
+  <template nglFormLabel><i>Alternate Radio Group</i></template>
+  <label ngl-form-group-element *ngFor="let day of days"><template nglFormLabel>{{day}}</template><input type="radio" /></label>
 </fieldset>
 
 <fieldset ngl-form-group nglFormLabel="Checkbox Group Label" [nglFormRequired]="required" [nglFormError]="hasError ? error : null" class="slds-m-top--small">

@@ -5,6 +5,7 @@ import {NglFormGroup} from './groups/group';
 import {NglFormGroupAlternate} from './groups/group-alt';
 import {NglFormGroupElement} from './groups/element';
 import {NglFormGroupCheckbox, NglFormGroupRadio} from './groups/input';
+import {NglFormLabelTemplate} from './form-label';
 
 export {NglFormElement} from './elements/element';
 export {NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox} from './elements/input';
@@ -13,6 +14,7 @@ export {NglFormGroup} from './groups/group';
 export {NglFormGroupAlternate} from './groups/group-alt';
 export {NglFormGroupElement} from './groups/element';
 export {NglFormGroupCheckbox, NglFormGroupRadio} from './groups/input';
+export {NglFormLabelTemplate} from './form-label';
 
 
 export const NGL_FORM_DIRECTIVES: Array<any> = [
@@ -23,4 +25,5 @@ export const NGL_FORM_DIRECTIVES: Array<any> = [
   NglFormGroupAlternate,
   NglFormGroupElement,
   NglFormGroupCheckbox, NglFormGroupRadio,
+  NglFormLabelTemplate,
 ];

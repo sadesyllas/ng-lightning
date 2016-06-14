@@ -24,7 +24,7 @@ describe('`NglFormGroup`', () => {
     expect(element).toHaveCssClass('slds-form-element');
 
     const labelEl = getLabelElement(element);
-    expect(labelEl.textContent).toBe('Group Label');
+    expect(labelEl).toHaveText('Group Label');
   }));
 
   it('should be able to change label', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -34,7 +34,7 @@ describe('`NglFormGroup`', () => {
     fixture.detectChanges();
 
     const labelEl = getLabelElement(fixture.nativeElement);
-    expect(labelEl.textContent).toBe('Another label');
+    expect(labelEl).toHaveText('Another label');
   }));
 
   it('should render error message', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -49,7 +49,7 @@ describe('`NglFormGroup`', () => {
 
     const errorEl = getErrorElement(element);
     expect(element).toHaveCssClass('slds-has-error');
-    expect(errorEl.textContent).toBe('This is an error!');
+    expect(errorEl).toHaveText('This is an error!');
   }, `<fieldset ngl-form-group [nglFormError]="error"></fieldset>`));
 
   it('should show required label indication', testAsync((fixture: ComponentFixture<TestComponent>) => {

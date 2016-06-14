@@ -29,7 +29,7 @@ describe('`NglFormInput`', () => {
     expect(element).toHaveCssClass('slds-form-element');
 
     const labelEl = getLabelElement(element);
-    expect(labelEl.textContent).toBe('My label');
+    expect(labelEl).toHaveText('My label');
 
     const inputEl = getInputElement(element);
     expect(inputEl).toHaveCssClass('slds-input');
@@ -46,7 +46,7 @@ describe('`NglFormInput`', () => {
     fixture.detectChanges();
 
     const labelEl = getLabelElement(fixture.nativeElement);
-    expect(labelEl.textContent).toBe('Another label');
+    expect(labelEl).toHaveText('Another label');
   }));
 
   it('should render error message', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -63,7 +63,7 @@ describe('`NglFormInput`', () => {
     const inputEl = getInputElement(element);
     expect(element).toHaveCssClass('slds-has-error');
     expect(errorEl.id).toEqual(inputEl.getAttribute('aria-describedby'));
-    expect(errorEl.textContent).toBe('This is an error!');
+    expect(errorEl).toHaveText('This is an error!');
   }, `<ngl-form-element [nglFormError]="error"><input type="text"></ngl-form-element>`));
 
   it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {

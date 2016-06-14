@@ -1,6 +1,6 @@
 legend.slds-form-element__label
   abbr.slds-required(*ngIf="required", title="required") *
-  | {{label}}
+  span([nglInternalOutlet]="_label")
 .slds-form-element__control
   block control
     ng-content

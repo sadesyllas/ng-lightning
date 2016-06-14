@@ -15,7 +15,7 @@ describe('`NglFormCheckbox`', () => {
     expect(element).toHaveCssClass('slds-form-element');
 
     const labelEl = getLabelElement(element);
-    expect(labelEl.textContent).toBe('My label');
+    expect(labelEl).toHaveText('My label');
     expect(labelEl).toHaveCssClass('slds-checkbox');
 
     expect(element.querySelector('input[type=checkbox]')).not.toBeNull();

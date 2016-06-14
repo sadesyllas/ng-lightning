@@ -19,7 +19,7 @@ describe('`NglFormSelect`', () => {
     expect(element).toHaveCssClass('slds-form-element');
 
     const labelEl = getLabelElement(element);
-    expect(labelEl.textContent).toBe('My label');
+    expect(labelEl).toHaveText('My label');
 
     const inputEl = getInputElement(element);
     expect(inputEl).toHaveCssClass('slds-select');
