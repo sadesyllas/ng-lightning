@@ -4,7 +4,8 @@ import {Component} from '@angular/core';
 import {NglTabs} from './tabs';
 import {NglTab} from './tab';
 import {NglTabVerbose, NglTabContent, NglTabHeading} from './tab-verbose';
-import {selectElements} from '../../test/helpers';
+import {selectElements, dispatchKeyEvent} from '../../test/helpers';
+import {By} from '@angular/platform-browser';
 
 function getTabsElement(element: Element): HTMLUListElement {
   return <HTMLUListElement>element.querySelector('ul');
@@ -72,6 +73,23 @@ describe('Tabs Component', () => {
     headers[3].click();
     fixture.detectChanges();
     expect(getTabContent(fixture.nativeElement)).toBe('Tab 4');
+  }));
+
+  it('should activate tab based on keyboard', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+    const predicate = By.css('ul[role=tablist]');
+
+    dispatchKeyEvent(fixture, predicate, `keydown.ArrowLeft`);
+    fixture.detectChanges();
+    expect(getTabContent(fixture.nativeElement)).toBe('Tab 1');
+
+    dispatchKeyEvent(fixture, predicate, `keydown.ArrowRight`);
+    fixture.detectChanges();
+    expect(getTabContent(fixture.nativeElement)).toBe('Tab 2');
+
+    dispatchKeyEvent(fixture, predicate, `keydown.ArrowRight`);
+    fixture.detectChanges();
+    expect(getTabContent(fixture.nativeElement)).toBe('Tab 3');
   }));
 
   it('should call activate/deactivate methods accordingly', testAsync((fixture: ComponentFixture<TestComponent>) => {
