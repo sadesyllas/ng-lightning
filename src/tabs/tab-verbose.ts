@@ -26,8 +26,8 @@ export class NglTabContent {
 export class NglTabVerbose extends NglTab {
   @Input('nglTabId') id: string;
   @Input() heading: string | TemplateRef<any>;
-  @Output() onActivate = new EventEmitter<NglTab>(false);
-  @Output() onDeactivate = new EventEmitter<NglTab>(false);
+  @Output() onActivate = new EventEmitter<NglTab>();
+  @Output() onDeactivate = new EventEmitter<NglTab>();
 
   @ContentChild(NglTabContent) contentTemplate: NglTabContent;
   @ContentChild(NglTabHeading) headingTemplate: NglTabHeading;

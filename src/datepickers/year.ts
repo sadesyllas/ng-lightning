@@ -15,7 +15,7 @@ export class NglDatepickerYear {
   @Input('year') set setYear(year: string | number) {
     this.year = +year;
   }
-  @Output() yearChange = new EventEmitter(false);
+  @Output() yearChange = new EventEmitter();
 
   get range(): number[] {
     const currentYear = (new Date()).getFullYear();

@@ -25,7 +25,7 @@ export class NglTabs {
     this.activate();
   }
 
-  @Output() selectedChange = new EventEmitter<NglTab>(false);
+  @Output() selectedChange = new EventEmitter<NglTab>();
 
   ngAfterContentInit() {
     // Initial selection after all tabs are created

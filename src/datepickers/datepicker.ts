@@ -39,7 +39,7 @@ export class NglDatepicker {
     this.showToday = toBoolean(showToday);
   }
 
-  @Output() dateChange = new EventEmitter(false);
+  @Output() dateChange = new EventEmitter();
 
   weeks: NglInternalDate[];
   uid = uniqueId('datepicker');

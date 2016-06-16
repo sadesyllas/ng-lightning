@@ -3,7 +3,7 @@ import {NglDropdownItem} from './dropdown-item';
 import {NglPick} from '../pick/pick';
 import {toBoolean} from '../util/util';
 
-const openEventEmitter = new EventEmitter<any>(false);
+const openEventEmitter = new EventEmitter<any>();
 
 @Directive({
   selector: '[nglDropdown]',
@@ -30,13 +30,13 @@ export class NglDropdown implements OnInit, OnDestroy {
   }
   @Input() handlePageEvents = true;
   @ContentChildren(NglDropdownItem, {descendants: true}) items: QueryList<NglDropdownItem>;
-  @Output('openChange') isOpenChange = new EventEmitter<boolean>(false);
+  @Output('openChange') isOpenChange = new EventEmitter<boolean>();
   @HostBinding('class.slds-is-open')
   @HostBinding('attr.aria-expanded')
   get __isOpen() {
     return this.isOpen;
   }
-  triggerFocusEventEmitter = new EventEmitter(false);
+  triggerFocusEventEmitter = new EventEmitter();
   isPicklist = false;
 
   private handleGlobalClickEvents = true;

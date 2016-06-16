@@ -13,7 +13,7 @@ export class NglPagination implements OnChanges {
   pages: NglPage[] = [];
 
   @Input('page') current: number | string;
-  @Output() pageChange = new EventEmitter<number>(false);
+  @Output() pageChange = new EventEmitter<number>();
 
   @Input() total: number | string;
   @Input() perPage: number | string = 10;

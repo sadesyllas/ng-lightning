@@ -27,7 +27,7 @@ export class NglLookup {
       this.inputSubject.next(value);
     }
   }
-  @Output() valueChange = new EventEmitter<string>(false);
+  @Output() valueChange = new EventEmitter<string>();
 
   @Input() lookup: Function;
   @Input() field: string;
@@ -37,7 +37,7 @@ export class NglLookup {
     this.inputValue = this.resolveLabel(pick);
     this.pick = pick;
   }
-  @Output() pickChange = new EventEmitter(false);
+  @Output() pickChange = new EventEmitter();
 
   @ViewChild('lookupInput') inputEl: ElementRef;
 

@@ -25,7 +25,7 @@ export class NglModal {
     }
     this.open = _open;
   }
-  @Output() openChange = new EventEmitter(false);
+  @Output() openChange = new EventEmitter();
 
   constructor(private element: ElementRef, private renderer: Renderer) {}
 

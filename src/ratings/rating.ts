@@ -30,8 +30,8 @@ export class NglRating {
   private readonly = false;
   private inputRate: number;
 
-  @Output() private rateChange = new EventEmitter<number>(false);
-  @Output() private hover = new EventEmitter<number>(false);
+  @Output() private rateChange = new EventEmitter<number>();
+  @Output() private hover = new EventEmitter<number>();
 
   constructor(element: ElementRef, renderer: Renderer, @Attribute('max') max: string | number) {
     if (max) this.max = +max;

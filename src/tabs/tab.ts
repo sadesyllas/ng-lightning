@@ -12,8 +12,8 @@ import {Directive, Input, TemplateRef, Output, EventEmitter} from '@angular/core
 export class NglTab {
   @Input('nglTabId') id: string;
   @Input() heading: string | TemplateRef<any>;
-  @Output() onActivate = new EventEmitter<NglTab>(false);
-  @Output() onDeactivate = new EventEmitter<NglTab>(false);
+  @Output() onActivate = new EventEmitter<NglTab>();
+  @Output() onDeactivate = new EventEmitter<NglTab>();
 
   private _active: boolean = false;
 

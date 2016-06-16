@@ -15,7 +15,7 @@ export class NglPill {
   removable: boolean;
   unlinked: boolean = true;
 
-  @Output() nglPillRemove = new EventEmitter(false);
+  @Output() nglPillRemove = new EventEmitter();
 
   constructor(public detector: ChangeDetectorRef) {}
 

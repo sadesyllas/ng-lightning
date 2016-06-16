@@ -15,7 +15,7 @@ export class NglSection {
   @HostBinding('class.slds-is-open')
   @Input() open = false;
 
-  @Output() private openChange = new EventEmitter<boolean>(false);
+  @Output() private openChange = new EventEmitter<boolean>();
 
   constructor(private element: ElementRef, private renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'slds-section', true);

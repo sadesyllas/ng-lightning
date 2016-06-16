@@ -19,7 +19,7 @@ export class NglButtonState {
   get selected() {
     return this._selected;
   }
-  @Output('nglButtonStateChange') selectedChange = new EventEmitter<boolean>(false);
+  @Output('nglButtonStateChange') selectedChange = new EventEmitter<boolean>();
 
   constructor(public element: ElementRef, public renderer: Renderer) {}
 
