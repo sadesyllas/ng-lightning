@@ -25,14 +25,11 @@ function clickRemove(element: HTMLElement) {
   button.click();
 }
 
-function expectOptions(fixture: any, expectedOptions: any[], cb = function() {}) {
-  setTimeout(() => {
-    fixture.detectChanges();
-    const { menu, options } = getElements(fixture.nativeElement);
-    expect(menu).not.toHaveCssClass('slds-hide');
-    expect(options.map(e => e.textContent.trim())).toEqual(expectedOptions);
-    cb();
-  });
+function expectOptions(fixture: any, expectedOptions: any[]) {
+  fixture.detectChanges();
+  const { menu, options } = getElements(fixture.nativeElement);
+  expect(menu).not.toHaveCssClass('slds-hide');
+  expect(options.map(e => e.textContent.trim())).toEqual(expectedOptions);
 }
 
 function expectMenuExpanded(element: HTMLElement, isOpen: boolean) {
@@ -116,36 +113,24 @@ describe('Lookup Component', () => {
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
-    setTimeout(() => {
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, true);
+    expectMenuExpanded(nativeElement, true);
 
-      fixture.componentInstance.selection = 'my selection';
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, false);
-    });
+    fixture.componentInstance.selection = 'my selection';
+    fixture.detectChanges();
+    expectMenuExpanded(nativeElement, false);
   }, `<ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" debounce="0"></ngl-lookup>`));
 
   it('should trigger lookup function when value changes', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const { componentInstance } = fixture;
     fixture.detectChanges();
 
-    spyOn(componentInstance, 'filter').and.callFake((value: string) => {
-      switch (componentInstance.filter.calls.count()) {
-        case 1:
-          expect(componentInstance.filter).toHaveBeenCalledWith('ABC');
-          break;
-        case 2:
-          expect(componentInstance.filter).toHaveBeenCalledWith('ABCDE');
-          break;
-      }
-    });
-
     componentInstance.value = 'ABC';
     fixture.detectChanges();
+    expect(componentInstance.filter).toHaveBeenCalledWith('ABC');
 
     componentInstance.value = 'ABCDE';
     fixture.detectChanges();
+    expect(componentInstance.filter).toHaveBeenCalledWith('ABCDE');
   }));
 
   it('should change suggestions based on lookup result', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -173,11 +158,11 @@ describe('Lookup Component', () => {
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
-    expectOptions(fixture, ['ABCDE', 'DEFGH'], () => {
-      const { options } = getElements(nativeElement);
-      options[1].click();
-      expect(componentInstance.onSelect).toHaveBeenCalledWith('DEFGH');
-    });
+    expectOptions(fixture, ['ABCDE', 'DEFGH']);
+
+    const { options } = getElements(nativeElement);
+    options[1].click();
+    expect(componentInstance.onSelect).toHaveBeenCalledWith('DEFGH');
   }));
 
   it('should close menu on escape key', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -188,14 +173,11 @@ describe('Lookup Component', () => {
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
-    setTimeout(() => {
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, true);
+    expectMenuExpanded(nativeElement, true);
 
-      dispatchKeyEvent(fixture, By.css('input'), 'keydown.Esc');
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, false);
-    });
+    dispatchKeyEvent(fixture, By.css('input'), 'keydown.Esc');
+    fixture.detectChanges();
+    expectMenuExpanded(nativeElement, false);
   }));
 
   it('should close menu on outside click', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -208,18 +190,15 @@ describe('Lookup Component', () => {
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
-    setTimeout(() => {
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, true);
+    expectMenuExpanded(nativeElement, true);
 
-      input.click();
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, true);
+    input.click();
+    fixture.detectChanges();
+    expectMenuExpanded(nativeElement, true);
 
-      document.body.click();
-      fixture.detectChanges();
-      expectMenuExpanded(nativeElement, false);
-    });
+    document.body.click();
+    fixture.detectChanges();
+    expectMenuExpanded(nativeElement, false);
   }));
 
   it('should handle objects using `field` property', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -230,11 +209,11 @@ describe('Lookup Component', () => {
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
-    expectOptions(fixture, ['ABCDE', 'DEFGH'], () => {
-      const { options } = getElements(nativeElement);
-      options[1].click();
-      expect(componentInstance.onSelect).toHaveBeenCalledWith({id: 2, name: 'DEFGH'});
-    });
+    expectOptions(fixture, ['ABCDE', 'DEFGH']);
+
+    const { options } = getElements(nativeElement);
+    options[1].click();
+    expect(componentInstance.onSelect).toHaveBeenCalledWith({id: 2, name: 'DEFGH'});
   }, `<ngl-lookup [value]="value" [lookup]="filterObject" field="name" (pickChange)="onSelect($event)" debounce="0"></ngl-lookup>`));
 
   it('should support keyboard navigation and selection', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -261,25 +240,25 @@ describe('Lookup Component', () => {
 
     componentInstance.value = 'DE';
     fixture.detectChanges();
-    expectOptions(fixture, ['ABCDE', 'DEFGH'], () => {
-      const { options } = getElements(nativeElement);
+    expectOptions(fixture, ['ABCDE', 'DEFGH']);
 
-      expectActiveOption('ArrowDown', options[0]);
-      expectActiveOption('ArrowDown', options[1]);
-      expectActiveOption('ArrowDown', options[1]);
+    const { options } = getElements(nativeElement);
 
-      expectActiveOption('ArrowUp', options[0]);
-      expectActiveOption('ArrowUp', null);
-      expectActiveOption('ArrowUp', null);
+    expectActiveOption('ArrowDown', options[0]);
+    expectActiveOption('ArrowDown', options[1]);
+    expectActiveOption('ArrowDown', options[1]);
 
-      dispatchKeyEvent(fixture, By.css('input'), `keydown.Enter`);
-      expect(componentInstance.onSelect).not.toHaveBeenCalled();
+    expectActiveOption('ArrowUp', options[0]);
+    expectActiveOption('ArrowUp', null);
+    expectActiveOption('ArrowUp', null);
 
-      expectActiveOption('ArrowDown', options[0]);
+    dispatchKeyEvent(fixture, By.css('input'), `keydown.Enter`);
+    expect(componentInstance.onSelect).not.toHaveBeenCalled();
 
-      dispatchKeyEvent(fixture, By.css('input'), `keydown.Enter`);
-      expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
-    });
+    expectActiveOption('ArrowDown', options[0]);
+
+    dispatchKeyEvent(fixture, By.css('input'), `keydown.Enter`);
+    expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
   }));
 });
 
@@ -307,10 +286,10 @@ export class TestComponent {
 
   value = '';
 
-  filter(value: string) {
+  filter = jasmine.createSpy('filter').and.callFake((value: string) => {
     const data = ['ABCDE', 'DEFGH', 'EHIJ'];
     return data.filter((d: string) => d.indexOf(value) > -1);
-  }
+  });
 
   filterObject(value: string) {
     const data = [

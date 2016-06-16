@@ -1,6 +1,5 @@
 import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {Control} from '@angular/common';
-import {Observable} from 'rxjs/Rx';
+import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import {NglPill} from '../pills/pill';
 import {NglPillRemove} from '../pills/pill-remove';
 import {uniqueId, isObject} from '../util/util';
@@ -23,8 +22,9 @@ export class NglLookup {
   @Input() placeholder: string;
 
   @Input() set value(value: string) {
-    if (value !== this.input.value) {
-      this.input.updateValue(value);
+    if (value !== this.inputSubject.getValue()) {
+      this.inputValue = value;
+      this.inputSubject.next(value);
     }
   }
   @Output() valueChange = new EventEmitter<string>(false);
@@ -34,7 +34,7 @@ export class NglLookup {
 
   pick: any;
   @Input('pick') set setPick(pick: any) {
-    this.input.updateValue(this.resolveLabel(pick), {emitEvent: false});
+    this.inputValue = this.resolveLabel(pick);
     this.pick = pick;
   }
   @Output() pickChange = new EventEmitter(false);
@@ -64,7 +64,8 @@ export class NglLookup {
   get open(): boolean {
     return this._open;
   }
-  private input = new Control();
+  private inputValue = '';
+  private inputSubject = new BehaviorSubject(undefined);
   private suggestions: any[];
   private noResults: boolean = false;
   private activeIndex: number = -1;
@@ -82,8 +83,12 @@ export class NglLookup {
     this.pickChange.emit(item);
   }
 
+  onInputChange(value: string) {
+    this.inputSubject.next(value);
+  }
+
   ngOnInit() {
-    let valueStream = this.input.valueChanges
+    let valueStream = this.inputSubject.skip(1)
       .do((value: string) => {
         this.lastUserInput = value;
         this.activeIndex = -1;
@@ -144,7 +149,7 @@ export class NglLookup {
 
     // Update input value based on active option
     const value = this.activeIndex === -1 ? this.lastUserInput : this.resolveLabel(this.suggestions[this.activeIndex]);
-    this.input.updateValue(value, {emitEvent: false});
+    this.inputValue = value;
   }
 
   ngAfterViewChecked() {
