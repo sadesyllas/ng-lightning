@@ -3,7 +3,7 @@ import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing'
 import {Component} from '@angular/core';
 import {selectElements, dispatchKeyEvent} from '../../test/helpers';
 import {By} from '@angular/platform-browser';
-import {NglLookup} from './lookup';
+import {NGL_LOOKUP_DIRECTIVES} from './directives';
 
 function getElements(element: HTMLElement) {
   return {
@@ -27,8 +27,7 @@ function clickRemove(element: HTMLElement) {
 
 function expectOptions(fixture: any, expectedOptions: any[]) {
   fixture.detectChanges();
-  const { menu, options } = getElements(fixture.nativeElement);
-  expect(menu).not.toHaveCssClass('slds-hide');
+  const { options } = getElements(fixture.nativeElement);
   expect(options.map(e => e.textContent.trim())).toEqual(expectedOptions);
 }
 
@@ -260,7 +259,26 @@ describe('Lookup Component', () => {
     dispatchKeyEvent(fixture, By.css('input'), `keydown.Enter`);
     expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
   }));
-});
+
+  it('should support custom item template', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    const { componentInstance, nativeElement } = fixture;
+    componentInstance.filter = () => [
+      { foo: 'foo_1', bar: 'bar_1' },
+      { foo: 'foo_2', bar: 'bar_2' },
+    ];
+    fixture.detectChanges();
+
+    componentInstance.value = 'DE';
+    fixture.detectChanges();
+
+    const { options } = getElements(nativeElement);
+    expect(options[0]).toHaveText('foo_1 - bar_1 DE');
+    expect(options[1]).toHaveText('foo_2 - bar_2 DE');
+  }, `<ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0">
+        <span nglLookupLabel>Lookup:</span>
+        <template nglLookupItem let-ctx>{{ctx.foo}} - {{ctx.bar}} {{value}}</template>
+      </ngl-lookup>`));
+  });
 
 
 // Shortcut function for less boilerplate on each `it`
@@ -274,7 +292,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglLookup],
+  directives: [NGL_LOOKUP_DIRECTIVES],
   template: `
     <ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0">
       <span nglLookupLabel>Lookup:</span>

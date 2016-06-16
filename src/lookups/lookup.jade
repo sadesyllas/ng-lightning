@@ -1,3 +1,5 @@
+include ./menu
+
 .slds-lookup.slds-form-element(data-select="single", data-scope="single", [class.slds-is-open]="expanded")
   label.slds-form-element__label([attr.for]="inputId")
     ng-content(select="[nglLookupLabel]")
@@ -10,7 +12,7 @@
                      (keydown.ArrowDown)="moveActive($event, 1)", (keydown.ArrowUp)="moveActive($event, -1)", (keydown.Enter)="pickActive($event)")
 
   .slds-lookup__menu(*ngIf="expanded", role="listbox")
-    ul.slds-lookup__list(role="presentation")
-      li(*ngIf="noResults"): .slds-lookup__item--label No results found
-      li(*ngFor="let item of suggestions; let i=index", (click)="handlePick(item)", [ngClass]="{'slds-dropdown__item--active': i === activeIndex }")
-        a.slds-lookup__item-action([id]="optionId(i)", role="option") {{resolveLabel(item)}}
+    +lookup-list()(*ngIf="!itemTemplate")
+      |{{resolveLabel(item)}}
+    +lookup-list()(*ngIf="itemTemplate")
+      template([ngTemplateOutlet]="itemTemplate.templateRef", [ngOutletContext]="{ $implicit: item }")

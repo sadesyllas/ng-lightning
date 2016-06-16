@@ -1,5 +1,6 @@
-import {Component, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from '@angular/core';
+import {Component, ContentChild, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
+import {NglLookupItemTemplate} from './item';
 import {NglPill} from '../pills/pill';
 import {NglPillRemove} from '../pills/pill-remove';
 import {uniqueId, isObject} from '../util/util';
@@ -18,6 +19,8 @@ import {uniqueId, isObject} from '../util/util';
   ],
 })
 export class NglLookup {
+
+  @ContentChild(NglLookupItemTemplate) itemTemplate: NglLookupItemTemplate;
 
   @Input() placeholder: string;
 

@@ -12,3 +12,7 @@
 
   * `valueChange: EventEmitter<string>`: current input value
   * `pickChange: EventEmitter<any>`: callback when a suggestion is selected
+
+### Content
+
+  * `template[nglLookupItem]?`: Custom suggestion template inside popup menu.

@@ -8,7 +8,7 @@ import {NglButton} from './buttons/button';
 import {NglButtonState} from './buttons/button-state';
 import {NglButtonIcon} from './buttons/button-icon';
 import {NglIcon} from './icons/icon';
-import {NglLookup} from './lookups/lookup';
+import {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 import {NglDatepicker} from './datepickers/datepicker';
 import {NGL_FORM_DIRECTIVES} from './forms/form';
 import {NglDropdownTrigger} from './menus/dropdown-trigger';
@@ -41,7 +41,7 @@ export {NglButton} from './buttons/button';
 export {NglButtonState} from './buttons/button-state';
 export {NglButtonIcon} from './buttons/button-icon';
 export {NglIcon} from './icons/icon';
-export {NglLookup} from './lookups/lookup';
+export {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 export {NglDatepicker} from './datepickers/datepicker';
 export {NGL_FORM_DIRECTIVES} from './forms/form';
 export {NglDropdownTrigger} from './menus/dropdown-trigger';
@@ -72,9 +72,9 @@ export const NGL_DIRECTIVES = [
   NglBreadcrumbs, NglBreadcrumb,
   NglButton, NglButtonState, NglButtonIcon,
   NglIcon,
-  NglLookup,
+  NGL_LOOKUP_DIRECTIVES,
   NglDatepicker,
-  ...NGL_FORM_DIRECTIVES,
+  NGL_FORM_DIRECTIVES,
   NglDropdownTrigger, NglDropdown, NglDropdownItem,
   NglModal,
   NglNotification, NglNotificationClose,
