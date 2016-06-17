@@ -1,3 +1,57 @@
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/ng-lightning/ng-lightning/compare/v0.11.1...v0.12.0) (2016-06-17)
+
+
+### Bug Fixes
+
+* **NglBreadcrumbs:** make breadcrumbs markup compatible with v2.0 ([8377b5e](https://github.com/ng-lightning/ng-lightning/commit/8377b5e))
+* **NglIcon:** make custom icons compatible with v2.0 ([d5bac96](https://github.com/ng-lightning/ng-lightning/commit/d5bac96))
+* **NglLookup:** make lookup markup compatible with v2.0 ([bc653dd](https://github.com/ng-lightning/ng-lightning/commit/bc653dd))
+* **NglPill:** make compatible with v2.0 ([d5f0434](https://github.com/ng-lightning/ng-lightning/commit/d5f0434)), closes [#122](https://github.com/ng-lightning/ng-lightning/issues/122)
+
+
+### Features
+
+* **app:** support alternate radio & checkbox group component ([278f97e](https://github.com/ng-lightning/ng-lightning/commit/278f97e)), closes [#123](https://github.com/ng-lightning/ng-lightning/issues/123)
+* **app:** upgrade SLDS to v2.0 ([91502ea](https://github.com/ng-lightning/ng-lightning/commit/91502ea))
+* **forms:** support `<template>` element as label ([f9d85b5](https://github.com/ng-lightning/ng-lightning/commit/f9d85b5)), closes [#127](https://github.com/ng-lightning/ng-lightning/issues/127)
+* **lookup:** support custom item template for results ([3732a5a](https://github.com/ng-lightning/ng-lightning/commit/3732a5a)), closes [#66](https://github.com/ng-lightning/ng-lightning/issues/66) [#130](https://github.com/ng-lightning/ng-lightning/issues/130)
+
+
+### BREAKING CHANGES
+
+* app: `ngl-form-group-element` should be added as attribute on a `<label>`
+
+  Before:
+
+  ```html
+  <ngl-form-group-element>...</ngl-form-group-element>
+  ```
+
+  After:
+  ```html
+  <label ngl-form-group-element>...</label>
+  ```
+* NglPill: `ngl-pill` is now an element instead of attribute and `<a>` moved inside content
+
+  Before:
+
+  ```html
+  <a href="..." nglPill>
+    <ngl-icon nglPillImage></ngl-icon>With icon
+  </a>
+  ```
+
+  After:
+  ```html
+  <ngl-pill>
+    <ngl-icon nglPillImage></ngl-icon>
+    <a href="...">With icon</a>
+  </ngl-pill>
+  ```
+
+
+
 <a name="0.11.1"></a>
 ## [0.11.1](https://github.com/ng-lightning/ng-lightning/compare/v0.11.0...v0.11.1) (2016-06-08)
 
