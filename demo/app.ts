@@ -1,14 +1,11 @@
 import './vendor';
 import {Component, enableProdMode} from '@angular/core';
-import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig} from '@angular/router-deprecated';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {bootstrap} from '@angular/platform-browser-dynamic';
+import {APP_ROUTER_PROVIDERS} from './routes';
 
 import {provideNglConfig} from '../dist/ng-lightning';
-
-import {IntroRoute} from './components/intro/intro';
-import {DemoRoute} from './components/demo/demo';
-import {SupportRoute} from './components/support/support';
 
 if (__ENV__.production) {
   enableProdMode();
@@ -19,15 +16,10 @@ if (__ENV__.production) {
     directives: [ROUTER_DIRECTIVES],
     template: require('./app.jade')(__ENV__),
 })
-@RouteConfig([
-  { path: '/', name: 'Intro', component: IntroRoute, useAsDefault: true },
-  { path: '/components', name: 'Components', component: DemoRoute },
-  { path: '/support', name: 'Support', component: SupportRoute },
-])
 export class App {}
 
 bootstrap(App, [
-  ROUTER_PROVIDERS,
+  APP_ROUTER_PROVIDERS,
   { provide: LocationStrategy, useClass: HashLocationStrategy },
   provideNglConfig(),
 ]);

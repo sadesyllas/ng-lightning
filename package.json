@@ -48,7 +48,7 @@
     "@angular/http": "2.0.0-rc.2",
     "@angular/platform-browser": "2.0.0-rc.2",
     "@angular/platform-browser-dynamic": "2.0.0-rc.2",
-    "@angular/router-deprecated": "2.0.0-rc.2",
+    "@angular/router": "^3.0.0-alpha.7",
     "@salesforce-ux/design-system": "^2.0.2",
     "app-root-path": "^1.0.0",
     "browser-sync": "^2.13.0",
