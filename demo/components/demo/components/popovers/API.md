@@ -7,3 +7,6 @@
    * `nglPopoverPlacement: 'top' | 'right' | 'bottom' | 'left' = 'top'`: Position relative to host element.
    * `nglTooltip?: boolean`: Whether popover looks like tooltip.
    * `nglPopoverTheme?: string`: Theme you want to apply. [See available themes.](https://www.lightningdesignsystem.com/components/utilities/themes/#flavor-color)
+
+
+# `[nglPopover][nglPopoverBehavior]`

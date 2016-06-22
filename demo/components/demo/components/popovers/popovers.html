@@ -8,7 +8,7 @@
 <div>
   Quisque scelerisque lectus vel sodales semper.
   Sed <a [nglPopover]="tip" [nglPopoverPlacement]="placement" [nglOpen]="open" (mouseenter)="open = true" (mouseleave)="open = false">hover</a>  vehicula sapien,
-  vitae tristique nisl viverra vitae. Aliquam erat volutpat. Ut accumsan metus vel hendrerit sagittis.
+  vitae tristique <a tabindex="0" [nglPopover]="tip2" nglPopoverBehavior>behavior</a> nisl viverra vitae. Aliquam erat volutpat. Ut accumsan metus vel hendrerit sagittis.
 </div>
 <div class="slds-m-top--x-large">
   <button type="button" nglButton="neutral" [nglPopover]="tip2" nglPopoverTheme="success" [nglOpen]="open2" (click)="open2 = !open2">Click me</button>

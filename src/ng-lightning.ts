@@ -24,8 +24,7 @@ import {NglPill} from './pills/pill';
 import {NglPillImage} from './pills/pill-image';
 import {NglPillLink} from './pills/pill-link';
 import {NglPillRemove} from './pills/pill-remove';
-import {NglPopover} from './popovers/popover';
-import {NglPopoverTrigger} from './popovers/trigger';
+import {NGL_POPOVER_DIRECTIVES} from './popovers/directives';
 import {NglRating} from './ratings/rating';
 import {NglSection} from './sections/section';
 import {NglSpinner} from './spinners/spinner';
@@ -57,8 +56,7 @@ export {NglPill} from './pills/pill';
 export {NglPillImage} from './pills/pill-image';
 export {NglPillLink} from './pills/pill-link';
 export {NglPillRemove} from './pills/pill-remove';
-export {NglPopover} from './popovers/popover';
-export {NglPopoverTrigger} from './popovers/trigger';
+export {NGL_POPOVER_DIRECTIVES} from './popovers/directives';
 export {NglRating} from './ratings/rating';
 export {NglSection} from './sections/section';
 export {NglSpinner} from './spinners/spinner';
@@ -81,7 +79,7 @@ export const NGL_DIRECTIVES = [
   NglPagination,
   NglPick, NglPickOption,
   NglPill, NglPillImage, NglPillLink, NglPillRemove,
-  NglPopover, NglPopoverTrigger,
+  NGL_POPOVER_DIRECTIVES,
   NglRating,
   NglSection,
   NglSpinner,

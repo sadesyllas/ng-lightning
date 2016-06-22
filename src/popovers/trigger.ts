@@ -22,9 +22,9 @@ export class NglPopoverTrigger {
 
   @Input() nglTooltip: string | boolean;
 
-  @Input() set nglOpen(_open: boolean) {
-    if (_open) {
-      this.show();
+  @Input() set nglOpen(open: boolean) {
+    if (open) {
+      this.create();
     } else {
       this.destroy();
     }
@@ -75,7 +75,9 @@ export class NglPopoverTrigger {
     this.popover.nglTooltip = this.nglTooltip;
   }
 
-  private show() {
+  private create() {
+    if (this.componentRef) return;
+
     this.componentResolver.resolveComponent(NglPopover).then((cf: ComponentFactory<NglPopover>) => {
       const view: EmbeddedViewRef<any> = this.viewContainer.createEmbeddedView(this.template);
       this.componentRef = this.viewContainer.createComponent(cf, 0, this.injector, [view.rootNodes]);

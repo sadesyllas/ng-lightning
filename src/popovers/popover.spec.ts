@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import {NglPopover} from './popover';
 import {NglPopoverTrigger} from './trigger';
 
-function getPopoverElement(element: HTMLElement): HTMLElement {
+export function getPopoverElement(element: HTMLElement): HTMLElement {
   return <HTMLElement>element.querySelector('ngl-popover');
 }
 
