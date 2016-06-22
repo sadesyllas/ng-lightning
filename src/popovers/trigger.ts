@@ -35,6 +35,7 @@ export class NglPopoverTrigger {
   private placement: Direction = 'top';
   private theme: string;
   private tether: Tether;
+  private initPositionTimeout: number;
 
   constructor(private element: ElementRef, private viewContainer: ViewContainerRef,
               private componentResolver: ComponentResolver, private injector: Injector) {}
@@ -57,6 +58,7 @@ export class NglPopoverTrigger {
 
     if (create) {
       this.tether = new Tether(options);
+      this.initPositionTimeout = setTimeout(() => this.tether.position());
     } else {
       this.tether.setOptions(options);
     }
@@ -87,6 +89,7 @@ export class NglPopoverTrigger {
 
     this.tether.destroy();
     this.tether = null;
+    clearTimeout(this.initPositionTimeout);
     this.componentRef.destroy();
     this.componentRef = null;
     this.popover = null;
