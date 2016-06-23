@@ -1,3 +1,18 @@
+<a name="0.13.0"></a>
+# [0.13.0](https://github.com/ng-lightning/ng-lightning/compare/v0.12.1...v0.13.0) (2016-06-23)
+
+
+### Bug Fixes
+
+* **popover:** ensure that a position call happens after layouts have finished ([74e5ba7](https://github.com/ng-lightning/ng-lightning/commit/74e5ba7))
+
+
+### Features
+
+* **popover:** add `nglPopoverBehavior` to handle common open/hide events ([ff3883b](https://github.com/ng-lightning/ng-lightning/commit/ff3883b)), closes [#133](https://github.com/ng-lightning/ng-lightning/issues/133)
+
+
+
 <a name="0.12.1"></a>
 ## [0.12.1](https://github.com/ng-lightning/ng-lightning/compare/v0.12.0...v0.12.1) (2016-06-17)
 
