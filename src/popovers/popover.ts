@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, Renderer} from '@angular/core';
 import {replaceClass, toBoolean} from '../util/util';
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
@@ -26,7 +26,7 @@ export class NglPopover {
     this._nubbin = direction;
   }
 
-  constructor(public element: ElementRef, public renderer: Renderer) {
+  constructor(public element: ElementRef, public renderer: Renderer, public changeDetector: ChangeDetectorRef) {
     this.renderer.setElementClass(this.element.nativeElement, 'slds-popover', true);
 
     // Prevent position changes of "close by" elements

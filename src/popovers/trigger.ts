@@ -83,6 +83,10 @@ export class NglPopoverTrigger {
       this.componentRef = this.viewContainer.createComponent(cf, 0, this.injector, [view.rootNodes]);
       this.popover = this.componentRef.instance;
       this.setTether(true);
+
+      // To avoid unexpected behavior when template "lives" inside an OnPush
+      // component, explicitlly request change detection to run on creation.
+      this.popover.changeDetector.markForCheck();
     });
   }
 
