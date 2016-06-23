@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
 
 @Component({
-    selector: 'demo-menus',
-    directives: [NGL_DIRECTIVES],
-    template: require('./menus.html'),
+  selector: 'demo-menus',
+  directives: [NGL_DIRECTIVES],
+  template: require('./menus.html'),
 })
 export class DemoMenus {
   open: boolean;

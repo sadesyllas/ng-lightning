@@ -2,35 +2,35 @@ import {Component} from '@angular/core';
 import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
 
 @Component({
-    selector: 'demo-tabs',
-    directives: [NGL_DIRECTIVES],
-    template: require('./tabs.html'),
+  selector: 'demo-tabs',
+  directives: [NGL_DIRECTIVES],
+  template: require('./tabs.html'),
 })
 export class DemoTabs {
 
-    type: string = 'scoped';
-    id: number = 0;
-    selectedTab: any = 'sum';
-    private details: number[] = [];
+  type: string = 'scoped';
+  id: number = 0;
+  selectedTab: any = 'sum';
+  private details: number[] = [];
 
-    change() {
-      this.type = this.type === 'scoped' ? 'default' : 'scoped';
-    }
+  change() {
+    this.type = this.type === 'scoped' ? 'default' : 'scoped';
+  }
 
-    addDetail() {
-      this.details.push(this.id++);
-    }
+  addDetail() {
+    this.details.push(this.id++);
+  }
 
-    isDisabled() {
-      return this.selectedTab === 'sum' || this.selectedTab.id === 'sum';
-    }
+  isDisabled() {
+    return this.selectedTab === 'sum' || this.selectedTab.id === 'sum';
+  }
 
-    protected tabChange(detail: number, event: string) {
-      console.log('detail', detail, event);
-    }
+  protected tabChange(detail: number, event: string) {
+    console.log('detail', detail, event);
+  }
 
-    protected removeDetail(detail: Object) {
-      this.details = this.details.filter((d) => d !== detail);
-      setTimeout(() => this.selectedTab = 'sum');
-    }
+  protected removeDetail(detail: Object) {
+    this.details = this.details.filter((d) => d !== detail);
+    setTimeout(() => this.selectedTab = 'sum');
+  }
 }

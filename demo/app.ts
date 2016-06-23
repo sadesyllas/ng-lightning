@@ -12,9 +12,9 @@ if (__ENV__.production) {
 }
 
 @Component({
-    selector: 'app',
-    directives: [ROUTER_DIRECTIVES],
-    template: require('./app.jade')(__ENV__),
+  selector: 'app',
+  directives: [ROUTER_DIRECTIVES],
+  template: require('./app.jade')(__ENV__),
 })
 export class App {}
 
