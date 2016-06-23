@@ -7,7 +7,6 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
   selector: 'ngl-popover',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './popover.jade',
-  styles: [`:host { position: absolute; }`], // Prevent position changes of "close" elements
 })
 export class NglPopover {
 
@@ -29,5 +28,8 @@ export class NglPopover {
 
   constructor(public element: ElementRef, public renderer: Renderer) {
     this.renderer.setElementClass(this.element.nativeElement, 'slds-popover', true);
+
+    // Prevent position changes of "close by" elements
+    this.renderer.setElementStyle(this.element.nativeElement, 'position', 'absolute');
   }
 }

@@ -1,5 +1,6 @@
 import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {getDOM} from '@angular/platform-browser/src/dom/dom_adapter';
 import {Component} from '@angular/core';
 import {NglPopover} from './popover';
 import {NglPopoverTrigger} from './trigger';
@@ -10,7 +11,16 @@ export function getPopoverElement(element: HTMLElement): HTMLElement {
 
 describe('Popovers', () => {
 
-  it('should render the popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should render popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const popoverEl = getPopoverElement(fixture.nativeElement);
+    expect(popoverEl).toHaveCssClass('slds-popover');
+    expect(popoverEl.textContent.trim()).toBe('My content');
+    expect(getDOM().getStyle(popoverEl, 'position')).toEqual('absolute');
+  }, `<ngl-popover>My content</ngl-popover>`));
+
+  it('should render the created popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
     setTimeout(() => {
