@@ -1,3 +1,14 @@
+<a name="0.13.1"></a>
+## [0.13.1](https://github.com/ng-lightning/ng-lightning/compare/v0.13.0...v0.13.1) (2016-06-23)
+
+
+### Bug Fixes
+
+* **popovers:** always run change detection on creation ([a5b54f9](https://github.com/ng-lightning/ng-lightning/commit/a5b54f9)), closes [#134](https://github.com/ng-lightning/ng-lightning/issues/134)
+* **popovers:** specify absolute position with bigger specificity ([6c8c825](https://github.com/ng-lightning/ng-lightning/commit/6c8c825))
+
+
+
 <a name="0.13.0"></a>
 # [0.13.0](https://github.com/ng-lightning/ng-lightning/compare/v0.12.1...v0.13.0) (2016-06-23)
 
