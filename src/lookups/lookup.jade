@@ -7,7 +7,7 @@ include ./menu
     .slds-pill_container(*ngIf="pick")
       ngl-pill((nglPillRemove)="clear()") {{resolveLabel(pick)}}
     input.slds-input.slds-lookup__search-input(#lookupInput, [id]="inputId", type="text", [ngClass]="{'slds-hide': pick}", aria-autocomplete="list", role="combobox", 
-                     [attr.aria-expanded]="expanded", [attr.aria-activedescendant]="optionId(activeIndex)",
+                     [attr.aria-expanded]="!!expanded", [attr.aria-activedescendant]="optionId(activeIndex)",
                      [ngModel]="inputValue", (ngModelChange)="onInputChange($event)", (keydown.Esc)="close($event)", [placeholder]="placeholder || ''",
                      (keydown.ArrowDown)="moveActive($event, 1)", (keydown.ArrowUp)="moveActive($event, -1)", (keydown.Enter)="pickActive($event)")
 
