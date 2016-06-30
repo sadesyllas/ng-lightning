@@ -57,10 +57,7 @@ export class NglLookup {
       });
     } else {
       this.activeIndex = -1;
-      if (this.globalClickUnsubscriber) {
-        this.globalClickUnsubscriber();
-        this.globalClickUnsubscriber = null;
-      }
+      this.unsubscribeGlobalClick();
     }
     this._open = _open;
   }
@@ -177,9 +174,12 @@ export class NglLookup {
   }
 
   ngOnDestroy() {
-    if (this.globalClickUnsubscriber) {
-      this.globalClickUnsubscriber();
-      this.globalClickUnsubscriber = null;
-    }
+    this.unsubscribeGlobalClick();
+  }
+
+  private unsubscribeGlobalClick() {
+    if (!this.globalClickUnsubscriber) return;
+    this.globalClickUnsubscriber();
+    this.globalClickUnsubscriber = null;
   }
 }
