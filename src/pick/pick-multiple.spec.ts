@@ -1,6 +1,6 @@
 import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
-import {selectElements} from '../../test/helpers';
+import {selectElements} from '../../test/util/helpers';
 import {Component} from '@angular/core';
 import {NglPick} from './pick';
 import {NglPickOption} from './pick-option';

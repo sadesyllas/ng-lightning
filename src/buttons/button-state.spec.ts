@@ -3,7 +3,7 @@ import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing'
 import {Component} from '@angular/core';
 import {NglButtonState} from './button-state';
 import {NglIcon} from '../icons/icon';
-import {selectElements} from '../../test/helpers';
+import {selectElements} from '../../test/util/helpers';
 
 function getButtonElement(element: Element): HTMLButtonElement {
   return <HTMLButtonElement>element.querySelector('button');

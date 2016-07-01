@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import {NglDropdown} from './dropdown';
 import {NglDropdownTrigger} from './dropdown-trigger';
 import {NglPick} from '../pick/pick';
-import {dispatchKeyEvent} from '../../test/helpers';
+import {dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
 function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {

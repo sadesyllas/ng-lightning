@@ -15,7 +15,7 @@ var BUILD = tsProject.options.outDir;
 var PATHS = {
   src: ['src/**/*.ts','!src/**/*.spec.ts'],
   templates: ['src/**/*.jade'],
-  spec: ['src/**/*.ts', 'test/helpers.ts'],
+  spec: ['src/**/*.ts', 'test/util/*.ts'],
   typings: 'typings/index.d.ts',
   temp: 'temp/',
 };

@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import {NglTabs} from './tabs';
 import {NglTab} from './tab';
 import {NglTabVerbose, NglTabContent, NglTabHeading} from './tab-verbose';
-import {selectElements, dispatchKeyEvent} from '../../test/helpers';
+import {selectElements, dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
 function getTabsElement(element: Element): HTMLUListElement {

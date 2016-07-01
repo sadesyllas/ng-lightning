@@ -1,13 +1,13 @@
 /**
  * Testing helpers
  */
-
-import {beforeEachProviders} from '@angular/core/testing';
-import {ComponentFixture} from '@angular/compiler/testing';
-import {provideNglConfig} from '../src/config/config';
+import {addProviders, ComponentFixture} from '@angular/core/testing';
+import {provideNglConfig} from '../../src/config/config';
 
 // Default configuration for every TestComponent
-beforeEachProviders(() => [provideNglConfig()]);
+beforeEach(() => {
+  addProviders([provideNglConfig()]);
+});
 
 export function dispatchKeyEvent(fixture: ComponentFixture<any>, predicate: any, key: string, indexOf: number = -1) {
   const { debugElement} = fixture;

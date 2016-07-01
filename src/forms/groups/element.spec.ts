@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import {NglFormGroup} from './group';
 import {NglFormGroupElement} from './element';
 import {NglFormGroupCheckbox, NglFormGroupRadio} from './input';
-import {selectElements} from '../../../test/helpers';
+import {selectElements} from '../../../test/util/helpers';
 
 function getLabelElements(element: HTMLElement): HTMLElement[] {
   return selectElements(element, 'label');

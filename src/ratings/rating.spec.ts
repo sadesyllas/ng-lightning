@@ -2,7 +2,7 @@ import {it, describe, expect, inject, async}  from '@angular/core/testing';
 import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {NglRating} from './rating';
-import {dispatchKeyEvent} from '../../test/helpers';
+import {dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
 function getStars(element: HTMLElement): HTMLElement[] {
@@ -39,7 +39,9 @@ describe('Rating Component', () => {
 
   it('prevents stars from wrapping', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
-    expect(fixture.nativeElement.firstElementChild).toHaveCssStyle({'white-space': 'nowrap', 'background-color': 'red'});
+    const el = fixture.nativeElement.firstElementChild;
+    expect(el).toHaveCssStyle({'white-space': 'nowrap'});
+    expect(el).toHaveCssStyle({'background-color': 'red'});
   }, `<ngl-rating [(rate)]="value" style="background: red;"></ngl-rating>`));
 
   it('should change rate based on click', testAsync((fixture: ComponentFixture<TestComponent>) => {
