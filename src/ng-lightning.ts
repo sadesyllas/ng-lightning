@@ -7,6 +7,7 @@ import {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 import {NglButton} from './buttons/button';
 import {NglButtonState} from './buttons/button-state';
 import {NglButtonIcon} from './buttons/button-icon';
+import {NGL_DATATABLE_DIRECTIVES} from './datatables/directives';
 import {NglIcon} from './icons/icon';
 import {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 import {NglDatepicker} from './datepickers/datepicker';
@@ -39,6 +40,7 @@ export {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 export {NglButton} from './buttons/button';
 export {NglButtonState} from './buttons/button-state';
 export {NglButtonIcon} from './buttons/button-icon';
+export {NGL_DATATABLE_DIRECTIVES} from './datatables/directives';
 export {NglIcon} from './icons/icon';
 export {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 export {NglDatepicker} from './datepickers/datepicker';
@@ -69,6 +71,7 @@ export const NGL_DIRECTIVES = [
   NglBadge,
   NglBreadcrumbs, NglBreadcrumb,
   NglButton, NglButtonState, NglButtonIcon,
+  NGL_DATATABLE_DIRECTIVES,
   NglIcon,
   NGL_LOOKUP_DIRECTIVES,
   NglDatepicker,

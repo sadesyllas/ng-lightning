@@ -1,0 +1,13 @@
+<button type="button" nglButton="neutral" (click)="hideName = !hideName" class="slds-m-bottom--large">Toggle "Name" column</button>
+
+<table ngl-datatable [data]="data" dataTrackByKey="rank" [striped]="false">
+  <ngl-datatable-column heading="Rank" dataKey="rank"></ngl-datatable-column>
+  <ngl-datatable-column heading="Name" dataKey="name" *ngIf="!hideName"></ngl-datatable-column>
+  <ngl-datatable-column heading="Surname">
+    <template nglDatatableCell let-row="row"><b>{{row.surname}}</b></template>
+  </ngl-datatable-column>
+  <ngl-datatable-column heading="Points" dataKey="points">
+    <template nglDatatableCell let-value><ngl-badge>{{value | number}}</ngl-badge>
+    </template>
+  </ngl-datatable-column>
+</table>

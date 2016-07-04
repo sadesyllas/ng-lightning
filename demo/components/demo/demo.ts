@@ -5,6 +5,7 @@ import {Plunker} from './playground/plunker';
 import {DemoBadges} from './components/badges/badges';
 import {DemoBreadcrumbs} from './components/breadcrumbs/breadcrumbs';
 import {DemoButtons} from './components/buttons/buttons';
+import {DemoDatatables} from './components/datatables/datatables';
 import {DemoDatepickers} from './components/datepickers/datepickers';
 import {DemoForms} from './components/forms/forms';
 import {DemoIcons} from './components/icons/icons';
@@ -38,6 +39,7 @@ const components: any[] = [
   { key: 'badges', component: DemoBadges },
   { key: 'breadcrumbs', component: DemoBreadcrumbs },
   { key: 'buttons', component: DemoButtons },
+  { key: 'datatables', component: DemoDatatables },
   { key: 'datepickers', component: DemoDatepickers },
   { key: 'forms', component: DemoForms },
   { key: 'icons', component: DemoIcons },

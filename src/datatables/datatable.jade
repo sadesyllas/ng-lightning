@@ -1,0 +1,7 @@
+thead
+  tr.slds-text-heading--label
+    th(*ngFor="let col of columns; trackBy:columnTrackBy", scope="col") {{ col.heading }}
+
+tbody
+  tr(*ngFor="let d of data; let i = index; trackBy:dataTrackBy")
+    td(*ngFor="let col of columns; trackBy:columnTrackBy", ngl-internal-datatatable-cell, [row]="d", [column]="col", [index]="i")

@@ -1,0 +1,3 @@
+.slds-truncate(*ngIf="column.cellTpl")
+  template([ngTemplateOutlet]="column.cellTpl.templateRef", [ngOutletContext]="context")
+.slds-truncate(*ngIf="!column.cellTpl") {{ value }}
