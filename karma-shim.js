@@ -29,11 +29,11 @@ System.config({
 });
 
 Promise.all([
-    '@angular/core/testing',
-    '@angular/platform-browser-dynamic/testing',
-    '/base/temp/test/util/helpers.js',
-    '/base/temp/test/util/matchers.js',
-  ].map((p) => System.import(p)))
+    System.import('@angular/core/testing'),
+    System.import('@angular/platform-browser-dynamic/testing'),
+    System.import('/base/temp/test/util/helpers.js'),
+    System.import('/base/temp/test/util/matchers.js'),
+  ])
   .then(function(providers) {
     var testing = providers[0];
     var testingBrowser = providers[1];
