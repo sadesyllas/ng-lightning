@@ -1,10 +1,13 @@
-import {Directive, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, ComponentResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
+import {Component, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
 import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';
 
-@Directive({
+// Use `@Component` instead of `@Directive` to support `precompile`
+@Component({
   selector: '[nglPopover]',
+  template: `<ng-content></ng-content>`,
+  precompile: [NglPopover],
 })
 export class NglPopoverTrigger {
 
@@ -31,14 +34,16 @@ export class NglPopoverTrigger {
   }
 
   private popover: NglPopover;
-  private componentRef: ComponentRef<any>;
+  private popoverFactory: ComponentFactory<NglPopover>;
+  private componentRef: ComponentRef<NglPopover>;
   private placement: Direction = 'top';
   private theme: string;
   private tether: Tether;
-  private initPositionTimeout: number;
 
-  constructor(private element: ElementRef, private viewContainer: ViewContainerRef,
-              private componentResolver: ComponentResolver, private injector: Injector) {}
+  constructor(private element: ElementRef, private viewContainer: ViewContainerRef, private injector: Injector,
+              componentFactoryResolver: ComponentFactoryResolver) {
+    this.popoverFactory = componentFactoryResolver.resolveComponentFactory(NglPopover);
+  }
 
   ngOnDestroy() {
     this.destroy();
@@ -58,7 +63,7 @@ export class NglPopoverTrigger {
 
     if (create) {
       this.tether = new Tether(options);
-      this.initPositionTimeout = setTimeout(() => this.tether.position());
+      this.tether.position();
     } else {
       this.tether.setOptions(options);
     }
@@ -78,16 +83,14 @@ export class NglPopoverTrigger {
   private create() {
     if (this.componentRef) return;
 
-    this.componentResolver.resolveComponent(NglPopover).then((cf: ComponentFactory<NglPopover>) => {
-      const view: EmbeddedViewRef<any> = this.viewContainer.createEmbeddedView(this.template);
-      this.componentRef = this.viewContainer.createComponent(cf, 0, this.injector, [view.rootNodes]);
-      this.popover = this.componentRef.instance;
-      this.setTether(true);
+    const view: EmbeddedViewRef<any> = this.viewContainer.createEmbeddedView(this.template);
+    this.componentRef = this.viewContainer.createComponent(this.popoverFactory, 0, this.injector, [view.rootNodes]);
+    this.popover = this.componentRef.instance;
+    this.setTether(true);
 
-      // To avoid unexpected behavior when template "lives" inside an OnPush
-      // component, explicitlly request change detection to run on creation.
-      this.popover.changeDetector.markForCheck();
-    });
+    // To avoid unexpected behavior when template "lives" inside an OnPush
+    // component, explicitlly request change detection to run on creation.
+    this.popover.changeDetector.markForCheck();
   }
 
   private destroy() {
@@ -95,7 +98,6 @@ export class NglPopoverTrigger {
 
     this.tether.destroy();
     this.tether = null;
-    clearTimeout(this.initPositionTimeout);
     this.componentRef.destroy();
     this.componentRef = null;
     this.popover = null;
