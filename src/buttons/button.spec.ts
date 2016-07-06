@@ -1,5 +1,4 @@
-import {it, describe, expect, inject, async}  from '@angular/core/testing';
-import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {NglButton} from './button';
 import {NglIcon} from '../icons/icon';

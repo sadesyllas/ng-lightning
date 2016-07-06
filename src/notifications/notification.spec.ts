@@ -1,5 +1,4 @@
-import {it, describe, expect, inject, async, fakeAsync, tick}  from '@angular/core/testing';
-import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
+import {inject, async, fakeAsync, tick, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {NglNotification} from './notification';
 import {NglNotificationClose} from './notification-close';
