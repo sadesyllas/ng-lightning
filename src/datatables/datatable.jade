@@ -1,6 +1,7 @@
 thead
   tr.slds-text-heading--label
-    th(*ngFor="let col of columns; trackBy:columnTrackBy", scope="col") {{ col.heading }}
+    th(*ngFor="let col of columns; trackBy:columnTrackBy", ngl-internal-datatatable-head,
+       [heading]="col.heading", [sortable]="col.sortable", [sortOrder]="getColumnSortOrder(col)", (onSort)="onColumnSort(col, $event)")
 
 tbody
   tr(*ngFor="let d of data; let i = index; trackBy:dataTrackBy")

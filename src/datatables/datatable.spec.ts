@@ -4,7 +4,15 @@ import {selectElements} from '../../test/util/helpers';
 import {NGL_DATATABLE_DIRECTIVES} from './directives';
 
 function getHeadings(element: HTMLElement) {
-  return selectElements(element, 'thead th').map(e => e.textContent);
+  return selectElements(element, 'thead th');
+}
+
+function getHeadingText(element: HTMLElement) {
+  return element.querySelector('.slds-truncate').textContent;
+}
+
+function getHeadingsText(element: HTMLElement) {
+  return getHeadings(element).map(getHeadingText);
 }
 
 function getRows(element: HTMLElement): HTMLTableRowElement[] {
@@ -19,6 +27,30 @@ function getData(element: HTMLElement) {
   return getRows(element).map(row => getRowData(row));
 }
 
+function expectSortedHeadings(element: HTMLElement, expected: string[]) {
+  const headings = getHeadings(element);
+
+  headings.map((e: HTMLElement, index: number) => {
+    const text = getHeadingText(e);
+    const expectation = expected[index];
+    if (expectation.startsWith('+')) {
+      expect(e).toHaveCssClass('slds-is-sorted');
+      expect(e).toHaveCssClass('slds-is-sorted--asc');
+      expect(e.getAttribute('aria-sort')).toEqual('ascending');
+      expect(expectation).toEqual(`+${text}`);
+    } else if (expectation.startsWith('-')) {
+      expect(e).toHaveCssClass('slds-is-sorted');
+      expect(e).toHaveCssClass('slds-is-sorted--desc');
+      expect(e.getAttribute('aria-sort')).toEqual('descending');
+      expect(expectation).toEqual(`-${text}`);
+    } else {
+      expect(e).not.toHaveCssClass('slds-is-sorted');
+      expect(e.getAttribute('aria-sort')).toBeNull();
+      expect(expectation).toEqual(text);
+    }
+  });
+}
+
 describe('`NglDatatable`', () => {
 
   it('should render head and body correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -29,7 +61,7 @@ describe('`NglDatatable`', () => {
     expect(tableEl).toHaveCssClass('slds-table--bordered');
     expect(tableEl).toHaveCssClass('slds-table--striped');
 
-    expect(getHeadings(fixture.nativeElement)).toEqual(['ID', 'Name', 'Number']);
+    expect(getHeadingsText(fixture.nativeElement)).toEqual(['ID', 'Name', 'Number']);
     expect(getData(fixture.nativeElement)).toEqual([
       [ '1', 'PP', '80' ],
       [ '2', 'AB', '10' ],
@@ -80,7 +112,7 @@ describe('`NglDatatable`', () => {
     fixture.componentInstance.exists = false;
     fixture.detectChanges();
 
-    expect(getHeadings(fixture.nativeElement)).toEqual(['ID', 'Number']);
+    expect(getHeadingsText(fixture.nativeElement)).toEqual(['ID', 'Number']);
     expect(getData(fixture.nativeElement)).toEqual([
       [ '1', '80' ],
       [ '2', '10' ],
@@ -90,7 +122,7 @@ describe('`NglDatatable`', () => {
 
     fixture.componentInstance.exists = true;
     fixture.detectChanges();
-    expect(getHeadings(fixture.nativeElement)).toEqual(['ID', 'Name', 'Number']);
+    expect(getHeadingsText(fixture.nativeElement)).toEqual(['ID', 'Name', 'Number']);
     expect(getData(fixture.nativeElement)).toEqual([
       [ '1', 'PP', '80' ],
       [ '2', 'AB', '10' ],
@@ -119,6 +151,70 @@ describe('`NglDatatable`', () => {
       </table>`
   ));
 
+  it('should handle sortable columns', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.sortable = false;
+    fixture.detectChanges();
+
+    const [first, second] = getHeadings(fixture.nativeElement);
+
+    expect(first).toHaveCssClass('slds-is-sortable');
+    expect(first.querySelector('a')).toBeDefined();
+
+    expect(second).not.toHaveCssClass('slds-is-sortable');
+    expect(second.querySelector('a')).toBeNull();
+
+    fixture.componentInstance.sortable = true;
+    fixture.detectChanges();
+    expect(second).toHaveCssClass('slds-is-sortable');
+    expect(second.querySelector('a')).toBeDefined();
+  }, `<table ngl-datatable [data]="data">
+        <ngl-datatable-column key="id" sortable></ngl-datatable-column>
+        <ngl-datatable-column [sortable]="sortable"></ngl-datatable-column>
+      </table>`
+  ));
+
+  it('should display sorting state', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.sort = {key: 'id', order: 'asc'};
+    fixture.detectChanges();
+    expectSortedHeadings(fixture.nativeElement, ['+ID', 'Name', 'Number']);
+
+    fixture.componentInstance.sort = null;
+    fixture.detectChanges();
+    expectSortedHeadings(fixture.nativeElement, ['ID', 'Name', 'Number']);
+
+    fixture.componentInstance.sort = {key: 'id', order: 'desc'};
+    fixture.detectChanges();
+    expectSortedHeadings(fixture.nativeElement, ['-ID', 'Name', 'Number']);
+
+    fixture.componentInstance.sort = {key: 'name', order: 'asc'};
+    fixture.detectChanges();
+    expectSortedHeadings(fixture.nativeElement, ['ID', '+Name', 'Number']);
+  }, `<table ngl-datatable [data]="data" [sort]="sort">
+        <ngl-datatable-column heading="ID" key="id" sortable></ngl-datatable-column>
+        <ngl-datatable-column heading="Name" key="name" sortable></ngl-datatable-column>
+        <ngl-datatable-column heading="Number" key="number"></ngl-datatable-column>
+      </table>`
+  ));
+
+  it('should sort when clicking on sortable header', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.sort = {key: 'id', order: 'desc'};
+    fixture.componentInstance.sortChange = jasmine.createSpy('sortChange');
+    fixture.detectChanges();
+    expect(fixture.componentInstance.sortChange).not.toHaveBeenCalled();
+
+    const headingLinks = getHeadings(fixture.nativeElement).map(e => <HTMLAnchorElement>e.querySelector('a'));
+
+    headingLinks[0].click();
+    expect(fixture.componentInstance.sortChange).toHaveBeenCalledWith({ key: 'id', order: 'asc' });
+
+    headingLinks[1].click();
+    expect(fixture.componentInstance.sortChange).toHaveBeenCalledWith({ key: 'name', order: 'desc' });
+  }, `<table ngl-datatable [data]="data" [sort]="sort" (sortChange)="sortChange($event)">
+        <ngl-datatable-column heading="ID" key="id" sortable></ngl-datatable-column>
+        <ngl-datatable-column heading="Name" key="name" sortable></ngl-datatable-column>
+        <ngl-datatable-column heading="Number" key="number"></ngl-datatable-column>
+      </table>`
+  ));
 });
 
 

@@ -15,4 +15,15 @@ export class DemoDatatables {
     { rank: 4, name: 'Michael', surname: 'Jordan', points: 32292 },
     { rank: 5, name: 'Wilt', surname: 'Chamberlain', points: 31419 },
   ];
+
+  // Initial sort
+  sort = { key: 'rank', order: 'asc' };
+
+  // Custom sort function
+  onSort($event: any) {
+    const { key, order } = $event;
+    this.data.sort((a: any, b: any) => {
+      return (key === 'rank' ? b[key] - a[key] : b[key].localeCompare(a[key])) * (order === 'desc' ? 1 : -1);
+    });
+  }
 }

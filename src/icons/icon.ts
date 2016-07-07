@@ -7,7 +7,7 @@ import {NglButtonIcon} from '../buttons/button-icon';
 export type NglIconCategory = 'action' | 'custom' | 'doctype' | 'standard' | 'utility';
 
 @Component({
-  selector: 'ngl-icon',
+  selector: 'ngl-icon, [ngl-icon]',
   templateUrl: './icon.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
