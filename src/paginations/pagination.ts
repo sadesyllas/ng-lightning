@@ -7,6 +7,7 @@ export type NglPage = { number: number | string, disabled?: boolean };
   selector: 'ngl-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pagination.jade',
+  exportAs: 'nglPagination',
 })
 export class NglPagination implements OnChanges {
 
@@ -78,6 +79,14 @@ export class NglPagination implements OnChanges {
 
   pageTrackBy(index: number, page: NglPage) {
     return page.number;
+  }
+
+  get start(): number {
+    return Math.max(1 + (+this.current - 1) * +this.perPage, 0);
+  }
+
+  get end() {
+    return Math.min(this.start + (+this.perPage - 1), +this.total);
   }
 
   private getPageArray(start: number, end: number) {

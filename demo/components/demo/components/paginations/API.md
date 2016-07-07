@@ -12,3 +12,8 @@
 ### Output
 
   * `pageChange: EventEmitter<number>`: the page clicked in order to select
+
+### Export
+
+  * `start: number`: Starting row index of current page
+  * `end: number`: Last row index of current page

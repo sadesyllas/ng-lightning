@@ -187,6 +187,28 @@ describe('Pagination Component', () => {
       expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(4);
     }, `<ngl-pagination [page]="page" [total]="total" (pageChange)="pageChange($event)" boundaryLinks></ngl-pagination>`));
   });
+
+  it('should export `start` and `end` index', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const el = fixture.nativeElement.querySelector('h1');
+    expect(el).toHaveText('11 - 20');
+
+    fixture.componentInstance.page = 1;
+    fixture.detectChanges();
+    expect(el).toHaveText('1 - 10');
+
+    fixture.componentInstance.page = 4;
+    fixture.detectChanges();
+    expect(el).toHaveText('31 - 33');
+
+    fixture.componentInstance.total = 0;
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(el).toHaveText('0 - 0');
+    });
+  }, `<ngl-pagination [(page)]="page" [total]="total" #pg></ngl-pagination><h1>{{pg.start}} - {{pg.end}}</h1>`));
 });
 
 // Shortcut function for less boilerplate on each `it`
