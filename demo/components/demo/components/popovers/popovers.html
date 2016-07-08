@@ -3,7 +3,6 @@
   Dolor sit amet, <i>consectetur adipisicing</i> elit. Cum, quaerat?
 </template>
 <template #tip2>Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi.</template>
-<template #tooltip>...which always keep showing!</template>
 
 <div>
   Quisque scelerisque lectus vel sodales semper.
@@ -14,7 +13,7 @@
   <button type="button" nglButton="neutral" [nglPopover]="tip2" nglPopoverTheme="success" [nglOpen]="open2" (click)="open2 = !open2">Click me</button>
   <button type="button" nglButton="neutral" [nglPopover]="tip2" nglPopoverTheme="warning" [nglOpen]="open3" (click)="open3 = !open3">...and me!</button>
 </div>
-<div class="slds-m-top--x-large"><span [nglPopover]="tooltip" nglOpen="true" nglPopoverPlacement="right" nglTooltip>You can also make tooltips</span></div>
+<div class="slds-m-top--x-large"><span nglPopover="...which always keep showing!" nglOpen="true" nglPopoverPlacement="right" nglTooltip>You can also make tooltips</span></div>
 
 <div class="slds-button-group slds-m-top--xx-large" role="group">
   <button type="button" (click)="change('top')" nglButton="neutral">Top</button>

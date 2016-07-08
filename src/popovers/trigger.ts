@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
+import {Component, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, Renderer, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
 import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';
@@ -11,7 +11,7 @@ import {placement} from './placements';
 })
 export class NglPopoverTrigger {
 
-  @Input('nglPopover') template: TemplateRef<any>;
+  @Input() nglPopover: string | TemplateRef<any>;
 
   @Input() set nglPopoverPlacement(_placement: Direction) {
     this.placement = _placement || 'top';
@@ -41,7 +41,7 @@ export class NglPopoverTrigger {
   private tether: Tether;
 
   constructor(private element: ElementRef, private viewContainer: ViewContainerRef, private injector: Injector,
-              componentFactoryResolver: ComponentFactoryResolver) {
+              private renderer: Renderer, componentFactoryResolver: ComponentFactoryResolver) {
     this.popoverFactory = componentFactoryResolver.resolveComponentFactory(NglPopover);
   }
 
@@ -83,14 +83,22 @@ export class NglPopoverTrigger {
   private create() {
     if (this.componentRef) return;
 
-    const view: EmbeddedViewRef<any> = this.viewContainer.createEmbeddedView(this.template);
-    this.componentRef = this.viewContainer.createComponent(this.popoverFactory, 0, this.injector, [view.rootNodes]);
+    this.componentRef = this.viewContainer.createComponent(this.popoverFactory, 0, this.injector, [this.projectableNodes]);
     this.popover = this.componentRef.instance;
     this.setTether(true);
 
     // To avoid unexpected behavior when template "lives" inside an OnPush
     // component, explicitlly request change detection to run on creation.
     this.popover.changeDetector.markForCheck();
+  }
+
+  private get projectableNodes() {
+    if (this.nglPopover instanceof TemplateRef) {
+      const view: EmbeddedViewRef<any> = this.viewContainer.createEmbeddedView(<TemplateRef<any>>this.nglPopover);
+      return view.rootNodes;
+    } else {
+      return [this.renderer.createText(null, <string>this.nglPopover)];
+    }
   }
 
   private destroy() {

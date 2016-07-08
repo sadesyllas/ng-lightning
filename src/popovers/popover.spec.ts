@@ -30,6 +30,13 @@ describe('Popovers', () => {
     });
   }));
 
+  it('should render popover with string content', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const popoverEl = getPopoverElement(fixture.nativeElement);
+    expect(popoverEl.textContent.trim()).toBe('I am a string');
+  }, `<span nglPopover="I am a string" nglOpen="true"></span>`));
+
   it('should change visibility based on trigger', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
