@@ -109,13 +109,13 @@ describe('`NglDatatable`', () => {
       [ '4:', '3 = EB', '14' ],
     ]);
   }, `<table ngl-datatable [data]="data">
-        <ngl-datatable-column dataKey="id">
+        <ngl-datatable-column key="id">
           <template nglDatatableCell let-value>{{value}}:</template>
         </ngl-datatable-column>
         <ngl-datatable-column>
           <template nglDatatableCell let-row="row" let-i="index">{{i}} = {{row.name}}</template>
         </ngl-datatable-column>
-        <ngl-datatable-column dataKey="number"></ngl-datatable-column>
+        <ngl-datatable-column key="number"></ngl-datatable-column>
       </table>`
   ));
 
@@ -136,9 +136,9 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
   directives: [NGL_DATATABLE_DIRECTIVES],
   template: `
     <table ngl-datatable [data]="data">
-      <ngl-datatable-column heading="ID" dataKey="id"></ngl-datatable-column>
-      <ngl-datatable-column heading="Name" dataKey="name" *ngIf="exists"></ngl-datatable-column>
-      <ngl-datatable-column heading="Number" dataKey="number"></ngl-datatable-column>
+      <ngl-datatable-column heading="ID" key="id"></ngl-datatable-column>
+      <ngl-datatable-column heading="Name" key="name" *ngIf="exists"></ngl-datatable-column>
+      <ngl-datatable-column heading="Number" key="number"></ngl-datatable-column>
     </table>`,
 })
 export class TestComponent {

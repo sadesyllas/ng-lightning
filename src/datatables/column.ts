@@ -6,6 +6,6 @@ import {NglDatatableCell} from './cell';
 })
 export class NglDatatableColumn {
   @Input() heading: string;
-  @Input() dataKey: string;
+  @Input() key: string;
   @ContentChild(NglDatatableCell) cellTpl: NglDatatableCell;
 };

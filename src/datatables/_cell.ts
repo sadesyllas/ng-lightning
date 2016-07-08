@@ -26,8 +26,8 @@ export class NglInternalDatatableCell {
   }
 
   get value() {
-    const { dataKey } = this.column;
-    return dataKey ? this.row[ dataKey ] : null;
+    const { key } = this.column;
+    return key ? this.row[ key ] : null;
   }
 
 }

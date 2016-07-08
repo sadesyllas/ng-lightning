@@ -11,7 +11,7 @@ import {NglInternalDatatableCell} from './_cell';
 export class NglDatatable {
 
   @Input() data: any[] = [];
-  @Input() dataTrackByKey: string;
+  @Input() trackByKey: string;
 
   @HostBinding('class.slds-table--bordered')
   @Input() bordered = true;
@@ -28,11 +28,11 @@ export class NglDatatable {
   }
 
   columnTrackBy(index: number, column: NglDatatableColumn) {
-    return column.dataKey || index;
+    return column.key || index;
   }
 
   dataTrackBy(index: number, data: any) {
-    return this.dataTrackByKey ? data[this.dataTrackByKey] : index;
+    return this.trackByKey ? data[this.trackByKey] : index;
   }
 
   ngAfterContentInit() {
