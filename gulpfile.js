@@ -47,8 +47,10 @@ gulp.task('lint:ts', function lint_ts_impl() {
 
   return gulp.src( PATHS.spec )
     .pipe(cache('lint:ts'))
-    .pipe(tslint())
-    .pipe(tslint.report('prose', {
+    .pipe(tslint({
+      formatter: 'prose',
+    }))
+    .pipe(tslint.report({
       emitError: argv.failOnError,
       summarizeFailureOutput: true,
     }));
