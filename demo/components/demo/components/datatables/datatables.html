@@ -1,6 +1,6 @@
 <button type="button" nglButton="neutral" (click)="hideName = !hideName" class="slds-m-bottom--large">Toggle "Name" column</button>
 
-<table ngl-datatable [data]="data" trackByKey="rank" [(sort)]="sort" (sortChange)="onSort($event)" [striped]="false">
+<table ngl-datatable [data]="data" trackByKey="rank" [(sort)]="sort" (sortChange)="onSort($event)" class="slds-max-medium-table--stacked-horizontal">
   <ngl-datatable-column heading="Rank" key="rank" sortable></ngl-datatable-column>
   <ngl-datatable-column heading="Name" key="name" *ngIf="!hideName" sortable></ngl-datatable-column>
   <ngl-datatable-column heading="Surname" key="surname" sortable>
