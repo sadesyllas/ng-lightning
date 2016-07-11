@@ -2,8 +2,8 @@
 
 <table ngl-datatable [data]="data" trackByKey="rank" [(sort)]="sort" (sortChange)="onSort($event)" class="slds-max-medium-table--stacked-horizontal">
   <ngl-datatable-column heading="Rank" key="rank" sortable></ngl-datatable-column>
-  <ngl-datatable-column heading="Name" key="name" *ngIf="!hideName" sortable></ngl-datatable-column>
-  <ngl-datatable-column heading="Surname" key="surname" sortable>
+  <ngl-datatable-column heading="Name" key="name" *ngIf="!hideName" cellClass="slds-truncate" sortable></ngl-datatable-column>
+  <ngl-datatable-column heading="Surname" key="surname" cellClass="slds-truncate" sortable>
     <template nglDatatableCell let-row="row"><b>{{row.surname}}</b></template>
   </ngl-datatable-column>
   <ngl-datatable-column heading="Points" key="points">

@@ -151,6 +151,30 @@ describe('`NglDatatable`', () => {
       </table>`
   ));
 
+  it('should support custom cell class per column', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.class1 = 'custom-class1';
+    fixture.detectChanges();
+
+    const rows = getRows(fixture.nativeElement).map(row => selectElements(row, 'td'));
+    rows.forEach(([first, second]) => {
+      expect(first).toHaveCssClass('custom-class1');
+      expect(second).not.toHaveCssClass('custom-class1');
+    });
+
+    fixture.componentInstance.class1 = null;
+    fixture.componentInstance.class2 = ['apply-me', 'apply-this'];
+    fixture.detectChanges();
+    rows.forEach(([first, second]) => {
+      expect(first).not.toHaveCssClass('custom-class1');
+      expect(second).toHaveCssClass('apply-me');
+      expect(second).toHaveCssClass('apply-this');
+    });
+  }, `<table ngl-datatable [data]="data">
+        <ngl-datatable-column [cellClass]="class1"></ngl-datatable-column>
+        <ngl-datatable-column [cellClass]="class2"></ngl-datatable-column>
+      </table>`
+  ));
+
   it('should handle sortable columns', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.sortable = false;
     fixture.detectChanges();
