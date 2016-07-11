@@ -12,13 +12,13 @@ const config = {
     module: 'cjs'
   },
   map: {
-    'typescript': path.resolve('node_modules/typescript/lib/typescript'),
-    '@angular': path.resolve('node_modules/@angular'),
-    'rxjs': path.resolve('node_modules/rxjs'),
+    'typescript': 'node_modules/typescript/lib/typescript',
+    '@angular': 'node_modules/@angular',
+    'rxjs': 'node_modules/rxjs',
   },
   paths: {
     'ts-helpers': 'node_modules/ts-helpers/index.js',
-    '*': '*.js'
+    'dist/*': 'dist/*.js',
   },
   meta: {
     'node_modules/@angular/*': { build: false },
