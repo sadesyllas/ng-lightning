@@ -1,3 +1,17 @@
+<a name="0.14.0"></a>
+# [0.14.0](https://github.com/ng-lightning/ng-lightning/compare/v0.13.1...v0.14.0) (2016-07-11)
+
+
+### Features
+
+* **app:** add datatable component ([d5e56bc](https://github.com/ng-lightning/ng-lightning/commit/d5e56bc)), closes [#140](https://github.com/ng-lightning/ng-lightning/issues/140)
+* **app:** upgrade Angular 2 to rc.4 ([208a755](https://github.com/ng-lightning/ng-lightning/commit/208a755)), closes [#138](https://github.com/ng-lightning/ng-lightning/issues/138)
+* **datables:** add sorting ([8bab4af](https://github.com/ng-lightning/ng-lightning/commit/8bab4af)), closes [#142](https://github.com/ng-lightning/ng-lightning/issues/142)
+* **paginations:** `exportAs` starting and ending row index ([8ba2107](https://github.com/ng-lightning/ng-lightning/commit/8ba2107)), closes [#141](https://github.com/ng-lightning/ng-lightning/issues/141)
+* **popovers:** support string as content ([76c956f](https://github.com/ng-lightning/ng-lightning/commit/76c956f)), closes [#143](https://github.com/ng-lightning/ng-lightning/issues/143)
+
+
+
 <a name="0.13.1"></a>
 ## [0.13.1](https://github.com/ng-lightning/ng-lightning/compare/v0.13.0...v0.13.1) (2016-06-23)
 
