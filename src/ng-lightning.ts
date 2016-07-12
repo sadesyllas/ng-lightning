@@ -25,7 +25,7 @@ import {NglPill} from './pills/pill';
 import {NglPillImage} from './pills/pill-image';
 import {NglPillLink} from './pills/pill-link';
 import {NglPillRemove} from './pills/pill-remove';
-import {NGL_POPOVER_DIRECTIVES} from './popovers/directives';
+import {NGL_POPOVER_DIRECTIVES, NGL_POPOVER_PRECOMPILE} from './popovers/directives';
 import {NglRating} from './ratings/rating';
 import {NglSection} from './sections/section';
 import {NglSpinner} from './spinners/spinner';
@@ -58,7 +58,7 @@ export {NglPill} from './pills/pill';
 export {NglPillImage} from './pills/pill-image';
 export {NglPillLink} from './pills/pill-link';
 export {NglPillRemove} from './pills/pill-remove';
-export {NGL_POPOVER_DIRECTIVES} from './popovers/directives';
+export {NGL_POPOVER_DIRECTIVES, NGL_POPOVER_PRECOMPILE} from './popovers/directives';
 export {NglRating} from './ratings/rating';
 export {NglSection} from './sections/section';
 export {NglSpinner} from './spinners/spinner';
@@ -87,6 +87,10 @@ export const NGL_DIRECTIVES = [
   NglSection,
   NglSpinner,
   NglTabs, NglTab, NglTabVerbose, NglTabContent, NglTabHeading,
+];
+
+export const NGL_PRECOMPILE = [
+  NGL_POPOVER_PRECOMPILE,
 ];
 
 export {provideNglConfig} from './config/config';

@@ -70,6 +70,12 @@ mixin prism(html)
         b svgPath
         | : path to SVG sprites. Default is&nbsp;
         code assets/icons
+        
+    p.slds-m-bottom--small.slds-m-top--large 
+      | Also, in the root component of your application add 
+      code NGL_PRECOMPILE
+      | &nbsp;into the `precompile` property:
+    +prism(usagePrecompile)
       
     p.slds-m-bottom--small.slds-m-top--large 
       | Then, you can use all the&nbsp;

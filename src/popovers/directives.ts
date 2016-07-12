@@ -7,7 +7,10 @@ export {NglPopoverTrigger} from './trigger';
 export {NglPopoverBehavior} from './behavior';
 
 export const NGL_POPOVER_DIRECTIVES: Array<any> = [
-  NglPopover,
   NglPopoverTrigger,
   NglPopoverBehavior,
+];
+
+export const NGL_POPOVER_PRECOMPILE: Array<any> = [
+  NglPopover,
 ];

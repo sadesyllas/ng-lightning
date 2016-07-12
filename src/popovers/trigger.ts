@@ -1,13 +1,11 @@
-import {Component, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, Renderer, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
+import {Directive, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, Renderer, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
 import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';
 
 // Use `@Component` instead of `@Directive` to support `precompile`
-@Component({
+@Directive({
   selector: '[nglPopover]',
-  template: `<ng-content></ng-content>`,
-  precompile: [NglPopover],
 })
 export class NglPopoverTrigger {
 

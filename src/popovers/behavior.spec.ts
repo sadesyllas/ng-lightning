@@ -1,6 +1,6 @@
 import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NGL_POPOVER_DIRECTIVES} from './directives';
+import {NGL_POPOVER_DIRECTIVES, NGL_POPOVER_PRECOMPILE} from './directives';
 import {getPopoverElement} from './popover.spec';
 
 describe('`NglPopoverBehavior`', () => {
@@ -62,5 +62,6 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
     <template #tip>I am a tooltip</template>
     <span [nglPopover]="tip" nglPopoverBehavior>Open here</span>
   `,
+  precompile: [NGL_POPOVER_PRECOMPILE],
 })
 export class TestComponent {}

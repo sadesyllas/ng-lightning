@@ -3,6 +3,7 @@ import {getDOM} from '@angular/platform-browser/src/dom/dom_adapter';
 import {Component} from '@angular/core';
 import {NglPopover} from './popover';
 import {NglPopoverTrigger} from './trigger';
+import {NGL_POPOVER_PRECOMPILE} from './directives';
 
 export function getPopoverElement(element: HTMLElement): HTMLElement {
   return <HTMLElement>element.querySelector('ngl-popover');
@@ -132,6 +133,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
     <template #tip>I am a tooltip</template>
     <span [nglPopover]="tip" [nglPopoverPlacement]="placement" [nglPopoverTheme]="theme" [nglOpen]="open">Open here</span>
   `,
+  precompile: [NGL_POPOVER_PRECOMPILE],
 })
 export class TestComponent {
   placement: string;
