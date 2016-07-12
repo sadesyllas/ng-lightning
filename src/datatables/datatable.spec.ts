@@ -239,6 +239,25 @@ describe('`NglDatatable`', () => {
         <ngl-datatable-column heading="Number" key="number"></ngl-datatable-column>
       </table>`
   ));
+
+  it('should not re-render templates in cell if no input has changed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.cb = jasmine.createSpy('cb').and.callThrough();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
+
+    const button1 = fixture.nativeElement.querySelector('button');
+    button1.click();
+    fixture.detectChanges();
+
+    const button2 = fixture.nativeElement.querySelector('button');
+    expect(button1).toBe(button2);
+    expect(fixture.componentInstance.cb).toHaveBeenCalled();
+  }, `<table ngl-datatable [data]="data">
+        <ngl-datatable-column>
+          <template nglDatatableCell><button type="button" (click)="cb()"></button></template>
+        </ngl-datatable-column>
+      </table>`
+  ));
 });
 
 

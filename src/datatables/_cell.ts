@@ -11,14 +11,15 @@ export class NglInternalDatatableCell {
   @Input() column: NglDatatableColumn;
   @Input() index: number;
 
-
   @HostBinding('attr.data-label')
   get dataLabel() {
     return this.column.heading;
   }
 
-  get context() {
-    return {
+  context: any;
+
+  ngOnChanges() {
+    this.context =  {
       $implicit: this.value,
       row: this.row,
       index: this.index,
@@ -29,5 +30,4 @@ export class NglInternalDatatableCell {
     const { key } = this.column;
     return key ? this.row[ key ] : null;
   }
-
 }
