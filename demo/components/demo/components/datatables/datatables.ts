@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
+import {NGL_DIRECTIVES, INglDatatableSort} from '../../../../../dist/ng-lightning';
 
 @Component({
   selector: 'demo-datatables',
@@ -17,10 +17,10 @@ export class DemoDatatables {
   ];
 
   // Initial sort
-  sort = { key: 'rank', order: 'asc' };
+  sort: INglDatatableSort = { key: 'rank', order: 'asc' };
 
   // Custom sort function
-  onSort($event: any) {
+  onSort($event: INglDatatableSort) {
     const { key, order } = $event;
     this.data.sort((a: any, b: any) => {
       return (key === 'rank' ? b[key] - a[key] : b[key].localeCompare(a[key])) * (order === 'desc' ? 1 : -1);

@@ -40,7 +40,7 @@ export {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 export {NglButton} from './buttons/button';
 export {NglButtonState} from './buttons/button-state';
 export {NglButtonIcon} from './buttons/button-icon';
-export {NGL_DATATABLE_DIRECTIVES} from './datatables/directives';
+export {NGL_DATATABLE_DIRECTIVES, INglDatatableSort} from './datatables/directives';
 export {NglIcon} from './icons/icon';
 export {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 export {NglDatepicker} from './datepickers/datepicker';

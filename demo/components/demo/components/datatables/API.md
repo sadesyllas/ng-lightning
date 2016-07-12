@@ -3,14 +3,14 @@
 ### Input
 
   * `data: any[]`: Data to be displayed as rows in the table.
-  * `sort: Object`: Sorting state object as `{ key: '<column key>', order: '<asc|desc>'}`
+  * `sort: INglDatatableSort`: Sorting state object as `{ key: '<column key>', order: '<asc|desc>'}`
   * `trackByKey?: string`: Unique object property of data, useful for internal tracking.
   * `bordered: boolean = true`: Adds borders to the table.
   * `striped: boolean = true`: Adds stripes to alternating rows.
 
 ### Output
 
-  * `sortChange: EventEmitter<Object>`: Requested sort as `{ key: '<column key>', order: '<asc|desc>'}`
+  * `sortChange: EventEmitter<INglDatatableSort>`: Requested sort as `{ key: '<column key>', order: '<asc|desc>'}`
 
 # `ngl-datatable-column`
 
