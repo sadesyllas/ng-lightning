@@ -1,3 +1,18 @@
+<a name="0.15.0"></a>
+# [0.15.0](https://github.com/ng-lightning/ng-lightning/compare/v0.14.0...v0.15.0) (2016-07-12)
+
+
+### Bug Fixes
+
+* **datatables:** don't force `slds-truncate` on each cell ([3c3bcaa](https://github.com/ng-lightning/ng-lightning/commit/3c3bcaa))
+
+
+### Features
+
+* **datatables:** support user defined cell classes per column ([071f614](https://github.com/ng-lightning/ng-lightning/commit/071f614)), closes [#144](https://github.com/ng-lightning/ng-lightning/issues/144)
+
+
+
 <a name="0.14.0"></a>
 # [0.14.0](https://github.com/ng-lightning/ng-lightning/compare/v0.13.1...v0.14.0) (2016-07-11)
 
