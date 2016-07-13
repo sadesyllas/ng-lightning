@@ -1,3 +1,33 @@
+<a name="0.16.0"></a>
+# [0.16.0](https://github.com/ng-lightning/ng-lightning/compare/v0.15.0...v0.16.0) (2016-07-13)
+
+
+### Bug Fixes
+
+* **app:** export INglDatatableSort ([d4e26dc](https://github.com/ng-lightning/ng-lightning/commit/d4e26dc)), closes [#147](https://github.com/ng-lightning/ng-lightning/issues/147)
+* **app:** use `NGL_PRECOMPILE` for precompiled directives ([6a3ba50](https://github.com/ng-lightning/ng-lightning/commit/6a3ba50)), closes [#148](https://github.com/ng-lightning/ng-lightning/issues/148)
+* **datatables:** only render cell templates when needed ([6041743](https://github.com/ng-lightning/ng-lightning/commit/6041743)), closes [#149](https://github.com/ng-lightning/ng-lightning/issues/149)
+
+
+### BREAKING CHANGES
+
+* app: Add `NGL_PRECOMPILE` on your root component of your application.
+
+  ```js
+  import {NGL_DIRECTIVES, NGL_PRECOMPILE} from 'ng-lightning/ng-lightning';
+
+  @Component({
+    ...
+    precompile: [NGL_PRECOMPILE],
+    ...
+  })
+  export class App {
+    ...
+  }
+  ```
+
+
+
 <a name="0.15.0"></a>
 # [0.15.0](https://github.com/ng-lightning/ng-lightning/compare/v0.14.0...v0.15.0) (2016-07-12)
 
