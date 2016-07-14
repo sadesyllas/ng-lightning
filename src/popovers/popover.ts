@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, Renderer} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, Renderer} from '@angular/core';
 import {replaceClass, toBoolean} from '../util/util';
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
@@ -9,6 +9,8 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
   templateUrl: './popover.jade',
 })
 export class NglPopover {
+
+  @Output() afterViewInit = new EventEmitter();
 
   private _theme: string;
   @Input() set theme(theme: any) {
@@ -31,5 +33,9 @@ export class NglPopover {
 
     // Prevent position changes of "close by" elements
     this.renderer.setElementStyle(this.element.nativeElement, 'position', 'absolute');
+  }
+
+  ngAfterViewInit() {
+    this.afterViewInit.emit(null);
   }
 }

@@ -61,7 +61,6 @@ export class NglPopoverTrigger {
 
     if (create) {
       this.tether = new Tether(options);
-      this.tether.position();
     } else {
       this.tether.setOptions(options);
     }
@@ -83,6 +82,7 @@ export class NglPopoverTrigger {
 
     this.componentRef = this.viewContainer.createComponent(this.popoverFactory, 0, this.injector, [this.projectableNodes]);
     this.popover = this.componentRef.instance;
+    this.popover.afterViewInit.take(1).subscribe(() => this.tether.position());
     this.setTether(true);
 
     // To avoid unexpected behavior when template "lives" inside an OnPush

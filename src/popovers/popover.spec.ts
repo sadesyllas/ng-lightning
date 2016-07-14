@@ -20,6 +20,12 @@ describe('Popovers', () => {
     expect(getDOM().getStyle(popoverEl, 'position')).toEqual('absolute');
   }, `<ngl-popover>My content</ngl-popover>`));
 
+  it('should notify when view is initialized', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.cb = jasmine.createSpy('afterViewInit');
+    fixture.detectChanges();
+    expect(fixture.componentInstance.cb).toHaveBeenCalled();
+  }, `<ngl-popover (afterViewInit)="cb()">My content</ngl-popover>`));
+
   it('should render the created popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
