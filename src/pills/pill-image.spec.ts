@@ -15,21 +15,17 @@ describe('NglPill', () => {
   it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    setTimeout(() => {
-      const icon = getIcon(fixture.nativeElement);
-      expect(icon).toHaveCssClass('slds-pill__icon');
-    });
+    const icon = getIcon(fixture.nativeElement);
+    expect(icon).toHaveCssClass('slds-pill__icon');
   }));
 
   it('should not conflict with avatars', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    setTimeout(() => {
-      const icon = getIcon(fixture.nativeElement);
-      expect(icon).toHaveCssClass('slds-pill__icon');
-      expect(icon).toHaveCssClass('slds-avatar');
-      expect(icon).not.toHaveCssClass('slds-avatar--medium');
-    });
+    const icon = getIcon(fixture.nativeElement);
+    expect(icon).toHaveCssClass('slds-pill__icon');
+    expect(icon).toHaveCssClass('slds-avatar');
+    expect(icon).not.toHaveCssClass('slds-avatar--medium');
   }, `<ngl-pill><ngl-avatar nglPillImage></ngl-avatar>I am a pill!</ngl-pill>`));
 
 });

@@ -21,26 +21,22 @@ describe('NglPill', () => {
   it('should have the proper css classes and text content', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    setTimeout(() => {
-      const pill = getPill(fixture.nativeElement);
-      const text = getLabelEl(pill);
-      const removeButton = getRemoveButton(pill);
-      expect(pill).toHaveCssClass('slds-pill');
-      expect(text.tagName).toBe('A');
-      expect(text.textContent.trim()).toBe('I am a pill!');
-      expect(removeButton).toHaveCssClass('slds-pill__remove');
-    });
+    const pill = getPill(fixture.nativeElement);
+    const text = getLabelEl(pill);
+    const removeButton = getRemoveButton(pill);
+    expect(pill).toHaveCssClass('slds-pill');
+    expect(text.tagName).toBe('A');
+    expect(text.textContent.trim()).toBe('I am a pill!');
+    expect(removeButton).toHaveCssClass('slds-pill__remove');
   }));
 
   it('should render unlinked correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    setTimeout(() => {
-      const pill = getPill(fixture.nativeElement);
-      const text = getLabelEl(pill);
-      expect(text.tagName).toBe('SPAN');
-      expect(text.textContent.trim()).toBe('I am unlinked!');
-    });
+    const pill = getPill(fixture.nativeElement);
+    const text = getLabelEl(pill);
+    expect(text.tagName).toBe('SPAN');
+    expect(text.textContent.trim()).toBe('I am unlinked!');
   }, `<ngl-pill>I am unlinked!</ngl-pill>`));
 
   it('should not render the remove button without `nglPillRemove`', testAsync((fixture: ComponentFixture<TestComponent>) => {

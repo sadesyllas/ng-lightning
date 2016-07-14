@@ -11,12 +11,10 @@ describe('`NglPopoverBehavior`', () => {
     const triggerEl = fixture.nativeElement.firstElementChild;
     triggerEl.dispatchEvent(new Event('mouseenter'));
 
-    setTimeout(() => {
-      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-      triggerEl.dispatchEvent(new Event('mouseleave'));
-      expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-    });
+    triggerEl.dispatchEvent(new Event('mouseleave'));
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
   }));
 
   it('should change visibility based on focus', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -24,13 +22,10 @@ describe('`NglPopoverBehavior`', () => {
 
     const triggerEl = fixture.nativeElement.firstElementChild;
     triggerEl.dispatchEvent(new Event('focus'));
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-    setTimeout(() => {
-      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
-
-      triggerEl.dispatchEvent(new Event('blur'));
-      expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-    });
+    triggerEl.dispatchEvent(new Event('blur'));
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
   }));
 
   it('should create more than one instances', testAsync((fixture: ComponentFixture<TestComponent>) => {
@@ -38,11 +33,8 @@ describe('`NglPopoverBehavior`', () => {
 
     const triggerEl = fixture.nativeElement.firstElementChild;
     triggerEl.dispatchEvent(new Event('focus'));
-
-    setTimeout(() => {
-      triggerEl.dispatchEvent(new Event('mouseenter'));
-      expect(fixture.nativeElement.querySelectorAll('ngl-popover').length).toBe(1);
-    });
+    triggerEl.dispatchEvent(new Event('mouseenter'));
+    expect(fixture.nativeElement.querySelectorAll('ngl-popover').length).toBe(1);
   }));
 });
 
