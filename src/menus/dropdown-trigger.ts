@@ -5,7 +5,6 @@ import {NglDropdown} from './dropdown';
   selector: '[nglDropdownTrigger]',
   host: {
     'aria-haspopup': 'true',
-    '[class.slds-picklist__label]': 'dropdown.isPicklist',
   },
 })
 export class NglDropdownTrigger implements OnDestroy {

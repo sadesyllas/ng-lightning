@@ -22,22 +22,10 @@
 <div *ngIf="selected" class="slds-m-top--large">You selected: <b>{{selected}}</b></div>
 
 
-<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Picklist Multi select</div>
-<span nglDropdown [(open)]="open2" [(nglPick)]="picks" nglPickMultiple>
-  <button class="slds-button slds-button--neutral" nglDropdownTrigger>
-    <span class="slds-truncate">{{picks.length ? picks.length + ' options selected' : 'Select an Option'}}</span>
-    <ngl-icon icon="down" size="x-small"></ngl-icon>
-  </button>
-  <div class="slds-dropdown slds-dropdown--left">
-    <ul class="dropdown__list" role="menu">
-      <li class="slds-dropdown__item" *ngFor="let item of items;" [nglPickOption]="item" nglPickActiveClass="slds-is-selected">
-        <a role="menuitem" nglDropdownItem>
-          <p class="slds-truncate">
-            <ngl-icon icon="check" size="x-small" svgClass="slds-icon--selected slds-m-right--small"></ngl-icon>
-            {{item.value}}
-          </p>
-        </a>
-      </li>
-    </ul>
-  </div>
-</span>
+<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Picklist</div>
+<ngl-picklist [data]="items" [(nglPick)]="pick" [(open)]="open2" [nglPickMultiple]="multiple">
+  <span class="slds-truncate">{{ pickLabel }}</span>
+  <template nglPicklistItem let-item>{{item.value}}</template>
+</ngl-picklist>
+
+<button type="button" nglButton="neutral" (click)="toggleMultiple()">Toggle Multiple</button>

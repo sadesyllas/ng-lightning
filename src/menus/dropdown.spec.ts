@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import {NglDropdown} from './dropdown';
 import {NglDropdownTrigger} from './dropdown-trigger';
 import {NglDropdownItem} from './dropdown-item';
-import {NglPick} from '../pick/pick';
 import {dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
@@ -92,12 +91,6 @@ describe('`nglDropdown`', () => {
     dispatchKeyEvent(fixture, By.directive(NglDropdown), 'keydown.arrowdown');
     expect(dropdownItem).toEqual(document.activeElement);
   }));
-
-  it('should have the `slds-picklist` class when it is also a picklist', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.slds-dropdown-trigger')).toHaveCssClass('slds-picklist');
-  }, '<div nglPick nglDropdown></div>'));
-
 });
 
 // Shortcut function for less boilerplate on each `it`
@@ -111,7 +104,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglDropdown, NglDropdownTrigger, NglDropdownItem, NglPick],
+  directives: [NglDropdown, NglDropdownTrigger, NglDropdownItem],
   template: ['<div nglDropdown [open]="open" (openChange)="setOpen($event)">',
     '<button type="button" nglDropdownTrigger></button>',
     '<div nglDropdownItem></div>',

@@ -1,0 +1,11 @@
+.slds-picklist(nglDropdown, [open]="open", (openChange)="openChange.emit($event)", [ngClass]="{'slds-picklist--fluid': fluid}")
+  button.slds-button.slds-button--neutral.slds-picklist__label(nglDropdownTrigger, [disabled]="disabled")
+    ng-content
+    ngl-icon(icon="down", size="x-small")
+  .slds-dropdown.slds-dropdown--left
+    ul.dropdown__list(role="menu", [ngClass]="dropdownListClass")
+      li.slds-dropdown__item(*ngFor="let item of data;", [nglPickOption]="item", nglPickActiveClass="slds-is-selected")
+        a(role="menuitem", nglDropdownItem)
+          p.slds-truncate
+            ngl-icon(icon="check", size="x-small", svgClass="slds-icon--selected slds-m-right--small")
+            template([ngTemplateOutlet]="itemTemplate?.templateRef", [ngOutletContext]="{$implicit: item}")

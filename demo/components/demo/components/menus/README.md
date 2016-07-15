@@ -8,7 +8,7 @@ usually a `<button>` or a `<a>`, to open or close the dropdown.
 Add the `nglDropdownItem` directive on any child element that constitutes
 a dropdown item.
 
-You can easily create a `Picklist` just by combining with the `nglPick` directive.
+You can easily create a picklist just by combining the `<ngl-picklist>` with the `nglPick` directive.
 
 **Accessibility and Keyboard interactions**:
 
