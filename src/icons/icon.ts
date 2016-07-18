@@ -1,5 +1,5 @@
 import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Attribute, Optional} from '@angular/core';
-import {NglConfig} from '../config/config';
+import {NglIconSvg} from './svg';
 import {toBoolean, replaceClass} from '../util/util';
 import {NglButton} from '../buttons/button';
 import {NglButtonIcon} from '../buttons/button-icon';
@@ -10,6 +10,7 @@ export type NglIconCategory = 'action' | 'custom' | 'doctype' | 'standard' | 'ut
   selector: 'ngl-icon, [ngl-icon]',
   templateUrl: './icon.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  directives: [NglIconSvg],
 })
 export class NglIcon {
   _icon: string;
@@ -33,7 +34,7 @@ export class NglIcon {
   private button: boolean;
   private _containerClass: string[];
 
-  constructor(private config: NglConfig, public element: ElementRef, public renderer: Renderer,
+  constructor(public element: ElementRef, public renderer: Renderer,
               @Attribute('state') private state: 'not-selected' | 'selected' | 'selected-focus',
               @Attribute('button') button: 'not-selected' | 'selected' | 'selected-focus',
               @Optional() private nglButton: NglButton, @Optional() private nglButtonIcon: NglButtonIcon) {
@@ -42,10 +43,6 @@ export class NglIcon {
     if (state) {
       renderer.setElementClass(element.nativeElement, `slds-text-${state}`, true);
     }
-  }
-
-  iconPath() {
-    return `${this.config.svgPath}/${this.category}-sprite/svg/symbols.svg#${this.icon}`;
   }
 
   ngOnChanges() {
