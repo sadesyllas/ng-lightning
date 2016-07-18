@@ -11,15 +11,25 @@ import {Observable} from 'rxjs/Rx';
 })
 export class DemoLookups {
 
+  superheroes = ['Hulk', 'Flash', 'Superman', 'Batman', 'Spiderman', 'Iron Man', 'Thor', 'Wolverine', 'Deadpool'];
+  superheroeines = ['Catwoman', 'She-Hulk', 'Wonder Woman', 'Batwoman', 'Invisible Woman'];
+
+  scopes = [
+    { value: 'All', icon: 'groups' },
+    { value: 'Men', icon: 'user' },
+    { value: 'Women', icon: 'lead' },
+  ];
+
+  scope = this.scopes[0];
+
   constructor(public http: Http) {}
 
-  lookup = (query: string): string[] => {
-    const superheroes = ['Hulk', 'Flash', 'Superman', 'Batman', 'Spiderman', 'Iron Man', 'Thor', 'Wolverine', 'Deadpool'];
+  lookup = (query: string, source = this.superheroes): string[] => {
     if (!query) {
       return null;
     }
 
-    return superheroes.filter((d: string) => d.toLowerCase().indexOf(query.toLowerCase()) > -1);
+    return source.filter((d: string) => d.toLowerCase().indexOf(query.toLowerCase()) > -1);
   }
 
   // This function is now safe to pass around
@@ -31,5 +41,18 @@ export class DemoLookups {
     return this.http.get(`//maps.googleapis.com/maps/api/geocode/json?address=${query}`)
       .map((res: Response) => res.json())
       .map((response: any) => response.results);
+  }
+
+  lookupPolymorphic = (query: string): string[] => {
+    let heroes: string[];
+    if (this.scope.value === 'Men') {
+      heroes = [ ...this.superheroes ];
+    } else if (this.scope.value === 'Women') {
+      heroes = [ ...this.superheroeines ];
+    } else {
+      heroes = [ ...this.superheroes, ...this.superheroeines ];
+    }
+
+    return this.lookup(query, heroes);
   }
 }

@@ -15,7 +15,7 @@ function getElements(element: HTMLElement) {
   };
 }
 
-function getPill(element: HTMLElement) {
+export function getPill(element: HTMLElement) {
   return <HTMLAnchorElement>element.querySelector('.slds-pill_container');
 }
 
@@ -42,7 +42,7 @@ function expectOptions(fixture: any, expectedOptions: any[]) {
   expect(options.map(e => e.textContent.trim())).toEqual(expectedOptions);
 }
 
-function expectMenuExpanded(element: HTMLElement, isOpen: boolean) {
+export function expectMenuExpanded(element: HTMLElement, isOpen: boolean) {
   const { lookup, menu, input } = getElements(element);
 
   if (isOpen) {

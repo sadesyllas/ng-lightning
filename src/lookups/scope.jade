@@ -1,0 +1,11 @@
+span(nglDropdown, [open]="open", (openChange)="openChange.emit($event)")
+  ng-content
+
+  button.slds-button.slds-button--icon.slds-button-space-left.slds-shrink-none(nglDropdownTrigger)
+    svg.slds-button__icon(nglIconCategory="utility", nglIcon="down")
+      
+  .slds-dropdown.slds-dropdown--left(*ngIf="open")
+    ul.dropdown__list
+      li.slds-dropdown__item(*ngFor="let s of scope.scopes", (click)="onScopeChange(s)", (keydown.Enter)="onScopeChange(s)")
+        a(role="menuitem", nglDropdownItem)
+          template([ngTemplateOutlet]="scope.templateRef", [ngOutletContext]="{ $implicit: s }")

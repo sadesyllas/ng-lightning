@@ -4,13 +4,15 @@ import {NglLookupItemTemplate} from './item';
 import {NglPill} from '../pills/pill';
 import {NglPillRemove} from '../pills/pill-remove';
 import {NglIconSvg} from '../icons/svg';
+import {NglInternalLookupScope} from './scope';
+import {NglLookupScopeItem} from './scope-item';
 import {uniqueId, isObject} from '../util/util';
 
 @Component({
   selector: 'ngl-lookup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './lookup.jade',
-  directives: [NglPill, NglPillRemove, NglIconSvg],
+  directives: [NglPill, NglPillRemove, NglIconSvg, NglInternalLookupScope],
   styles: [
     `.slds-dropdown__item--active > a {
         outline: 0;
@@ -22,9 +24,12 @@ import {uniqueId, isObject} from '../util/util';
 export class NglLookup {
 
   @ContentChild(NglLookupItemTemplate) itemTemplate: NglLookupItemTemplate;
+  @ContentChild(NglLookupScopeItem) polymorphic: NglLookupScopeItem;
 
   @Input() placeholder: string;
   @Input() searchIcon: boolean = true;
+
+  openScope: boolean = false;
 
   @Input() set value(value: string) {
     if (value !== this.inputSubject.getValue()) {
@@ -121,8 +126,10 @@ export class NglLookup {
     return this.field && isObject(item) ? item[this.field] : item;
   }
 
-  close(evt: KeyboardEvent) {
-    evt.preventDefault();
+  close(evt: KeyboardEvent = null) {
+    if (evt) {
+      evt.preventDefault();
+    }
     this.open = false;
   }
 
@@ -152,6 +159,19 @@ export class NglLookup {
     // Update input value based on active option
     const value = this.activeIndex === -1 ? this.lastUserInput : this.resolveLabel(this.suggestions[this.activeIndex]);
     this.inputValue = value;
+  }
+
+  onScopeOpen(open: boolean) {
+    if (open) {
+      this.close();
+    }
+    this.openScope = open;
+  }
+
+  scopeSelect(scope: any) {
+    this.openScope = false;
+    this.focus();
+    this.polymorphic.scopeChange.emit(scope);
   }
 
   ngAfterViewChecked() {

@@ -17,3 +17,14 @@
 ### Content
 
   * `template[nglLookupItem]?`: Custom suggestion template inside popup menu.
+  * `template[nglPolymorphicLabel]`: Label for selected scope of a polymorphic lookup.
+
+# template[nglPolymorphicItem]
+
+### Input
+
+  * `scopes: any[]`: available scope items
+
+### Output
+
+  * `scopeChange: EventEmitter<any>`: selected scope item
