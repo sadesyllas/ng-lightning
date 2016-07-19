@@ -93,17 +93,47 @@ describe('`Pick`', () => {
     expectState(fixture.nativeElement, [false, false, false, false, true]);
   }));
 
-  it('emit `undefined` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.componentInstance.selected = 'op2';
+  it('call `nglOptionDestroyed` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.selected = 'option3';
+    fixture.componentInstance.exists = true;
+    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
+    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
     fixture.detectChanges();
 
-    spyOn(fixture.componentInstance, 'selectedChange').and.callFake(() => {
-      expect(fixture.componentInstance.selectedChange).toHaveBeenCalledWith(undefined);
+    fixture.componentInstance.exists = false;
+    fixture.detectChanges();
+    setTimeout(() => {
+        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+        expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
     });
+  }, `
+    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" (nglOptionDestroyed)="destroyed($event)">
+      <button type="button" nglPickOption="option1"></button>
+      <button type="button" nglPickOption="option2"></button>
+      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+    </div>
+  `));
 
-    fixture.componentInstance.options.splice(0, 1);
+  it('not call `nglOptionDestroyed` when a not selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.selected = 'option2';
+    fixture.componentInstance.exists = true;
+    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
+    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
     fixture.detectChanges();
-  }));
+
+    fixture.componentInstance.exists = false;
+    fixture.detectChanges();
+    setTimeout(() => {
+        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+        expect(fixture.componentInstance.destroyed).not.toHaveBeenCalled();
+    });
+  }, `
+    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" (nglOptionDestroyed)="destroyed($event)">
+      <button type="button" nglPickOption="option1"></button>
+      <button type="button" nglPickOption="option2"></button>
+      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+    </div>
+  `));
 
   it('should allow picking from outside and expose state', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const spanEl = <HTMLSpanElement>fixture.nativeElement.querySelector('span');

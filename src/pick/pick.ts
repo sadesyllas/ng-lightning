@@ -19,6 +19,7 @@ export class NglPick {
   @Input() nglPickActiveClass: string;
 
   @Output() private nglPickChange = new EventEmitter();
+  @Output() private nglOptionDestroyed = new EventEmitter();
 
   @Input('nglPickMultiple') set setIsMultiple(isMultiple: any) {
     this.isMultiple = toBoolean(isMultiple);
@@ -50,7 +51,18 @@ export class NglPick {
   }
 
   optionRemoved(value: any) {
-    if (this.selected !== value) return;
-    setTimeout(() => this.nglPickChange.emit(undefined));
+    if (this.isMultiple && !this.selected) return;
+
+    let emit: boolean;
+
+    if (this.isMultiple) {
+      emit = Array.isArray(this.selected) ? this.selected.indexOf(value) > -1 : !!this.selected[value];
+    } else {
+      emit = this.selected === value;
+    }
+
+    if (emit) {
+      setTimeout(() => this.nglOptionDestroyed.emit(value));
+    }
   }
 }

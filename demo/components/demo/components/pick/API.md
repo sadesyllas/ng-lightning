@@ -7,6 +7,7 @@
 
 ### Output
   * `nglPickChange`: the value that is going to be selected when a `nglPickOption` is clicked.
+  * `nglOptionDestroyed`: emits the value of any *selected* option that is destroyed (ie `*ngIf`)
 
 
 # `[nglPickOption]`

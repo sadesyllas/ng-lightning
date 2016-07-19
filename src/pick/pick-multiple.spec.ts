@@ -52,6 +52,48 @@ describe('Pick multiple array', () => {
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
   }, HTML));
+
+  it('call `nglOptionDestroyed` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.selected = ['option2', 'option3'];
+    fixture.componentInstance.exists = true;
+    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
+    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
+    fixture.detectChanges();
+
+    fixture.componentInstance.exists = false;
+    fixture.detectChanges();
+    setTimeout(() => {
+        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+        expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
+    });
+  }, `
+    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
+      <button type="button" nglPickOption="option1"></button>
+      <button type="button" nglPickOption="option2"></button>
+      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+    </div>
+  `));
+
+  it('not call `nglOptionDestroyed` when a not selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.selected = null;
+    fixture.componentInstance.exists = true;
+    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
+    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
+    fixture.detectChanges();
+
+    fixture.componentInstance.exists = false;
+    fixture.detectChanges();
+    setTimeout(() => {
+        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+        expect(fixture.componentInstance.destroyed).not.toHaveBeenCalled();
+    });
+  }, `
+    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
+      <button type="button" nglPickOption="option1"></button>
+      <button type="button" nglPickOption="option2"></button>
+      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+    </div>
+  `));
 });
 
 describe('Pick multiple object', () => {
@@ -97,6 +139,27 @@ describe('Pick multiple object', () => {
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
   }, HTML));
+
+  it('call `nglOptionDestroyed` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.selected = {'option2': true, 'option3': true};
+    fixture.componentInstance.exists = true;
+    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
+    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
+    fixture.detectChanges();
+
+    fixture.componentInstance.exists = false;
+    fixture.detectChanges();
+    setTimeout(() => {
+        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+        expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
+    });
+  }, `
+    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
+      <button type="button" nglPickOption="option1"></button>
+      <button type="button" nglPickOption="option2"></button>
+      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+    </div>
+  `));
 });
 
 // Shortcut function for less boilerplate on each `it`

@@ -56,6 +56,7 @@ export class NglPickOption {
 
   private _isActive(value: any) {
     if (this.nglPick.isMultiple) {
+      if (!value) return false;
       return Array.isArray(value) ? value.indexOf(this._value) > -1 : !!value[this._value];
     } else {
       return this._value === value;
