@@ -4,30 +4,30 @@ mixin prism(html)
 
 #banner(style="background: #111111; color: #ccc; tex-align: center;")
   .slds-container--large.slds-container--center
-    .slds-grid.slds-grid--align-center.slds-p-around--x-large
+    .slds-grid.slds-grid--align-center.slds-p-around--large
       .slds-col.slds-text-align--center
-        img(src='img/shield.svg', alt='', style="height: 180px;")
+        img(src="img/shield.svg", style="height: 170px;")
         .slds-text-heading--large(style="color:#FFF;") NG-LIGHTNING
         .slds-text-heading--small.slds-p-top--small Native Angular 2 components & directives for Lightning Design System
 
-.slds-container--large.slds-container--center.slds-m-top--large.slds-p-around--x-large
+.slds-container--large.slds-container--center.slds-m-top--small.slds-p-around--x-large
 
-  .slds-grid.slds-m-top--large
-    .slds-col--padded.slds-text-align--center.slds-size--1-of-3
+  .slds-grid.slds-wrap
+    .slds-col--padded.slds-text-align--center.slds-size--1-of-1.slds-large-size--1-of-3.slds-m-top--medium
       .slds-text-heading--medium BUILDING FOR THE FUTURE
-      .slds-m-top--large 
+      .slds-m-top--small 
         | Built upon next generation frameworks like 
         b: a(href="https://angular.io/") Angular 2 
         | and 
         b: a(href="https://www.lightningdesignsystem.com/") Salesforce's Lightning Design System
         | , rest ​assured that you building an application to stand the test of time.
-    .slds-col--padded.slds-text-align--center.slds-size--1-of-3
+    .slds-col--padded.slds-text-align--center.slds-size--1-of-1.slds-large-size--1-of-3.slds-m-top--medium
       .slds-text-heading--medium BEST PRACTICES
-      .slds-m-top--large 
+      .slds-m-top--small 
         | We focus on building stateless functional components that depend only on their input properties, guaranteeing better performance, more development flexibility and seamless integration with your application's requirements.
-    .slds-col--padded.slds-text-align--center.slds-size--1-of-3
+    .slds-col--padded.slds-text-align--center.slds-size--1-of-1.slds-large-size--1-of-3.slds-m-top--medium
       .slds-text-heading--medium  ACCESSIBILITY
-      .slds-m-top--large 
+      .slds-m-top--small 
         | We put a lot of effort to follow Lightning Design System's accessibility guidelines, to assure that your product is operable by people with a wide range of abilities
         | and meets all legal requirements.
 
