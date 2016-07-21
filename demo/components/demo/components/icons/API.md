@@ -12,3 +12,11 @@
 ### Attribute
 
   * `button? boolean`: Whether it lives inside a button, in order to apply the appropriate styles. If not explicitly set, it will try to determine it based on the parent directives, `nglButton` or `nglButtonIcon`.
+
+
+# `<svg nglIcon>`
+
+### Input
+
+  * `nglIcon`: You can find the values on the [icon page](https://www.lightningdesignsystem.com/resources/icons/#utility).
+  * `nglIconCategory`: Category sprite to use.

@@ -6,7 +6,7 @@ import {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
 import {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 import {NGL_BUTTON_DIRECTIVES} from './buttons/directives';
 import {NGL_DATATABLE_DIRECTIVES} from './datatables/directives';
-import {NglIcon} from './icons/icon';
+import {NGL_ICON_DIRECTIVES} from './icons/directives';
 import {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 import {NglDatepicker} from './datepickers/datepicker';
 import {NGL_FORM_DIRECTIVES} from './forms/form';
@@ -28,7 +28,7 @@ export {NglBreadcrumbs} from './breadcrumbs/breadcrumbs';
 export {NglBreadcrumb} from './breadcrumbs/breadcrumb';
 export {NGL_BUTTON_DIRECTIVES} from './buttons/directives';
 export {NGL_DATATABLE_DIRECTIVES, INglDatatableSort} from './datatables/directives';
-export {NglIcon} from './icons/icon';
+export {NGL_ICON_DIRECTIVES} from './icons/directives';
 export {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 export {NglDatepicker} from './datepickers/datepicker';
 export {NGL_FORM_DIRECTIVES} from './forms/form';
@@ -50,7 +50,7 @@ export const NGL_DIRECTIVES = [
   NglBreadcrumbs, NglBreadcrumb,
   NGL_BUTTON_DIRECTIVES,
   NGL_DATATABLE_DIRECTIVES,
-  NglIcon,
+  NGL_ICON_DIRECTIVES,
   NGL_LOOKUP_DIRECTIVES,
   NglDatepicker,
   NGL_FORM_DIRECTIVES,

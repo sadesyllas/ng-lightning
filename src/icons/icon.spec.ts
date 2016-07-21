@@ -9,7 +9,7 @@ function getElements(element: Element) {
 
   return {
     host: <HTMLElement>element.firstElementChild,
-    icon: <HTMLElement>element.querySelector('svg'),
+    icon: <SVGSVGElement>element.querySelector('svg'),
     assistiveText: assistiveEl ? assistiveEl.textContent.trim() : null,
   };
 }
