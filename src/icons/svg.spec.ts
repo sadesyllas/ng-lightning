@@ -13,7 +13,7 @@ describe('SVG icon Component', () => {
 
     expect(svg.getAttribute('aria-hidden')).toBe('true');
     expect(use.getAttribute('xlink:href')).toBe('/mypath/utility-sprite/svg/symbols.svg#warning');
-  }, `<svg nglIcon="warning" nglIconCategory="utility"></svg>`));
+  }, `<svg nglIcon="warning"></svg>`));
 
   it('should change `use` path based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.icon = 'icon1';

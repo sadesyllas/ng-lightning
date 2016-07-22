@@ -19,4 +19,4 @@
 ### Input
 
   * `nglIcon`: You can find the values on the [icon page](https://www.lightningdesignsystem.com/resources/icons/#utility).
-  * `nglIconCategory`: Category sprite to use.
+  * `nglIconCategory = 'utility'`: Category sprite to use.

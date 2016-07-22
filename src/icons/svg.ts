@@ -11,7 +11,7 @@ import {NglConfig} from '../config/config';
 })
 export class NglIconSvg {
 
-  @Input('nglIconCategory') category: string;
+  @Input('nglIconCategory') category: string = 'utility';
   @Input('nglIcon') icon: string;
 
   constructor(private config: NglConfig) {}
