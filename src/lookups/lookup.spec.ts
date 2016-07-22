@@ -24,6 +24,18 @@ function clickRemove(element: HTMLElement) {
   button.click();
 }
 
+function expectSearchIcon(element: HTMLElement, exists: boolean) {
+  const containerEl = element.querySelector('.slds-input-has-icon');
+  const svg = containerEl.querySelector('svg.slds-input__icon');
+  if (exists) {
+    expect(containerEl).toHaveCssClass('slds-input-has-icon--right');
+    expect(svg).toBeTruthy();
+  } else {
+    expect(containerEl).not.toHaveCssClass('slds-input-has-icon--right');
+    expect(svg).toBeFalsy();
+  }
+}
+
 function expectOptions(fixture: any, expectedOptions: any[]) {
   fixture.detectChanges();
   const { options } = getElements(fixture.nativeElement);
@@ -32,11 +44,15 @@ function expectOptions(fixture: any, expectedOptions: any[]) {
 
 function expectMenuExpanded(element: HTMLElement, isOpen: boolean) {
   const { lookup, menu, input } = getElements(element);
-  expect(input.getAttribute('aria-expanded')).toBe(isOpen.toString());
+
   if (isOpen) {
+    expect(input.getAttribute('aria-expanded')).toBe('true');
     expect(lookup).toHaveCssClass('slds-is-open');
     expect(menu).toBeTruthy();
   } else {
+    if (input) {
+      expect(input.getAttribute('aria-expanded')).toBe('false');
+    }
     expect(lookup).not.toHaveCssClass('slds-is-open');
     expect(menu).toBeFalsy();
   }
@@ -68,41 +84,58 @@ describe('Lookup Component', () => {
     fixture.componentInstance.placeholder = 'my placeholder';
     fixture.detectChanges();
     expect(input.placeholder).toBe('my placeholder');
+    expectSearchIcon(fixture.nativeElement, true);
   }, `<ngl-lookup [lookup]="filter" [placeholder]="placeholder"></ngl-lookup>`));
 
-  it('should toggle pill and input based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should render search icon based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.icon = false;
+    fixture.detectChanges();
+    expectSearchIcon(fixture.nativeElement, false);
+
+    fixture.componentInstance.icon = true;
+    fixture.detectChanges();
+    expectSearchIcon(fixture.nativeElement, true);
+  }, `<ngl-lookup [searchIcon]="icon" debounce="0"></ngl-lookup>`));
+
+  it('should toggle pill and <input> based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
 
-    const { input } = getElements(fixture.nativeElement);
-    expect(input).not.toHaveCssClass('slds-hide');
+    function expectInputToExist(exists: boolean) {
+      const inputEl: HTMLInputElement = fixture.nativeElement.querySelector('input');
+      if (exists) {
+        expect(inputEl).toBeTruthy();
+      } else {
+        expect(inputEl).toBeFalsy();
+      }
+      return inputEl;
+    }
+
+    expectInputToExist(true);
     expect(getPill(fixture.nativeElement)).toBeFalsy();
 
     fixture.componentInstance.selection = 'my selection';
     fixture.detectChanges();
 
-    expect(input).toHaveCssClass('slds-hide');
+    expectInputToExist(false);
     expect(getPill(fixture.nativeElement).textContent.trim()).toBe('my selection');
 
     fixture.componentInstance.selection = null;
     fixture.detectChanges();
-    expect(input).not.toHaveCssClass('slds-hide');
+    const input = expectInputToExist(true);
     expect(input.value).toBe('');
     expect(getPill(fixture.nativeElement)).toBeFalsy();
   }, `<ngl-lookup [lookup]="filter" [pick]="selection"></ngl-lookup>`));
 
-  it('should remove selection when clicking on pill button', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should remove selection when clicking on pill button and focus input', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.selection = 'my selection';
     fixture.detectChanges();
-
-    const { input } = getElements(fixture.nativeElement);
-
-    spyOn(input, 'focus');
 
     clickRemove(fixture.nativeElement);
     expect(fixture.componentInstance.selection).toBe(null);
 
     fixture.detectChanges();
-    expect(input.focus).toHaveBeenCalled();
+    const { input } = getElements(fixture.nativeElement);
+    expect(input).toBe(document.activeElement);
   }, `<ngl-lookup [lookup]="filter" [(pick)]="selection"></ngl-lookup>`));
 
   it('should close menu when there is selection', testAsync((fixture: ComponentFixture<TestComponent>) => {

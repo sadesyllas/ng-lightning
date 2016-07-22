@@ -3,13 +3,14 @@ import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import {NglLookupItemTemplate} from './item';
 import {NglPill} from '../pills/pill';
 import {NglPillRemove} from '../pills/pill-remove';
+import {NglIconSvg} from '../icons/svg';
 import {uniqueId, isObject} from '../util/util';
 
 @Component({
   selector: 'ngl-lookup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './lookup.jade',
-  directives: [NglPill, NglPillRemove],
+  directives: [NglPill, NglPillRemove, NglIconSvg],
   styles: [
     `.slds-dropdown__item--active > a {
         outline: 0;
@@ -23,6 +24,7 @@ export class NglLookup {
   @ContentChild(NglLookupItemTemplate) itemTemplate: NglLookupItemTemplate;
 
   @Input() placeholder: string;
+  @Input() searchIcon: boolean = true;
 
   @Input() set value(value: string) {
     if (value !== this.inputSubject.getValue()) {
