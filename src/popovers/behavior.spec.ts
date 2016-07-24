@@ -1,5 +1,6 @@
 import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
+import {dispatchEvent} from '../../test/util/helpers';
 import {NGL_POPOVER_DIRECTIVES, NGL_POPOVER_PRECOMPILE} from './directives';
 import {getPopoverElement} from './popover.spec';
 
@@ -9,11 +10,10 @@ describe('`NglPopoverBehavior`', () => {
     fixture.detectChanges();
 
     const triggerEl = fixture.nativeElement.firstElementChild;
-    triggerEl.dispatchEvent(new Event('mouseenter'));
-
+    dispatchEvent(triggerEl, 'mouseenter');
     expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-    triggerEl.dispatchEvent(new Event('mouseleave'));
+    dispatchEvent(triggerEl, 'mouseleave');
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
   }));
 
@@ -21,10 +21,10 @@ describe('`NglPopoverBehavior`', () => {
     fixture.detectChanges();
 
     const triggerEl = fixture.nativeElement.firstElementChild;
-    triggerEl.dispatchEvent(new Event('focus'));
+    dispatchEvent(triggerEl, 'focus');
     expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-    triggerEl.dispatchEvent(new Event('blur'));
+    dispatchEvent(triggerEl, 'blur');
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
   }));
 
@@ -32,8 +32,8 @@ describe('`NglPopoverBehavior`', () => {
     fixture.detectChanges();
 
     const triggerEl = fixture.nativeElement.firstElementChild;
-    triggerEl.dispatchEvent(new Event('focus'));
-    triggerEl.dispatchEvent(new Event('mouseenter'));
+    dispatchEvent(triggerEl, 'focus');
+    dispatchEvent(triggerEl, 'mouseenter');
     expect(fixture.nativeElement.querySelectorAll('ngl-popover').length).toBe(1);
   }));
 });

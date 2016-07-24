@@ -20,8 +20,7 @@ module.exports = function(config) {
 
     files: [
         // Polyfills
-        {pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: false},
-        {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false},
+        {pattern: 'node_modules/core-js/client/core.js', included: true, watched: false},
 
         // Intl pollyfill
         'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
@@ -89,6 +88,12 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: [isTravis ? 'Firefox' : 'Chrome'],
+    customLaunchers: {
+      IE_no_addons: {
+        base:  'IE',
+        flags: ['-extoff']
+      }
+    },
     singleRun: false,
   };
 

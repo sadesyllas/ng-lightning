@@ -19,6 +19,12 @@ module.exports = {
     platform: 'OS X 10.11',
     version: '9'
   },
+  'SL_IE_11': {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    platform: 'Windows 8.1',
+    version: '11'
+  },
   'SL_EDGE': {
     base: 'SauceLabs',
     browserName: 'microsoftedge',

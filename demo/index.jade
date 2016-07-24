@@ -11,6 +11,13 @@ html(lang="en")
 
     //- Intl pollyfill for Safari
     script(type="application/javascript", src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en")
+    
+    //- IE11 Polyfills
+    script(type="application/javascript", src="https://npmcdn.com/classlist.js")
+    script(type="application/javascript", src="https://npmcdn.com/svg4everybody")
+    script(type="application/javascript"). 
+      svg4everybody()
+  
   body
     app
       div(style="position:fixed;top:49%;width:100%;text-align:center;font-size:large;") Loading...

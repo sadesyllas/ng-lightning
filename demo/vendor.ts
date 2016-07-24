@@ -1,5 +1,5 @@
-import 'es6-shim/es6-shim.js';
-import 'reflect-metadata/Reflect.js';
+import 'core-js/es6';
+import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 
 // Typescript helpers polyfill

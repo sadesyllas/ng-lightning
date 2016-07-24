@@ -1,7 +1,7 @@
 import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {NglRating} from './rating';
-import {dispatchKeyEvent} from '../../test/util/helpers';
+import {dispatchKeyEvent, dispatchEvent } from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
 function getStars(element: HTMLElement): HTMLElement[] {
@@ -66,10 +66,10 @@ describe('Rating Component', () => {
     spyOn(componentInstance, 'change');
     expect(componentInstance.change).not.toHaveBeenCalled();
 
-    stars[3].dispatchEvent(new Event('mouseenter'));
+    dispatchEvent(stars[3], 'mouseenter');
     expect(componentInstance.change).toHaveBeenCalledWith(4);
 
-    stars[0].dispatchEvent(new Event('mouseenter'));
+    dispatchEvent(stars[0], 'mouseenter');
     expect(componentInstance.change).toHaveBeenCalledWith(1);
   }, `<ngl-rating [rate]="value" (hover)="change($event)"></ngl-rating>`));
 

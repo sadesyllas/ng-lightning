@@ -1,6 +1,6 @@
 import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {selectElements, dispatchKeyEvent} from '../../test/util/helpers';
+import {selectElements, dispatchEvent, dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 import {NglDatepicker} from './datepicker';
 
@@ -33,9 +33,7 @@ function chooseYear(element: HTMLElement, year: number) {
   const select = <HTMLSelectElement>element.querySelector('select');
   select.value = '' + year;
 
-  const evt = document.createEvent('HTMLEvents');
-  evt.initEvent('change', false, true);
-  select.dispatchEvent(evt);
+  dispatchEvent(select, 'change', false);
 }
 
 function clickButton(element: HTMLElement, isNext = false) {

@@ -8,11 +8,19 @@ html
     link(rel="stylesheet", href="https://npmcdn.com/@salesforce-ux/design-system@#{pkg.devDependencies['@salesforce-ux/design-system']}/assets/styles/salesforce-lightning-design-system.min.css")
     link(rel="stylesheet", href="styles.css")
 
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/#{pkg.devDependencies['es6-shim'].replace('^', '')}/es6-shim.min.js")
+    script(src="https://npmcdn.com/core-js@#{pkg.devDependencies['core-js']}/client/core.min.js")
     script(src="https://npmcdn.com/zone.js@#{pkg.devDependencies['zone.js']}")
-    script(src="https://npmcdn.com/reflect-metadata@#{pkg.devDependencies['reflect-metadata']}")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.27/system.js")
     script(src="https://npmcdn.com/typescript@#{pkg.devDependencies.typescript}/lib/typescript.js")
+    script(type="text/javascript").
+      var isIE11 = window.navigator.userAgent.indexOf('Trident/') > 0;
+      if (isIE11) {
+        System.import('https://npmcdn.com/classlist.js');
+        System.import('https://npmcdn.com/svg4everybody')
+          .then(function(){
+            svg4everybody();
+          });
+      }
 
     - var url = production ? 'https://npmcdn.com/ng-lightning@' + pkg.version + '/ng-lightning.bundle.js' : 'ng-lightning.js';
     script(src="#{url}")

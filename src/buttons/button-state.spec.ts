@@ -45,6 +45,8 @@ describe('`nglButtonState`', () => {
   }));
 
   it('should emit the appopriate state on click', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
     const { nativeElement, componentInstance } = fixture;
     spyOn(componentInstance, 'change');
 
