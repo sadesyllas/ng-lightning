@@ -10,11 +10,15 @@ beforeEach(() => {
 });
 
 export function dispatchKeyEvent(fixture: ComponentFixture<any>, predicate: any, key: string, indexOf: number = -1) {
-  const { debugElement} = fixture;
+  const { debugElement } = fixture;
   const _debugElement = indexOf > -1 ? debugElement.queryAll(predicate)[indexOf] : debugElement.query(predicate);
   const event = document.createEvent('KeyboardEvent');
-  event.initEvent('', true, true);
-  _debugElement.triggerEventHandler(key, event);
+  event.initEvent(key === 'input' ? 'input' : '', true, true);
+  if (key === 'input') {
+    _debugElement.nativeElement.dispatchEvent(event);
+  } else {
+    _debugElement.triggerEventHandler(key, event);
+  }
 }
 
 export function selectElements(element: HTMLElement, selector: string): HTMLElement[] {

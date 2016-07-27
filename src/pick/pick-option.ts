@@ -19,6 +19,9 @@ export class NglPickOption {
   @Input('nglPickOption') set setValue(value: any) {
     this._value = value;
   }
+  get value() {
+    return this._value;
+  }
 
   @Input() nglPickActiveClass: string;
 
@@ -31,7 +34,7 @@ export class NglPickOption {
   @HostListener('click')
   @HostListener('keydown.Space', ['$event'])
   @HostListener('keydown.Enter', ['$event'])
-  pick(evt: Event) {
+  pick(evt?: Event) {
     if (evt) {
       evt.preventDefault();
     }

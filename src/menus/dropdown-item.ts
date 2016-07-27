@@ -10,13 +10,17 @@ export class NglDropdownItem {
   private isFocused = false;
 
   @HostListener('focus') onFocus() {
-    this.isFocused = true;
+    this.setFocused(true);
   }
   @HostListener('blur') onBlur() {
-    this.isFocused = false;
+    this.setFocused(false);
   }
 
   constructor(private element: ElementRef, private renderer: Renderer) {}
+
+  setFocused(isFocused: boolean) {
+    this.isFocused = isFocused;
+  }
 
   hasFocus() {
     return this.isFocused;

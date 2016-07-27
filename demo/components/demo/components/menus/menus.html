@@ -23,7 +23,7 @@
 
 
 <div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Picklist</div>
-<ngl-picklist [data]="items" [(nglPick)]="pick" [(open)]="open2" [nglPickMultiple]="multiple">
+<ngl-picklist [data]="items" [(nglPick)]="pick" [(open)]="open2" [nglPickMultiple]="multiple" filter="value">
   <span class="slds-truncate">{{ pickLabel }}</span>
   <template nglPicklistItem let-item>{{item.value}}</template>
 </ngl-picklist>

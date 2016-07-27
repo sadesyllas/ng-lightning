@@ -21,5 +21,5 @@ export class App {}
 bootstrap(App, [
   APP_ROUTER_PROVIDERS,
   { provide: LocationStrategy, useClass: HashLocationStrategy },
-  provideNglConfig(),
+  provideNglConfig({ picklist: { filterPlaceholder: 'Filter Options' } }),
 ]);

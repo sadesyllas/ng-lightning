@@ -18,6 +18,9 @@ export class NglDropdown implements OnInit, OnDestroy {
       this._subscribeToGlobalClickEvents();
       this.handleGlobalClickEvents = false;
       setTimeout(() => this.handleGlobalClickEvents = true);
+      if (this.handleFocus && this.items && this.items.length) {
+        this.items.forEach(item => this.handleFocus(item, false));
+      }
     } else {
       this._unsubscribeFromGlobalClickEvents();
     }
@@ -36,6 +39,8 @@ export class NglDropdown implements OnInit, OnDestroy {
   }
   triggerFocusEventEmitter = new EventEmitter();
 
+  handleFocus: (item: NglDropdownItem, isFocused: boolean) => void;
+
   private handleGlobalClickEvents = true;
   private _isOpen = false;
   private openEventSubscription: any;
@@ -43,6 +48,7 @@ export class NglDropdown implements OnInit, OnDestroy {
 
   @HostListener('keydown.esc', ['"esc"'])
   @HostListener('keydown.tab', ['"tab"'])
+  @HostListener('keydown.shift.tab', ['"shift.tab"'])
   onKeydownClose(eventName: string) {
     this.toggle(false);
     if (eventName === 'esc') {
@@ -108,6 +114,15 @@ export class NglDropdown implements OnInit, OnDestroy {
     const items = this.items.toArray();
     const activeElementIndex = items.findIndex(item => item.hasFocus()) + (direction === 'next' ? 1 : -1);
     if (activeElementIndex === items.length || activeElementIndex < 0) {
+      return;
+    }
+    if (this.handleFocus) {
+      items.forEach((_, index) => {
+        if (index !== activeElementIndex) {
+          this.handleFocus(items[index], false);
+        }
+      });
+      this.handleFocus(items[activeElementIndex], true);
       return;
     }
     this.renderer.invokeElementMethod(items[activeElementIndex], 'focus', []);
