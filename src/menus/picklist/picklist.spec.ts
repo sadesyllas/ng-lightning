@@ -13,7 +13,7 @@ function getDropdownTrigger(element: HTMLElement): HTMLButtonElement {
   return <HTMLButtonElement>element.querySelector('button');
 }
 
-function getOptionElements(element: HTMLElement): HTMLElement[] {
+export function getOptionElements(element: HTMLElement): HTMLElement[] {
   return selectElements(element, 'li');
 }
 
