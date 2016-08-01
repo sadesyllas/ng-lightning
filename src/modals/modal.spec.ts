@@ -54,6 +54,19 @@ describe('`NglModal`', () => {
     expect(backdrop).not.toHaveCssClass('slds-backdrop--open');
   }));
 
+  it('should render correctly without header', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const headerEl = fixture.nativeElement.querySelector('.slds-modal__header');
+    expect(headerEl).not.toHaveCssClass('slds-modal__header--empty');
+    expect(getHeader(fixture.nativeElement)).toBeTruthy();
+
+    fixture.componentInstance.header = null;
+    fixture.detectChanges();
+    expect(headerEl).toHaveCssClass('slds-modal__header--empty');
+    expect(getHeader(fixture.nativeElement)).toBeFalsy();
+  }));
+
   it('should close when close button is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.detectChanges();
     expect(fixture.componentInstance.openChange).not.toHaveBeenCalled();

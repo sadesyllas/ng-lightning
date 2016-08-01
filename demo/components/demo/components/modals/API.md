@@ -8,8 +8,8 @@
 
 ### Input
 
-  * `header: string`: Heading text.
-  * `open: boolean`: Whether modal is visible or not.
+  * `header?: string`: Heading text.
+  * `open?: boolean`: Whether modal is visible or not.
   * `size?: 'large'`:  Whether modal has large or default size.
 
 ### Output

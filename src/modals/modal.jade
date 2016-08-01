@@ -1,10 +1,10 @@
 .slds-modal([class.slds-fade-in-open]="open", [ngClass]="[size ? 'slds-modal--' + size : '']", [attr.aria-hidden]="!open", role="dialog",
                               [attr.aria-labelledby]="headingId")
   .slds-modal__container
-    .slds-modal__header
+    .slds-modal__header([class.slds-modal__header--empty]="!header")
       button.slds-modal__close(#closeButton, type="button", nglButtonIcon="inverse", (click)="close()")
         ngl-icon(icon="close", size="large", alt="Close")
-      h2.slds-text-heading--medium([id]="headingId") {{header}}
+      h2.slds-text-heading--medium(*ngIf="header", [id]="headingId") {{header}}
       ng-content(select="[tagline]")
     .slds-modal__content.slds-p-around--medium
       ng-content(select="[body]")
