@@ -1,4 +1,4 @@
-import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter} from '@angular/core';
+import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter, HostListener, ViewChild} from '@angular/core';
 import {toBoolean, uniqueId} from '../util/util';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';
@@ -8,14 +8,19 @@ import {NglIcon} from '../icons/icon';
   directives: [NglButtonIcon, NglIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './modal.jade',
+  host: {
+    'tabindex': '0',
+  },
 })
 export class NglModal {
   @Input() header: string = '';
   @Input() size: 'large';
 
+  @ViewChild('closeButton') closeButton: ElementRef;
+
   headingId = uniqueId('modal_header');
 
-  open: boolean = false;
+  open: boolean = true;
   @Input('open') set _open(_open: any) {
     _open = toBoolean(_open);
     if (_open === this.open) return;
@@ -29,11 +34,20 @@ export class NglModal {
 
   constructor(private element: ElementRef, private renderer: Renderer) {}
 
-  close(event: string | boolean = false) {
-    this.openChange.emit(event);
+  @HostListener('keydown.esc', ['$event'])
+  close(evt: Event) {
+    if (evt) {
+      evt.stopPropagation();
+    }
+    this.openChange.emit(false);
+  }
+
+  @HostListener('click', ['$event'])
+  stopPropagation(evt: Event) {
+    evt.stopPropagation();
   }
 
   focusFirst() {
-    this.renderer.invokeElementMethod(this.element.nativeElement.children[0], 'focus', []);
+    this.renderer.invokeElementMethod(this.closeButton.nativeElement, 'focus', []);
   }
 };

@@ -11,7 +11,7 @@ import {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 import {NglDatepicker} from './datepickers/datepicker';
 import {NGL_FORM_DIRECTIVES} from './forms/form';
 import {NGL_MENU_DIRECTIVES} from './menus/directives';
-import {NglModal} from './modals/modal';
+import {NGL_MODAL_DIRECTIVES} from './modals/directives';
 import {NGL_NOTIFICATION_DIRECTIVES} from './notifications/directives';
 import {NglPagination} from './paginations/pagination';
 import {NGL_PICK_DIRECTIVES} from './pick/directives';
@@ -33,7 +33,7 @@ export {NGL_LOOKUP_DIRECTIVES} from './lookups/directives';
 export {NglDatepicker} from './datepickers/datepicker';
 export {NGL_FORM_DIRECTIVES} from './forms/form';
 export {NGL_MENU_DIRECTIVES} from './menus/directives';
-export {NglModal} from './modals/modal';
+export {NGL_MODAL_DIRECTIVES} from './modals/directives';
 export {NGL_NOTIFICATION_DIRECTIVES} from './notifications/directives';
 export {NglPagination} from './paginations/pagination';
 export {NGL_PICK_DIRECTIVES} from './pick/directives';
@@ -55,7 +55,7 @@ export const NGL_DIRECTIVES = [
   NglDatepicker,
   NGL_FORM_DIRECTIVES,
   NGL_MENU_DIRECTIVES,
-  NglModal,
+  NGL_MODAL_DIRECTIVES,
   NGL_NOTIFICATION_DIRECTIVES,
   NglPagination,
   NGL_PICK_DIRECTIVES,
