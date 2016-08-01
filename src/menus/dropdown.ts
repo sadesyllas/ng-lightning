@@ -15,9 +15,7 @@ export class NglDropdown implements OnInit, OnDestroy {
   @Input('open') set isOpen(isOpen: boolean | string) {
     isOpen = toBoolean(isOpen);
     if (isOpen) {
-      this._subscribeToGlobalClickEvents();
-      this.handleGlobalClickEvents = false;
-      setTimeout(() => this.handleGlobalClickEvents = true);
+      setTimeout(() => this._subscribeToGlobalClickEvents());
     } else {
       this._unsubscribeFromGlobalClickEvents();
     }
@@ -36,7 +34,6 @@ export class NglDropdown implements OnInit, OnDestroy {
   }
   triggerFocusEventEmitter = new EventEmitter();
 
-  private handleGlobalClickEvents = true;
   private _isOpen = false;
   private openEventSubscription: any;
   private clickEventUnsubscriber: Function = null;
@@ -81,7 +78,7 @@ export class NglDropdown implements OnInit, OnDestroy {
   }
 
   handleGlobalClickEvent($event: Event) {
-    if (!this.handlePageEvents || !this.handleGlobalClickEvents ||
+    if (!this.handlePageEvents ||
         $event.target === this.element.nativeElement || this.element.nativeElement.contains($event.target)) {
       return;
     }
