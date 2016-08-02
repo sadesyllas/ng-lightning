@@ -6,20 +6,20 @@ import {NglDropdownItem} from './dropdown-item';
 import {dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
-function getDropdownElement(fixtureElement: HTMLElement): HTMLElement {
-  return <HTMLElement>fixtureElement.childNodes[0];
+function getDropdownElement(element: HTMLElement): HTMLElement {
+  return <HTMLElement>element.firstElementChild;
 }
 
-function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {
-  return <HTMLElement>fixtureElement.childNodes[0].childNodes[0];
+function getDropdownTrigger(element: HTMLElement): HTMLButtonElement {
+  return <HTMLButtonElement>element.querySelector('button');
 }
 
-function getDropdownItem(fixtureElement: HTMLElement): HTMLElement {
-  return <HTMLElement>fixtureElement.childNodes[0].childNodes[1];
+function getDropdownItem(element: HTMLElement): HTMLElement {
+  return <HTMLElement>element.querySelector('[nglDropdownItem]');
 }
 
-function getOutsideDropdownElement(fixtureElement: HTMLElement): HTMLElement {
-  return <HTMLElement>fixtureElement.childNodes[1];
+function getOutsideDropdownElement(element: HTMLElement): HTMLElement {
+  return <HTMLElement>element.children[1];
 }
 
 describe('`nglDropdown`', () => {
@@ -49,19 +49,41 @@ describe('`nglDropdown`', () => {
     expect(dropdownEl.getAttribute('aria-expanded')).toBe('true');
   }));
 
-  it('should be closed when anything outside the dropdown is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    const outsideDropdownElement = getOutsideDropdownElement(fixture.nativeElement);
-    fixture.componentInstance.open = true;
-    fixture.detectChanges();
+  describe('when anything outside the dropdown is clicked', function () {
+    it('should close', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      const outsideDropdownElement = getOutsideDropdownElement(fixture.nativeElement);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
 
-    spyOn(fixture.componentInstance, 'setOpen').and.callThrough();
-    expect(fixture.componentInstance.setOpen).not.toHaveBeenCalled();
+      spyOn(fixture.componentInstance, 'setOpen').and.callThrough();
+      expect(fixture.componentInstance.setOpen).not.toHaveBeenCalled();
 
-    setTimeout(() => {
-      outsideDropdownElement.click();
-      expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(false);
-    });
-  }));
+      fixture.whenStable().then(() => {
+        outsideDropdownElement.click();
+        expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(false);
+      });
+    }));
+
+    it('should not close when handlePageEvents is false', testAsync((fixture: ComponentFixture<TestComponent>) => {
+      const outsideDropdownElement = getOutsideDropdownElement(fixture.nativeElement);
+      fixture.componentInstance.handlePageEvents = false;
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+
+      spyOn(fixture.componentInstance, 'setOpen').and.callThrough();
+      expect(fixture.componentInstance.setOpen).not.toHaveBeenCalled();
+
+      fixture.whenStable().then(() => {
+        outsideDropdownElement.click();
+        expect(fixture.componentInstance.setOpen).not.toHaveBeenCalled();
+      });
+    }, `
+      <div nglDropdown [open]="open" (openChange)="setOpen($event)" [handlePageEvents]="handlePageEvents">
+        <button type="button" nglDropdownTrigger></button>
+        <div nglDropdownItem></div>
+      </div>
+      <div></div>`));
+  });
 
   it('should be closed when the ESC key is pressed', testAsync((fixture: ComponentFixture<TestComponent>) => {
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
@@ -105,12 +127,12 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 
 @Component({
   directives: [NglDropdown, NglDropdownTrigger, NglDropdownItem],
-  template: ['<div nglDropdown [open]="open" (openChange)="setOpen($event)">',
-    '<button type="button" nglDropdownTrigger></button>',
-    '<div nglDropdownItem></div>',
-    '</div>',
-    '<div></div>',
-  ].join(''),
+  template: `
+    <div nglDropdown [open]="open" (openChange)="setOpen($event)">
+      <button type="button" nglDropdownTrigger></button>
+      <div nglDropdownItem></div>
+    </div>
+    <div></div>`,
 })
 export class TestComponent {
   open: boolean = false;
