@@ -57,8 +57,6 @@ describe('`nglNotification`', () => {
     fixture.detectChanges();
 
     const closeButton = getCloseButton(fixture);
-    spyOn(fixture.componentInstance, 'onClose');
-
     closeButton.click();
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
   }));
@@ -67,8 +65,6 @@ describe('`nglNotification`', () => {
     fixture.detectChanges();
 
     const externalCloseButton = fixture.nativeElement.querySelector('.boundVarCloser');
-    spyOn(fixture.componentInstance, 'onClose');
-
     externalCloseButton.click();
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('api');
   }));
@@ -76,8 +72,6 @@ describe('`nglNotification`', () => {
   it('should emit a close event when the specified timeout has passed', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
-
-    spyOn(fixture.componentInstance, 'onClose');
 
     tick(400);
     expect(fixture.componentInstance.onClose).not.toHaveBeenCalled();
@@ -89,8 +83,6 @@ describe('`nglNotification`', () => {
   it('should set the timeout anew when the binding changes', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
-
-    spyOn(fixture.componentInstance, 'onClose');
 
     tick(400);
     fixture.componentInstance.timeout = 300;
@@ -106,8 +98,6 @@ describe('`nglNotification`', () => {
   it('should cancel the active timeout after the close button has been clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
-
-    spyOn(fixture.componentInstance, 'onClose');
 
     tick(400);
     getCloseButton(fixture).click();
@@ -149,5 +139,5 @@ export class TestComponent {
   assistiveText: '';
   closeAssistiveText: '';
   timeout: any = null;
-  onClose($event: Event) {}
+  onClose = jasmine.createSpy('onClose');
 }

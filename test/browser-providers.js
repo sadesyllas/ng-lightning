@@ -7,12 +7,6 @@ module.exports = {
     base: 'SauceLabs',
     browserName: 'firefox',
   },
-  // 'SL_Safari_8': {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   platform: 'OS X 10.10',
-  //   version: '8'
-  // },
   'SL_Safari_9': {
     base: 'SauceLabs',
     browserName: 'safari',
@@ -30,5 +24,11 @@ module.exports = {
     browserName: 'microsoftedge',
     platform: 'Windows 10',
     version: '20.10240'
+  },
+  'SL_ANDROID5': {
+    base: 'SauceLabs',
+    browserName: 'android',
+    platform: 'Linux',
+    version: '5.1'
   },
 };

@@ -103,9 +103,6 @@ module.exports = function(config) {
     cfg.reporters.push('saucelabs');
     cfg.sauceLabs = {
       tunnelIdentifier: isTravis ? process.env.TRAVIS_JOB_NUMBER : 'ng-lightning',
-      connectOptions: {
-        logfile: './saucelabs.log',
-      },
     };
     cfg.captureTimeout = 120000;
     cfg.browserNoActivityTimeout = 120000;
