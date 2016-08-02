@@ -16,6 +16,13 @@ export class NglModal {
   @Input() header: string = '';
   @Input() size: 'large';
 
+  @Input() set directional(directional: string | boolean) {
+    this._directional = toBoolean(directional);
+  }
+  get directional() {
+    return this._directional;
+  }
+
   @ViewChild('closeButton') closeButton: ElementRef;
 
   headingId = uniqueId('modal_header');
@@ -31,6 +38,8 @@ export class NglModal {
     this.open = _open;
   }
   @Output() openChange = new EventEmitter();
+
+  private _directional = false;
 
   constructor(private element: ElementRef, private renderer: Renderer) {}
 

@@ -83,6 +83,18 @@ describe('`NglModal`', () => {
     dispatchKeyEvent(fixture, By.directive(NglModal), 'keydown.esc');
     expect(fixture.componentInstance.openChange).toHaveBeenCalledWith(false);
   }));
+
+  it('should support directional footer', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.componentInstance.directional = true;
+    fixture.detectChanges();
+
+    const footer = fixture.nativeElement.querySelector('.slds-modal__footer');
+    expect(footer).toHaveCssClass('slds-modal__footer--directional');
+
+    fixture.componentInstance.directional = false;
+    fixture.detectChanges();
+    expect(footer).not.toHaveCssClass('slds-modal__footer--directional');
+  }, `<ngl-modal [header]="header" open="true" [directional]="directional"></ngl-modal>`));
 });
 
 

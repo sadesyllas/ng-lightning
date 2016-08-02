@@ -11,6 +11,7 @@
   * `header?: string`: Heading text.
   * `open?: boolean`: Whether modal is visible or not.
   * `size?: 'large'`:  Whether modal has large or default size.
+  * `directional: boolean = false`:  Whether buttons inside footer spread to both left and right.
 
 ### Output
 
