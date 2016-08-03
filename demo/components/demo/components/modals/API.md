@@ -4,7 +4,7 @@
 
   * `[body]`: Body content.
   * `[tagline]`: If you need to provide additional context inside the header.
-  * `button`: Action buttons displayed on modal's footer.
+  * `template[ngl-modal-footer]`: Contains buttons displayed on modal's footer.
 
 ### Input
 

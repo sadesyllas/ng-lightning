@@ -8,7 +8,7 @@
       ng-content(select="[tagline]")
     .slds-modal__content.slds-p-around--medium
       ng-content(select="[body]")
-    .slds-modal__footer([class.slds-modal__footer--directional]="directional")
-      ng-content(select="button")
+    .slds-modal__footer(*ngIf="footer", [class.slds-modal__footer--directional]="directional")
+      template([ngTemplateOutlet]="footer.templateRef")
 div(tabindex="0", (focus)="focusFirst()")
 .slds-backdrop([class.slds-backdrop--open]="open")

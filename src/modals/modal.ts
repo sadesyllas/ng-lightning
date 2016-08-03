@@ -1,7 +1,8 @@
-import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter, HostListener, ViewChild} from '@angular/core';
+import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter, HostListener, ViewChild, ContentChild} from '@angular/core';
 import {toBoolean, uniqueId} from '../util/util';
 import {NglButtonIcon} from '../buttons/button-icon';
 import {NglIcon} from '../icons/icon';
+import {NglModalFooter} from './footer';
 
 @Component({
   selector: 'ngl-modal',
@@ -38,6 +39,8 @@ export class NglModal {
     this.open = _open;
   }
   @Output() openChange = new EventEmitter();
+
+  @ContentChild(NglModalFooter) footer: NglModalFooter;
 
   private _directional = false;
 

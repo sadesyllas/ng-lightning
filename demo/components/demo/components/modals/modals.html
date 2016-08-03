@@ -1,16 +1,24 @@
 <button type="button" nglButton="neutral" (click)="open()">Open modal</button>
 <button type="button" nglButton="neutral" (click)="open('large')">Open large</button>
 
-<ngl-modal header="Modal Header" [(open)]="opened" [size]="size" [directional]="directional">
+<ngl-modal [header]="noHeader ? '' : 'Modal Header'" [(open)]="opened" [size]="size" [directional]="directional">
   <div body>
     <p>Sit nulla est ex deserunt exercitation anim occaecat. Tempor cupidatat consequat elit dolor adipisicing.</p>
     <p>Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia.</p>
     <p>Labore esse esse cupidatat amet velit id elit consequat minim ullamco mollit enim excepteur ea.</p>
   </div>
-  <button class="slds-button slds-button--neutral" (click)="cancel()">Cancel</button>
-  <button class="slds-button slds-button--brand">Save</button>
+  <template ngl-modal-footer *ngIf="!noFooter">
+    <button class="slds-button slds-button--neutral" (click)="cancel()">Cancel</button>
+    <button class="slds-button slds-button--brand">Save</button>
+  </template>
 </ngl-modal>
 
+<ngl-form-element nglFormLabel="Empty header" class="slds-m-top--small">
+  <input type="checkbox" [(ngModel)]="noHeader" />
+</ngl-form-element>
+<ngl-form-element nglFormLabel="Empty footer" class="slds-m-top--small">
+  <input type="checkbox" [(ngModel)]="noFooter" />
+</ngl-form-element>
 <ngl-form-element nglFormLabel="Directional footer" class="slds-m-top--small">
-  <input type="checkbox" [(ngModel)]="directional" />
+  <input type="checkbox" [(ngModel)]="directional" [disabled]="noFooter" />
 </ngl-form-element>

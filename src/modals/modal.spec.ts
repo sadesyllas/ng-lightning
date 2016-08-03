@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 import {NglModal} from './modal';
-
+import {NglModalFooter} from './footer';
 
 function getModal(element: HTMLElement): HTMLElement {
   return <HTMLElement>element.querySelector('.slds-modal');
@@ -11,6 +11,10 @@ function getModal(element: HTMLElement): HTMLElement {
 
 function getHeader(element: HTMLElement) {
   return element.querySelector('.slds-modal__header > h2');
+}
+
+function getFooter(element: HTMLElement) {
+  return element.querySelector('.slds-modal__footer');
 }
 
 function getCloseButton(element: HTMLElement): HTMLButtonElement {
@@ -84,17 +88,29 @@ describe('`NglModal`', () => {
     expect(fixture.componentInstance.openChange).toHaveBeenCalledWith(false);
   }));
 
+  it('should support footer', testAsync((fixture: ComponentFixture<TestComponent>) => {
+    fixture.detectChanges();
+
+    const footer = fixture.nativeElement.querySelector('.slds-modal__footer');
+    expect(footer).toHaveText('Modal Header in footer');
+    expect(footer).not.toHaveCssClass('slds-modal__footer--directional');
+  }, `<ngl-modal open="true">
+        <template ngl-modal-footer>{{header}} in footer</template>
+      </ngl-modal>`));
+
   it('should support directional footer', testAsync((fixture: ComponentFixture<TestComponent>) => {
     fixture.componentInstance.directional = true;
     fixture.detectChanges();
 
-    const footer = fixture.nativeElement.querySelector('.slds-modal__footer');
+    const footer = getFooter(fixture.nativeElement);
     expect(footer).toHaveCssClass('slds-modal__footer--directional');
 
     fixture.componentInstance.directional = false;
     fixture.detectChanges();
     expect(footer).not.toHaveCssClass('slds-modal__footer--directional');
-  }, `<ngl-modal [header]="header" open="true" [directional]="directional"></ngl-modal>`));
+  }, `<ngl-modal open="true" [directional]="directional">
+        <template ngl-modal-footer></template>
+      </ngl-modal>`));
 });
 
 
@@ -109,12 +125,10 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 }
 
 @Component({
-  directives: [NglModal],
+  directives: [NglModal, NglModalFooter],
   template: `
     <ngl-modal [header]="header" [open]="open" (openChange)="openChange($event)" [size]="size">
       <div body>Body content.</div>
-      <button class="slds-button slds-button--neutral" (click)="cancel()">Cancel</button>
-      <button class="slds-button slds-button--neutral slds-button--brand">Save</button>
     </ngl-modal>`,
 })
 export class TestComponent {
