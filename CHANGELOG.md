@@ -1,3 +1,56 @@
+<a name="0.17.0"></a>
+# [0.17.0](https://github.com/ng-lightning/ng-lightning/compare/v0.16.0...v0.17.0) (2016-08-08)
+
+
+### Bug Fixes
+
+* **build:** support and test IE11 ([b925469](https://github.com/ng-lightning/ng-lightning/commit/b925469)), closes [#121](https://github.com/ng-lightning/ng-lightning/issues/121) [#163](https://github.com/ng-lightning/ng-lightning/issues/163)
+* **icons:** use `utility` as default category for `svg[nglIcon]` ([c4b7cfe](https://github.com/ng-lightning/ng-lightning/commit/c4b7cfe))
+* **modals:** simplify structure and correctly handle open state ([f87eeec](https://github.com/ng-lightning/ng-lightning/commit/f87eeec)), closes [#168](https://github.com/ng-lightning/ng-lightning/issues/168)
+* **pick:** emit on `nglOptionDestroyed` when a selected option is "destroyed" ([65546e9](https://github.com/ng-lightning/ng-lightning/commit/65546e9)), closes [#156](https://github.com/ng-lightning/ng-lightning/issues/156)
+* **popovers:** reposition generated popover after it's view initialized ([ae5a825](https://github.com/ng-lightning/ng-lightning/commit/ae5a825)), closes [#151](https://github.com/ng-lightning/ng-lightning/issues/151)
+
+
+### Features
+
+* **icons:** expose `svg[nglIcon]` component for increased flexibility ([e942ff1](https://github.com/ng-lightning/ng-lightning/commit/e942ff1)), closes [#161](https://github.com/ng-lightning/ng-lightning/issues/161)
+* **lookups:** add search icon option ([63867ba](https://github.com/ng-lightning/ng-lightning/commit/63867ba)), closes [#162](https://github.com/ng-lightning/ng-lightning/issues/162)
+* **lookups:** support polymorphic variation ([8249715](https://github.com/ng-lightning/ng-lightning/commit/8249715)), closes [#139](https://github.com/ng-lightning/ng-lightning/issues/139) [#165](https://github.com/ng-lightning/ng-lightning/issues/165)
+* **menus:** add picklist component ([2482ebe](https://github.com/ng-lightning/ng-lightning/commit/2482ebe)), closes [#158](https://github.com/ng-lightning/ng-lightning/issues/158)
+* **menus:** support picklist filter ([9cf07a7](https://github.com/ng-lightning/ng-lightning/commit/9cf07a7)), closes [#175](https://github.com/ng-lightning/ng-lightning/issues/175)
+* **modals:** support directional footer ([6bf0d2d](https://github.com/ng-lightning/ng-lightning/commit/6bf0d2d)), closes [#172](https://github.com/ng-lightning/ng-lightning/issues/172)
+* **modals:** support empty header ([723b563](https://github.com/ng-lightning/ng-lightning/commit/723b563)), closes [#169](https://github.com/ng-lightning/ng-lightning/issues/169)
+* **modals:** support removed footer ([f88cbbd](https://github.com/ng-lightning/ng-lightning/commit/f88cbbd)), closes [#173](https://github.com/ng-lightning/ng-lightning/issues/173) [#174](https://github.com/ng-lightning/ng-lightning/issues/174)
+
+
+### BREAKING CHANGES
+
+* modals: modal footer is inside <template ngl-modal-footer>
+
+  Before:
+
+  ```html
+  <ngl-modal>
+    ...
+    <button>Cancel</button>
+    <button>Submit</button>
+  </ngl-modal>
+  ```
+
+  After:
+
+  ```html
+  <ngl-modal>
+    ...
+    <template ngl-modal-footer>
+      <button>Cancel</button>
+      <button>Submit</button>
+    </template>
+  </ngl-modal>
+  ```
+
+
+
 <a name="0.16.0"></a>
 # [0.16.0](https://github.com/ng-lightning/ng-lightning/compare/v0.15.0...v0.16.0) (2016-07-13)
 
