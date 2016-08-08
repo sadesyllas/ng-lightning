@@ -95,14 +95,15 @@ describe('Picklist filter', () => {
     fixture.componentInstance.open = true;
     fixture.detectChanges();
 
-    setTimeout(() => {
-      const options = getOptionElements(fixture.nativeElement);
-      expect(options[2]).not.toHaveCssClass('slds-is-active');
+    const inputFilter = getDropdownFilter(fixture);
+    dispatchEvent(inputFilter, 'focus');
 
-      dispatchEvent(options[2], 'mouseover');
-      fixture.detectChanges();
-      expect(options[2]).toHaveCssClass('slds-is-active');
-    });
+    const options = getOptionElements(fixture.nativeElement);
+    expect(options[2]).not.toHaveCssClass('slds-is-active');
+
+    dispatchEvent(options[2], 'mouseover');
+    fixture.detectChanges();
+    expect(options[2]).toHaveCssClass('slds-is-active');
   }));
 
   it('should not select with keyboard if not valid', testAsync((fixture: ComponentFixture<TestComponent>) => {
