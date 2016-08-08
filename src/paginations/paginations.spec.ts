@@ -204,10 +204,7 @@ describe('Pagination Component', () => {
 
     fixture.componentInstance.total = 0;
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(el).toHaveText('0 - 0');
-    });
+    expect(el).toHaveText('0 - 0');
   }, `<ngl-pagination [(page)]="page" [total]="total" #pg></ngl-pagination><h1>{{pg.start}} - {{pg.end}}</h1>`));
 });
 
