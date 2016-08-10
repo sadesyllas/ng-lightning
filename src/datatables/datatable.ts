@@ -1,8 +1,6 @@
 import {Component, Input, ChangeDetectorRef, ContentChildren, QueryList, ElementRef, Renderer, HostBinding, Output, EventEmitter} from '@angular/core';
 import {Subscription} from 'rxjs/Rx';
 import {NglDatatableColumn} from './column';
-import {NglInternalDatatableHeadCell} from './_head';
-import {NglInternalDatatableCell} from './_cell';
 
 export interface INglDatatableSort {
   key: string;
@@ -12,7 +10,6 @@ export interface INglDatatableSort {
 @Component({
   selector: 'table[ngl-datatable]',
   templateUrl: './datatable.jade',
-  directives: [NglInternalDatatableHeadCell, NglInternalDatatableCell],
 })
 export class NglDatatable {
 

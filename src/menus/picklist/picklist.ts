@@ -1,18 +1,12 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ContentChild, ViewChild, ElementRef} from '@angular/core';
 import {NglPicklistItemTemplate} from './item';
-import {NglDropdownTrigger} from '../dropdown-trigger';
-import {NglDropdown} from '../dropdown';
-import {NglDropdownItem} from '../dropdown-item';
 import {NglPick} from '../../pick/pick';
-import {NglPickOption} from '../../pick/pick-option';
-import {NglIconSvg} from '../../icons/svg';
 import {toBoolean} from '../../util/util';
 
 @Component({
   selector: 'ngl-picklist[nglPick]',
   templateUrl: './picklist.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [NglDropdown, NglDropdownTrigger, NglDropdownItem, NglPickOption, NglIconSvg],
   styles: [`
     li.slds-is-active {
       background-color: #F4F6F9;

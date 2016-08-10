@@ -1,15 +1,18 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglFormElement} from './element';
-import {NglFormInput} from './input';
-import {NglFormElementRequired} from './required';
+import {createGenericTestComponent} from '../../../test/util/helpers';
+import {NglFormsModule} from '../module';
 import {getRequiredElement} from './input.spec';
 
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 describe('`NglFormElementRequired`', () => {
 
-  it('should hook label indication on input required', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglFormsModule]}));
+
+  it('should hook label indication on input required', () => {
+    const fixture = createTestComponent();
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
 
     fixture.componentInstance.required = true;
@@ -20,27 +23,19 @@ describe('`NglFormElementRequired`', () => {
     fixture.componentInstance.required = false;
     fixture.detectChanges();
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-  }));
+  });
 
-  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should not leak outside parent', () => {
+    createTestComponent(`<input required="required">`);
     expect(true).toBe(true); // Expect just to compile correctly and reach here
-  }, `<input required="required">`));
+  });
 
 });
 
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglFormElement, NglFormInput, NglFormElementRequired],
   template: `<ngl-form-element><input type="text" [required]="required"></ngl-form-element>`,
 })
-export class TestComponent {}
+export class TestComponent {
+  required: boolean;
+}

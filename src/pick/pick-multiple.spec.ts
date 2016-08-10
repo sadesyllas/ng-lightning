@@ -1,8 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
-import {selectElements} from '../../test/util/helpers';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglPick} from './pick';
-import {NglPickOption} from './pick-option';
+import {createGenericTestComponent, selectElements} from '../../test/util/helpers';
+import {NglPickModule} from './module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function expectState(element: HTMLElement, state: boolean[], activeClass = 'slds-button--brand') {
   const options = selectElements(element, 'button');
@@ -18,17 +20,19 @@ describe('Pick multiple array', () => {
     </div>
   `;
 
-  it('should have proper options selected based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglPickModule]}));
+
+  it('should have proper options selected based on input', () => {
+    const fixture = createTestComponent(HTML);
     expectState(fixture.nativeElement, [true, false, true, false]);
 
     fixture.componentInstance.selected = ['op2', 'op3'];
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, true, true, false]);
-  }, HTML));
+  });
 
-  it('should have proper selected value when `nglPickOption` is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should have proper selected value when `nglPickOption` is clicked', () => {
+    const fixture = createTestComponent(HTML);
     const elements = selectElements(fixture.nativeElement, 'button');
 
     elements[2].click();
@@ -41,9 +45,10 @@ describe('Pick multiple array', () => {
     fixture.detectChanges();
     elements[1].click();
     expect(fixture.componentInstance.selected).toEqual(['op1', 'op3', 'op2']);
-  }, HTML));
+  });
 
-  it('should have proper option selected when a new option is added', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should have proper option selected when a new option is added', () => {
+    const fixture = createTestComponent(HTML, false);
     fixture.componentInstance.selected = ['op5'];
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false]);
@@ -51,49 +56,47 @@ describe('Pick multiple array', () => {
     fixture.componentInstance.options.push('op5');
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
-  }, HTML));
+  });
 
-  it('call `nglOptionDestroyed` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('call `nglOptionDestroyed` when a selected option is removed', () => {
+    const fixture = createTestComponent(`
+      <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
+        <button type="button" nglPickOption="option1"></button>
+        <button type="button" nglPickOption="option2"></button>
+        <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+      </div>
+    `, false);
     fixture.componentInstance.selected = ['option2', 'option3'];
     fixture.componentInstance.exists = true;
-    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
-    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
     fixture.detectChanges();
 
     fixture.componentInstance.exists = false;
     fixture.detectChanges();
     setTimeout(() => {
-        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
-        expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
+      expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
     });
-  }, `
-    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
-      <button type="button" nglPickOption="option1"></button>
-      <button type="button" nglPickOption="option2"></button>
-      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
-    </div>
-  `));
+  });
 
-  it('not call `nglOptionDestroyed` when a not selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('not call `nglOptionDestroyed` when a not selected option is removed', () => {
+    const fixture = createTestComponent(`
+      <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
+        <button type="button" nglPickOption="option1"></button>
+        <button type="button" nglPickOption="option2"></button>
+        <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+      </div>
+    `, false);
     fixture.componentInstance.selected = null;
     fixture.componentInstance.exists = true;
-    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
-    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
     fixture.detectChanges();
 
     fixture.componentInstance.exists = false;
     fixture.detectChanges();
     setTimeout(() => {
-        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
-        expect(fixture.componentInstance.destroyed).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.destroyed).not.toHaveBeenCalled();
     });
-  }, `
-    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
-      <button type="button" nglPickOption="option1"></button>
-      <button type="button" nglPickOption="option2"></button>
-      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
-    </div>
-  `));
+  });
 });
 
 describe('Pick multiple object', () => {
@@ -104,17 +107,19 @@ describe('Pick multiple object', () => {
     </div>
   `;
 
-  it('should have proper options selected based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglPickModule]}));
+
+  it('should have proper options selected based on input', () => {
+    const fixture = createTestComponent(HTML);
     expectState(fixture.nativeElement, [true, false, true, false]);
 
     fixture.componentInstance.selectedObject = {op2: true, op3: true};
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, true, true, false]);
-  }, HTML));
+  });
 
-  it('should have proper selected value when `nglPickOption` is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should have proper selected value when `nglPickOption` is clicked', () => {
+    const fixture = createTestComponent(HTML);
     const elements = selectElements(fixture.nativeElement, 'button');
 
     elements[2].click();
@@ -128,9 +133,10 @@ describe('Pick multiple object', () => {
     fixture.detectChanges();
     elements[1].click();
     expect(fixture.componentInstance.selectedObject).toEqual({ op1: true, op2: true, op3: true, op4: false });
-  }, HTML));
+  });
 
-  it('should have proper option selected when a new option is added', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should have proper option selected when a new option is added', () => {
+    const fixture = createTestComponent(HTML);
     fixture.componentInstance.selectedObject = {op5: true};
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false]);
@@ -138,46 +144,37 @@ describe('Pick multiple object', () => {
     fixture.componentInstance.options.push('op5');
     fixture.detectChanges();
     expectState(fixture.nativeElement, [false, false, false, false, true]);
-  }, HTML));
+  });
 
-  it('call `nglOptionDestroyed` when a selected option is removed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('call `nglOptionDestroyed` when a selected option is removed', () => {
+    const fixture = createTestComponent(`
+      <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
+        <button type="button" nglPickOption="option1"></button>
+        <button type="button" nglPickOption="option2"></button>
+        <button type="button" nglPickOption="option3" *ngIf="exists"></button>
+      </div>
+    `, false);
     fixture.componentInstance.selected = {'option2': true, 'option3': true};
     fixture.componentInstance.exists = true;
-    fixture.componentInstance.destroyed = jasmine.createSpy('destroyed');
-    fixture.componentInstance.selectedChange = jasmine.createSpy('destroyed');
     fixture.detectChanges();
 
     fixture.componentInstance.exists = false;
     fixture.detectChanges();
     setTimeout(() => {
-        expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
-        expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
+      expect(fixture.componentInstance.selectedChange).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.destroyed).toHaveBeenCalledWith('option3');
     });
-  }, `
-    <div [nglPick]="selected" (nglPickChange)="selectedChange($event)" nglPickMultiple (nglOptionDestroyed)="destroyed($event)">
-      <button type="button" nglPickOption="option1"></button>
-      <button type="button" nglPickOption="option2"></button>
-      <button type="button" nglPickOption="option3" *ngIf="exists"></button>
-    </div>
-  `));
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
 
-@Component({
-  directives: [NglPick, NglPickOption],
-  template: '',
-})
+@Component({ template: '' })
 export class TestComponent {
-  selected = ['op1', 'op3'];
-  selectedObject = {'op1': true, 'op2': false, 'op3': true, 'op4': false};
+  selected: any = ['op1', 'op3'];
+  selectedObject: any = {'op1': true, 'op2': false, 'op3': true, 'op4': false};
   options = ['op2', 'op3', 'op4'];
+
+  exists: boolean;
+  destroyed = jasmine.createSpy('destroyed');
+  selectedChange = jasmine.createSpy('selectedChange');
 }

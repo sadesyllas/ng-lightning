@@ -17,12 +17,11 @@ export class Plunker {
     if (!this.component) return '';
 
     const ts = this.component.tsRaw
-                .replace('../../../../../dist/', 'ng-lightning/')
-                .replace('NGL_DIRECTIVES', 'NGL_DIRECTIVES, provideNglConfig')
-                .replace(/selector: '(.*)'/, 'selector: \'demo\'')
+                .replace('../../../../../dist/ng-lightning', 'ng-lightning/ng-lightning')
+                .replace(/selector: '(.*)'/, 'selector: \'my-app\'')
                 .replace(/template: require(.*)/, 'templateUrl: \'app/demo.html\'')
-                .replace(/class Demo(.*) {/, 'class Demo {');
-    return `import {bootstrap}  from '@angular/platform-browser-dynamic';\n${ts}\nbootstrap(Demo, [provideNglConfig()]);`;
+                .replace(/class Demo(.*) {/, 'class AppComponent {');
+    return `${ts}`;
   }
 
   html() {
@@ -32,6 +31,10 @@ export class Plunker {
 
   lib() {
     return require('!!raw!dist/ng-lightning.bundle.js');
+  }
+
+  raw(filename: string) {
+    return require('!!raw!./files/' + filename);
   }
 
   open(component: any) {

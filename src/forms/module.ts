@@ -1,3 +1,7 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {NglInternalOutletModule} from '../util/outlet.module';
+
 import {NglFormElement} from './elements/element';
 import {NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox} from './elements/input';
 import {NglFormElementRequired} from './elements/required';
@@ -7,17 +11,7 @@ import {NglFormGroupElement} from './groups/element';
 import {NglFormGroupCheckbox, NglFormGroupRadio} from './groups/input';
 import {NglFormLabelTemplate} from './form-label';
 
-export {NglFormElement} from './elements/element';
-export {NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox} from './elements/input';
-export {NglFormElementRequired} from './elements/required';
-export {NglFormGroup} from './groups/group';
-export {NglFormGroupAlternate} from './groups/group-alt';
-export {NglFormGroupElement} from './groups/element';
-export {NglFormGroupCheckbox, NglFormGroupRadio} from './groups/input';
-export {NglFormLabelTemplate} from './form-label';
-
-
-export const NGL_FORM_DIRECTIVES: Array<any> = [
+const NGL_FORM_DIRECTIVES = [
   NglFormElement,
   NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox,
   NglFormElementRequired,
@@ -27,3 +21,10 @@ export const NGL_FORM_DIRECTIVES: Array<any> = [
   NglFormGroupCheckbox, NglFormGroupRadio,
   NglFormLabelTemplate,
 ];
+
+@NgModule({
+  declarations: NGL_FORM_DIRECTIVES,
+  exports: NGL_FORM_DIRECTIVES,
+  imports: [CommonModule, NglInternalOutletModule],
+})
+export class NglFormsModule {}

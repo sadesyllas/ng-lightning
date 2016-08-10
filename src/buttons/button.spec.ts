@@ -1,7 +1,11 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglButton} from './button';
-import {NglIcon} from '../icons/icon';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglButtonsModule} from './module';
+import {NglIconsModule} from '../icons/module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getButtonElement(element: Element): HTMLButtonElement {
   return <HTMLButtonElement>element.querySelector('button');
@@ -9,25 +13,25 @@ function getButtonElement(element: Element): HTMLButtonElement {
 
 describe('`nglButton`', () => {
 
-  it('should render the default button', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglButtonsModule, NglIconsModule]}));
 
+  it('should render the default button', () => {
+    const fixture = createTestComponent();
     const button = getButtonElement(fixture.nativeElement);
     expect(button).toHaveCssClass('slds-button');
-  }));
+  });
 
-  it('should render icon correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render icon correctly', () => {
+    const fixture = createTestComponent(`<button [nglButton]="style"><ngl-icon icon="download" align="left"></ngl-icon> Download</button>`);
     const button = getButtonElement(fixture.nativeElement);
     const icon = button.querySelector('svg');
     expect(icon).toHaveCssClass('slds-button__icon');
     expect(icon).toHaveCssClass('slds-button__icon--left');
-  }, `<button [nglButton]="style"><ngl-icon icon="download" align="left"></ngl-icon> Download</button>`));
+  });
 
-  it('should render dynamic style', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should render dynamic style', () => {
+    const fixture = createTestComponent();
     const { componentInstance } = fixture;
-    fixture.detectChanges();
 
     const button = getButtonElement(fixture.nativeElement);
     expect(button).toHaveCssClass('slds-button');
@@ -44,22 +48,11 @@ describe('`nglButton`', () => {
     expect(button).toHaveCssClass('slds-button');
     expect(button).not.toHaveCssClass('slds-button--destructive');
     expect(button).not.toHaveCssClass('slds-button--brand');
-  }));
-
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
 
 @Component({
-  directives: [NglButton, NglIcon],
   template: `<button [nglButton]="style">Go <</button>`,
 })
 export class TestComponent {

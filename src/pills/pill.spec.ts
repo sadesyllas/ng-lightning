@@ -1,8 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglPill} from './pill';
-import {NglPillLink} from './pill-link';
-import {NglPillRemove} from './pill-remove';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglPillsModule} from './module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 export function getPill(root: HTMLElement): any {
   return root.firstElementChild;
@@ -18,9 +20,10 @@ function getRemoveButton(pill: HTMLElement): any {
 
 describe('NglPill', () => {
 
-  it('should have the proper css classes and text content', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglPillsModule]}));
 
+  it('should have the proper css classes and text content', () => {
+    const fixture = createTestComponent();
     const pill = getPill(fixture.nativeElement);
     const text = getLabelEl(pill);
     const removeButton = getRemoveButton(pill);
@@ -28,30 +31,30 @@ describe('NglPill', () => {
     expect(text.tagName).toBe('A');
     expect(text.textContent.trim()).toBe('I am a pill!');
     expect(removeButton).toHaveCssClass('slds-pill__remove');
-  }));
+  });
 
-  it('should render unlinked correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render unlinked correctly', () => {
+    const fixture = createTestComponent(`<ngl-pill>I am unlinked!</ngl-pill>`);
     const pill = getPill(fixture.nativeElement);
     const text = getLabelEl(pill);
     expect(text.tagName).toBe('SPAN');
     expect(text.textContent.trim()).toBe('I am unlinked!');
-  }, `<ngl-pill>I am unlinked!</ngl-pill>`));
+  });
 
-  it('should not render the remove button without `nglPillRemove`', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should not render the remove button without `nglPillRemove`', () => {
+    const fixture = createTestComponent(`<ngl-pill></ngl-pill>`);
     const pill = getPill(fixture.nativeElement);
     expect(getRemoveButton(pill)).toBeNull();
-  }, `<ngl-pill></ngl-pill>`));
+  });
 
-  it('should not render the remove button without `nglPillRemove` even with `nglPillRemovable`', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should not render the remove button without `nglPillRemove` even with `nglPillRemovable`', () => {
+    const fixture = createTestComponent(`<ngl-pill nglPillRemovable="true"></ngl-pill>`);
     const pill = getPill(fixture.nativeElement);
     expect(getRemoveButton(pill)).toBeNull();
-  }, `<ngl-pill nglPillRemovable="true"></ngl-pill>`));
+  });
 
-  it('should toggle the remove button based on `nglPillRemovable`', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should toggle the remove button based on `nglPillRemovable`', () => {
+    const fixture = createTestComponent(`<ngl-pill (nglPillRemove)="onRemove()" [nglPillRemovable]="removable"></ngl-pill>`);
     const pill = getPill(fixture.nativeElement);
 
     fixture.componentInstance.removable = false;
@@ -61,31 +64,19 @@ describe('NglPill', () => {
     fixture.componentInstance.removable = true;
     fixture.detectChanges();
     expect(getRemoveButton(pill)).not.toBeNull();
-  }, `<ngl-pill (nglPillRemove)="onRemove()" [nglPillRemovable]="removable"></ngl-pill>`));
+  });
 
-  it('should trigger the remove event whenever the remove button is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should trigger the remove event whenever the remove button is clicked', () => {
+    const fixture = createTestComponent();
     const pill = getPill(fixture.nativeElement);
     const removeButton = getRemoveButton(pill);
-    spyOn(fixture.componentInstance, 'onRemove');
     expect(fixture.componentInstance.onRemove).not.toHaveBeenCalled();
     removeButton.click();
     expect(fixture.componentInstance.onRemove).toHaveBeenCalled();
-  }));
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglPill, NglPillLink, NglPillRemove],
   template: `
     <ngl-pill (nglPillRemove)="onRemove()">
       <a>I am a pill!</a>
@@ -94,5 +85,5 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 })
 export class TestComponent {
   removable = true;
-  onRemove() {}
+  onRemove = jasmine.createSpy('onRemove');
 }

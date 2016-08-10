@@ -1,11 +1,9 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBinding, ElementRef, Renderer} from '@angular/core';
-import {NglIcon} from '../icons/icon';
 
 @Component({
   selector: 'th[ngl-internal-datatatable-head]',
   templateUrl: './_head.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [NglIcon],
   host: {
     'scope': 'col',
   },

@@ -1,7 +1,10 @@
-import {provideNglConfig} from 'ng-lightning/ng-lightning';
+import {AppComponent} from '...';
+import {NglModule, provideNglConfig} from 'ng-lightning/ng-lightning';
 
-bootstrap(App, [
-  ...
-  provideNglConfig( /* optional configuration object with overrides */ ),
-  ...
-]);
+@NgModule({
+  imports: [NglModule, ...],
+  declarations: [AppComponent, ...],
+  providers: [provideNglConfig(/* optional configuration object with overrides */), ...],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}

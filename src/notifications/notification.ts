@@ -1,13 +1,10 @@
 import {Component, Input, Output, EventEmitter, OnChanges, ElementRef, Renderer, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NglNotificationClose} from './notification-close';
-import {NglButtonIcon} from '../buttons/button-icon';
-import {NglIcon} from '../icons/icon';
 import {replaceClass, isInt} from '../util/util';
 
 @Component({
   selector: 'ngl-notification',
   templateUrl: './notification.jade',
-  directives: [NglButtonIcon, NglIcon],
   host: {
     '[class.slds-notify]': 'true',
     'role': 'alert',

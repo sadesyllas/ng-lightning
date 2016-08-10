@@ -1,19 +1,22 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglFormElement} from './element';
-import {NglFormTextarea} from './input';
-import {NglFormElementRequired} from './required';
+import {createGenericTestComponent} from '../../../test/util/helpers';
+import {NglFormsModule} from '../module';
 import {getLabelElement, getRequiredElement} from './input.spec';
 
-function getInputElement(element: Element): HTMLInputElement {
-  return <HTMLInputElement>element.querySelector('textarea');
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
+
+function getInputElement(element: Element): HTMLTextAreaElement {
+  return <HTMLTextAreaElement>element.querySelector('textarea');
 }
 
 describe('`NglFormTextarea`', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglFormsModule]}));
 
+  it('should render correctly', () => {
+    const fixture = createTestComponent();
     const element = fixture.nativeElement.firstElementChild;
     expect(element).toHaveCssClass('slds-form-element');
 
@@ -26,10 +29,10 @@ describe('`NglFormTextarea`', () => {
     const inputId = inputEl.getAttribute('id');
     expect(inputId).toMatch(/form_element_/);
     expect(inputId).toEqual(labelEl.getAttribute('for'));
-  }));
+  });
 
-  it('should hook label indication on input required', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should hook label indication on input required', () => {
+    const fixture = createTestComponent(`<ngl-form-element><textarea [required]="required"></textarea></ngl-form-element>`);
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
 
     fixture.componentInstance.required = true;
@@ -40,29 +43,17 @@ describe('`NglFormTextarea`', () => {
     fixture.componentInstance.required = false;
     fixture.detectChanges();
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-  }, `<ngl-form-element><textarea [required]="required"></textarea></ngl-form-element>`));
+  });
 
-  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should not leak outside parent', () => {
+    const fixture = createTestComponent(`<textarea class="out"></textarea><ngl-form-element><textarea class="in"></textarea></ngl-form-element>`);
     expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-textarea');
     expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-textarea');
-  }, `<textarea class="out"></textarea><ngl-form-element><textarea class="in"></textarea></ngl-form-element>`));
+  });
 
 });
 
-
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglFormElement, NglFormTextarea, NglFormElementRequired],
   template: `
     <ngl-form-element [nglFormLabel]="label">
       <textarea></textarea>
@@ -71,4 +62,5 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 })
 export class TestComponent {
   label: string = 'My label';
+  required: boolean;
 }

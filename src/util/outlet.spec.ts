@@ -1,6 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglInternalOutlet} from './outlet';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglInternalOutletModule} from './outlet.module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getElement(fixture: ComponentFixture<TestComponent>) {
   return fixture.nativeElement.firstElementChild;
@@ -8,48 +12,39 @@ function getElement(fixture: ComponentFixture<TestComponent>) {
 
 describe('`NglInternalOutlet`', () => {
 
-  it('should render string', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglInternalOutletModule]}));
+
+  it('should render string', () => {
+    const fixture = createTestComponent(null, false);
     fixture.componentInstance.isTemplate = false;
     fixture.detectChanges();
     expect(getElement(fixture)).toHaveText('String content');
-  }));
+  });
 
-  it('should render template', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should render template', () => {
+    const fixture = createTestComponent();
     expect(getElement(fixture)).toHaveText('Template content. Count is 10');
-  }));
+  });
 
-  it('could switch between string and template', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('could switch between string and template', () => {
+    const fixture = createTestComponent();
     expect(getElement(fixture)).not.toHaveText('String content');
 
     fixture.componentInstance.isTemplate = false;
     fixture.detectChanges();
     expect(getElement(fixture)).toHaveText('String content');
-  }));
+  });
 
-  it('should be able to update variables in template', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should be able to update variables in template', () => {
+    const fixture = createTestComponent();
     fixture.componentInstance.count = 15;
     fixture.detectChanges();
     expect(getElement(fixture)).toHaveText('Template content. Count is 15');
-  }));
+  });
 });
 
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglInternalOutlet],
   template: `
     <template #tpl>Template content. Count is {{ count }}</template>
     <span [nglInternalOutlet]="isTemplate ? tpl : str"></span>

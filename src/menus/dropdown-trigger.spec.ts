@@ -1,27 +1,31 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglDropdown} from './dropdown';
 import {NglDropdownTrigger} from './dropdown-trigger';
-import {dispatchKeyEvent} from '../../test/util/helpers';
+import {createGenericTestComponent, dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
+import {NglMenusModule} from './module';
 
-function getDropdownTrigger(fixtureElement: HTMLElement): HTMLElement {
-  return <HTMLElement>fixtureElement.childNodes[0].childNodes[0];
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
+
+function getDropdownTrigger(element: HTMLElement): HTMLButtonElement {
+  return <HTMLButtonElement>element.querySelector('button');
 }
 
 describe('`nglDropdownTrigger`', () => {
 
-  it('should have the attribute `aria-haspopup` set to `true`', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglMenusModule]}));
+
+  it('should have the attribute `aria-haspopup` set to `true`', () => {
+    const fixture = createTestComponent();
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
-    fixture.detectChanges();
     expect(dropdownTrigger.getAttribute('aria-haspopup')).toBe('true');
-  }));
+    fixture.destroy();
+  });
 
-  it('should toggle the dropdown when it is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should toggle the dropdown when it is clicked', () => {
+    const fixture = createTestComponent();
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);
-    fixture.detectChanges();
-
-    spyOn(fixture.componentInstance, 'setOpen');
 
     dropdownTrigger.click();
     expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(true);
@@ -31,40 +35,26 @@ describe('`nglDropdownTrigger`', () => {
 
     dropdownTrigger.click();
     expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(false);
-  }));
+    fixture.destroy();
+  });
 
-  it('should open the dropdown when the down arrow key is pressed while it is focused', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
-    spyOn(fixture.componentInstance, 'setOpen').and.callFake((isOpen: boolean) => {
-      expect(isOpen).toBe(true);
-    });
-
-    dispatchKeyEvent(fixture, By.directive(NglDropdownTrigger), 'keydown.ArrowDown');
-    fixture.detectChanges();
-  }));
+  it('should open the dropdown when the down arrow key is pressed while it is focused', () => {
+    const fixture = createTestComponent();
+    dispatchKeyEvent(fixture, By.directive(NglDropdownTrigger), 'keydown.arrowdown');
+    expect(fixture.componentInstance.setOpen).toHaveBeenCalledWith(true);
+    fixture.destroy();
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
 
 @Component({
-  directives: [NglDropdown, NglDropdownTrigger],
-  template: ['<div nglDropdown [open]="open" (openChange)="setOpen($event)">',
-    '<button type="button" nglDropdownTrigger></button>',
-    '</div>',
-  ].join(''),
+  template: `
+    <div nglDropdown [open]="open" (openChange)="setOpen($event)">
+      <button type="button" nglDropdownTrigger></button>
+    </div>
+  `,
 })
 export class TestComponent {
   open: boolean = false;
-  setOpen(open: boolean) {
-    this.open = open;
-  }
+  setOpen = jasmine.createSpy('setOpenDropdownTrigger');
 }

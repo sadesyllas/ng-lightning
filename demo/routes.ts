@@ -1,15 +1,13 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
 
-import {IntroRoute} from './components/intro/intro';
+import {IntroComponent} from './components/intro/intro';
 import {DemoRoute} from './components/demo/demo';
-import {SupportRoute} from './components/support/support';
+import {SupportComponent} from './components/support/support';
 
-export const routes: RouterConfig = [
-  { path: '', component: IntroRoute },
+export const routes: Routes = [
+  { path: '', component: IntroComponent },
   { path: 'components', component: DemoRoute},
-  { path: 'support', component: SupportRoute},
+  { path: 'support', component: SupportComponent},
 ];
 
-export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes),
-];
+export const routing: any = RouterModule.forRoot(routes, {useHash: true});

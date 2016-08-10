@@ -1,11 +1,9 @@
 import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ElementRef, Renderer, Attribute} from '@angular/core';
 import {toBoolean} from '../util/util';
-import {NglIcon} from '../icons/icon';
 
 @Component({
   selector: 'ngl-rating',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [NglIcon],
   templateUrl: './rating.jade',
   host: {
     'style': 'white-space: nowrap;',

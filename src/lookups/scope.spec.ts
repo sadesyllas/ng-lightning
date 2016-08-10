@@ -1,9 +1,11 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {selectElements} from '../../test/util/helpers';
-import {NGL_LOOKUP_DIRECTIVES} from './directives';
+import {createGenericTestComponent, selectElements} from '../../test/util/helpers';
+import {NglLookupsModule} from './module';
 import {expectMenuExpanded, getPill} from './lookup.spec';
 
+const createTestComponent = (html?: string) =>
+  createGenericTestComponent(TestComponent, html) as ComponentFixture<TestComponent>;
 
 function getScopeLabelText(element: HTMLElement) {
   return element.querySelector('[nglpolymorphiclabel]').textContent.trim();
@@ -41,8 +43,10 @@ function expectScopeMenuOpen(element: HTMLElement, isOpen: boolean) {
 
 describe('Lookup Polymorphic', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglLookupsModule]}));
+
+  it('should render correctly', () => {
+    const fixture = createTestComponent();
 
     expect(getScopeLabelText(fixture.nativeElement)).toBe('Approvals');
     expectPlaceholder(fixture.nativeElement, 'Search Approvals');
@@ -52,18 +56,18 @@ describe('Lookup Polymorphic', () => {
     expectMenuExpanded(fixture.nativeElement, false);
 
     expect(getPill(fixture.nativeElement)).toBeFalsy();
-  }));
+  });
 
-  it('shoulp open menu on trigger click', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('shoulp open menu on trigger click', () => {
+    const fixture = createTestComponent();
 
     clickScopeMenuTrigger(fixture);
     expectScopeMenuOpen(fixture.nativeElement, true);
     expectScopeOptions(fixture.nativeElement, [ '1. Accounts', '2. Approvals', '3. Lead' ]);
-  }));
+  });
 
-  it('shoulp change scope based on click', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('shoulp change scope based on click', () => {
+    const fixture = createTestComponent();
 
     clickScopeMenuTrigger(fixture);
     const options = getScopeOptions(fixture.nativeElement);
@@ -72,10 +76,10 @@ describe('Lookup Polymorphic', () => {
     expectScopeMenuOpen(fixture.nativeElement, false);
     expect(getScopeLabelText(fixture.nativeElement)).toBe('Lead');
     expectPlaceholder(fixture.nativeElement, 'Search Lead');
-  }));
+  });
 
-  it('should close results menu when scope menu opens', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should close results menu when scope menu opens', () => {
+    const fixture = createTestComponent();
 
     fixture.componentInstance.value = 'DE';
     fixture.detectChanges();
@@ -85,22 +89,11 @@ describe('Lookup Polymorphic', () => {
     fixture.detectChanges();
     expectScopeMenuOpen(fixture.nativeElement, true);
     expectMenuExpanded(fixture.nativeElement, false);
-  }));
+  });
 });
 
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NGL_LOOKUP_DIRECTIVES],
   template: `
     <ngl-lookup [value]="value" [lookup]="filter" [(pick)]="selection" debounce="0" [placeholder]="'Search ' + scope.label">
       <span nglLookupLabel>Lookup:</span>
@@ -113,6 +106,7 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 export class TestComponent {
 
   selection: any;
+  value: string;
 
   scopes = [
     { label: 'Accounts', icon: '1' },

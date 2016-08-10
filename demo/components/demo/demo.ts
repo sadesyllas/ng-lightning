@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {NGL_DIRECTIVES} from '../../../dist/ng-lightning';
-import {Plunker} from './playground/plunker';
 
 import {DemoBadges} from './components/badges/badges';
 import {DemoBreadcrumbs} from './components/breadcrumbs/breadcrumbs';
@@ -35,7 +33,7 @@ export interface IComponent {
   api?: string;
 };
 
-const components: any[] = [
+export const components: any[] = [
   { key: 'badges', component: DemoBadges },
   { key: 'breadcrumbs', component: DemoBreadcrumbs },
   { key: 'buttons', component: DemoButtons },
@@ -63,15 +61,17 @@ components.forEach(component => {
   const { key } = component;
   const path = 'components/' + key + '/' + key;
   component.html = require('!!prismjs?lang=markup!./' + path + '.html');
-  component.ts = require('!!string-replace?search=../../../../../dist&replace=ng-lightning!prismjs?lang=typescript!./' + path + '.ts');
+  component.ts = require('!!prismjs?lang=typescript!./' + path + '.ts')
+                  .replace('../../../../../dist/ng-lightning', 'ng-lightning/ng-lightning')
+                  .replace(/\{/g, `&#x007b;`).replace(/\}/g, `&#x007d;`);
   if (!component.title) {
     component.title = key.charAt(0).toUpperCase() + key.slice(1);
   }
   if (!component.readme) {
-    component.readme = require('./components/' + key + '/README.md');
+    component.readme = require('./components/' + key + '/README.md').replace(/\{/g, `&#x007b;`).replace(/\}/g, `&#x007d;`);
   }
   if (!component.api) {
-    component.api = require('./components/' + key + '/API.md');
+    component.api = require('./components/' + key + '/API.md').replace(/\{/g, `&#x007b;`).replace(/\}/g, `&#x007d;`);
   }
 
   // Retrieve raw for live editing in plunker
@@ -82,7 +82,6 @@ components.forEach(component => {
 
 @Component({
   template: require('./demo.jade')({ content, components }),
-  directives: [NGL_DIRECTIVES, Plunker].concat(components.map((c: any) => c.component)),
 })
 export class DemoRoute {
   selectedTab: string[] = [];

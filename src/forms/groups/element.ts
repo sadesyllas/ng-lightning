@@ -2,12 +2,10 @@ import {Component, Input, ChangeDetectionStrategy, ContentChild, Optional, Eleme
 import {NglFormGroupAlternate} from './group-alt';
 import {NglFormGroupCheckbox} from './input';
 import {NglFormLabelTemplate, getFormLabel} from '../form-label';
-import {NglInternalOutlet} from '../../util/outlet';
 
 @Component({
   selector: 'label[ngl-form-group-element]',
   templateUrl: './element.jade',
-  directives: [NglInternalOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglFormGroupElement {

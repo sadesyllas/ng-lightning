@@ -1,7 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglFormElement} from './element';
-import {NglFormInput} from './input';
+import {createGenericTestComponent} from '../../../test/util/helpers';
+import {NglFormsModule} from '../module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 export function getLabelElement(element: Element): HTMLLabelElement {
   return <HTMLLabelElement>element.querySelector('label');
@@ -21,9 +24,10 @@ export function getRequiredElement(element: Element): HTMLDivElement {
 
 describe('`NglFormInput`', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglFormsModule]}));
 
+  it('should render correctly', () => {
+    const fixture = createTestComponent();
     const element = fixture.nativeElement.firstElementChild;
     expect(element).toHaveCssClass('slds-form-element');
 
@@ -36,21 +40,19 @@ describe('`NglFormInput`', () => {
     const inputId = inputEl.getAttribute('id');
     expect(inputId).toMatch(/form_element_/);
     expect(inputId).toEqual(labelEl.getAttribute('for'));
-  }));
+  });
 
-  it('should be able to change label', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should be able to change label', () => {
+    const fixture = createTestComponent();
     fixture.componentInstance.label = 'Another label';
     fixture.detectChanges();
 
     const labelEl = getLabelElement(fixture.nativeElement);
     expect(labelEl).toHaveText('Another label');
-  }));
+  });
 
-  it('should render error message', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render error message', () => {
+    const fixture = createTestComponent(`<ngl-form-element [nglFormError]="error"><input type="text"></ngl-form-element>`);
     const element = fixture.nativeElement.firstElementChild;
 
     expect(element).not.toHaveCssClass('slds-has-error');
@@ -63,29 +65,17 @@ describe('`NglFormInput`', () => {
     expect(element).toHaveCssClass('slds-has-error');
     expect(errorEl.id).toEqual(inputEl.getAttribute('aria-describedby'));
     expect(errorEl).toHaveText('This is an error!');
-  }, `<ngl-form-element [nglFormError]="error"><input type="text"></ngl-form-element>`));
+  });
 
-  it('should not leak outside parent', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should not leak outside parent', () => {
+    const fixture = createTestComponent(`<input class="out"><ngl-form-element><input class="in"></ngl-form-element>`);
     expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-input');
     expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-input');
-  }, `<input class="out"><ngl-form-element><input class="in"></ngl-form-element>`));
+  });
 
 });
 
-
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglFormElement, NglFormInput],
   template: `
     <ngl-form-element [nglFormLabel]="label">
       <input type="text">
@@ -94,4 +84,5 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 })
 export class TestComponent {
   label: string = 'My label';
+  error: string;
 }

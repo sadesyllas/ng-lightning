@@ -1,6 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglSection} from './section';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglSectionsModule} from './module';
+
+const createTestComponent = (html?: string) =>
+  createGenericTestComponent(TestComponent, html) as ComponentFixture<TestComponent>;
 
 function getSectionEl(element: HTMLElement) {
   return element.firstElementChild;
@@ -12,7 +16,10 @@ function getTitleEl(element: HTMLElement) {
 
 describe('Section Component', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglSectionsModule]}));
+
+  it('should render correctly', () => {
+    const fixture = createTestComponent();
     const { nativeElement } = fixture;
     const sectionEl = getSectionEl(nativeElement);
 
@@ -21,9 +28,10 @@ describe('Section Component', () => {
     expect(sectionEl).not.toHaveCssClass('slds-is-open');
     expect(getTitleEl(nativeElement).textContent.trim()).toBe('Section title');
     expect(nativeElement.querySelector('.slds-section__content').textContent).toBe('Body');
-  }));
+  });
 
-  it('should toggle based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should toggle based on input', () => {
+    const fixture = createTestComponent();
     const { nativeElement, componentInstance } = fixture;
     const sectionEl = getSectionEl(nativeElement);
 
@@ -34,9 +42,10 @@ describe('Section Component', () => {
     componentInstance.open = false;
     fixture.detectChanges();
     expect(sectionEl).not.toHaveCssClass('slds-is-open');
-  }));
+  });
 
-  it('should toggle when clicking on title', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should toggle when clicking on title', () => {
+    const fixture = createTestComponent();
     const sectionEl = getSectionEl(fixture.nativeElement);
     const titleEl = getTitleEl(fixture.nativeElement);
 
@@ -47,22 +56,11 @@ describe('Section Component', () => {
     titleEl.click();
     fixture.detectChanges();
     expect(sectionEl).not.toHaveCssClass('slds-is-open');
-  }));
+  });
 
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglSection],
   template: `<ngl-section [(open)]="open" title="Section title">Body</ngl-section>`,
 })
 export class TestComponent {

@@ -19,6 +19,7 @@ System.config({
     '@angular/core': {main: 'index.js', defaultExtension: 'js'},
     '@angular/compiler': {main: 'index.js', defaultExtension: 'js'},
     '@angular/common': {main: 'index.js', defaultExtension: 'js'},
+    '@angular/forms': {main: 'index.js', defaultExtension: 'js'},
     '@angular/platform-browser': {main: 'index.js', defaultExtension: 'js'},
     '@angular/platform-browser-dynamic': {main: 'index.js', defaultExtension: 'js'},
     'rxjs': {defaultExtension: 'js'},
@@ -40,12 +41,10 @@ Promise.all([
       })
   ])
   .then(function(providers) {
-    var testing = providers[0];
-    var testingBrowser = providers[1];
+    var coreTesting = providers[0];
+    var browserTesting = providers[1];
 
-    testing.setBaseTestProviders(
-      testingBrowser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-      testingBrowser.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
+    coreTesting.TestBed.initTestEnvironment(browserTesting.BrowserDynamicTestingModule, browserTesting.platformBrowserDynamicTesting());
   })
   .then(function() {
     return Promise.all(resolveTestFiles());

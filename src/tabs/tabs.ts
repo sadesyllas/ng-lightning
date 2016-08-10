@@ -1,12 +1,10 @@
 import {Component, Input, QueryList, ContentChildren, Output, EventEmitter} from '@angular/core';
 import {isInt} from '../util/util';
 import {NglTab} from './tab';
-import {NglInternalOutlet} from '../util/outlet';
 
 @Component({
   selector: 'ngl-tabs',
   templateUrl: './tabs.jade',
-  directives: [NglInternalOutlet],
 })
 export class NglTabs {
   @Input() type: 'default' | 'scoped' = 'default';

@@ -1,19 +1,12 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {uniqueId, toBoolean} from '../util/util';
-import {NglButtonIcon} from '../buttons/button-icon';
-import {NglIcon} from '../icons/icon';
-import {NglDatepickerWeekdays} from './weekdays';
-import {NglDay} from './day';
-import {NglDatepickerYear} from './year';
 
 export type NglInternalDate = { year: number, month: number, day: number, disabled?: boolean};
 
 @Component({
   selector: 'ngl-datepicker',
   templateUrl: './datepicker.jade',
-  directives: [NglButtonIcon, NglIcon, NglDay, NglDatepickerWeekdays, NglDatepickerYear],
-  providers: [DatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'aria-hidden': 'false',

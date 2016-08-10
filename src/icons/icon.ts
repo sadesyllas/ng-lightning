@@ -1,5 +1,4 @@
 import {Component, Input, ElementRef, Renderer, ChangeDetectionStrategy, Attribute, Optional} from '@angular/core';
-import {NglIconSvg} from './svg';
 import {toBoolean, replaceClass} from '../util/util';
 import {NglButton} from '../buttons/button';
 import {NglButtonIcon} from '../buttons/button-icon';
@@ -10,7 +9,6 @@ export type NglIconCategory = 'action' | 'custom' | 'doctype' | 'standard' | 'ut
   selector: 'ngl-icon, [ngl-icon]',
   templateUrl: './icon.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [NglIconSvg],
 })
 export class NglIcon {
   _icon: string;

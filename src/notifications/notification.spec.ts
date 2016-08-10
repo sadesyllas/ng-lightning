@@ -1,8 +1,10 @@
-import {inject, async, fakeAsync, tick, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {fakeAsync, tick, TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglNotification} from './notification';
-import {NglNotificationClose} from './notification-close';
-import {provideNglConfig} from '../config/config';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglNotificationsModule} from './module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getCloseButton(fixture: any): HTMLElement {
   return fixture.nativeElement.querySelector('button');
@@ -10,9 +12,10 @@ function getCloseButton(fixture: any): HTMLElement {
 
 describe('`nglNotification`', () => {
 
-  it('should have the proper classes and attributes', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglNotificationsModule]}));
 
+  it('should have the proper classes and attributes', () => {
+    const fixture = createTestComponent();
     const notificationElement = fixture.nativeElement.querySelector('.slds-notify');
 
     expect(notificationElement.getAttribute('role')).toBe('alert');
@@ -33,43 +36,42 @@ describe('`nglNotification`', () => {
 
     const closeButton = getCloseButton(fixture);
     expect(closeButton).toHaveCssClass('slds-notify__close');
-  }));
+  });
 
-  it('should have the proper assistive texts', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should have the proper assistive texts', () => {
+    const fixture = createTestComponent();
     fixture.componentInstance.assistiveText = 'Test of assistive text';
     fixture.componentInstance.closeAssistiveText = 'Test of close assistive text';
-
     fixture.detectChanges();
 
     const assistiveTexts = fixture.nativeElement.querySelectorAll('.slds-assistive-text');
     expect(assistiveTexts.length).toBe(2);
     expect(assistiveTexts[0].textContent).toBe(fixture.componentInstance.assistiveText);
     expect(assistiveTexts[1].textContent).toBe(fixture.componentInstance.closeAssistiveText);
-  }));
+  });
 
-  it('should not have a close button when the nglNotificationClose attribute is absent', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should not have a close button when the nglNotificationClose attribute is absent', () => {
+    const fixture = createTestComponent('<ngl-notification [type]="type" [severity]="severity">');
     const closeButton = getCloseButton(fixture);
     expect(closeButton).toBeFalsy();
-  }, '<ngl-notification [type]="type" [severity]="severity">'));
+  });
 
-  it('should emit a close event when the close button is clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should emit a close event when the close button is clicked', () => {
+    const fixture = createTestComponent();
     const closeButton = getCloseButton(fixture);
     closeButton.click();
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
-  }));
+  });
 
-  it('should emit a close event when its `close` method is called', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should emit a close event when its `close` method is called', () => {
+    const fixture = createTestComponent();
     const externalCloseButton = fixture.nativeElement.querySelector('.boundVarCloser');
     externalCloseButton.click();
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('api');
-  }));
+  });
 
-  it('should emit a close event when the specified timeout has passed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should emit a close event when the specified timeout has passed', fakeAsync(() => {
+    const fixture = createTestComponent();
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -78,9 +80,10 @@ describe('`nglNotification`', () => {
 
     tick(100);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
-  }, null, true));
+  }));
 
-  it('should set the timeout anew when the binding changes', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should set the timeout anew when the binding changes', fakeAsync(() => {
+    const fixture = createTestComponent();
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -91,11 +94,12 @@ describe('`nglNotification`', () => {
     tick(299);
     expect(fixture.componentInstance.onClose).not.toHaveBeenCalled();
 
-    tick(1);
+    tick(10);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
-  }, null, true));
+  }));
 
-  it('should cancel the active timeout after the close button has been clicked', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should cancel the active timeout after the close button has been clicked', fakeAsync(() => {
+    const fixture = createTestComponent();
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -105,23 +109,12 @@ describe('`nglNotification`', () => {
     tick(100);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
     expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
-  }, null, true));
+  }));
 
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null, fake = false) {
-  const injectFn = inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  });
-  return fake ? fakeAsync(injectFn) : async(injectFn);
-}
 
 @Component({
-  directives: [NglNotification, NglNotificationClose],
   template: `
     <ngl-notification [type]="type" [severity]="severity" (nglNotificationClose)="onClose($event)"
       [assistiveText]="assistiveText" [closeAssistiveText]="closeAssistiveText"
@@ -131,13 +124,12 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
     </ngl-notification>
     <button type="button" (click)="notification.close('api')" class="boundVarCloser"></button>
   `,
-  providers: [provideNglConfig()],
 })
 export class TestComponent {
   type = 'toast';
   severity = 'error';
-  assistiveText: '';
-  closeAssistiveText: '';
+  assistiveText: string;
+  closeAssistiveText: string;
   timeout: any = null;
   onClose = jasmine.createSpy('onClose');
 }

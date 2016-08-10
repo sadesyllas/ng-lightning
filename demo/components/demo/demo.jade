@@ -25,7 +25,7 @@ mixin code-preview(comp)
           .slds-col.slds-size--1-of-2
             #{'demo-' + comp.key}
           .slds-col.slds-size--1-of-2
-            .slds-p-horizontal--small.readme!= comp.readme
+            .slds-p-horizontal--small.readme(ngNonBindable)!= comp.readme
         .slds-grid.slds-m-top--large
           .slds-col 
             +code-preview(comp)

@@ -3,7 +3,6 @@ import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';
 
-// Use `@Component` instead of `@Directive` to support `precompile`
 @Directive({
   selector: '[nglPopover]',
 })

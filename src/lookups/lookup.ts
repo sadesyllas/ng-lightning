@@ -1,10 +1,6 @@
 import {Component, ContentChild, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import {NglLookupItemTemplate} from './item';
-import {NglPill} from '../pills/pill';
-import {NglPillRemove} from '../pills/pill-remove';
-import {NglIconSvg} from '../icons/svg';
-import {NglInternalLookupScope} from './scope';
 import {NglLookupScopeItem} from './scope-item';
 import {uniqueId, isObject} from '../util/util';
 
@@ -12,7 +8,6 @@ import {uniqueId, isObject} from '../util/util';
   selector: 'ngl-lookup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './lookup.jade',
-  directives: [NglPill, NglPillRemove, NglIconSvg, NglInternalLookupScope],
   styles: [
     `.slds-dropdown__item--active > a {
         outline: 0;

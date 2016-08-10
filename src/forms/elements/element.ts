@@ -2,12 +2,10 @@ import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, ContentChi
 import {uniqueId} from '../../util/util';
 import {NglFormInput, NglFormCheckbox} from './input';
 import {NglFormLabelTemplate, getFormLabel} from '../form-label';
-import {NglInternalOutlet} from '../../util/outlet';
 
 @Component({
   selector: 'ngl-form-element',
   templateUrl: './element.jade',
-  directives: [NglInternalOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.slds-form-element]': 'true',

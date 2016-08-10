@@ -1,7 +1,11 @@
-import {inject, async, TestComponentBuilder, ComponentFixture} from '@angular/core/testing';
+import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglButtonIcon} from './button-icon';
-import {NglIcon} from '../icons/icon';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglButtonsModule} from './module';
+import {NglIconsModule} from '../icons/module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getButtonElement(element: Element): HTMLButtonElement {
   return <HTMLButtonElement>element.querySelector('button');
@@ -9,7 +13,10 @@ function getButtonElement(element: Element): HTMLButtonElement {
 
 describe('`nglButtonIcon`', () => {
 
-  it('should render the appropriate button icon class based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglButtonsModule, NglIconsModule]}));
+
+  it('should render the appropriate button icon class based on input', () => {
+    const fixture = createTestComponent();
     const {componentInstance, nativeElement} = fixture;
     const button = getButtonElement(nativeElement);
 
@@ -31,53 +38,38 @@ describe('`nglButtonIcon`', () => {
     fixture.detectChanges();
     expect(button).toHaveCssClass('slds-button--icon-border');
     expect(button).not.toHaveCssClass('slds-button--icon-container');
-  }));
+  });
 
-  it('should render the appropriate icon', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should render the appropriate icon', () => {
+    const fixture = createTestComponent();
     const button = getButtonElement(fixture.nativeElement);
     const icon = button.querySelector('svg');
     expect(icon).toHaveCssClass('slds-button__icon');
-  }));
+  });
 
-  it('should render the default button icon when attribute value is empty', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render the default button icon when attribute value is empty', () => {
+    const fixture = createTestComponent(`<button nglButtonIcon=""></button>`);
     const button = getButtonElement(fixture.nativeElement);
     expect(button).toHaveCssClass('slds-button--icon-border');
     expect(button).not.toHaveCssClass('slds-button--icon');
-  }, `<button nglButtonIcon=""></button>`));
+  });
 
-
-  it('should render the default button icon when attribute value is not set', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render the default button icon when attribute value is not set', () => {
+    const fixture = createTestComponent(`<button nglButtonIcon></button>`);
     const button = getButtonElement(fixture.nativeElement);
     expect(button).not.toHaveCssClass('slds-button--icon');
     expect(button).toHaveCssClass('slds-button--icon-border');
-  }, `<button nglButtonIcon></button>`));
+  });
 
-  it('should render the bare button for \'\'', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it(`should render the bare button for ''`, () => {
+    const fixture = createTestComponent(`<button nglButtonIcon="''"></button>`);
     const button = getButtonElement(fixture.nativeElement);
     expect(button).toHaveCssClass('slds-button--icon');
     expect(button).not.toHaveCssClass('slds-button--icon-border');
-  }, `<button nglButtonIcon="''"></button>`));
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglButtonIcon, NglIcon],
   template: `<button [nglButtonIcon]="style"><ngl-icon icon="add"></ngl-icon></button>`,
 })
 export class TestComponent {

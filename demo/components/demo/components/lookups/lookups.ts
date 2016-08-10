@@ -1,13 +1,10 @@
 import {Component} from '@angular/core';
-import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
-import {HTTP_PROVIDERS, Http, Response} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'demo-lookups',
-  directives: [NGL_DIRECTIVES],
   template: require('./lookups.html'),
-  providers: [HTTP_PROVIDERS],
 })
 export class DemoLookups {
 

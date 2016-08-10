@@ -1,9 +1,12 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglPill} from './pill';
-import {NglPillImage} from './pill-image';
-import {NglAvatar} from '../images/avatar';
 import {getPill} from './pill.spec';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglPillsModule} from './module';
+import {NglImagesModule} from '../images/module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getIcon(element: HTMLElement): any {
   const pill = getPill(element);
@@ -12,36 +15,25 @@ function getIcon(element: HTMLElement): any {
 
 describe('NglPill', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglPillsModule, NglImagesModule]}));
 
+  it('should render correctly', () => {
+    const fixture = createTestComponent();
     const icon = getIcon(fixture.nativeElement);
     expect(icon).toHaveCssClass('slds-pill__icon');
-  }));
+  });
 
-  it('should not conflict with avatars', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should not conflict with avatars', () => {
+    const fixture = createTestComponent(`<ngl-pill><ngl-avatar nglPillImage></ngl-avatar>I am a pill!</ngl-pill>`);
     const icon = getIcon(fixture.nativeElement);
     expect(icon).toHaveCssClass('slds-pill__icon');
     expect(icon).toHaveCssClass('slds-avatar');
     expect(icon).not.toHaveCssClass('slds-avatar--medium');
-  }, `<ngl-pill><ngl-avatar nglPillImage></ngl-avatar>I am a pill!</ngl-pill>`));
+  });
 
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglPill, NglPillImage, NglAvatar],
   template: `
     <ngl-pill>
       <svg nglPillImage></svg>

@@ -1,7 +1,7 @@
 /**
  * Testing helpers
  */
-import {addProviders, ComponentFixture} from '@angular/core/testing';
+import {addProviders, TestBed, ComponentFixture} from '@angular/core/testing';
 import {provideNglConfig} from '../../src/config/config';
 
 // Default configuration for every TestComponent
@@ -28,4 +28,16 @@ export function dispatchEvent(el: HTMLElement, type: string, canBubble = true) {
   const evt = document.createEvent('HTMLEvents');
   evt.initEvent(type, canBubble, true);
   el.dispatchEvent(evt);
+}
+
+// Shortcut function for less boilerplate
+export function createGenericTestComponent<T>(type: {new (...args: any[]): T}, html?: string, detectChanges = true): ComponentFixture<T> {
+  if (html) {
+    TestBed.overrideComponent(type, {set: {template: html}});
+  }
+  const fixture = TestBed.createComponent(type);
+  if (detectChanges) {
+    fixture.detectChanges();
+  }
+  return fixture as ComponentFixture<T>;
 }

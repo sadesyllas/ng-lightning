@@ -1,12 +1,9 @@
 import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter, HostListener, ViewChild, ContentChild} from '@angular/core';
 import {toBoolean, uniqueId} from '../util/util';
-import {NglButtonIcon} from '../buttons/button-icon';
-import {NglIcon} from '../icons/icon';
 import {NglModalFooter} from './footer';
 
 @Component({
   selector: 'ngl-modal',
-  directives: [NglButtonIcon, NglIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './modal.jade',
   host: {

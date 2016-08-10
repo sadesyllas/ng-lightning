@@ -1,11 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglFormLabelTemplate} from './form-label';
-import {NglFormElement} from './elements/element';
-import {NglFormInput} from './elements/input';
-import {NglFormGroupAlternate} from './groups/group-alt';
-import {NglFormGroupElement} from './groups/element';
-import {NglFormGroupCheckbox} from './groups/input';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglFormsModule} from './module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 export function getLabelElement(element: Element): HTMLLabelElement {
   return <HTMLLabelElement>element.querySelector('.slds-form-element__label');
@@ -13,52 +12,39 @@ export function getLabelElement(element: Element): HTMLLabelElement {
 
 describe('`NglFormLabelTemplate`', () => {
 
-  it('should render correctly inside form element', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglFormsModule]}));
 
-    const labelEl = getLabelElement(fixture.nativeElement);
-    expect(labelEl).toHaveText('My Label');
-  }, `<ngl-form-element>
+  it('should render correctly inside form element', () => {
+    const fixture = createTestComponent(`
+      <ngl-form-element>
         <template nglFormLabel>{{ label }}</template>
         <input type="text">
-      </ngl-form-element>`
-  ));
-
-  it('should render correctly inside form group', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+      </ngl-form-element>`);
     const labelEl = getLabelElement(fixture.nativeElement);
     expect(labelEl).toHaveText('My Label');
-  }, `<fieldset ngl-form-group-alt><template nglFormLabel>{{ label }}</template></fieldset>`));
+  });
 
-  it('should render correctly inside form group element', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render correctly inside form group', () => {
+    const fixture = createTestComponent(`<fieldset ngl-form-group-alt><template nglFormLabel>{{ label }}</template></fieldset>`);
     const labelEl = getLabelElement(fixture.nativeElement);
     expect(labelEl).toHaveText('My Label');
+  });
 
-    expect(fixture.nativeElement.querySelector('label').textContent.trim()).toBe('Checkbox label');
-  }, `<fieldset ngl-form-group-alt>
+  it('should render correctly inside form group element', () => {
+    const fixture = createTestComponent(`
+      <fieldset ngl-form-group-alt>
         <template nglFormLabel>{{ label }}</template>
         <label ngl-form-group-element><template nglFormLabel>Checkbox label</template><input type="checkbox" /></label>
-      </fieldset>`));
+      </fieldset>`);
+
+    const labelEl = getLabelElement(fixture.nativeElement);
+    expect(labelEl).toHaveText('My Label');
+    expect(fixture.nativeElement.querySelector('label').textContent.trim()).toBe('Checkbox label');
+  });
 });
 
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
-@Component({
-  directives: [NglFormLabelTemplate, NglFormElement, NglFormInput, NglFormGroupAlternate, NglFormGroupElement, NglFormGroupCheckbox],
-  template: '',
-})
+@Component({ template: '' })
 export class TestComponent {
   label = 'My Label';
 }

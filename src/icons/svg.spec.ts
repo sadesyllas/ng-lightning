@@ -1,21 +1,31 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglIconSvg} from './svg';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglIconsModule} from './module';
 import {provideNglConfig} from '../config/config';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 describe('SVG icon Component', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({
+    declarations: [TestComponent],
+    imports: [NglIconsModule],
+    providers: [provideNglConfig({svgPath: '/mypath'})],
+  }));
 
+  it('should render correctly', () => {
+    const fixture = createTestComponent(`<svg nglIcon="warning"></svg>`);
     const svg = fixture.nativeElement.firstElementChild;
     const use = svg.querySelector('use');
 
     expect(svg.getAttribute('aria-hidden')).toBe('true');
     expect(use.getAttribute('xlink:href')).toBe('/mypath/utility-sprite/svg/symbols.svg#warning');
-  }, `<svg nglIcon="warning"></svg>`));
+  });
 
-  it('should change `use` path based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should change `use` path based on input', () => {
+    const fixture = createTestComponent(`<svg [nglIcon]="icon" [nglIconCategory]="category"></svg>`, false);
     fixture.componentInstance.icon = 'icon1';
     fixture.componentInstance.category = 'custom';
     fixture.detectChanges();
@@ -27,20 +37,12 @@ describe('SVG icon Component', () => {
     fixture.componentInstance.category = 'standard';
     fixture.detectChanges();
     expect(use.getAttribute('xlink:href')).toBe('/mypath/standard-sprite/svg/symbols.svg#icon2');
-  }, `<svg [nglIcon]="icon" [nglIconCategory]="category"></svg>`));
+  });
 
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return tcb.overrideTemplate(TestComponent, html).createAsync(TestComponent).then(fn);
-  }));
+@Component({ template: '' })
+export class TestComponent {
+  icon: string;
+  category: string;
 }
-
-@Component({
-  directives: [NglIconSvg],
-  template: '',
-  providers: [provideNglConfig({svgPath: '/mypath'})],
-})
-export class TestComponent {}

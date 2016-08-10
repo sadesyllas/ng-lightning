@@ -1,12 +1,10 @@
 import {Component, Input, ChangeDetectionStrategy, HostBinding, ContentChild, TemplateRef} from '@angular/core';
 import {uniqueId} from '../../util/util';
 import {NglFormLabelTemplate, getFormLabel} from '../form-label';
-import {NglInternalOutlet} from '../../util/outlet';
 
 @Component({
   selector: 'fieldset[ngl-form-group]',
   templateUrl: './group.jade',
-  directives: [NglInternalOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.slds-form-element]': 'true',

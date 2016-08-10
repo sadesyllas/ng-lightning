@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
-import {NGL_DIRECTIVES} from '../../../../../dist/ng-lightning';
 
 @Component({
   selector: 'demo-badges',
-  directives: [NGL_DIRECTIVES],
   template: require('./badges.html'),
 })
 export class DemoBadges {

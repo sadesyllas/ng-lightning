@@ -1,7 +1,6 @@
-.slds-section__title
-  h3.slds-section__title-action((click)="toggle($event)")
-    button(type="button", nglButtonIcon="container")
-      ngl-icon(icon="switch")
+h3.slds-section__title
+  button.slds-button.slds-section__title-action(type="button", (click)="toggle($event)")
+    svg.slds-section__title-action-icon.slds-button__icon.slds-button__icon--left(nglIcon="switch")
     | {{title}}
 .slds-section__content
   ng-content

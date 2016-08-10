@@ -1,9 +1,11 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {getDOM} from '@angular/platform-browser/src/dom/dom_adapter';
 import {Component} from '@angular/core';
-import {NglPopover} from './popover';
-import {NglPopoverTrigger} from './trigger';
-import {NGL_POPOVER_PRECOMPILE} from './directives';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglPopoversModule} from './module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 export function getPopoverElement(element: HTMLElement): HTMLElement {
   return <HTMLElement>element.querySelector('ngl-popover');
@@ -11,50 +13,48 @@ export function getPopoverElement(element: HTMLElement): HTMLElement {
 
 describe('Popovers', () => {
 
-  it('should render popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglPopoversModule]}));
 
+  it('should render popover correctly', () => {
+    const fixture = createTestComponent(`<ngl-popover>My content</ngl-popover>`);
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toHaveCssClass('slds-popover');
     expect(popoverEl.textContent.trim()).toBe('My content');
     expect(getDOM().getStyle(popoverEl, 'position')).toEqual('absolute');
-  }, `<ngl-popover>My content</ngl-popover>`));
+  });
 
-  it('should notify when view is initialized', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.componentInstance.cb = jasmine.createSpy('afterViewInit');
+  it('should notify when view is initialized', () => {
+    const fixture = createTestComponent(`<ngl-popover (afterViewInit)="cb()">My content</ngl-popover>`, false);
+    expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
     fixture.detectChanges();
     expect(fixture.componentInstance.cb).toHaveBeenCalled();
-  }, `<ngl-popover (afterViewInit)="cb()">My content</ngl-popover>`));
+  });
 
-  it('should render the created popover correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render the created popover correctly', () => {
+    const fixture = createTestComponent();
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toHaveCssClass('slds-popover');
     expect(popoverEl).toHaveCssClass('slds-nubbin--bottom'); // Top placement
     expect(popoverEl.textContent.trim()).toBe('I am a tooltip');
-  }));
+  });
 
-  it('should render popover with string content', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should render popover with string content', () => {
+    const fixture = createTestComponent(`<span nglPopover="I am a string" nglOpen="true"></span>`);
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl.textContent.trim()).toBe('I am a string');
-  }, `<span nglPopover="I am a string" nglOpen="true"></span>`));
+  });
 
-  it('should change visibility based on trigger', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should change visibility based on trigger', () => {
+    const fixture = createTestComponent();
     fixture.componentInstance.open = false;
     fixture.detectChanges();
 
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toBeFalsy();
-  }));
+  });
 
-  it('should change nubbin based on placement', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should change nubbin based on placement', () => {
+    const fixture = createTestComponent();
     const { nativeElement, componentInstance } = fixture;
     const popoverEl = getPopoverElement(nativeElement);
 
@@ -67,11 +67,10 @@ describe('Popovers', () => {
     fixture.detectChanges();
     expect(popoverEl).toHaveCssClass('slds-nubbin--top');
     expect(popoverEl).not.toHaveCssClass('slds-nubbin--right');
-  }));
+  });
 
-  it('should change theme based on input', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should change theme based on input', () => {
+    const fixture = createTestComponent();
     const { nativeElement, componentInstance } = fixture;
     const popoverEl = getPopoverElement(nativeElement);
 
@@ -90,15 +89,16 @@ describe('Popovers', () => {
     componentInstance.theme = null;
     fixture.detectChanges();
     expect(popoverEl).not.toHaveCssClass('slds-theme--error');
-  }));
+  });
 
-  it('should have tooltip appearence', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should have tooltip appearence', () => {
+    const fixture = createTestComponent(`<template #tip></template><span [nglPopover]="tip" nglOpen="true" nglTooltip></span>`);
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toHaveCssClass('slds-popover--tooltip');
-  }, `<template #tip></template><span [nglPopover]="tip" nglOpen="true" nglTooltip></span>`));
+  });
 
-  it('should destroy popover when host is destroyed', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should destroy popover when host is destroyed', () => {
+    const fixture = createTestComponent(`<template #tip></template><span *ngIf="exists" [nglPopover]="tip" nglOpen="true"></span>`, false);
     fixture.componentInstance.exists = true;
     fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
@@ -106,29 +106,20 @@ describe('Popovers', () => {
     fixture.componentInstance.exists = false;
     fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-  }, `<template #tip></template><span *ngIf="exists" [nglPopover]="tip" nglOpen="true"></span>`));
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglPopover, NglPopoverTrigger],
   template: `
     <template #tip>I am a tooltip</template>
     <span [nglPopover]="tip" [nglPopoverPlacement]="placement" [nglPopoverTheme]="theme" [nglOpen]="open">Open here</span>
   `,
-  precompile: [NGL_POPOVER_PRECOMPILE],
 })
 export class TestComponent {
   placement: string;
   open = true;
+  exists: boolean;
   theme: string;
+
+  cb = jasmine.createSpy('cb');
 }

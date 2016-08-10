@@ -1,11 +1,12 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement} from '@angular/core';
-import {NglPick} from '../../pick/pick';
-import {NglPicklist} from './picklist';
-import {NglPicklistItemTemplate} from './item';
-import {dispatchEvent, dispatchKeyEvent} from '../../../test/util/helpers';
+import {createGenericTestComponent, dispatchEvent, dispatchKeyEvent} from '../../../test/util/helpers';
+import {NglMenusModule} from '../module';
 import {getOptionElements} from './picklist.spec';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getDropdownTrigger(fixture: ComponentFixture<TestComponent>): HTMLElement {
   return fixture.debugElement.query(By.css('[nglDropdownTrigger]')).nativeElement;
@@ -22,8 +23,10 @@ function getDisplayedItems(fixture: ComponentFixture<TestComponent>): string[] {
 
 describe('Picklist filter', () => {
 
-  it('should be focused when the dropdown is opened', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglMenusModule]}));
+
+  it('should be focused when the dropdown is opened', () => {
+    const fixture = createTestComponent();
     const dropdownFilter = getDropdownFilter(fixture);
     expect(dropdownFilter).not.toBe(document.activeElement);
 
@@ -32,10 +35,10 @@ describe('Picklist filter', () => {
     setTimeout(() => {
       expect(dropdownFilter).toBe(document.activeElement);
     });
-  }));
+  });
 
-  it('should show only items matching the filter value', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should show only items matching the filter value', () => {
+    const fixture = createTestComponent();
     const dropdownTrigger = getDropdownTrigger(fixture);
     const dropdownFilter = getDropdownFilter(fixture);
 
@@ -71,9 +74,10 @@ describe('Picklist filter', () => {
     fixture.detectChanges();
 
     expect(getDisplayedItems(fixture)).toEqual(['Item 1', 'Item 2', 'Item 3']);
-  }));
+  });
 
-  it('should be able to select with keyboard', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should be able to select with keyboard', () => {
+    const fixture = createTestComponent();
     fixture.componentInstance.open = true;
     fixture.detectChanges();
 
@@ -89,9 +93,10 @@ describe('Picklist filter', () => {
     dispatchKeyEvent(fixture, By.css('input'), 'keydown.enter');
     fixture.detectChanges();
     expect(fixture.componentInstance.pick).toBe(fixture.componentInstance.items[1]);
-  }));
+  });
 
-  it('should update active option when hovered', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should update active option when hovered', () => {
+    const fixture = createTestComponent();
     fixture.componentInstance.open = true;
     fixture.detectChanges();
 
@@ -104,36 +109,28 @@ describe('Picklist filter', () => {
     dispatchEvent(options[2], 'mouseover');
     fixture.detectChanges();
     expect(options[2]).toHaveCssClass('slds-is-active');
-  }));
+  });
 
-  it('should not select with keyboard if not valid', testAsync((fixture: ComponentFixture<TestComponent>) => {
+  it('should not select with keyboard if not valid', () => {
+    const fixture = createTestComponent(null, false);
     fixture.componentInstance.open = true;
     fixture.detectChanges();
 
     const dropdownFilter = getDropdownFilter(fixture);
 
-    dropdownFilter.value = 'nothing';
-    dispatchEvent(dropdownFilter, 'input');
-    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      dropdownFilter.value = 'nothing';
+      dispatchEvent(dropdownFilter, 'input');
+      fixture.detectChanges();
 
-    dispatchKeyEvent(fixture, By.css('input'), 'keydown.enter');
-    fixture.detectChanges();
-    expect(fixture.componentInstance.pick).toEqual([]);
-  }));
+      dispatchKeyEvent(fixture, By.css('input'), 'keydown.enter');
+      fixture.detectChanges();
+      expect(fixture.componentInstance.pick).toEqual([]);
+    });
+  });
 });
 
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglPick, NglPicklist, NglPicklistItemTemplate],
   template: `
     <ngl-picklist [data]="items" [(nglPick)]="pick" [open]="open" (openChange)="openChange($enent)" filter="value">
       <template nglPicklistItem let-item>{{item.value}}</template>

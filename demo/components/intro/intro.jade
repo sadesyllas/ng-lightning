@@ -58,27 +58,18 @@ mixin prism(html)
 
   .slds-p-vertical--large
     .slds-text-heading--large.slds-m-bottom--large Usage
-    p.slds-m-bottom--small 
-      | Configure&nbsp;
-      code ng-lightning
-      | &nbsp;when your Angular 2 application is bootstraping:
+    p Once installed you need to import our main module into your application module.
+    p.slds-m-bottom--small You should end up with code similar to this:
     +prism(usageApp)
       
-    p.slds-m-top--small Currently available options:
+    p.slds-m-top--small
+      | Currently available options to configure&nbsp;
+      code ng-lightning
+      | &nbsp;through&nbsp;
+      i provideNglConfig
+      | &nbsp;are:
     ul.slds-list--dotted
       li 
         b svgPath
         | : path to SVG sprites. Default is&nbsp;
         code assets/icons
-        
-    p.slds-m-bottom--small.slds-m-top--large 
-      | Also, in the root component of your application add 
-      code NGL_PRECOMPILE
-      | &nbsp;into the `precompile` property:
-    +prism(usagePrecompile)
-      
-    p.slds-m-bottom--small.slds-m-top--large 
-      | Then, you can use all the&nbsp;
-      code ng-lightning
-      | &nbsp;directives in your own components like this:
-    +prism(usageCmp)

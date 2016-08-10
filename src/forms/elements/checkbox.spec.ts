@@ -1,15 +1,18 @@
-import {inject, async, TestComponentBuilder, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglFormElement} from './element';
-import {NglFormCheckbox} from './input';
-import {NglFormElementRequired} from './required';
+import {createGenericTestComponent} from '../../../test/util/helpers';
+import {NglFormsModule} from '../module';
 import {getLabelElement, getRequiredElement} from './input.spec';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 describe('`NglFormCheckbox`', () => {
 
-  it('should render correctly', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglFormsModule]}));
 
+  it('should render correctly', () => {
+    const fixture = createTestComponent();
     const element = fixture.nativeElement.firstElementChild;
     expect(element).toHaveCssClass('slds-form-element');
 
@@ -18,10 +21,10 @@ describe('`NglFormCheckbox`', () => {
     expect(labelEl).toHaveCssClass('slds-checkbox');
 
     expect(element.querySelector('input[type=checkbox]')).not.toBeNull();
-  }));
+  });
 
-  it('should hook label indication on input required', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  it('should hook label indication on input required', () => {
+    const fixture = createTestComponent(`<ngl-form-element><input type="checkbox" [required]="required" /></ngl-form-element>`);
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
 
     fixture.componentInstance.required = true;
@@ -32,23 +35,11 @@ describe('`NglFormCheckbox`', () => {
     fixture.componentInstance.required = false;
     fixture.detectChanges();
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
-  }, `<ngl-form-element><input type="checkbox" [required]="required" /></ngl-form-element>`));
+  });
 
 });
 
-
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    if (html) {
-      tcb = tcb.overrideTemplate(TestComponent, html);
-    }
-    return tcb.createAsync(TestComponent).then(fn);
-  }));
-}
-
 @Component({
-  directives: [NglFormElement, NglFormCheckbox, NglFormElementRequired],
   template: `
     <ngl-form-element [nglFormLabel]="label">
       <input type="checkbox" />
@@ -57,4 +48,5 @@ function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: s
 })
 export class TestComponent {
   label: string = 'My label';
+  required: boolean;
 }

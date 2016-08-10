@@ -1,13 +1,10 @@
 import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, ElementRef, Renderer} from '@angular/core';
 import {NglLookupScopeItem} from './scope-item';
-import {NGL_DROPDOWN_DIRECTIVES} from '../menus/directives';
-import {NglIconSvg} from '../icons/svg';
 
 @Component({
   selector: 'ngl-internal-lookup-scope',
   templateUrl: './scope.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [NglIconSvg, NGL_DROPDOWN_DIRECTIVES],
 })
 export class NglInternalLookupScope {
   @Input() scope: NglLookupScopeItem;

@@ -1,6 +1,10 @@
-import {inject, async, TestComponentBuilder, ComponentFixture} from '@angular/core/testing';
+import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {Component} from '@angular/core';
-import {NglBadge} from './badge';
+import {createGenericTestComponent} from '../../test/util/helpers';
+import {NglBadgesModule} from './module';
+
+const createTestComponent = (html?: string, detectChanges?: boolean) =>
+  createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
 
 function getBadgeElement(element: Element): HTMLSpanElement {
   return <HTMLSpanElement>element.querySelector('span');
@@ -8,17 +12,17 @@ function getBadgeElement(element: Element): HTMLSpanElement {
 
 describe('Badge Component', () => {
 
-  it('should render the badge element with default class', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglBadgesModule]}));
 
+  it('should render the badge element with default class', () => {
+    const fixture = createTestComponent(`<ngl-badge></ngl-badge>`);
     const badge = getBadgeElement(fixture.nativeElement);
     expect(badge).toBeDefined();
     expect(badge.classList.toString()).toEqual('slds-badge');
-  }, `<ngl-badge></ngl-badge>`));
+  });
 
-  it('should have the appropriate classes for the selected type', testAsync((fixture: ComponentFixture<TestComponent>) => {
-    fixture.detectChanges();
-
+  it('should have the appropriate classes for the selected type', () => {
+    const fixture = createTestComponent(`<ngl-badge [type]="type"></ngl-badge>`);
     const { componentInstance, nativeElement } = fixture;
 
     const badge = getBadgeElement(nativeElement);
@@ -31,22 +35,11 @@ describe('Badge Component', () => {
     componentInstance.type = null;
     fixture.detectChanges();
     expect(badge.classList.toString()).toEqual('slds-badge');
-  }, `<ngl-badge [type]="type"></ngl-badge>`));
+  });
 
 });
 
-
-// Shortcut function for less boilerplate on each `it`
-function testAsync(fn: (value: ComponentFixture<TestComponent>) => void, html: string = null) {
-  return async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return tcb.overrideTemplate(TestComponent, html).createAsync(TestComponent).then(fn);
-  }));
-}
-
-@Component({
-  directives: [NglBadge],
-  template: ``,
-})
+@Component({ template: '' })
 export class TestComponent {
   type: string = 'default';
 }

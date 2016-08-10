@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import {NGL_DIRECTIVES, INglDatatableSort} from '../../../../../dist/ng-lightning';
+import {INglDatatableSort} from '../../../../../dist/ng-lightning';
 
 @Component({
   selector: 'demo-datatables',
-  directives: [NGL_DIRECTIVES],
   template: require('./datatables.html'),
 })
 export class DemoDatatables {

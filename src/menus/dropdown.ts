@@ -15,7 +15,8 @@ export class NglDropdown implements OnInit, OnDestroy {
   @Input('open') set isOpen(isOpen: boolean | string) {
     isOpen = toBoolean(isOpen);
     if (isOpen) {
-      setTimeout(() => this._subscribeToGlobalClickEvents());
+      this.clearGlobalClickTimeout();
+      this.globalClickTimeout = setTimeout(() => this._subscribeToGlobalClickEvents());
     } else {
       this._unsubscribeFromGlobalClickEvents();
     }
@@ -37,6 +38,7 @@ export class NglDropdown implements OnInit, OnDestroy {
   private _isOpen = false;
   private openEventSubscription: any;
   private clickEventUnsubscriber: Function = null;
+  private globalClickTimeout: number;
 
   @HostListener('keydown.esc', ['"esc"'])
   @HostListener('keydown.tab', ['"tab"'])
@@ -60,6 +62,7 @@ export class NglDropdown implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.clearGlobalClickTimeout();
     this.openEventSubscription.unsubscribe();
     this._unsubscribeFromGlobalClickEvents();
   }
@@ -96,6 +99,10 @@ export class NglDropdown implements OnInit, OnDestroy {
       this.clickEventUnsubscriber();
       this.clickEventUnsubscriber = null;
     }
+  }
+
+  private clearGlobalClickTimeout() {
+    clearTimeout(this.globalClickTimeout);
   }
 
   private focusItem(direction: 'next' | 'previous') {
