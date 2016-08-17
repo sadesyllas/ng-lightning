@@ -45,7 +45,15 @@ describe('Picklist filter', () => {
     dropdownTrigger.click();
     fixture.detectChanges();
 
+    expect(getDisplayedItems(fixture)).toEqual(['Item 1', 'Item 2', 'Item 3']);
+
     dropdownFilter.value = 'item';
+    dispatchEvent(dropdownFilter, 'input');
+    fixture.detectChanges();
+
+    expect(getDisplayedItems(fixture)).toEqual(['Item 1', 'Item 2', 'Item 3']);
+
+    dropdownFilter.value = 'Item';
     dispatchEvent(dropdownFilter, 'input');
     fixture.detectChanges();
 

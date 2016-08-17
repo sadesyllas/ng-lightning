@@ -90,13 +90,13 @@ export class NglPicklist {
   }
 
   _filterData() {
-    if (!this.data || !this.filterType) {
+    if (!this.data || !this.filterType || !this.filter) {
       return this.data;
     }
     const filter = <any>this.filterType;
     switch (typeof(filter)) {
       case 'string':
-        return this.data.filter(d => (filter ? d[filter] : d.toString()).toLowerCase().indexOf(this.filter) !== -1);
+        return this.data.filter(d => (filter ? d[filter] : d.toString()).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1);
       case 'function':
         return this.data.filter(filter);
       default:
