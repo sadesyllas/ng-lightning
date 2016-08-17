@@ -1,7 +1,7 @@
 <div class="slds-grid">
   <div class="slds-col">
     <div class="slds-text-heading--label slds-m-bottom--x-small">Utility</div>
-    <ngl-icon icon="connected_apps"></ngl-icon>
+    <ngl-icon icon="connected_apps" type="default"></ngl-icon>
     <ngl-icon icon="warning" type="warning" alt="Warning"></ngl-icon>
     <ngl-icon icon="close" type="error"></ngl-icon>
   </div>
@@ -38,6 +38,6 @@
 <div class="slds-grid slds-m-top--large" style="height: 50px;">
  <div class="slds-align-middle slds-col">
    <button type="button" nglButton="neutral" (click)="change()">Change</button>
-   <ngl-icon [icon]="icon.icon" [size]="icon.size" [category]="icon.category"></ngl-icon>
+   <ngl-icon [icon]="icon.icon" [size]="icon.size" [category]="icon.category" [type]="icon.type"></ngl-icon>
  </div>
 </div>

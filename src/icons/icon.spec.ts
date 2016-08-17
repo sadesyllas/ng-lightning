@@ -34,7 +34,9 @@ describe('Icon Component', () => {
 
     expect(host).not.toHaveCssClass('slds-icon_container');
     expect(icon).toHaveCssClass('slds-icon');
-    expect(icon).toHaveCssClass('slds-icon-text-default');
+    expect(icon).not.toHaveCssClass('slds-icon-text-error');
+    expect(icon).not.toHaveCssClass('slds-icon-text-warning');
+    expect(icon).not.toHaveCssClass('slds-icon-text-default');
     expect(use.getAttribute('xlink:href')).toBe('/mypath/utility-sprite/svg/symbols.svg#warning');
     expect(assistiveText).toEqual('Help!');
   });
@@ -44,15 +46,23 @@ describe('Icon Component', () => {
     const { nativeElement, componentInstance } = fixture;
     const { icon } = getElements(nativeElement);
 
+    componentInstance.type = 'default';
+    fixture.detectChanges();
+    expect(icon).toHaveCssClass('slds-icon-text-default');
+    expect(icon).not.toHaveCssClass('slds-icon-text-error');
+    expect(icon).not.toHaveCssClass('slds-icon-text-warning');
+
     componentInstance.type = 'warning';
     fixture.detectChanges();
     expect(icon).toHaveCssClass('slds-icon-text-warning');
+    expect(icon).not.toHaveCssClass('slds-icon-text-error');
     expect(icon).not.toHaveCssClass('slds-icon-text-default');
 
     componentInstance.type = 'error';
     fixture.detectChanges();
     expect(icon).toHaveCssClass('slds-icon-text-error');
     expect(icon).not.toHaveCssClass('slds-icon-text-warning');
+    expect(icon).not.toHaveCssClass('slds-icon-text-default');
 
     componentInstance.type = 'false';
     fixture.detectChanges();
@@ -114,7 +124,7 @@ describe('Icon Component', () => {
     fixture.detectChanges();
     expect(host).not.toHaveCssClass('slds-icon_container');
     expect(host).not.toHaveCssClass('slds-icon-standard-add');
-    expect(icon).toHaveCssClass('slds-icon-text-default');
+    expect(icon).not.toHaveCssClass('slds-icon-text-default');
     expect(use.getAttribute('xlink:href')).toBe('/mypath/utility-sprite/svg/symbols.svg#add');
   });
 

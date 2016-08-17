@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 export class DemoIcons {
 
   icons = [
-    { icon: 'announcement' },
+    { icon: 'announcement', type: 'default' },
     { category: 'standard', icon: 'case_comment', size: 'large' },
     { category: 'custom', icon: '2', size: 'large' },
   ];

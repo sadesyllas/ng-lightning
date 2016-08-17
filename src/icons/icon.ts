@@ -59,8 +59,8 @@ export class NglIcon {
       classes.push(`${prefix}--${this.size}`);
     }
 
-    if (this.type || (this.category === 'utility' && !this.button)) {
-      classes.push(`slds-icon-text-${this.type || 'default'}`);
+    if (this.type) {
+      classes.push(`slds-icon-text-${this.type}`);
     }
 
     if (this.align || this.state) {
