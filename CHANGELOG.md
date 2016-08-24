@@ -1,3 +1,23 @@
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/ng-lightning/ng-lightning/compare/v0.17.0...v0.18.0) (2016-08-24)
+
+
+### Bug Fixes
+
+* **pagination:** bound start page by total elements ([ee08318](https://github.com/ng-lightning/ng-lightning/commit/ee08318)), closes [#178](https://github.com/ng-lightning/ng-lightning/issues/178)
+
+
+### Features
+
+* **app:** upgrade Angular 2 to rc.5 and [@NgModule](https://github.com/NgModule) ([7b3a902](https://github.com/ng-lightning/ng-lightning/commit/7b3a902)), closes [#182](https://github.com/ng-lightning/ng-lightning/issues/182)
+
+
+### BREAKING CHANGES
+
+* app: use `@NgModule` to setup your application. Check the `Usage` section for more details.
+
+
+
 <a name="0.17.0"></a>
 # [0.17.0](https://github.com/ng-lightning/ng-lightning/compare/v0.16.0...v0.17.0) (2016-08-08)
 
