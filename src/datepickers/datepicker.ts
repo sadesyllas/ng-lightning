@@ -1,5 +1,4 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
-import {DatePipe} from '@angular/common';
 import {uniqueId, toBoolean} from '../util/util';
 
 export type NglInternalDate = { year: number, month: number, day: number, disabled?: boolean};
@@ -18,6 +17,10 @@ export type NglInternalDate = { year: number, month: number, day: number, disabl
 export class NglDatepicker {
   date: NglInternalDate;
   current: NglInternalDate;
+
+  @Input() monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  @Input() dayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  @Input() dayNamesLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursda', 'Friday', 'Saturday'];
 
   @Input('date') set _date(date: Date) {
     this.date = this.parseDate(date);
@@ -38,7 +41,7 @@ export class NglDatepicker {
   uid = uniqueId('datepicker');
   private monthLabel: string;
 
-  constructor(private datePipe: DatePipe) {}
+  constructor() {}
 
   moveYear(year: string | number) {
     this.current.year = +year;
@@ -119,7 +122,7 @@ export class NglDatepicker {
     }
 
     const { year, month, day } = this.current;
-    this.monthLabel = this.datePipe.transform(new Date(year, month, 1), 'MMMM');
+    this.monthLabel = this.monthNames[month];
 
     const days = this.daysInMonth(year, month);
 

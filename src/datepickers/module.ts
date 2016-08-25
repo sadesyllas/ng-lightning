@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule, DatePipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {NglIconsModule} from '../icons/module';
 
@@ -13,6 +13,5 @@ import {NglDatepickerYear} from './year';
   declarations: [NglDatepicker, NglDay, NglDatepickerWeekdays, NglDatepickerYear],
   exports: [NglDatepicker],
   imports: [CommonModule, FormsModule, NglIconsModule],
-  providers: [DatePipe],
 })
 export class NglDatepickersModule {}

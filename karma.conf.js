@@ -22,9 +22,6 @@ module.exports = function(config) {
         // Polyfills
         {pattern: 'node_modules/core-js/client/core.js', included: true, watched: false},
 
-        // Intl pollyfill
-        'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
-
         // Typescript helpers polyfill
         {pattern: 'node_modules/ts-helpers/index.js', included: true, watched: false},
 

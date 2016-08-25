@@ -77,7 +77,7 @@ function expectCalendar(fixture: ComponentFixture<TestComponent>, expectedDates:
     expect(dates).toEqual(expectedDates);
 
     const month = removeNonPrintable(element.querySelector('h2.slds-align-middle').textContent.trim());
-    expect(expectedMonth.substring(0, month.length)).toEqual(month); // TODO: remove this Safari workaround!!!
+    expect(expectedMonth).toEqual(month);
 
     const year = (<HTMLSelectElement>element.querySelector('select.slds-select')).value;
     expect(expectedYear).toEqual(year);
@@ -354,6 +354,24 @@ describe('`Datepicker` Component', () => {
 
     jasmine.clock().uninstall();
   });
+
+  it('should support custom month and day names', () => {
+    const currentDate = new Date(2005, 10, 9); // 9 November 2005
+    jasmine.clock().mockDate(currentDate);
+
+    const fixture = createTestComponent(`<ngl-datepicker [date]="date" [monthNames]="customMonths" [dayNamesShort]="customDays" showToday="false"></ngl-datepicker>`);
+    expectCalendar(fixture, [
+      ['29-', '30-', '31-', '01', '02', '03', '04'],
+      ['05', '06', '07', '08', '09', '10', '11'],
+      ['12', '13', '14', '15', '16', '17', '18'],
+      ['19', '20', '21', '22', '23', '24', '25'],
+      ['26', '27', '28', '29', '*30+', '01-', '02-'],
+    ], 'Sep', '2010').then(() => {
+      expect(getDayHeaders(fixture.nativeElement)).toEqual([ 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7' ]);
+    });
+
+    jasmine.clock().uninstall();
+  });
 });
 
 
@@ -364,4 +382,7 @@ export class TestComponent {
   date = new Date(2010, 8, 30); // 30 September 2010
   showToday: boolean;
   dateChange = jasmine.createSpy('dateChange');
+
+  customMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  customDays = [ 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7' ];
 }
