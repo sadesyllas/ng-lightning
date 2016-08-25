@@ -1,3 +1,23 @@
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/ng-lightning/ng-lightning/compare/v0.18.0...v0.19.0) (2016-08-25)
+
+
+### Bug Fixes
+
+* **app:** declare `@angular/*` as peer dependencies ([722cf23](https://github.com/ng-lightning/ng-lightning/commit/722cf23))
+
+
+### Features
+
+* **datepickers:** support custom month and day names ([1f7bbb3](https://github.com/ng-lightning/ng-lightning/commit/1f7bbb3)), closes [#184](https://github.com/ng-lightning/ng-lightning/issues/184)
+
+
+### BREAKING CHANGES
+
+* datepickers: Intl polypill for Safari is no longer needed
+
+
+
 <a name="0.18.0"></a>
 # [0.18.0](https://github.com/ng-lightning/ng-lightning/compare/v0.17.0...v0.18.0) (2016-08-24)
 
