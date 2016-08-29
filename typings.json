@@ -1,8 +1,8 @@
 {
   "globalDependencies": {
-    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
-    "node": "registry:dt/node#6.0.0+20160613154055",
+    "core-js": "registry:dt/core-js#0.0.0+20160725163759",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
+    "node": "registry:dt/node#6.0.0+20160826120425",
     "tether": "registry:dt/tether#1.1.0+20160316155526"
   }
 }
