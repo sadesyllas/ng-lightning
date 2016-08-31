@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture, async}  from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement} from '@angular/core';
 import {createGenericTestComponent, dispatchEvent, dispatchKeyEvent} from '../../../test/util/helpers';
@@ -25,7 +25,7 @@ describe('Picklist filter', () => {
 
   beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglMenusModule]}));
 
-  it('should be focused when the dropdown is opened', () => {
+  it('should be focused when the dropdown is opened', async(() => {
     const fixture = createTestComponent();
     const dropdownFilter = getDropdownFilter(fixture);
     expect(dropdownFilter).not.toBe(document.activeElement);
@@ -35,7 +35,7 @@ describe('Picklist filter', () => {
     setTimeout(() => {
       expect(dropdownFilter).toBe(document.activeElement);
     });
-  });
+  }));
 
   it('should show only items matching the filter value', () => {
     const fixture = createTestComponent();
@@ -118,15 +118,13 @@ describe('Picklist filter', () => {
 
     const dropdownFilter = getDropdownFilter(fixture);
 
-    fixture.whenStable().then(() => {
-      dropdownFilter.value = 'nothing';
-      dispatchEvent(dropdownFilter, 'input');
-      fixture.detectChanges();
+    dropdownFilter.value = 'nothing';
+    dispatchEvent(dropdownFilter, 'input');
+    fixture.detectChanges();
 
-      dispatchKeyEvent(fixture, By.css('input'), 'keydown.enter');
-      fixture.detectChanges();
-      expect(fixture.componentInstance.pick).toEqual([]);
-    });
+    dispatchKeyEvent(fixture, By.css('input'), 'keydown.enter');
+    fixture.detectChanges();
+    expect(fixture.componentInstance.pick).toEqual([]);
   });
 });
 

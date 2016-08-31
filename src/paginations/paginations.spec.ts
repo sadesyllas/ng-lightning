@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture, async}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent} from '../../test/util/helpers';
 import {NglPaginationsModule} from './module';
@@ -74,15 +74,15 @@ describe('Pagination Component', () => {
       expectPages(fixture.nativeElement, [ 'Previous', '1', '2', '3', '+4', '-Next' ]);
     });
 
-    it('should move to first if none defined', () => {
+    it('should move to first if none defined', async(() => {
       const fixture = createTestComponent(`<ngl-pagination [page]="unknown" [total]="total" (pageChange)="pageChange($event)"></ngl-pagination>`);
       expect(fixture.componentInstance.pageChange).not.toHaveBeenCalled();
       fixture.whenStable().then(() => {
         expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(1);
       });
-    });
+    }));
 
-    it('should keep current page inside limits when total page changes', () => {
+    it('should keep current page inside limits when total page changes', async(() => {
       const fixture = createTestComponent();
       fixture.componentInstance.page = 4;
       fixture.detectChanges();
@@ -94,7 +94,7 @@ describe('Pagination Component', () => {
       setTimeout(() => {
         expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(2);
       });
-    });
+    }));
   });
 
   describe('with limit settings', () => {

@@ -1,5 +1,4 @@
 import {TestBed, ComponentFixture}  from '@angular/core/testing';
-import {getDOM} from '@angular/platform-browser/src/dom/dom_adapter';
 import {Component} from '@angular/core';
 import {createGenericTestComponent} from '../../test/util/helpers';
 import {NglPopoversModule} from './module';
@@ -20,7 +19,6 @@ describe('Popovers', () => {
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toHaveCssClass('slds-popover');
     expect(popoverEl.textContent.trim()).toBe('My content');
-    expect(getDOM().getStyle(popoverEl, 'position')).toEqual('absolute');
   });
 
   it('should notify when view is initialized', () => {

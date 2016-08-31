@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture, async}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent, selectElements, dispatchEvent, dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
@@ -92,7 +92,7 @@ describe('`Datepicker` Component', () => {
 
   beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglDatepickersModule]}));
 
-  it('should render correctly', () => {
+  it('should render correctly', async(() => {
     const currentDate = new Date(2005, 10, 9); // 9 November 2005
     jasmine.clock().mockDate(currentDate);
 
@@ -110,9 +110,9 @@ describe('`Datepicker` Component', () => {
     });
 
     jasmine.clock().uninstall();
-  });
+  }));
 
-  it('should change view when input date is changing', () => {
+  it('should change view when input date is changing', async(() => {
     const fixture = createTestComponent();
 
     fixture.componentInstance.date = new Date(2013, 7, 11); // 11 August 2013
@@ -133,9 +133,9 @@ describe('`Datepicker` Component', () => {
         [ '26', '27', '28', '29', '30', '31', '01-' ],
       ], 'October', '2014');
     });
-  });
+  }));
 
-  it('does not change current view when model is cleared', () => {
+  it('does not change current view when model is cleared', async(() => {
     const fixture = createTestComponent();
 
     fixture.componentInstance.date = null;
@@ -146,9 +146,9 @@ describe('`Datepicker` Component', () => {
       ['19', '20', '21', '22', '23', '24', '25'],
       ['26', '27', '28', '29', '30+', '01-', '02-'],
     ], 'September', '2010');
-  });
+  }));
 
-  it('should show current date if none is set', () => {
+  it('should show current date if none is set', async(() => {
     const currentDate = new Date(2013, 7, 11); // 11 August 2013
     jasmine.clock().mockDate(currentDate);
 
@@ -163,7 +163,7 @@ describe('`Datepicker` Component', () => {
     ], 'August', '2013');
 
     jasmine.clock().uninstall();
-  });
+  }));
 
   it('updates the model when a day is clicked', () => {
     const fixture = createTestComponent();
@@ -179,7 +179,7 @@ describe('`Datepicker` Component', () => {
     expect(fixture.componentInstance.dateChange).not.toHaveBeenCalled();
   });
 
-  it('moves to previous month correctly when button is clicked', () => {
+  it('moves to previous month correctly when button is clicked', async(() => {
     const fixture = createTestComponent();
     clickButton(fixture.nativeElement, false);
 
@@ -192,9 +192,9 @@ describe('`Datepicker` Component', () => {
     ], 'August', '2010').then(() => {
       expect(fixture.componentInstance.dateChange).not.toHaveBeenCalled();
     });
-  });
+  }));
 
-  it('moves to next month correctly when button is clicked', () => {
+  it('moves to next month correctly when button is clicked', async(() => {
     const fixture = createTestComponent();
     clickButton(fixture.nativeElement, true);
 
@@ -208,9 +208,9 @@ describe('`Datepicker` Component', () => {
     ], 'October', '2010').then(() => {
       expect(fixture.componentInstance.dateChange).not.toHaveBeenCalled();
     });
-  });
+  }));
 
-  it('should not "jump" months and keep current day in limits', () => {
+  it('should not "jump" months and keep current day in limits', async(() => {
     const fixture = createTestComponent();
     fixture.componentInstance.date = new Date(2016, 0, 30);
     fixture.detectChanges();
@@ -223,9 +223,9 @@ describe('`Datepicker` Component', () => {
       [ '21', '22', '23', '24', '25', '26', '27' ],
       [ '28', '29+', '01-', '02-', '03-', '04-', '05-' ],
     ], 'February', '2016');
-  });
+  }));
 
-  it('moves to selected year from dropdown', () => {
+  it('moves to selected year from dropdown', async(() => {
     const fixture = createTestComponent();
 
     fixture.whenStable().then(() => {
@@ -238,7 +238,7 @@ describe('`Datepicker` Component', () => {
         [ '28', '29', '30+', '01-', '02-', '03-', '04-' ],
       ], 'September', '2014');
     });
-  });
+  }));
 
   it('should change year range based on selection', () => {
     const currentDate = new Date(1983, 10, 7); // 7 November 1983
@@ -252,7 +252,7 @@ describe('`Datepicker` Component', () => {
 
   describe('keyboard navigation', () => {
 
-    it('will be able to activate appropriate day', () => {
+    it('will be able to activate appropriate day', async(() => {
       const fixture = createTestComponent();
 
       dispatchKey(fixture, 'ArrowDown');
@@ -296,9 +296,9 @@ describe('`Datepicker` Component', () => {
           ['26', '27', '28', '29+', '*30', '01-', '02-'],
         ], 'September', '2010');
       });
-    });
+    }));
 
-    it('will be able to activate appropriate edge day', () => {
+    it('will be able to activate appropriate edge day', async(() => {
       const fixture = createTestComponent();
 
       dispatchKey(fixture, 'Home');
@@ -319,7 +319,7 @@ describe('`Datepicker` Component', () => {
           ['26', '27', '28', '29', '*30+', '01-', '02-'],
         ], 'September', '2010');
       });
-    });
+    }));
 
     it('will be able to select active day', () => {
       const fixture = createTestComponent();
@@ -355,7 +355,7 @@ describe('`Datepicker` Component', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should support custom month and day names', () => {
+  it('should support custom month and day names', async(() => {
     const currentDate = new Date(2005, 10, 9); // 9 November 2005
     jasmine.clock().mockDate(currentDate);
 
@@ -371,7 +371,7 @@ describe('`Datepicker` Component', () => {
     });
 
     jasmine.clock().uninstall();
-  });
+  }));
 });
 
 

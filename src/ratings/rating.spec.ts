@@ -42,13 +42,6 @@ describe('Rating Component', () => {
     expectState(nativeElement, '****-');
   });
 
-  it('prevents stars from wrapping', () => {
-    const fixture = createTestComponent(`<ngl-rating [(rate)]="value" style="background: red;"></ngl-rating>`);
-    const el = fixture.nativeElement.firstElementChild;
-    expect(el).toHaveCssStyle({'white-space': 'nowrap'});
-    expect(el).toHaveCssStyle({'background-color': 'red'});
-  });
-
   it('should change rate based on click', () => {
     const fixture = createTestComponent();
     const { nativeElement, componentInstance } = fixture;

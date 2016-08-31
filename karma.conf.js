@@ -20,7 +20,7 @@ module.exports = function(config) {
 
     files: [
         // Polyfills
-        {pattern: 'node_modules/core-js/client/core.js', included: true, watched: false},
+        {pattern: 'node_modules/core-js/client/shim.min.js', included: true, watched: false},
 
         // Typescript helpers polyfill
         {pattern: 'node_modules/ts-helpers/index.js', included: true, watched: false},
@@ -30,11 +30,14 @@ module.exports = function(config) {
         {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
 
         // Zone.js
+        {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false},
         {pattern: 'node_modules/zone.js/dist/zone.min.js', included: true, watched: false},
         {pattern: 'node_modules/zone.js/dist/long-stack-trace-zone.min.js', included: true, watched: false},
+        {pattern: 'node_modules/zone.js/dist/proxy.js', included: true, watched: false},
+        {pattern: 'node_modules/zone.js/dist/sync-test.js', included: true, watched: false},
+        {pattern: 'node_modules/zone.js/dist/jasmine-patch.min.js', included: true, watched: false},
         {pattern: 'node_modules/zone.js/dist/async-test.js', included: true, watched: false},
         {pattern: 'node_modules/zone.js/dist/fake-async-test.js', included: true, watched: false},
-        {pattern: 'node_modules/zone.js/dist/jasmine-patch.min.js', included: true, watched: false},
 
         // RxJS
         {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},

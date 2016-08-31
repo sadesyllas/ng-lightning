@@ -9,23 +9,31 @@ __karma__.loaded = function() {};
 
 System.config({
   baseURL: '/base',
+  paths: {
+    'npm:': 'node_modules/',
+    'tether': 'node_modules/tether/dist/js/tether.min.js'
+  },
   map: {
-    'rxjs': 'node_modules/rxjs',
-    '@angular': 'node_modules/@angular',
-    'temp': 'temp'
+    'rxjs': 'npm:rxjs',
+    'temp': 'temp',
+
+    // angular bundles
+    '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
+    '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
+    '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
+    '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+    '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+    '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+
+    // angular testing umd bundles
+    '@angular/core/testing': 'npm:@angular/core/bundles/core-testing.umd.js',
+    '@angular/compiler/testing': 'npm:@angular/compiler/bundles/compiler-testing.umd.js',
+    '@angular/platform-browser/testing': 'npm:@angular/platform-browser/bundles/platform-browser-testing.umd.js',
+    '@angular/platform-browser-dynamic/testing': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
   },
   packages: {
     'temp': {defaultExtension: 'js'},
-    '@angular/core': {main: 'index.js', defaultExtension: 'js'},
-    '@angular/compiler': {main: 'index.js', defaultExtension: 'js'},
-    '@angular/common': {main: 'index.js', defaultExtension: 'js'},
-    '@angular/forms': {main: 'index.js', defaultExtension: 'js'},
-    '@angular/platform-browser': {main: 'index.js', defaultExtension: 'js'},
-    '@angular/platform-browser-dynamic': {main: 'index.js', defaultExtension: 'js'},
     'rxjs': {defaultExtension: 'js'},
-  },
-  paths: {
-    'tether': 'node_modules/tether/dist/js/tether.min.js'
   },
 });
 

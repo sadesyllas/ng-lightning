@@ -96,21 +96,19 @@ describe('Tabs Component', () => {
     const fixture = createTestComponent();
     const { componentInstance } = fixture;
 
-    fixture.whenStable().then(() => {
-      expect(componentInstance.activate).not.toHaveBeenCalled();
-      componentInstance.selectedTab = 'three';
-      fixture.detectChanges();
-      expect(componentInstance.activate).toHaveBeenCalledWith(true);
+    expect(componentInstance.activate).not.toHaveBeenCalled();
+    componentInstance.selectedTab = 'three';
+    fixture.detectChanges();
+    expect(componentInstance.activate).toHaveBeenCalledWith(true);
 
-      componentInstance.selectedTab = 3; // index based
-      fixture.detectChanges();
-      expect(componentInstance.activate).toHaveBeenCalledWith(false);
-      expect(componentInstance.activate).toHaveBeenCalledWith(4, true);
+    componentInstance.selectedTab = 3; // index based
+    fixture.detectChanges();
+    expect(componentInstance.activate).toHaveBeenCalledWith(false);
+    expect(componentInstance.activate).toHaveBeenCalledWith(4, true);
 
-      componentInstance.selectedTab = 'two';
-      fixture.detectChanges();
-      expect(componentInstance.activate).toHaveBeenCalledWith(4, false);
-    });
+    componentInstance.selectedTab = 'two';
+    fixture.detectChanges();
+    expect(componentInstance.activate).toHaveBeenCalledWith(4, false);
   });
 
   it('should allow activating tab from outside', () => {
@@ -123,12 +121,10 @@ describe('Tabs Component', () => {
     `);
     const button = fixture.nativeElement.querySelector('button');
 
-    fixture.whenStable().then(() => {
-      expect(getTabContent(fixture.nativeElement)).not.toBe('Another tab');
-      button.click();
-      fixture.detectChanges();
-      expect(getTabContent(fixture.nativeElement)).toBe('Another tab');
-    });
+    expect(getTabContent(fixture.nativeElement)).not.toBe('Another tab');
+    button.click();
+    fixture.detectChanges();
+    expect(getTabContent(fixture.nativeElement)).toBe('Another tab');
   });
 
 });

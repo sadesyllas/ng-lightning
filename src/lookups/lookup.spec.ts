@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture}  from '@angular/core/testing';
+import {TestBed, ComponentFixture, async}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent, selectElements, dispatchKeyEvent} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
@@ -251,7 +251,7 @@ describe('Lookup Component', () => {
     expect(componentInstance.onSelect).toHaveBeenCalledWith({id: 2, name: 'DEFGH'});
   });
 
-  it('should support keyboard navigation and selection', () => {
+  it('should support keyboard navigation and selection', async(() => {
     const fixture = createTestComponent();
     const { nativeElement, componentInstance } = fixture;
 
@@ -297,7 +297,7 @@ describe('Lookup Component', () => {
       dispatchKeyEvent(fixture, By.css('input'), `keydown.Enter`);
       expect(componentInstance.onSelect).toHaveBeenCalledWith('ABCDE');
     });
-  });
+  }));
 
   it('should support custom item template', () => {
     const fixture = createTestComponent(`<ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0">
