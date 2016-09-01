@@ -63,7 +63,7 @@ describe('Pagination Component', () => {
       expect(fixture.componentInstance.pageChange).toHaveBeenCalledWith(3);
     });
 
-    it('should disbale pages correctly when on limits', () => {
+    it('should disable pages correctly when on limits', () => {
       const fixture = createTestComponent(null, false);
       fixture.componentInstance.page = 1;
       fixture.detectChanges();
@@ -105,7 +105,7 @@ describe('Pagination Component', () => {
       expectPages(fixture.nativeElement, [ 'Previous', '1', '+2', 'Next' ]);
     });
 
-    it('should disbale pages correctly when on limits', () => {
+    it('should disable pages correctly when on limits', () => {
       const fixture = createTestComponent(html);
       fixture.componentInstance.page = 1;
       fixture.detectChanges();
