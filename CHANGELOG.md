@@ -1,3 +1,13 @@
+<a name="0.20.0"></a>
+# [0.20.0](https://github.com/ng-lightning/ng-lightning/compare/v0.19.0...v0.20.0) (2016-09-02)
+
+
+### Features
+
+* **app:** upgrade Angular 2 to rc.6 ([ea144aa](https://github.com/ng-lightning/ng-lightning/commit/ea144aa)), closes [#187](https://github.com/ng-lightning/ng-lightning/issues/187)
+
+
+
 <a name="0.19.0"></a>
 # [0.19.0](https://github.com/ng-lightning/ng-lightning/compare/v0.18.0...v0.19.0) (2016-08-25)
 
