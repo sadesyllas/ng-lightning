@@ -19,7 +19,7 @@ export class Plunker {
     const ts = this.component.tsRaw
                 .replace('../../../../../dist/ng-lightning', 'ng-lightning/ng-lightning')
                 .replace(/selector: '(.*)'/, 'selector: \'my-app\'')
-                .replace(/template: require(.*)/, 'templateUrl: \'app/demo.html\'')
+                .replace(/template: require(.*)/, 'templateUrl: \'app/demo.html\',')
                 .replace(/class Demo(.*) {/, 'class AppComponent {');
     return `${ts}`;
   }
