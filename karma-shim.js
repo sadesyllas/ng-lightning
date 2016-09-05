@@ -42,8 +42,8 @@ Promise.all([
     System.import('@angular/platform-browser-dynamic/testing'),
     System.import('/base/temp/test/util/helpers.js'),
     System.import('/base/temp/test/util/matchers.js'),
-    System.import('https://npmcdn.com/classlist.js'),
-    System.import('https://npmcdn.com/svg4everybody')
+    System.import('https://unpkg.com/classlist.js'),
+    System.import('https://unpkg.com/svg4everybody')
       .then(function(){
         svg4everybody();
       })

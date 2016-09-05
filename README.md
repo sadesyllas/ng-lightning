@@ -20,19 +20,19 @@ Install through `npm`:
 npm install --save ng-lightning
 ```
 
-If you use **SystemJS** to load your files, you may want to use our bundle file through [npmcdn](https://npmcdn.com/)
+If you use **SystemJS** to load your files, you may want to use our bundle file through [unpkg](https://unpkg.com/)
 
 ```html
-<script src="https://npmcdn.com/ng-lightning@x.x.x/ng-lightning.bundle.js"></script>
+<script src="https://unpkg.com/ng-lightning@x.x.x/ng-lightning.bundle.js"></script>
 ```
 
 #### IE11 support
 Unfortunately, IE11 does not support two important features.
 
 * [SVG External Content](https://css-tricks.com/svg-use-with-external-reference-take-2/), used to load SVG icons from a spritemap. In order to support this, you will need to use a small script called [svg4everybody](https://github.com/jonathantneal/svg4everybody).  
-Available on npm cdn [here](https://npmcdn.com/svg4everybody).
+Available on npm cdn [here](https://unpkg.com/svg4everybody).
 
-* `Element.classList` on SVG elements, used by Angular's `renderer.setElementClass`. See [here](https://github.com/angular/angular/issues/6327) for more information. Use [classList.js](https://github.com/eligrey/classList.js) shim, available on npm cdn [here](https://npmcdn.com/classlist.js).
+* `Element.classList` on SVG elements, used by Angular's `renderer.setElementClass`. See [here](https://github.com/angular/angular/issues/6327) for more information. Use [classList.js](https://github.com/eligrey/classList.js) shim, available on npm cdn [here](https://unpkg.com/classlist.js).
 
 Typically, these shims should be placed within the `<head>` element.  
 
