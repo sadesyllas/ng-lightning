@@ -20,6 +20,11 @@ export class NglPagination implements OnChanges {
   @Input() perPage: number | string = 10;
   @Input() limit: number | string = 0;
   @Input() boundaryNumbers: number = 0;
+  @Input() firstText = 'First';
+  @Input() previousText = 'Previous';
+  @Input() nextText = 'Next';
+  @Input() lastText = 'Last';
+
   @Input() set boundaryLinks(boundaryLinks: string | boolean) {
     this._boundaryLinks = toBoolean(boundaryLinks);
   }

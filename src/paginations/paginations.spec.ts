@@ -217,6 +217,20 @@ describe('Pagination Component', () => {
     fixture.detectChanges();
     expect(el).toHaveText('0 - 0');
   });
+
+  it('should support custom text in buttons', async(() => {
+    const fixture = createTestComponent(`<ngl-pagination page="1" total="1" boundaryLinks
+      firstText="<<" previousText="<" nextText=">" [lastText]="lastText" ></ngl-pagination>`, false);
+    fixture.componentInstance.lastText = '>>';
+    fixture.detectChanges();
+
+    const pageEls = getPageElements(fixture.nativeElement);
+    expect(pageEls.map(el => el.textContent)).toEqual([ '<<', '<', '1', '>', '>>' ]);
+
+    fixture.componentInstance.lastText = '>>>';
+    fixture.detectChanges();
+    expect(pageEls.map(el => el.textContent)).toEqual([ '<<', '<', '1', '>', '>>>' ]);
+  }));
 });
 
 @Component({
@@ -225,5 +239,6 @@ describe('Pagination Component', () => {
 export class TestComponent {
   page = 2;
   total = 33;
+  lastText: string;
   pageChange = jasmine.createSpy('pageChange');
 }
