@@ -100,6 +100,10 @@ describe('`NglModal`', () => {
     const footer = fixture.nativeElement.querySelector('.slds-modal__footer');
     expect(footer).toHaveText('Modal Header in footer');
     expect(footer).not.toHaveCssClass('slds-modal__footer--directional');
+
+    fixture.componentInstance.header = 'Changed header';
+    fixture.detectChanges();
+    expect(footer).toHaveText('Changed header in footer');
   });
 
   it('should support directional footer', () => {

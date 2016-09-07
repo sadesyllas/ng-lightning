@@ -1,10 +1,9 @@
-import {Component, Input, Output, ElementRef, Renderer, ChangeDetectionStrategy, EventEmitter, HostListener, ViewChild, ContentChild} from '@angular/core';
+import {Component, Input, Output, ElementRef, Renderer, EventEmitter, HostListener, ViewChild, ContentChild} from '@angular/core';
 import {toBoolean, uniqueId} from '../util/util';
 import {NglModalFooter} from './footer';
 
 @Component({
   selector: 'ngl-modal',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './modal.jade',
   host: {
     'tabindex': '0',
