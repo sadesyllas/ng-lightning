@@ -22,6 +22,7 @@ export class NglLookup {
   @ContentChild(NglLookupScopeItem) polymorphic: NglLookupScopeItem;
 
   @Input() placeholder: string;
+  @Input() noResultsText = 'No results found';
   @Input() searchIcon: boolean = true;
 
   openScope: boolean = false;

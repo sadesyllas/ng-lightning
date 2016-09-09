@@ -188,6 +188,16 @@ describe('Lookup Component', () => {
     expectOptions(fixture, ['No results found']);
   });
 
+  it('should custom message when no results found', () => {
+    const fixture = createTestComponent(
+      `<ngl-lookup [value]="value" [lookup]="filter" [(pick)]="selection" debounce="0" noResultsText="Nothing found!"></ngl-lookup>`);
+    const { componentInstance } = fixture;
+
+    componentInstance.value = 'NO MATCH';
+    fixture.detectChanges();
+    expectOptions(fixture, ['Nothing found!']);
+  });
+
   it('should update input with selection and close menu', () => {
     const fixture = createTestComponent();
     const { nativeElement, componentInstance } = fixture;

@@ -1,7 +1,7 @@
 mixin lookup-list
 
   ul.slds-lookup__list(role="presentation")&attributes(attributes)
-    li(*ngIf="noResults"): .slds-lookup__item--label No results found
+    li(*ngIf="noResults"): .slds-lookup__item--label {{noResultsText}}
     li(*ngFor="let item of suggestions; let i=index", (click)="handlePick(item)", [ngClass]="{'slds-dropdown__item--active': i === activeIndex }")
       a.slds-lookup__item-action([id]="optionId(i)", role="option")
         block

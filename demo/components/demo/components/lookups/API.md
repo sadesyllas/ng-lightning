@@ -8,6 +8,7 @@
   * `field?: string`: field of a suggested object to use as label
   * `debounce?: number = 200`:  delay so that the actual value update only takes place when a timer expires. A value of 0 triggers an immediate update
   * `searchIcon?: boolean = true`: whether search icon is displayed inside the input
+  * `noResultsText? = 'No results found'`: message to be displayed when no match
 
 ### Output
 
