@@ -1,3 +1,38 @@
+<a name="0.21.0"></a>
+# [0.21.0](https://github.com/ng-lightning/ng-lightning/compare/v0.20.0...v0.21.0) (2016-09-09)
+
+
+### Bug Fixes
+
+* **icons:** remove `default` as default color ([288e65b](https://github.com/ng-lightning/ng-lightning/commit/288e65b)), closes [#191](https://github.com/ng-lightning/ng-lightning/issues/191)
+* **modals:** use default change detection strategy ([3e6fd4b](https://github.com/ng-lightning/ng-lightning/commit/3e6fd4b)), closes [#197](https://github.com/ng-lightning/ng-lightning/issues/197)
+* **picklist:** convent filter to lowercase before compare ([17899ab](https://github.com/ng-lightning/ng-lightning/commit/17899ab))
+
+
+### Features
+
+* **lookups:** support custom message when no results found ([cd1b758](https://github.com/ng-lightning/ng-lightning/commit/cd1b758)), closes [#198](https://github.com/ng-lightning/ng-lightning/issues/198) [#199](https://github.com/ng-lightning/ng-lightning/issues/199)
+* **paginations:** support custom text for non-number buttons ([3c38201](https://github.com/ng-lightning/ng-lightning/commit/3c38201)), closes [#193](https://github.com/ng-lightning/ng-lightning/issues/193) [#195](https://github.com/ng-lightning/ng-lightning/issues/195)
+
+
+### BREAKING CHANGES
+
+* icons: utility icons have no default type `default`
+
+  Before:
+
+  ```html
+  <ngl-icon ...></ngl-icon>
+  ```
+
+  After:
+
+  ```html
+  <ngl-icon ... type="default"></ngl-icon>
+  ```
+
+
+
 <a name="0.20.0"></a>
 # [0.20.0](https://github.com/ng-lightning/ng-lightning/compare/v0.19.0...v0.20.0) (2016-09-02)
 
