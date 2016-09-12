@@ -5,6 +5,7 @@
   * `data: any[]`: Data to be displayed as rows in the table.
   * `sort: INglDatatableSort`: Sorting state object as `{ key: '<column key>', order: '<asc|desc>'}`
   * `trackByKey?: string`: Unique object property of data, useful for internal tracking.
+  * `loading?: boolean`: Whether loading overlay should be displayed.
   * `bordered: boolean = true`: Adds borders to the table.
   * `striped: boolean = true`: Adds stripes to alternating rows.
 
@@ -28,3 +29,5 @@
   * `$implicit`: Cell value, if `key` has been defined for this column.
   * `row: any`: Object data.
   * `index: number`: Row index.
+
+# `template[nglLoadingOverlay]`

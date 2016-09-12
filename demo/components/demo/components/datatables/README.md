@@ -5,3 +5,5 @@ You should provide an array of objects in the `[data]` property and define each 
 Optionally, you can specify a template inside a column, that will be used to render each cell of this column. Inside this template you can have access to the implicit value of the cell, it's `index` and the `row`'s' data.
 
 You can easily support sorting by adding the `sortable` on each column that you want to be sortable, and listen to `sortChange` events that produce event objects like `<INglDatatableSort>{ key: 'key of sorted column', order: 'asc or desc'}`.
+
+Ypu can optionally specify a `template[nglLoadingOverlay]` thats gets displayed when it is `loading` data.

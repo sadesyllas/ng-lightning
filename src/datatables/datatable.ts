@@ -1,6 +1,7 @@
-import {Component, Input, ChangeDetectorRef, ContentChildren, QueryList, ElementRef, Renderer, HostBinding, Output, EventEmitter} from '@angular/core';
+import {Component, Input, ChangeDetectorRef, ContentChild, ContentChildren, QueryList, ElementRef, Renderer, HostBinding, Output, EventEmitter} from '@angular/core';
 import {Subscription} from 'rxjs/Rx';
 import {NglDatatableColumn} from './column';
+import {NglDatatableLoadingOverlay} from './overlays';
 
 export interface INglDatatableSort {
   key: string;
@@ -10,6 +11,17 @@ export interface INglDatatableSort {
 @Component({
   selector: 'table[ngl-datatable]',
   templateUrl: './datatable.jade',
+  host: {
+    '[class.slds-is-relative]': 'loading',
+  },
+  styles: [`
+    .ngl-datatable-loading {
+      position: absolute;
+      z-index: 1;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.5)
+    }
+  `],
 })
 export class NglDatatable {
 
@@ -24,6 +36,12 @@ export class NglDatatable {
 
   @Input() sort: INglDatatableSort;
   @Output() sortChange = new EventEmitter<INglDatatableSort>();
+
+  @Input() loading: boolean = false;
+  @ContentChild(NglDatatableLoadingOverlay) loadingOverlay: NglDatatableLoadingOverlay;
+  get showLoading() {
+    return this.loading && this.loadingOverlay;
+  }
 
   @ContentChildren(NglDatatableColumn) columns: QueryList<NglDatatableColumn>;
 

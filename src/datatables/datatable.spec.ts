@@ -30,6 +30,10 @@ function getData(element: HTMLElement) {
   return getRows(element).map(row => getRowData(row));
 }
 
+function getLoadingEl(element: HTMLElement) {
+  return element.querySelector('table > .ngl-datatable-loading');
+}
+
 function expectSortedHeadings(element: HTMLElement, expected: string[]) {
   const headings = getHeadings(element);
 
@@ -263,6 +267,21 @@ describe('`NglDatatable`', () => {
     expect(button1).toBe(button2);
     expect(fixture.componentInstance.cb).toHaveBeenCalled();
   });
+
+  it('should be able to render a loading overlay', () => {
+    const fixture = createTestComponent(`
+      <table ngl-datatable [data]="data" [loading]="loading">
+        <template nglLoadingOverlay>Loading...</template>
+      </table>`);
+
+    expect(getLoadingEl(fixture.nativeElement)).toBeFalsy();
+
+    fixture.componentInstance.loading = true;
+    fixture.detectChanges();
+
+    const el = getLoadingEl(fixture.nativeElement);
+    expect(el.textContent.trim()).toBe('Loading...');
+  });
 });
 
 @Component({
@@ -278,6 +297,7 @@ export class TestComponent {
   striped: boolean;
   bordered: boolean;
   sortable: boolean;
+  loading: boolean;
 
   data = [
     { id: 1, name: 'PP', number: 80 },
