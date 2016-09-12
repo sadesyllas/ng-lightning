@@ -15,3 +15,10 @@
 
   * `rateChange: EventEmitter<number>`: the clicked rate
   * `hover: EventEmitter<number>`: the currently hovered rate
+
+# `template[nglRatingIcon]`
+
+### Variables
+
+  * `$implicit: boolean`: Whether icon should be active.
+  * `index: number`: Icon index.

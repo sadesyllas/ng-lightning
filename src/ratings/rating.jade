@@ -1,1 +1,12 @@
-ngl-icon([icon]="icon", [size]="size", *ngFor="let r of range", [type]="r <= currentRate ? 'warning' : 'default'", (click)="update(r)", (mouseenter)="enter(r)")
+mixin container(isDefault)
+  - var condition = isDefault ? '!' : '';
+  span(*ngIf="#{condition}iconTemplate")
+    .slds-show--inline-block(*ngFor="let r of range; let i = index", (click)="update(r)", (mouseenter)="enter(r)")
+      block
+
+
++container(true)
+  ngl-icon([icon]="icon", [size]="size", [type]="r <= currentRate ? 'warning' : 'default'")
+
++container(false)
+  template([ngTemplateOutlet]="iconTemplate.templateRef", [ngOutletContext]="{$implicit: r <= currentRate, index: i}")

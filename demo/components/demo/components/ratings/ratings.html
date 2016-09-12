@@ -1,8 +1,16 @@
+<div class="slds-text-heading--label slds-m-bottom--small">Default</div>
+
 Value is: {{value}}
 <ngl-rating [(rate)]="value" [isReadonly]="readonly" [size]="size"></ngl-rating>
-
 
 <div class="slds-grid slds-m-top--large"></div>
 <button type="button" nglButton="destructive" (click)="value = 0" [disabled]="readonly">Clear</button>
 <button type="button" nglButton="neutral" (click)="readonly = !readonly">Toggle readonly</button>
 <button type="button" nglButton="neutral" (click)="changeSize()">Change Size</button>
+
+<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Custom icon</div>
+<ngl-rating [(rate)]="value">
+  <template nglRatingIcon let-active>
+    <ngl-avatar [src]="customImage(active)" size="small" type="circle"></ngl-avatar>
+  </template>
+</ngl-rating>

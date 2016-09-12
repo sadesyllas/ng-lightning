@@ -14,4 +14,8 @@ export class DemoRatings {
   changeSize() {
     this.size = this.sizes[(this.sizes.indexOf(this.size) + 1) % this.sizes.length];
   }
+
+  customImage(isActive: boolean) {
+    return `assets/images/avatar${isActive ? 3 : 2}.jpg`;
+  }
 }

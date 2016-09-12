@@ -2,18 +2,18 @@ import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {NglRating} from './rating';
 import {NglRatingsModule} from './module';
-import {createGenericTestComponent, dispatchKeyEvent, dispatchEvent } from '../../test/util/helpers';
+import {createGenericTestComponent, dispatchKeyEvent, dispatchEvent, selectElements} from '../../test/util/helpers';
 import {By} from '@angular/platform-browser';
 
 const createTestComponent = (html?: string) =>
   createGenericTestComponent(TestComponent, html) as ComponentFixture<TestComponent>;
 
 function getStars(element: HTMLElement): HTMLElement[] {
-  return [].slice.call(element.querySelectorAll('ngl-icon'));
+  return selectElements(element, '.slds-show--inline-block');
 }
 
-function getICons(element: HTMLElement): SVGElement[] {
-  return [].slice.call(element.querySelectorAll('svg'));
+function getICons(element: HTMLElement): HTMLElement[] {
+  return selectElements(element, 'svg');
 }
 
 function dispatchKey(fixture: ComponentFixture<any>, key: string) {
@@ -163,6 +163,28 @@ describe('Rating Component', () => {
     });
   });
 
+  describe('with custom icon', function () {
+    let fixture: ComponentFixture<TestComponent>;
+
+    beforeEach(function () {
+      fixture = createTestComponent(`
+        <ngl-rating [(rate)]="value">
+          <template nglRatingIcon let-active let-i="index">{{i}}/{{active}}</template>
+        </ngl-rating>`);
+    });
+
+    it('should render correctly', () => {
+      const stars = getStars(fixture.nativeElement);
+      expect(stars.map(el => el.textContent)).toEqual(['0/true', '1/true', '2/false', '3/false', '4/false']);
+    });
+
+    it('should update on hover', () => {
+      const stars = getStars(fixture.nativeElement);
+      dispatchEvent(stars[3], 'mouseenter');
+      fixture.detectChanges();
+      expect(stars.map(el => el.textContent)).toEqual(['0/true', '1/true', '2/true', '3/true', '4/false']);
+    });
+  });
 });
 
 @Component({

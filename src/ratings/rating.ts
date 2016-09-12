@@ -1,4 +1,5 @@
-import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ElementRef, Renderer, Attribute} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ElementRef, Renderer, Attribute, ContentChild} from '@angular/core';
+import {NglRatingIconTemplate} from './icons';
 import {toBoolean} from '../util/util';
 
 @Component({
@@ -23,6 +24,8 @@ export class NglRating {
     this.inputRate = rate;
     this.currentRate = rate;
   }
+
+  @ContentChild(NglRatingIconTemplate) iconTemplate: NglRatingIconTemplate;
 
   private max: number = 5;
   private readonly = false;
