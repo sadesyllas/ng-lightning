@@ -282,6 +282,14 @@ describe('`NglDatatable`', () => {
     const el = getLoadingEl(fixture.nativeElement);
     expect(el.textContent.trim()).toBe('Loading...');
   });
+
+  it('should show a custom message when no data available', () => {
+    const fixture = createTestComponent(`
+      <table ngl-datatable>
+        <template nglNoRowsOverlay>No data available in table!</template>
+      </table>`);
+    expect(getData(fixture.nativeElement)).toEqual([[ 'No data available in table!' ]]);
+  });
 });
 
 @Component({

@@ -31,3 +31,5 @@
   * `index: number`: Row index.
 
 # `template[nglLoadingOverlay]`
+
+# `template[nglNoRowsOverlay]`

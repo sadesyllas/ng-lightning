@@ -1,7 +1,7 @@
 import {Component, Input, ChangeDetectorRef, ContentChild, ContentChildren, QueryList, ElementRef, Renderer, HostBinding, Output, EventEmitter} from '@angular/core';
 import {Subscription} from 'rxjs/Rx';
 import {NglDatatableColumn} from './column';
-import {NglDatatableLoadingOverlay} from './overlays';
+import {NglDatatableLoadingOverlay, NglDatatableNoRowsOverlay} from './overlays';
 
 export interface INglDatatableSort {
   key: string;
@@ -41,6 +41,12 @@ export class NglDatatable {
   @ContentChild(NglDatatableLoadingOverlay) loadingOverlay: NglDatatableLoadingOverlay;
   get showLoading() {
     return this.loading && this.loadingOverlay;
+  }
+
+  @ContentChild(NglDatatableNoRowsOverlay) noRowsOverlay: NglDatatableNoRowsOverlay;
+
+  get hasRows() {
+    return this.data && this.data.length > 0;
   }
 
   @ContentChildren(NglDatatableColumn) columns: QueryList<NglDatatableColumn>;
