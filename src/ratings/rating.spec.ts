@@ -75,6 +75,15 @@ describe('Rating Component', () => {
       const fixture = createTestComponent(`<ngl-rating rate="5" max="10"></ngl-rating>`);
       expectState(fixture.nativeElement, '*****-----');
     });
+
+    it('should change based on input', () => {
+      const fixture = createTestComponent(`<ngl-rating rate="5" [max]="max"></ngl-rating>`);
+      expectState(fixture.nativeElement, '*****');
+
+      fixture.componentInstance.max = 10;
+      fixture.detectChanges();
+      expectState(fixture.nativeElement, '*****-----');
+    });
   });
 
   it('should not change when is readonly', () => {
@@ -192,6 +201,7 @@ describe('Rating Component', () => {
 })
 export class TestComponent {
   value = 2;
+  max = 5;
   readonly = false;
   size: string;
   change = jasmine.createSpy('change');

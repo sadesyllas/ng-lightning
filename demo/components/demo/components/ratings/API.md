@@ -1,12 +1,9 @@
 # `<ngl-rating>`
 
-### Attribute
-
-  * `max?: number = 5`: Maximum rate number.
-
 ### Input
 
   * `rate: number`: Current rate.
+  * `max?: number = 5`: Maximum rate number.
   * `isReadonly?: boolean = false`: Prevent user's interaction.
   * `icon?: string = 'favorite'`: Icon used to display the available rates.
   * `size?: 'x-small' | 'small' | 'large'`: Icon sizes.
