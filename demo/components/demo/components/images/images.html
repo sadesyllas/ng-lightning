@@ -5,15 +5,7 @@
 <div class="slds-grid slds-m-top--large" style="height: 50px;">
  <div class="slds-align-middle slds-col">
    <button type="button" nglButton="neutral" (click)="changeType()">Change Type</button>
-   <ngl-avatar [src]="src" [type]="type"></ngl-avatar>
-   Type: <code>{{type}}</code>
- </div>
-</div>
- <br />
-<div class="slds-grid slds-m-top--large" style="height: 50px;">
- <div class="slds-align-middle slds-col">
    <button type="button" nglButton="neutral" (click)="changeSize()">Change Size</button>
-   <ngl-avatar [src]="src" [size]="size"></ngl-avatar>
-   Size: <code>{{size}}</code>
+   <ngl-avatar [src]="src" [size]="size" [type]="type"></ngl-avatar>
  </div>
 </div>
