@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBinding, ElementRef, Renderer} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBinding} from '@angular/core';
 
 @Component({
   selector: 'th[ngl-internal-datatatable-head]',
@@ -6,6 +6,9 @@ import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBin
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'scope': 'col',
+    '[class.slds-is-sorted--asc]': `sortOrder === 'asc'`,
+    '[class.slds-is-sorted--desc]': `sortOrder === 'desc'`,
+    '[class.slds-is-sorted]': `!!sortOrder`,
   },
 })
 export class NglInternalDatatableHeadCell {
@@ -16,18 +19,7 @@ export class NglInternalDatatableHeadCell {
   @HostBinding('class.slds-is-sortable')
   @Input() sortable: boolean;
 
-  @Input() set sortOrder(order: 'asc' | 'desc') {
-    this._sortOrder = order;
-    this.renderer.setElementClass(this.element.nativeElement, 'slds-is-sorted--asc', this.sortOrder === 'asc');
-    this.renderer.setElementClass(this.element.nativeElement, 'slds-is-sorted--desc', this.sortOrder === 'desc');
-  }
-  get sortOrder() {
-    return this._sortOrder;
-  }
-
-  @HostBinding('class.slds-is-sorted') get isSorted() {
-    return !!this.sortOrder;
-  }
+  @Input() sortOrder: 'asc' | 'desc';
 
   @HostBinding('attr.aria-sort')
   get ariaSort() {
@@ -35,10 +27,6 @@ export class NglInternalDatatableHeadCell {
   }
 
   @Output() onSort = new EventEmitter();
-
-  private _sortOrder: 'asc' | 'desc';
-
-  constructor(private element: ElementRef, private renderer: Renderer) {}
 
   sortChange() {
     this.onSort.emit(this.sortOrder === 'desc' ? 'asc' : 'desc');
