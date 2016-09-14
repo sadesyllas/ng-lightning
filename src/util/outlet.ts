@@ -7,11 +7,12 @@ import {Component, Input, TemplateRef} from '@angular/core';
 export class NglInternalOutlet {
   @Input() nglInternalOutlet: string | TemplateRef<any>;
 
-  get content() {
-    return this.nglInternalOutlet instanceof TemplateRef ? '' : this.nglInternalOutlet;
-  }
+  content: string;
+  contentTemplate: TemplateRef<any>;
 
-  get contentTemplate() {
-    return this.nglInternalOutlet instanceof TemplateRef ? this.nglInternalOutlet : null;
+  ngOnChanges() {
+    [this.content, this.contentTemplate] = this.nglInternalOutlet instanceof TemplateRef
+                                            ? ['', <TemplateRef<any>>this.nglInternalOutlet]
+                                            : [<string>this.nglInternalOutlet, null];
   }
-};
+}
