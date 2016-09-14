@@ -12,6 +12,7 @@
 ### Output
 
   * `sortChange: EventEmitter<INglDatatableSort>`: Requested sort as `{ key: '<column key>', order: '<asc|desc>'}`
+  * `onRowClick: EventEmitter<INglDatatableRowClick>`: Invoked when a row is clicked passing original `Event` and row's data, as `{event: Event, data: any}` 
 
 # `ngl-datatable-column`
 

@@ -23,7 +23,7 @@ import {NglSectionsModule} from './sections/module';
 import {NglSpinnersModule} from './spinners/module';
 import {NglTabsModule} from './tabs/module';
 
-export {INglDatatableSort} from './datatables/module';
+export {INglDatatableSort, INglDatatableRowClick} from './datatables/module';
 
 @NgModule({
   exports: [

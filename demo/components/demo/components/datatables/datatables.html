@@ -2,7 +2,8 @@
 <button type="button" nglButton="neutral" (click)="loading = !loading" class="slds-m-bottom--large">Toggle Loading</button>
 <button type="button" nglButton="neutral" (click)="toggleData()" class="slds-m-bottom--large">Clear/Set data</button>
 
-<table ngl-datatable [data]="data" trackByKey="rank" [loading]="loading" [(sort)]="sort" (sortChange)="onSort($event)" class="slds-max-medium-table--stacked-horizontal">
+<table ngl-datatable [data]="data" trackByKey="rank" [loading]="loading" [(sort)]="sort" (sortChange)="onSort($event)"
+  (onRowClick)="onRowClick($event)" class="slds-max-medium-table--stacked-horizontal">
   <ngl-datatable-column heading="Rank" key="rank" sortable></ngl-datatable-column>
   <ngl-datatable-column heading="Name" key="name" *ngIf="!hideName" cellClass="slds-truncate" sortable></ngl-datatable-column>
   <ngl-datatable-column heading="Surname" key="surname" cellClass="slds-truncate" sortable>

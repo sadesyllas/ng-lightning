@@ -290,6 +290,23 @@ describe('`NglDatatable`', () => {
       </table>`);
     expect(getData(fixture.nativeElement)).toEqual([[ 'No data available in table!' ]]);
   });
+
+  it('should hande row click', () => {
+    const fixture = createTestComponent(`
+        <table ngl-datatable [data]="data" (onRowClick)="rowClick($event)">
+          <ngl-datatable-column key="id"></ngl-datatable-column>
+        </table>`);
+
+    const {componentInstance} = fixture;
+    const rows = getRows(fixture.nativeElement);
+    expect(componentInstance.rowClick).not.toHaveBeenCalled();
+
+    rows[2].click();
+    expect(componentInstance.rowClick).toHaveBeenCalledWith({ event: jasmine.anything(), data: componentInstance.data[2]});
+
+    rows[1].click();
+    expect(componentInstance.rowClick).toHaveBeenCalledWith({ event: jasmine.anything(), data: componentInstance.data[1]});
+  });
 });
 
 @Component({
@@ -320,5 +337,6 @@ export class TestComponent {
   class2: any;
 
   sortChange = jasmine.createSpy('sortChange');
+  rowClick = jasmine.createSpy('rowClick');
   cb = jasmine.createSpy('cb').and.callThrough();
 }

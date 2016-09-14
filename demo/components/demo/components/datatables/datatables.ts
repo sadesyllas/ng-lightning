@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {INglDatatableSort} from '../../../../../dist/ng-lightning';
+import {INglDatatableSort, INglDatatableRowClick} from '../../../../../dist/ng-lightning';
 
 const DATA = [
   { rank: 1, name: 'Kareem', surname: 'Abdul-Jabbar', points: 38387 },
@@ -30,5 +30,9 @@ export class DemoDatatables {
 
   toggleData() {
     this.data = this.data ? null : DATA;
+  }
+
+  onRowClick($event: INglDatatableRowClick) {
+    console.log('clicked row', $event.data);
   }
 }

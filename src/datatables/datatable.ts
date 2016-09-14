@@ -8,6 +8,11 @@ export interface INglDatatableSort {
   order: 'asc' | 'desc';
 };
 
+export interface INglDatatableRowClick {
+  event: Event;
+  data: any;
+};
+
 @Component({
   selector: 'table[ngl-datatable]',
   templateUrl: './datatable.jade',
@@ -51,6 +56,8 @@ export class NglDatatable {
 
   @ContentChildren(NglDatatableColumn) columns: QueryList<NglDatatableColumn>;
 
+  @Output() onRowClick = new EventEmitter<INglDatatableRowClick>();
+
   private _columnsSubscription: Subscription;
 
   constructor(private detector: ChangeDetectorRef, element: ElementRef, renderer: Renderer) {
@@ -75,6 +82,10 @@ export class NglDatatable {
 
   getColumnSortOrder(column: NglDatatableColumn) {
     return this.sort && column.key === this.sort.key ? this.sort.order : null;
+  }
+
+  rowClick(event: Event, data: any) {
+    this.onRowClick.emit({ event, data });
   }
 
   ngAfterContentInit() {

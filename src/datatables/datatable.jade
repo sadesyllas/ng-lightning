@@ -11,7 +11,7 @@ tbody
 
   //- Data
   template(ngIf="hasRows")
-    tr(*ngFor="let d of data; let i = index; trackBy:dataTrackBy")
+    tr(*ngFor="let d of data; let i = index; trackBy:dataTrackBy", (click)="rowClick($event, d)")
       td(*ngFor="let col of columns; trackBy:columnTrackBy", [ngClass]="col.cellClass",
          ngl-internal-datatatable-cell, [row]="d", [column]="col", [index]="i")
 
