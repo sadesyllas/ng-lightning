@@ -1,6 +1,6 @@
-.slds-truncate(*ngIf="!sortable") {{ heading }}
+.slds-truncate(*ngIf="!sortable", [attr.title]="heading", [nglInternalOutlet]="header")
 a.slds-th__action.slds-text-link--reset(*ngIf="sortable", (click)="sortChange()") 
   span.slds-assistive-text Sort Column
-  span.slds-truncate([title]="heading") {{heading}}
+  span.slds-truncate([attr.title]="heading", [nglInternalOutlet]="header")
   .slds-icon_container(title="Sort Column")
     svg.slds-icon.slds-icon--x-small.slds-icon-text-default.slds-is-sortable__icon(nglIcon="arrowdown")

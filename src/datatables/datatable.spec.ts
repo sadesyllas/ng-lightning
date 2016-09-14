@@ -18,6 +18,10 @@ function getHeadingsText(element: HTMLElement) {
   return getHeadings(element).map(getHeadingText);
 }
 
+function getHeadingsTitle(element: HTMLElement) {
+  return getHeadings(element).map(el => el.querySelector('.slds-truncate').getAttribute('title'));
+}
+
 function getRows(element: HTMLElement): HTMLTableRowElement[] {
   return <HTMLTableRowElement[]>selectElements(element, 'tbody tr');
 }
@@ -71,6 +75,7 @@ describe('`NglDatatable`', () => {
     expect(tableEl).toHaveCssClass('slds-table--striped');
 
     expect(getHeadingsText(fixture.nativeElement)).toEqual(['ID', 'Name', 'Number']);
+    expect(getHeadingsTitle(fixture.nativeElement)).toEqual(['ID', 'Name', 'Number']);
     expect(getData(fixture.nativeElement)).toEqual([
       [ '1', 'PP', '80' ],
       [ '2', 'AB', '10' ],
@@ -306,6 +311,28 @@ describe('`NglDatatable`', () => {
 
     rows[1].click();
     expect(componentInstance.rowClick).toHaveBeenCalledWith({ event: jasmine.anything(), data: componentInstance.data[1]});
+  });
+
+  it('should display custom header template', () => {
+    const fixture = createTestComponent(`
+        <table ngl-datatable>
+          <ngl-datatable-column heading="My title">
+            <template nglDatatableHeading>Custom heading</template>
+          </ngl-datatable-column>
+        </table>`);
+    expect(getHeadingsText(fixture.nativeElement)).toEqual(['Custom heading']);
+    expect(getHeadingsTitle(fixture.nativeElement)).toEqual(['My title']);
+  });
+
+  it('should not display `undefined` title', () => {
+    const fixture = createTestComponent(`
+        <table ngl-datatable>
+          <ngl-datatable-column>
+            <template nglDatatableHeading>Custom heading</template>
+          </ngl-datatable-column>
+        </table>`);
+    expect(getHeadingsText(fixture.nativeElement)).toEqual(['Custom heading']);
+    expect(getHeadingsTitle(fixture.nativeElement)).toEqual([null]);
   });
 });
 

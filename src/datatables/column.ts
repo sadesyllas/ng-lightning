@@ -1,5 +1,6 @@
 import {Directive, Input, ContentChild} from '@angular/core';
 import {NglDatatableCell} from './cell';
+import {NglDatatableHeadingTemplate} from './heading';
 import {toBoolean} from '../util/util';
 
 @Directive({
@@ -10,6 +11,7 @@ export class NglDatatableColumn {
   @Input() key: string;
   @Input() cellClass: any;
   @ContentChild(NglDatatableCell) cellTpl: NglDatatableCell;
+  @ContentChild(NglDatatableHeadingTemplate) headingTpl: NglDatatableHeadingTemplate;
 
   @Input() set sortable(sortable: string | boolean) {
     this._sortable = toBoolean(sortable);

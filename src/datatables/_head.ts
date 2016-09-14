@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBinding} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBinding, TemplateRef} from '@angular/core';
 
 @Component({
   selector: 'th[ngl-internal-datatatable-head]',
@@ -15,6 +15,11 @@ export class NglInternalDatatableHeadCell {
 
   @HostBinding('attr.title')
   @Input() heading: string;
+  @Input() headingTpl: TemplateRef<any>;
+
+  get header() {
+    return this.headingTpl || this.heading;
+  }
 
   @HostBinding('class.slds-is-sortable')
   @Input() sortable: boolean;

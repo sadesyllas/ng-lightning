@@ -10,8 +10,8 @@
     <template nglDatatableCell let-row="row"><b>{{row.surname}}</b></template>
   </ngl-datatable-column>
   <ngl-datatable-column heading="Points" key="points">
-    <template nglDatatableCell let-value><ngl-badge>{{value | number}}</ngl-badge>
-    </template>
+    <template nglDatatableHeading><strong>Points</strong></template>
+    <template nglDatatableCell let-value><ngl-badge>{{value | number}}</ngl-badge></template>
   </ngl-datatable-column>
 
   <!-- Loading overlay -->
