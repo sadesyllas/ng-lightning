@@ -1,3 +1,24 @@
+<a name="0.22.0"></a>
+# [0.22.0](https://github.com/ng-lightning/ng-lightning/compare/v0.21.0...v0.22.0) (2016-09-15)
+
+
+### Features
+
+* **app:** upgrade Angular to 2.0.0 ([cab4c08](https://github.com/ng-lightning/ng-lightning/commit/cab4c08)), closes [#213](https://github.com/ng-lightning/ng-lightning/issues/213)
+* **datatables:** add loading overlay ([15fd577](https://github.com/ng-lightning/ng-lightning/commit/15fd577)), closes [#201](https://github.com/ng-lightning/ng-lightning/issues/201)
+* **datatables:** add row event handler ([446fe68](https://github.com/ng-lightning/ng-lightning/commit/446fe68)), closes [#204](https://github.com/ng-lightning/ng-lightning/issues/204) [#208](https://github.com/ng-lightning/ng-lightning/issues/208)
+* **datatables:** custom message when no data available ([052a0a6](https://github.com/ng-lightning/ng-lightning/commit/052a0a6)), closes [#205](https://github.com/ng-lightning/ng-lightning/issues/205)
+* **datatables:** support custom header template ([c0ecd8c](https://github.com/ng-lightning/ng-lightning/commit/c0ecd8c)), closes [#206](https://github.com/ng-lightning/ng-lightning/issues/206) [#211](https://github.com/ng-lightning/ng-lightning/issues/211)
+* **rating:** support `max` as input ([456ce76](https://github.com/ng-lightning/ng-lightning/commit/456ce76)), closes [#203](https://github.com/ng-lightning/ng-lightning/issues/203)
+* **rating:** support custom icon ([95a013f](https://github.com/ng-lightning/ng-lightning/commit/95a013f)), closes [#200](https://github.com/ng-lightning/ng-lightning/issues/200) [#202](https://github.com/ng-lightning/ng-lightning/issues/202)
+
+
+### Performance Improvements
+
+* **NglInternalOutlet:** reduce number of checks needed ([2b3b1ab](https://github.com/ng-lightning/ng-lightning/commit/2b3b1ab)), closes [#209](https://github.com/ng-lightning/ng-lightning/issues/209)
+
+
+
 <a name="0.21.0"></a>
 # [0.21.0](https://github.com/ng-lightning/ng-lightning/compare/v0.20.0...v0.21.0) (2016-09-09)
 
