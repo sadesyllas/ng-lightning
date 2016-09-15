@@ -38,7 +38,7 @@
       // other libraries
       'rxjs':                       'npm:rxjs',
       'ts':                         'npm:plugin-typescript@4.0.10/lib/plugin.js',
-      'typescript':                 'npm:typescript@1.9.0-dev.20160409/lib/typescript.js',
+      'typescript':                 'npm:typescript@2.0.2/lib/typescript.js',
 
     },
     // packages tells the System loader how to load when no filename and/or no extension
