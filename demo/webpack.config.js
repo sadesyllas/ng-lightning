@@ -90,13 +90,7 @@ if (isProduction) {
     new webpack.optimize.DedupePlugin(),
 
     // Minify all javascript, switch loaders to minimizing mode
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      // Angular 2 is broken again, disabling mangle until fix
-      mangle: false,
-      compress : { screw_ie8 : true },
-      comments: false,
-    })
+    new webpack.optimize.UglifyJsPlugin()
   );
 }
 

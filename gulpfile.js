@@ -65,11 +65,11 @@ gulp.task('build:ts', gulp.series('lint:ts', function build_ts_impl() {
 }));
 
 gulp.task('bundle', function() {
-  return bundle({mangle: false});
+  return bundle({});
 });
 
 gulp.task('bundle:min', function() {
-  return bundle({minify: true, sourceMaps: true, mangle: false});
+  return bundle({minify: true, sourceMaps: true});
 });
 
 gulp.task('build', gulp.series('clean', 'build:ts', gulp.parallel('bundle', 'bundle:min')));
