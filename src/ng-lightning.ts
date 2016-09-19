@@ -15,6 +15,7 @@ import {NglModalsModule} from './modals/module';
 import {NglNotificationsModule} from './notifications/module';
 import {NglPaginationsModule} from './paginations/module';
 import {NglPickModule} from './pick/module';
+import {NglPicklistModule} from './picklist/module';
 import {NglPillsModule} from './pills/module';
 import {NglPopoversModule} from './popovers/module';
 import {NglRatingsModule} from './ratings/module';
@@ -41,6 +42,7 @@ const MODULES = [
   NglNotificationsModule,
   NglPaginationsModule,
   NglPickModule,
+  NglPicklistModule,
   NglPillsModule,
   NglPopoversModule,
   NglRatingsModule,

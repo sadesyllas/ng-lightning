@@ -14,6 +14,7 @@ import {DemoModals} from './components/modals/modals';
 import {DemoNotifications} from './components/notifications/notifications';
 import {DemoPaginations} from './components/paginations/paginations';
 import {DemoPick} from './components/pick/pick';
+import {DemoPicklist} from './components/picklist/picklist';
 import {DemoPills} from './components/pills/pills';
 import {DemoPopovers} from './components/popovers/popovers';
 import {DemoRatings} from './components/ratings/ratings';
@@ -48,6 +49,7 @@ export const components: any[] = [
   { key: 'notifications', component: DemoNotifications },
   { key: 'paginations', component: DemoPaginations },
   { key: 'pick', component: DemoPick },
+  { key: 'picklist', component: DemoPicklist },
   { key: 'pills', component: DemoPills },
   { key: 'popovers', component: DemoPopovers },
   { key: 'ratings', component: DemoRatings },

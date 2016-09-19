@@ -1,7 +1,7 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ContentChild, ViewChild, ElementRef} from '@angular/core';
 import {NglPicklistItemTemplate} from './item';
-import {NglPick} from '../../pick/pick';
-import {toBoolean} from '../../util/util';
+import {NglPick} from '../pick/pick';
+import {toBoolean} from '../util/util';
 
 @Component({
   selector: 'ngl-picklist[nglPick]',

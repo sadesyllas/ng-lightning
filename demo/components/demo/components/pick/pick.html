@@ -1,4 +1,4 @@
-<div class="slds-text-heading--label slds-m-bottom--small">Single selection</div>
+<div class="slds-text-title--caps slds-m-bottom--small">Single selection</div>
 <div class="slds-m-bottom--small">Selected: <code>{{selected}}</code></div>
 <div [(nglPick)]="selected" nglPickActiveClass="slds-button--brand" class="slds-button-group" role="group">
   <button type="button" nglButton="neutral" nglPickOption="left">Left</button>
@@ -6,7 +6,7 @@
   <button type="button" nglButton="neutral" [nglPickOption]="'right'">Right</button>
 </div>
 
-<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Multiple selection</div>
+<div class="slds-text-title--caps slds-m-bottom--small slds-m-top--x-large">Multiple selection</div>
 <div class="slds-m-bottom--small">Selected: <code>{{multiple}}</code></div>
 <div [(nglPick)]="multiple" nglPickMultiple nglPickActiveClass="slds-button--brand" class="slds-button-group" role="group">
   <button type="button" nglButton="neutral" nglPickOption="left">Left</button>
@@ -14,7 +14,7 @@
   <button type="button" nglButton="neutral" [nglPickOption]="'right'">Right</button>
 </div>
 
-<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Multiple selection with object</div>
+<div class="slds-text-title--caps slds-m-bottom--small slds-m-top--x-large">Multiple selection with object</div>
 <div class="slds-m-bottom--small">Selected: <code>{{multipleObject | json}}</code></div>
 <div [(nglPick)]="multipleObject" nglPickMultiple nglPickActiveClass="slds-button--brand" class="slds-button-group" role="group">
   <button type="button" nglButton="neutral" nglPickOption="left">Left</button>

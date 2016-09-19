@@ -1,10 +1,10 @@
-<div class="slds-text-heading--label slds-m-bottom--small">Default</div>
+<div class="slds-text-title--caps slds-m-bottom--small">Default</div>
 <ngl-pagination [(page)]="pageDefault" total="62"></ngl-pagination>
 <ngl-pagination [(page)]="pageBoundary" total="42" boundaryLinks></ngl-pagination>
 
-<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--large">Limited visible options</div>
+<div class="slds-text-title--caps slds-m-bottom--small slds-m-top--large">Limited visible options</div>
 
-<div class="slds-text-heading--label-normal slds-m-bottom--x-small">Showing {{pagination.start}} - {{pagination.end}} of {{total}}</div>
+<div class="slds-text-title--caps-normal slds-m-bottom--x-small">Showing {{pagination.start}} - {{pagination.end}} of {{total}}</div>
 <ngl-pagination [(page)]="page" [total]="total" limit="5" boundaryNumbers="1" #pagination></ngl-pagination>
 
 Total: <input [(ngModel)]="total">

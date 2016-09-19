@@ -1,8 +1,8 @@
 import {TestBed, ComponentFixture, async}  from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement} from '@angular/core';
-import {createGenericTestComponent, dispatchEvent, dispatchKeyEvent} from '../../../test/util/helpers';
-import {NglMenusModule} from '../module';
+import {createGenericTestComponent, dispatchEvent, dispatchKeyEvent} from '../../test/util/helpers';
+import {NglPicklistModule} from './module';
 import {getOptionElements} from './picklist.spec';
 
 const createTestComponent = (html?: string, detectChanges?: boolean) =>
@@ -23,7 +23,7 @@ function getDisplayedItems(fixture: ComponentFixture<TestComponent>): string[] {
 
 describe('Picklist filter', () => {
 
-  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglMenusModule]}));
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglPicklistModule]}));
 
   it('should be focused when the dropdown is opened', async(() => {
     const fixture = createTestComponent();

@@ -1,5 +1,5 @@
 thead
-  tr.slds-text-heading--label
+  tr.slds-text-title--caps
     th(*ngFor="let col of columns; trackBy:columnTrackBy", ngl-internal-datatatable-head,
        [heading]="col.heading", [headingTpl]="col.headingTpl?.templateRef",
        [sortable]="col.sortable", [sortOrder]="getColumnSortOrder(col)", (onSort)="onColumnSort(col, $event)")

@@ -1,4 +1,3 @@
-<div class="slds-text-heading--label slds-m-bottom--small">Dropdown</div>
 <span nglDropdown [(open)]="open">
   <button class="slds-button slds-button--neutral" nglDropdownTrigger>
     <span class="slds-truncate">Select an item</span>
@@ -20,12 +19,3 @@
 <button type="button" nglButton="neutral" style="margin-left: 0px;" (click)="open = !open">Toggle</button>
 
 <div *ngIf="selected" class="slds-m-top--large">You selected: <b>{{selected}}</b></div>
-
-
-<div class="slds-text-heading--label slds-m-bottom--small slds-m-top--x-large">Picklist</div>
-<ngl-picklist [data]="items" [(nglPick)]="pick" [(open)]="open2" [nglPickMultiple]="multiple" filter="value">
-  <span class="slds-truncate">{{ pickLabel }}</span>
-  <template nglPicklistItem let-item>{{item.value}}</template>
-</ngl-picklist>
-
-<button type="button" nglButton="neutral" (click)="toggleMultiple()">Toggle Multiple</button>
