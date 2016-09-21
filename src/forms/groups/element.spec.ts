@@ -20,8 +20,8 @@ describe('`NglFormGroupElement`', () => {
 
   it('should render checkbox group correctly', () => {
     const fixture = createTestComponent(`<fieldset ngl-form-group>
-          <label ngl-form-group-element [nglFormLabel]="label"><input type="checkbox" /></label>
-          <label ngl-form-group-element nglFormLabel="Checkbox Label Two"><input type="checkbox" /></label>
+          <label ngl-form-group-element [label]="label"><input type="checkbox" /></label>
+          <label ngl-form-group-element label="Checkbox Label Two"><input type="checkbox" /></label>
         </fieldset>`);
     const labelEls = getLabelElements(fixture.nativeElement);
     expect(labelEls.map(e => e.textContent.trim())).toEqual(['Label One', 'Checkbox Label Two']);
@@ -37,8 +37,8 @@ describe('`NglFormGroupElement`', () => {
   it('should render radio group correctly', () => {
     const fixture = createTestComponent(`
       <fieldset ngl-form-group>
-        <label ngl-form-group-element [nglFormLabel]="label"><input type="radio" /></label>
-        <label ngl-form-group-element nglFormLabel="Radio Label Two"><input type="radio" /></label>
+        <label ngl-form-group-element [label]="label"><input type="radio" /></label>
+        <label ngl-form-group-element label="Radio Label Two"><input type="radio" /></label>
       </fieldset>`);
     const labelEls = getLabelElements(fixture.nativeElement);
     expect(labelEls.map(e => e.textContent.trim())).toEqual(['Label One', 'Radio Label Two']);

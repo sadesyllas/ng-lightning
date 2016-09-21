@@ -55,7 +55,7 @@ describe('`NglFormTextarea`', () => {
 
 @Component({
   template: `
-    <ngl-form-element [nglFormLabel]="label">
+    <ngl-form-element [label]="label">
       <textarea></textarea>
     </ngl-form-element>
   `,

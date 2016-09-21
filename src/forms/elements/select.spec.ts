@@ -55,7 +55,7 @@ describe('`NglFormSelect`', () => {
 
 @Component({
   template: `
-    <ngl-form-element [nglFormLabel]="label">
+    <ngl-form-element [label]="label">
       <select></select>
     </ngl-form-element>
   `,

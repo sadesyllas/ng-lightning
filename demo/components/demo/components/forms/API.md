@@ -1,8 +1,8 @@
 # `<ngl-form-element>`
 
 ### Input
-  * `nglFormLabel?: string | TemplateRef`: Input label.
-  * `nglFormError?: string`: Error message.
+  * `label?: string | TemplateRef`: Input label.
+  * `error?: string`: Error message.
 
 ### Content
 
@@ -13,9 +13,9 @@
 # `<fieldset[ngl-form-group], fieldset[ngl-form-group-alt]>`
 
 ### Input
-  * `nglFormLabel?: string`: Group label.
-  * `nglFormError?: string`: Error message.
-  * `nglFormRequired?: boolean = false`: Wheter it is required.
+  * `label?: string`: Group label.
+  * `error?: string`: Error message.
+  * `required?: boolean = false`: Wheter it is required.
 
 ### Content
 

@@ -11,14 +11,16 @@ import {NglFormLabelTemplate, getFormLabel} from '../form-label';
 export class NglFormGroupElement {
   @ContentChild(NglFormGroupCheckbox) contentEl: NglFormGroupCheckbox;
 
-  @Input('nglFormLabel') label: string;
+  @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;
 
-  get _label(): TemplateRef<any> | string {
-    return getFormLabel(this.label, this.labelTpl);
-  }
+  _label: TemplateRef<any> | string;
 
   constructor(@Optional() private groupAlt: NglFormGroupAlternate, private element: ElementRef, private renderer: Renderer) {}
+
+  ngOnChanges() {
+    this.setFormLabel();
+  }
 
   ngAfterContentInit() {
     const { type } = this.contentEl;
@@ -30,5 +32,11 @@ export class NglFormGroupElement {
     } else {
       this.renderer.setElementClass(this.element.nativeElement, `slds-${type}`, true);
     }
+
+    this.setFormLabel();
+  }
+
+  private setFormLabel() {
+    this._label = getFormLabel(this.labelStr, this.labelTpl);
   }
 };

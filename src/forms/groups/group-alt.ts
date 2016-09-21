@@ -12,13 +12,13 @@ import {NglFormLabelTemplate} from '../form-label';
 })
 export class NglFormGroupAlternate extends NglFormGroup {
 
-  @Input('nglFormLabel') label: string;
+  @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;
 
   @HostBinding('class.slds-has-error')
-  @Input('nglFormError') error: string;
+  @Input() error: string;
 
-  @Input('nglFormRequired') required: boolean;
+  @Input() required: boolean;
 
   @Input() type: string;
 };

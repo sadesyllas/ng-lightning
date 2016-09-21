@@ -12,17 +12,27 @@ import {NglFormLabelTemplate, getFormLabel} from '../form-label';
 })
 export class NglFormGroup {
 
-  @Input('nglFormLabel') label: string;
+  @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;
 
   @HostBinding('class.slds-has-error')
-  @Input('nglFormError') error: string;
+  @Input() error: string;
 
-  @Input('nglFormRequired') required: boolean;
+  @Input() required: boolean;
 
   uid = uniqueId('form_group');
 
-  get _label(): TemplateRef<any> | string {
-    return getFormLabel(this.label, this.labelTpl);
+  _label: string | TemplateRef<any>;
+
+  ngOnChanges() {
+    this.setFormLabel();
+  }
+
+  ngAfterContentInit() {
+    this.setFormLabel();
+  }
+
+  private setFormLabel() {
+    this._label = getFormLabel(this.labelStr, this.labelTpl);
   }
 };

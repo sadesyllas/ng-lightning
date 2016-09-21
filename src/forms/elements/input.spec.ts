@@ -52,7 +52,7 @@ describe('`NglFormInput`', () => {
   });
 
   it('should render error message', () => {
-    const fixture = createTestComponent(`<ngl-form-element [nglFormError]="error"><input type="text"></ngl-form-element>`);
+    const fixture = createTestComponent(`<ngl-form-element [error]="error"><input type="text"></ngl-form-element>`);
     const element = fixture.nativeElement.firstElementChild;
 
     expect(element).not.toHaveCssClass('slds-has-error');
@@ -77,7 +77,7 @@ describe('`NglFormInput`', () => {
 
 @Component({
   template: `
-    <ngl-form-element [nglFormLabel]="label">
+    <ngl-form-element [label]="label">
       <input type="text">
     </ngl-form-element>
   `,

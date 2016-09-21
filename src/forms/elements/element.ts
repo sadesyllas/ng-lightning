@@ -15,10 +15,10 @@ import {NglFormLabelTemplate, getFormLabel} from '../form-label';
 export class NglFormElement {
   @ContentChild(NglFormInput) contentEl: NglFormInput;
 
-  @Input('nglFormLabel') label: string;
+  @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;
 
-  @Input('nglFormError') set setError(error: string) {
+  @Input('error') set setError(error: string) {
     this.error = error;
     if (this.contentEl) {
       this.setInputErrorId();
@@ -31,9 +31,7 @@ export class NglFormElement {
 
   required = false;
 
-  get _label(): TemplateRef<any> | string {
-    return getFormLabel(this.label, this.labelTpl);
-  }
+  _label: TemplateRef<any> | string;
 
   get isCheckbox() {
     return this.contentEl instanceof NglFormCheckbox;
@@ -41,12 +39,21 @@ export class NglFormElement {
 
   constructor(public detector: ChangeDetectorRef) {}
 
+  ngOnChanges() {
+    this.setFormLabel();
+  }
+
   ngAfterContentInit() {
     this.contentEl.setup(this.uid);
     this.setInputErrorId();
+    this.setFormLabel();
   }
 
   private setInputErrorId() {
     this.contentEl.describedBy = this.error ? `error_${this.uid}` : null;
+  }
+
+  private setFormLabel() {
+    this._label = getFormLabel(this.labelStr, this.labelTpl);
   }
 };

@@ -41,7 +41,7 @@ describe('`NglFormCheckbox`', () => {
 
 @Component({
   template: `
-    <ngl-form-element [nglFormLabel]="label">
+    <ngl-form-element [label]="label">
       <input type="checkbox" />
     </ngl-form-element>
   `,

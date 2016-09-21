@@ -41,7 +41,7 @@ describe('`NglFormGroup`', () => {
   });
 
   it('should render error message', () => {
-    const fixture = createTestComponent(`<fieldset ngl-form-group [nglFormError]="error"></fieldset>`);
+    const fixture = createTestComponent(`<fieldset ngl-form-group [error]="error"></fieldset>`);
     const element = fixture.nativeElement.firstElementChild;
 
     expect(element).not.toHaveCssClass('slds-has-error');
@@ -55,7 +55,7 @@ describe('`NglFormGroup`', () => {
   });
 
   it('should show required label indication', () => {
-    const fixture = createTestComponent(`<fieldset ngl-form-group [nglFormRequired]="required"></fieldset>`);
+    const fixture = createTestComponent(`<fieldset ngl-form-group [required]="required"></fieldset>`);
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
 
     fixture.componentInstance.required = true;
@@ -71,7 +71,7 @@ describe('`NglFormGroup`', () => {
 });
 
 @Component({
-  template: `<fieldset ngl-form-group [nglFormLabel]="label"></fieldset>`,
+  template: `<fieldset ngl-form-group [label]="label"></fieldset>`,
 })
 export class TestComponent {
   label: string = 'Group Label';
