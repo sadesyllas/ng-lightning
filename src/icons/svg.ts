@@ -1,5 +1,5 @@
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
-import {NglConfig} from '../config/config';
+import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {NglConfig, NglConfigurable} from '../config/config';
 
 @Component({
   selector: 'svg[nglIcon]',
@@ -9,12 +9,13 @@ import {NglConfig} from '../config/config';
     '[attr.aria-hidden]': 'true',
   },
 })
+@NglConfigurable()
 export class NglIconSvg {
 
   @Input('nglIconCategory') category: string = 'utility';
   @Input('nglIcon') icon: string;
 
-  constructor(private config: NglConfig) {}
+  constructor(private config: NglConfig, private cd: ChangeDetectorRef) {}
 
   iconPath() {
     return `${this.config.svgPath}/${this.category}-sprite/svg/symbols.svg#${this.icon}`;

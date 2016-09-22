@@ -79,3 +79,9 @@ mixin prism(html)
         b svgPath
         | : path to SVG sprites. Default is&nbsp;
         code assets/icons
+        
+    p.slds-m-top--large
+      | If you want to change the config properties on runtime, you can do it by using&nbsp;
+      code refresh
+      | &nbsp;method like this:
+    +prism(configRun)

@@ -6,7 +6,7 @@ import {NglConfig} from 'ng-lightning/ng-lightning';
 })
 export class AppComponent {
 
-  constructor(config: NglConfig) {
+  constructor(private config: NglConfig) {
     config.svgPath = '/my/path'; // Override this specific property
   }
 
