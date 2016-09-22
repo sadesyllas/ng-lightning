@@ -22,8 +22,10 @@ import {NglRatingsModule} from './ratings/module';
 import {NglSectionsModule} from './sections/module';
 import {NglSpinnersModule} from './spinners/module';
 import {NglTabsModule} from './tabs/module';
+import {NglConfig} from './config/config';
 
 export {INglDatatableSort, INglDatatableRowClick} from './datatables/module';
+export {NglConfig} from './config/config';
 
 @NgModule({
   exports: [
@@ -48,7 +50,8 @@ export {INglDatatableSort, INglDatatableRowClick} from './datatables/module';
     NglSpinnersModule,
     NglTabsModule,
   ],
+  providers: [
+    NglConfig,
+  ],
 })
 export class NglModule {}
-
-export {provideNglConfig} from './config/config';

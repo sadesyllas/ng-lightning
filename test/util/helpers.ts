@@ -2,11 +2,11 @@
  * Testing helpers
  */
 import {TestBed, ComponentFixture} from '@angular/core/testing';
-import {provideNglConfig} from '../../src/config/config';
+import {NglConfig} from '../../src/config/config';
 
 // Default configuration for every TestComponent
 beforeEach(() => {
-  TestBed.configureTestingModule({providers: [provideNglConfig()]});
+  TestBed.configureTestingModule({providers: [NglConfig]});
 });
 
 export function dispatchKeyEvent(fixture: ComponentFixture<any>, predicate: any, key: string, indexOf: number = -1) {

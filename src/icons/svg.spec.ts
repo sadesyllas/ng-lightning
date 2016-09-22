@@ -2,7 +2,7 @@ import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent} from '../../test/util/helpers';
 import {NglIconsModule} from './module';
-import {provideNglConfig} from '../config/config';
+import {NglConfig} from '../config/config';
 
 const createTestComponent = (html?: string, detectChanges?: boolean) =>
   createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
@@ -12,7 +12,6 @@ describe('SVG icon Component', () => {
   beforeEach(() => TestBed.configureTestingModule({
     declarations: [TestComponent],
     imports: [NglIconsModule],
-    providers: [provideNglConfig({svgPath: '/mypath'})],
   }));
 
   it('should render correctly', () => {
@@ -45,4 +44,8 @@ describe('SVG icon Component', () => {
 export class TestComponent {
   icon: string;
   category: string;
+
+  constructor(config: NglConfig) {
+    config.svgPath = '/mypath';
+  }
 }

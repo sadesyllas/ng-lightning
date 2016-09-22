@@ -62,12 +62,18 @@ mixin prism(html)
     p.slds-m-bottom--small You should end up with code similar to this:
     +prism(usageApp)
       
-    p.slds-m-top--small
-      | Currently available options to configure&nbsp;
+  .slds-p-vertical--large
+    .slds-text-heading--large.slds-m-bottom--large Configuration
+    p 
+      | Optionally, you can configure&nbsp;
       code ng-lightning
-      | &nbsp;through&nbsp;
-      i provideNglConfig
-      | &nbsp;are:
+      | &nbsp;by injecting&nbsp;
+      code NglConfig
+      | &nbsp;service, typically in your root component, and customize it's values in order to provide your own default values.
+      | For example:
+    +prism(config)
+    p.slds-m-top--small
+      | Currently available options are:
     ul.slds-list--dotted
       li 
         b svgPath
