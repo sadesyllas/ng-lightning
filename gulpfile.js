@@ -57,7 +57,7 @@ gulp.task('build:ts', gulp.series('lint:ts', function build_ts_impl() {
 
   var tsResult = gulp.src(PATHS.src.concat(PATHS.typings), {base: 'src'})
     .pipe(inlineTemplatesTask())
-    .pipe(ts(tsProject));
+    .pipe(tsProject());
 
   return merge([tsResult.dts, tsResult.js])
     .pipe(cache('build:ts'))
@@ -96,10 +96,10 @@ gulp.task('test:clean', function() {
 gulp.task('test:build', function() {
   var sourcemaps = require('gulp-sourcemaps');
 
-  var tsResult = gulp.src(PATHS.spec.concat(PATHS.typings))
+  var tsResult = gulp.src(PATHS.spec.concat(PATHS.typings), {base: './'})
     .pipe(sourcemaps.init())
     .pipe(inlineTemplatesTask())
-    .pipe(ts(tsProject));
+    .pipe(tsProject());
 
   return tsResult.js
     .pipe(sourcemaps.write('.'))
