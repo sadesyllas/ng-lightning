@@ -54,10 +54,6 @@ module.exports = function(config) {
         // Our built application code
         {pattern: 'temp/**/*.js', included: false, watched: true},
 
-        // paths to support debugging with source maps in dev tools
-        {pattern: 'src/**/*.ts', included: false, watched: false},
-        {pattern: 'temp/**/*.js.map', included: false, watched: false},
-
         // fixtures
         {pattern: 'test/fixtures/**', watched: false, included: false, served: true},
     ],

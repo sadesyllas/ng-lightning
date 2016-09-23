@@ -53,13 +53,9 @@ gulp.task('lint:ts', function lint_ts_impl() {
 });
 
 gulp.task('build:ts', gulp.series('lint:ts', function build_ts_impl() {
-  var merge = require('merge2');
-
-  var tsResult = gulp.src(PATHS.src.concat(PATHS.typings), {base: 'src'})
+  return gulp.src(PATHS.src.concat(PATHS.typings), {base: 'src'})
     .pipe(inlineTemplatesTask())
-    .pipe(tsProject());
-
-  return merge([tsResult.dts, tsResult.js])
+    .pipe(tsProject())
     .pipe(cache('build:ts'))
     .pipe(gulp.dest(BUILD));
 }));
@@ -94,15 +90,11 @@ gulp.task('test:clean', function() {
 });
 
 gulp.task('test:build', function() {
-  var sourcemaps = require('gulp-sourcemaps');
-
   var tsResult = gulp.src(PATHS.spec.concat(PATHS.typings), {base: './'})
-    .pipe(sourcemaps.init())
     .pipe(inlineTemplatesTask())
     .pipe(tsProject());
 
   return tsResult.js
-    .pipe(sourcemaps.write('.'))
     .pipe(cache('test:build'))
     .pipe(gulp.dest(PATHS.temp));
 });
