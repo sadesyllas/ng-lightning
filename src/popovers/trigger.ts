@@ -22,10 +22,23 @@ export class NglPopoverTrigger {
 
   @Input() nglTooltip: string | boolean;
 
+  @Input() nglPopoverDelay: number = 0;
+
   @Input() set nglOpen(open: boolean) {
     if (open) {
-      this.create();
+      if (this.nglPopoverDelay > 0) {
+        this.openTimeout = setTimeout(() => {
+          this.openTimeout = null;
+          this.create();
+        }, this.nglPopoverDelay);
+      } else {
+        this.create();
+      }
     } else {
+      if (this.openTimeout) {
+        clearTimeout(this.openTimeout);
+        this.openTimeout = null;
+      }
       this.destroy();
     }
   }
@@ -36,6 +49,7 @@ export class NglPopoverTrigger {
   private placement: Direction = 'top';
   private theme: string;
   private tether: Tether;
+  private openTimeout: any = null;
 
   constructor(private element: ElementRef, private viewContainer: ViewContainerRef, private injector: Injector,
               private renderer: Renderer, componentFactoryResolver: ComponentFactoryResolver) {

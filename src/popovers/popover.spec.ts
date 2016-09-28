@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture}  from '@angular/core/testing';
+import {fakeAsync, tick, TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent} from '../../test/util/helpers';
 import {NglPopoversModule} from './module';
@@ -105,6 +105,22 @@ describe('Popovers', () => {
     fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
   });
+
+  it('should support delayed opening', fakeAsync(() => {
+    const fixture = createTestComponent('<button type="button" nglPopoverDelay="200" nglPopover="tip" [(nglOpen)]="open" (click)="open = !open"></button>', false);
+    fixture.componentInstance.open = false;
+    const triggerEl = fixture.nativeElement.querySelector('button');
+    fixture.detectChanges();
+
+    triggerEl.click();
+    fixture.detectChanges();
+
+    tick(100);
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+
+    tick(100);
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+  }));
 });
 
 @Component({
