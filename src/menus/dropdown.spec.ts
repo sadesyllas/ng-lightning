@@ -91,6 +91,24 @@ describe('`nglDropdown`', () => {
     }));
   });
 
+  it('should not close when something inside is clicked, and then removed from DOM', async(() => {
+    const fixture = createTestComponent(`
+      <div nglDropdown [open]="open" (openChange)="setOpen($event)">
+        <button type="button" *ngIf="!disappear" (click)="disappear = true"></button>
+      </div>`, false);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+
+    setTimeout(() => { // Wait for document subsription
+      const disappearElement = fixture.nativeElement.querySelector('button');
+      disappearElement.click();
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('button')).toBeNull();
+      expect(fixture.componentInstance.setOpen).not.toHaveBeenCalled();
+      fixture.destroy();
+    });
+  }));
+
   it('should be closed when the ESC key is pressed', () => {
     const fixture = createTestComponent();
     const dropdownTrigger = getDropdownTrigger(fixture.nativeElement);

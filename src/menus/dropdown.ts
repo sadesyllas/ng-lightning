@@ -16,9 +16,13 @@ export class NglDropdown implements OnInit, OnDestroy {
     isOpen = toBoolean(isOpen);
     if (isOpen) {
       this.clearGlobalClickTimeout();
-      this.globalClickTimeout = setTimeout(() => this._subscribeToGlobalClickEvents());
+      this.globalClickTimeout = setTimeout(() => {
+        if (this.handlePageEvents) {
+          this._subscribeToClickEvents();
+        }
+      });
     } else {
-      this._unsubscribeFromGlobalClickEvents();
+      this._unsubscribeFromClickEvents();
     }
     this._isOpen = <boolean>isOpen;
   }
@@ -37,6 +41,7 @@ export class NglDropdown implements OnInit, OnDestroy {
 
   private _isOpen = false;
   private openEventSubscription: any;
+  private globalClickEventUnsubscriber: Function = null;
   private clickEventUnsubscriber: Function = null;
   private globalClickTimeout: number;
 
@@ -64,7 +69,7 @@ export class NglDropdown implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.clearGlobalClickTimeout();
     this.openEventSubscription.unsubscribe();
-    this._unsubscribeFromGlobalClickEvents();
+    this._unsubscribeFromClickEvents();
   }
 
   toggle(toggle: boolean = !this.isOpen, focus: boolean = false) {
@@ -80,24 +85,31 @@ export class NglDropdown implements OnInit, OnDestroy {
     }
   }
 
-  handleGlobalClickEvent($event: Event) {
-    if (!this.handlePageEvents ||
-        $event.target === this.element.nativeElement || this.element.nativeElement.contains($event.target)) {
+  private handleGlobalClickEvent($event: any) {
+    if (!this.handlePageEvents || $event.$nglStop) {
       return;
     }
     this.toggle(false);
   }
 
-  private _subscribeToGlobalClickEvents() {
-    if (this.handlePageEvents && this.clickEventUnsubscriber === null) {
-      this.clickEventUnsubscriber = this.renderer.listenGlobal('document', 'click', this.handleGlobalClickEvent.bind(this));
-    }
+  private _subscribeToClickEvents() {
+    this._unsubscribeFromClickEvents();
+
+    // Prevent document listener to close it, since click happened inside
+    this.clickEventUnsubscriber = this.renderer.listen(this.element.nativeElement, 'click', ($event: any) => $event.$nglStop = true);
+
+    this.globalClickEventUnsubscriber = this.renderer.listenGlobal('document', 'click', this.handleGlobalClickEvent.bind(this));
   }
 
-  private _unsubscribeFromGlobalClickEvents() {
-    if (this.clickEventUnsubscriber !== null) {
+  private _unsubscribeFromClickEvents() {
+    if (this.clickEventUnsubscriber) {
       this.clickEventUnsubscriber();
       this.clickEventUnsubscriber = null;
+    }
+
+    if (this.globalClickEventUnsubscriber) {
+      this.globalClickEventUnsubscriber();
+      this.globalClickEventUnsubscriber = null;
     }
   }
 
