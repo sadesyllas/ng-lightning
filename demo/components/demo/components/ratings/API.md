@@ -7,6 +7,8 @@
   * `isReadonly?: boolean = false`: Prevent user's interaction.
   * `icon?: string = 'favorite'`: Icon used to display the available rates.
   * `size?: 'x-small' | 'small' | 'large'`: Icon sizes.
+  * `colorOn: 'string' = '#FFB75D'`: Color when active.
+  * `colorOff: 'string' = '#54698D'`: Color when not active.
 
 ### Output
 

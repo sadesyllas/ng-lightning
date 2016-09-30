@@ -20,12 +20,22 @@ function dispatchKey(fixture: ComponentFixture<any>, key: string) {
   dispatchKeyEvent(fixture, By.directive(NglRating), `keydown.${key}`);
 }
 
+function rgb2hex(value: string) {
+  const matches = value.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+  return matches ? [
+    '#',
+    ('0' + parseInt(matches[1], 10).toString(16)).slice(-2),
+    ('0' + parseInt(matches[2], 10).toString(16)).slice(-2),
+    ('0' + parseInt(matches[3], 10).toString(16)).slice(-2),
+  ].join('').toUpperCase() : value.toUpperCase();
+}
+
 function expectState(element: HTMLElement, state: string) {
   const stars = getICons(element);
   expect(stars.length).toBe(state.length);
   expect(+element.firstElementChild.getAttribute('aria-valuemax')).toBe(state.length);
   expect(+element.firstElementChild.getAttribute('aria-valuenow')).toBe((state.match(/\*/g) || []).length);
-  expect(stars.map(icon => icon.classList.contains('slds-icon-text-warning') ? '*' : '-').join('')).toBe(state);
+  expect(stars.map(icon => rgb2hex(icon.style.fill) === '#FFB75D' ? '*' : '-').join('')).toBe(state);
 }
 
 describe('Rating Component', () => {
@@ -170,6 +180,15 @@ describe('Rating Component', () => {
       expect(icon).not.toHaveCssClass('slds-icon--small');
       expect(icon).not.toHaveCssClass('slds-icon--large');
     });
+  });
+
+  it('should custom on/off color', () => {
+    const on = '#000000';
+    const off = '#FFFFFF';
+    const fixture = createTestComponent(`<ngl-rating rate="3" colorOn="${on}" colorOff="${off}"></ngl-rating>`);
+
+    const icons = getICons(fixture.nativeElement);
+    expect(icons.map(icon => rgb2hex(icon.style.fill))).toEqual([on, on, on, off, off]);
   });
 
   describe('with custom icon', function () {

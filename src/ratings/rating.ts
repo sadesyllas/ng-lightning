@@ -38,6 +38,9 @@ export class NglRating {
     return this._max;
   }
 
+  @Input() colorOn = '#FFB75D';
+  @Input() colorOff = '#54698D';
+
   private _max: number = 5;
   private readonly = false;
   private inputRate: number;

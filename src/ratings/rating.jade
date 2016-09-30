@@ -6,7 +6,7 @@ mixin container(isDefault)
 
 
 +container(true)
-  ngl-icon([icon]="icon", [size]="size", [type]="r <= currentRate ? 'warning' : 'default'")
+  svg.slds-icon([nglIcon]="icon", [ngClass]="size ? 'slds-icon--' + size : ''", [style.fill]="r <= currentRate ? colorOn : colorOff")
 
 +container(false)
   template([ngTemplateOutlet]="iconTemplate.templateRef", [ngOutletContext]="{$implicit: r <= currentRate, index: i}")
