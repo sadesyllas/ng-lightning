@@ -1,11 +1,13 @@
 module.exports = {
   'SL_Chrome': {
     base: 'SauceLabs',
-    browserName: 'chrome'
+    browserName: 'chrome',
+    version: '53'
   },
   'SL_FireFox': {
     base: 'SauceLabs',
     browserName: 'firefox',
+    version: '48'
   },
   'SL_Safari_9': {
     base: 'SauceLabs',
