@@ -80,10 +80,11 @@ describe('`nglNotification`', () => {
 
     tick(100);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
+    fixture.destroy();
   }));
 
   it('should set the timeout anew when the binding changes', fakeAsync(() => {
-    const fixture = createTestComponent();
+    const fixture = createTestComponent(null, false);
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -96,10 +97,11 @@ describe('`nglNotification`', () => {
 
     tick(10);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('timeout');
+    fixture.destroy();
   }));
 
   it('should cancel the active timeout after the close button has been clicked', fakeAsync(() => {
-    const fixture = createTestComponent();
+    const fixture = createTestComponent(null, false);
     fixture.componentInstance.timeout = 500;
     fixture.detectChanges();
 
@@ -109,6 +111,7 @@ describe('`nglNotification`', () => {
     tick(100);
     expect(fixture.componentInstance.onClose).toHaveBeenCalledWith('button');
     expect(fixture.componentInstance.onClose).not.toHaveBeenCalledWith('timeout');
+    fixture.destroy();
   }));
 
 });

@@ -118,6 +118,7 @@ describe('Popovers', () => {
 
     tick(200);
     expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    fixture.destroy();
   }));
 });
 
