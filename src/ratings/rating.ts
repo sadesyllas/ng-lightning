@@ -64,6 +64,18 @@ export class NglRating {
     this.hover.emit(value);
   }
 
+  get iconsCount() {
+    return Math.ceil(this.currentRate) || this.currentRate;
+  }
+
+  get iconsOnCount() {
+    return Math.floor(this.currentRate);
+  }
+
+  xPos(index: number) {
+    return index <= Math.floor(this.currentRate) ? 0 : Math.round((this.currentRate - index) * 100);
+  }
+
   @HostListener('mouseleave') reset() {
     this.currentRate = this.inputRate;
   }

@@ -14,6 +14,7 @@ export class NglIconSvg {
 
   @Input('nglIconCategory') category: string = 'utility';
   @Input('nglIcon') icon: string;
+  @Input() xPos: string = '0';
 
   constructor(private config: NglConfig, private cd: ChangeDetectorRef) {}
 

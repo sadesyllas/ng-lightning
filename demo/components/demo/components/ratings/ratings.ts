@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
   template: require('./ratings.html'),
 })
 export class DemoRatings {
-  value = 4;
+  value = 4.65;
   readonly = false;
   size = 'small';
   color = '#FFB75D';

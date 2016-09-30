@@ -8,6 +8,8 @@ import {By} from '@angular/platform-browser';
 const createTestComponent = (html?: string) =>
   createGenericTestComponent(TestComponent, html) as ComponentFixture<TestComponent>;
 
+const COLOR_ON = '#FFB75D';
+
 function getStars(element: HTMLElement): HTMLElement[] {
   return selectElements(element, '.slds-show--inline-block');
 }
@@ -35,7 +37,7 @@ function expectState(element: HTMLElement, state: string) {
   expect(stars.length).toBe(state.length);
   expect(+element.firstElementChild.getAttribute('aria-valuemax')).toBe(state.length);
   expect(+element.firstElementChild.getAttribute('aria-valuenow')).toBe((state.match(/\*/g) || []).length);
-  expect(stars.map(icon => rgb2hex(icon.style.fill) === '#FFB75D' ? '*' : '-').join('')).toBe(state);
+  expect(stars.map(icon => rgb2hex(icon.style.fill) === COLOR_ON ? '*' : '-').join('')).toBe(state);
 }
 
 describe('Rating Component', () => {
@@ -120,6 +122,36 @@ describe('Rating Component', () => {
 
     stars[3].click();
     expect(componentInstance.change).not.toHaveBeenCalled();
+  });
+
+  it('should render correclty when using fractional values', () => {
+    const fixture = createTestComponent(`<ngl-rating [rate]="value"></ngl-rating>`);
+
+    fixture.componentInstance.value = 3.2;
+    fixture.detectChanges();
+
+    const stars = getICons(fixture.nativeElement);
+    expect(stars.length).toBe(6);
+
+    // First three stars are single and "on"
+    for (let i = 0; i < 3; i++) {
+      expect(rgb2hex(stars[i].style.fill)).toBe(COLOR_ON);
+    }
+
+    // Fourth and fifth stars show the fractional value
+    const [starOff, starHalf] = [stars[3], stars[4]];
+    expect(rgb2hex(starOff.style.fill)).not.toBe(COLOR_ON);
+    expect(starOff.style.position).not.toBe('absolute');
+
+    expect(rgb2hex(starHalf.style.fill)).toBe(COLOR_ON);
+    expect(starHalf.style.position).toBe('absolute');
+    expect(starHalf.style.left).toBe('-80%');
+
+    const useEl = starHalf.querySelector('use');
+    expect(useEl.getAttribute('x')).toBe('80%');
+
+    // Last star is single and "off"
+    expect(rgb2hex(stars[5].style.fill)).not.toBe(COLOR_ON);
   });
 
   describe('keyboard interaction', () => {
