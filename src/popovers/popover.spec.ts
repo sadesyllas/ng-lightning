@@ -114,11 +114,9 @@ describe('Popovers', () => {
 
     triggerEl.click();
     fixture.detectChanges();
-
-    tick(100);
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
 
-    tick(100);
+    tick(200);
     expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
   }));
 });
