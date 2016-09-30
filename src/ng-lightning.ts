@@ -1,5 +1,5 @@
 import 'ts-helpers';
-import {NgModule} from '@angular/core';
+import {NgModule, ModuleWithProviders} from '@angular/core';
 
 
 import {NglBadgesModule} from './badges/module';
@@ -22,36 +22,45 @@ import {NglRatingsModule} from './ratings/module';
 import {NglSectionsModule} from './sections/module';
 import {NglSpinnersModule} from './spinners/module';
 import {NglTabsModule} from './tabs/module';
-import {NglConfig} from './config/config';
+import {NglConfig, INglConfig, NGL_CONFIG} from './config/config';
 
 export {INglDatatableSort, INglDatatableRowClick} from './datatables/module';
 export {NglConfig} from './config/config';
 
+const MODULES = [
+  NglBadgesModule,
+  NglBreadcrumbsModule,
+  NglButtonsModule,
+  NglDatatablesModule,
+  NglDatepickersModule,
+  NglFormsModule,
+  NglIconsModule,
+  NglImagesModule,
+  NglLookupsModule,
+  NglMenusModule,
+  NglModalsModule,
+  NglNotificationsModule,
+  NglPaginationsModule,
+  NglPickModule,
+  NglPillsModule,
+  NglPopoversModule,
+  NglRatingsModule,
+  NglSectionsModule,
+  NglSpinnersModule,
+  NglTabsModule,
+];
+
 @NgModule({
-  exports: [
-    NglBadgesModule,
-    NglBreadcrumbsModule,
-    NglButtonsModule,
-    NglDatatablesModule,
-    NglDatepickersModule,
-    NglFormsModule,
-    NglIconsModule,
-    NglImagesModule,
-    NglLookupsModule,
-    NglMenusModule,
-    NglModalsModule,
-    NglNotificationsModule,
-    NglPaginationsModule,
-    NglPickModule,
-    NglPillsModule,
-    NglPopoversModule,
-    NglRatingsModule,
-    NglSectionsModule,
-    NglSpinnersModule,
-    NglTabsModule,
-  ],
-  providers: [
-    NglConfig,
-  ],
+  exports: MODULES,
 })
-export class NglModule {}
+export class NglModule {
+  static forRoot(config: INglConfig = {}): ModuleWithProviders {
+    return {
+      ngModule: NglModule,
+      providers: [
+        { provide: NGL_CONFIG, useValue: config },
+        NglConfig,
+      ],
+   };
+ }
+}

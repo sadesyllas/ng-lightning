@@ -58,18 +58,20 @@ mixin prism(html)
 
   .slds-p-vertical--large
     .slds-text-heading--large.slds-m-bottom--large Usage
-    p Once installed you need to import our main module into your application module.
-    p.slds-m-bottom--small You should end up with code similar to this:
+    p 
+      | Once installed you need to import our main module into your application module by calling&nbsp;
+      code NglModule.forRoot()
+      | . You should end up with code similar to this:
     +prism(usageApp)
       
   .slds-p-vertical--large
     .slds-text-heading--large.slds-m-bottom--large Configuration
     p 
-      | Optionally, you can configure&nbsp;
+      | Optionally, you can pass an object to the&nbsp;
+      code forRoot
+      | &nbsp;method, to configure&nbsp;
       code ng-lightning
-      | &nbsp;by injecting&nbsp;
-      code NglConfig
-      | &nbsp;service, typically in your root component, and customize it's values in order to provide your own default values.
+      | &nbsp;during the initialization of the application, in order to provide your own default values.
       | For example:
     +prism(config)
     p.slds-m-top--small
@@ -81,7 +83,7 @@ mixin prism(html)
         code assets/icons
         
     p.slds-m-top--large
-      | If you want to change the config properties on runtime, you can do it by using&nbsp;
-      code refresh
+      | If you want to change some config properties during runtime, you can easily achieve it by utilizing the&nbsp;
+      code update
       | &nbsp;method like this:
     +prism(configRun)

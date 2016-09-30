@@ -18,6 +18,6 @@ export class NglIconSvg {
   constructor(private config: NglConfig, private cd: ChangeDetectorRef) {}
 
   iconPath() {
-    return `${this.config.svgPath}/${this.category}-sprite/svg/symbols.svg#${this.icon}`;
+    return `${this.config.get('svgPath')}/${this.category}-sprite/svg/symbols.svg#${this.icon}`;
   }
 }

@@ -162,6 +162,6 @@ export class TestComponent {
   svgClass: any = 'anextra fancy one';
 
   constructor(config: NglConfig) {
-    config.svgPath = '/mypath';
+    config.update({ svgPath: '/mypath' });
   }
 }

@@ -1,14 +1,31 @@
-import {Injectable, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Injectable, EventEmitter, ChangeDetectorRef, OpaqueToken, Inject} from '@angular/core';
+
+export const NGL_CONFIG = new OpaqueToken('NGL_CONFIG');
+
+export interface INglConfig {
+  svgPath?: string;
+}
 
 @Injectable()
 export class NglConfig {
 
-  svgPath = 'assets/icons';
+  private values: INglConfig = {
+    svgPath: 'assets/icons',
+  };
 
   private _emitter = new EventEmitter();
 
-  refresh() {
+  constructor(@Inject(NGL_CONFIG) config: INglConfig = null) {
+    this.values = Object.assign({}, this.values, config || {});
+  }
+
+  update(config: INglConfig) {
+    this.values = Object.assign({}, this.values, config || {});
     this._emitter.emit();
+  }
+
+  get(key: string) {
+    return (<any>this.values)[key];
   }
 
   _attach(cd: ChangeDetectorRef) {

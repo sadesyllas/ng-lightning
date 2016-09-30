@@ -4,7 +4,7 @@ describe('`NglConfig`', () => {
 
   it('should have default values', () => {
     const config = new NglConfig();
-    expect(config.svgPath).toBe('assets/icons');
+    expect(config.get('svgPath')).toBe('assets/icons');
   });
 
   it('should emit when changes happen', () => {
@@ -14,7 +14,8 @@ describe('`NglConfig`', () => {
     config._attach(<any>cd);
     expect(cd.markForCheck).not.toHaveBeenCalled();
 
-    config.refresh();
+    config.update({ svgPath: 'new/path' });
+    expect(config.get('svgPath')).toBe('new/path');
     expect(cd.markForCheck).toHaveBeenCalled();
   });
 

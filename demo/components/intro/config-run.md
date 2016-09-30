@@ -1,7 +1,13 @@
+import {NglConfig} from 'ng-lightning/ng-lightning';
+
 export class AppComponent {
-  ...
+
+  constructor(private config: NglConfig) {}
+
   changeConfig() {
-    this.config.svgPath = 'new/path';
-    this.config.refresh();
+    this.config.update({
+      svgPath: 'new/path',
+      ...,
+    });
   }
 }

@@ -15,7 +15,7 @@ import {SupportComponent} from './components/support/support';
   imports: [
     BrowserModule,
     routing,
-    NglModule,
+    NglModule.forRoot(),
     NglDemoComponentsModule,
   ],
   declarations: [

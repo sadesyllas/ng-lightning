@@ -46,6 +46,6 @@ export class TestComponent {
   category: string;
 
   constructor(config: NglConfig) {
-    config.svgPath = '/mypath';
+    config.update({ svgPath: '/mypath' });
   }
 }
