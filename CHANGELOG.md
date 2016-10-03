@@ -1,3 +1,46 @@
+<a name="0.23.0"></a>
+# [0.23.0](https://github.com/ng-lightning/ng-lightning/compare/v0.22.0...v0.23.0) (2016-10-03)
+
+
+### Bug Fixes
+
+* **app:** add `forRoot` to `NglModule` ([6426534](https://github.com/ng-lightning/ng-lightning/commit/6426534)), closes [#228](https://github.com/ng-lightning/ng-lightning/issues/228)
+* **config:** remove `provideNglConfig` for injectable `NglConfig` ([47acd3d](https://github.com/ng-lightning/ng-lightning/commit/47acd3d)), closes [#218](https://github.com/ng-lightning/ng-lightning/issues/218)
+* **forms:** remove `nglForm` prefix from input attributes ([5e9f16a](https://github.com/ng-lightning/ng-lightning/commit/5e9f16a)), closes [#217](https://github.com/ng-lightning/ng-lightning/issues/217)
+* **menus:** don't close when inner element is clicked and removed from DOM ([5361f80](https://github.com/ng-lightning/ng-lightning/commit/5361f80)), closes [#223](https://github.com/ng-lightning/ng-lightning/issues/223) [#224](https://github.com/ng-lightning/ng-lightning/issues/224)
+
+
+### Features
+
+* **config:** support runtime change of configuration ([3a14b44](https://github.com/ng-lightning/ng-lightning/commit/3a14b44)), closes [#219](https://github.com/ng-lightning/ng-lightning/issues/219)
+* **popovers:** support delayed opening ([8878beb](https://github.com/ng-lightning/ng-lightning/commit/8878beb)), closes [#222](https://github.com/ng-lightning/ng-lightning/issues/222)
+* **rating:** support custom color for on/off state ([0e771e1](https://github.com/ng-lightning/ng-lightning/commit/0e771e1)), closes [#226](https://github.com/ng-lightning/ng-lightning/issues/226)
+
+
+### BREAKING CHANGES
+
+* app: `NglModule` must now be imported using the `forRoot()` static method.
+* config: In case you didn't override default configuration values, just remove `provideNglConfig()`. If you did then, check the `Configuration` section for more details.
+* forms: renamed `nglForm*` attributes to just `*`
+
+  Before:
+
+  ```html
+  <... [nglFormLabel]="..."></...>
+  <... [nglFormError]="..."></...>
+  <... [nglFormRequired]="..."></...>
+  ```
+
+  After:
+
+  ```html
+  <... [label]="..."></...>
+  <... [error]="..."></...>
+  <... [required]="..."></...>
+  ```
+
+
+
 <a name="0.22.0"></a>
 # [0.22.0](https://github.com/ng-lightning/ng-lightning/compare/v0.21.0...v0.22.0) (2016-09-15)
 
