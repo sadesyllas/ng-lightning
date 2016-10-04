@@ -40,8 +40,7 @@
     "@salesforce-ux/design-system": "^2.0.1"
   },
   "dependencies": {
-    "tether": "^1.2.0",
-    "ts-helpers": "^1.1.1"
+    "tether": "^1.2.0"
   },
   "devDependencies": {
     "@angular/common": "^2.0.1",

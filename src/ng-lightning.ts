@@ -1,4 +1,3 @@
-import 'ts-helpers';
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
 

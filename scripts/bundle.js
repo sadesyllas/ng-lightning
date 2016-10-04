@@ -17,7 +17,6 @@ const config = {
     'rxjs': 'node_modules/rxjs',
   },
   paths: {
-    'ts-helpers': 'node_modules/ts-helpers/index.js',
     'dist/*': 'dist/*.js',
   },
   meta: {

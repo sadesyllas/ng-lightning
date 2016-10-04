@@ -22,9 +22,6 @@ module.exports = function(config) {
         // Polyfills
         {pattern: 'node_modules/core-js/client/shim.min.js', included: true, watched: false},
 
-        // Typescript helpers polyfill
-        {pattern: 'node_modules/ts-helpers/index.js', included: true, watched: false},
-
         // System.js for module loading
         {pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: true, watched: false},
         {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
