@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent }  from './demo';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, HttpModule, NglModule ],
+  imports:      [ BrowserModule, FormsModule, HttpModule, NglModule.forRoot() ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ],
 })
