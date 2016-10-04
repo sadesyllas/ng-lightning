@@ -1,14 +1,12 @@
 <div class="slds-text-heading--label slds-m-bottom--small">Static results</div>
-<ngl-lookup [lookup]="lookup" [(pick)]="superhero" debounce="0" placeholder="Hint: type `man` or `r`">
-  <span nglLookupLabel>Who is your favorite superhero?</span>
-</ngl-lookup>
+<ngl-lookup label="Who is your favorite superhero?" [lookup]="lookup" [(pick)]="superhero" debounce="0" placeholder="Hint: type `man` or `r`"></ngl-lookup>
 <div *ngIf="superhero" class="slds-m-top--small">My favorite superhero is <b>{{superhero}}</b></div>
 
 <div class="slds-text-heading--label slds-m-top--x-large slds-m-bottom--small">Asynchronous object results with custom template</div>
 <button type="button" nglButton="neutral" (click)="value='Athens'" class="slds-m-bottom--large">Search for: Athens</button>
 <button type="button" nglButton="destructive" (click)="address = null" class="slds-m-bottom--large" [disabled]="!address">Clear</button>
 <ngl-lookup [(value)]="value" [lookup]="lookupAsync" field="formatted_address" [(pick)]="address">
-  <span nglLookupLabel>Type an address:</span>
+  <template nglLookupLabel>Type an address:</template>
   <template nglLookupItem let-ctx>
     <div class="slds-media__body">
       <div class="slds-lookup__result-text">{{ctx.formatted_address}}</div>
@@ -21,7 +19,7 @@
 
 <div class="slds-text-heading--label slds-m-top--x-large slds-m-bottom--small">Polymorphic</div>
 <ngl-lookup [lookup]="lookupPolymorphic" [(pick)]="hero" debounce="0" [placeholder]="'Search ' + scope.value">
-  <span nglLookupLabel>Who is your favorite superhero/superheroeine?</span>
+  <template nglLookupLabel>Who is your favorite superhero/superheroeine?</template>
   <span nglPolymorphicLabel>
     <svg nglIconCategory="standard" [nglIcon]="scope.icon" [ngClass]="'slds-icon-standard-' + scope.icon" class="slds-icon slds-icon--small"></svg>
   </span>

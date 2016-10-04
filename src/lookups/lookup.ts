@@ -1,6 +1,6 @@
-import {Component, ContentChild, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild} from '@angular/core';
+import {Component, ContentChild, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild, TemplateRef} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
-import {NglLookupItemTemplate} from './item';
+import {NglLookupItemTemplate, NglLookupLabelTemplate} from './item';
 import {NglLookupScopeItem} from './scope-item';
 import {uniqueId, isObject} from '../util/util';
 
@@ -45,9 +45,14 @@ export class NglLookup {
   }
   @Output() pickChange = new EventEmitter();
 
+  @Input() label: string;
+  @ContentChild(NglLookupLabelTemplate) labelTemplate: NglLookupLabelTemplate;
+
   @ViewChild('lookupInput') inputEl: ElementRef;
 
   inputId = uniqueId('lookup_input');
+
+  _label: string | TemplateRef<any>;
 
   private globalClickUnsubscriber: Function = null;
   private _open = false;
@@ -116,6 +121,10 @@ export class NglLookup {
       this.open = !!suggestions;
       this.detector.markForCheck();
     });
+  }
+
+  ngOnChanges() {
+    this._label = this.labelTemplate ? this.labelTemplate.templateRef : (this.label || '');
   }
 
   resolveLabel(item: any) {

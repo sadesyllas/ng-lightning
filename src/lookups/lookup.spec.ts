@@ -80,6 +80,21 @@ describe('Lookup Component', () => {
     expect(options.length).toBe(0);
   });
 
+  it('should support custom label template', () => {
+    const fixture = createTestComponent(`<ngl-lookup [lookup]="filter"><template nglLookupLabel>Lookup:</template></ngl-lookup>`);
+
+    const { label, input } = getElements(fixture.nativeElement);
+    expect(label.textContent.trim()).toEqual('Lookup:');
+    expect(label.getAttribute('for')).toEqual(input.id);
+  });
+
+  it('should not render label if empty', () => {
+    const fixture = createTestComponent(`<ngl-lookup label="" [lookup]="filter"></ngl-lookup>`);
+
+    const { label } = getElements(fixture.nativeElement);
+    expect(label).toBeNull();
+  });
+
   it('should update placeholder based on input', () => {
     const fixture = createTestComponent(`<ngl-lookup [lookup]="filter" [placeholder]="placeholder"></ngl-lookup>`);
 
@@ -311,7 +326,7 @@ describe('Lookup Component', () => {
 
   it('should support custom item template', () => {
     const fixture = createTestComponent(`<ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0">
-          <span nglLookupLabel>Lookup:</span>
+          <template nglLookupLabel>Lookup:</template>
           <template nglLookupItem let-ctx>{{ctx.foo}} - {{ctx.bar}} {{value}}</template>
         </ngl-lookup>`);
     const { componentInstance, nativeElement } = fixture;
@@ -332,9 +347,7 @@ describe('Lookup Component', () => {
 
 @Component({
   template: `
-    <ngl-lookup [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0">
-      <span nglLookupLabel>Lookup:</span>
-    </ngl-lookup>`,
+    <ngl-lookup label="Lookup:" [value]="value" [lookup]="filter" [pick]="selection" (pickChange)="onSelect($event)" debounce="0"></ngl-lookup>`,
 })
 export class TestComponent {
 
