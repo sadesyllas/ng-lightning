@@ -22,24 +22,27 @@ export class NglPopoverTrigger {
 
   @Input() nglTooltip: string | boolean;
 
-  @Input() nglPopoverDelay: number = 0;
+  @Input() set nglPopoverDelay(delay: any | any[]) {
+    delay = Array.isArray(delay) ? delay : [delay, delay];
+    [this.openDelay, this.closeDelay] = delay.map(Number);
+  }
 
   @Input() set nglOpen(open: boolean) {
-    if (open) {
-      if (this.nglPopoverDelay > 0) {
-        this.openTimeout = setTimeout(() => {
-          this.openTimeout = null;
-          this.create();
-        }, this.nglPopoverDelay);
-      } else {
-        this.create();
-      }
+    if (this.toggleTimeout) {
+      clearTimeout(this.toggleTimeout);
+      this.toggleTimeout = null;
+    }
+
+    const toggleFn = (open ? this.create : this.destroy).bind(this);
+    const delay = open ? this.openDelay : this.closeDelay;
+
+    if (delay > 0) {
+      this.toggleTimeout = setTimeout(() => {
+        this.toggleTimeout = null;
+        toggleFn();
+      }, delay);
     } else {
-      if (this.openTimeout) {
-        clearTimeout(this.openTimeout);
-        this.openTimeout = null;
-      }
-      this.destroy();
+      toggleFn();
     }
   }
 
@@ -49,7 +52,9 @@ export class NglPopoverTrigger {
   private placement: Direction = 'top';
   private theme: string;
   private tether: Tether;
-  private openTimeout: any = null;
+  private openDelay = 0;
+  private closeDelay = 0;
+  private toggleTimeout: any = null;
 
   constructor(private element: ElementRef, private viewContainer: ViewContainerRef, private injector: Injector,
               private renderer: Renderer, componentFactoryResolver: ComponentFactoryResolver) {

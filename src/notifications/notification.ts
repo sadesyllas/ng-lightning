@@ -27,7 +27,7 @@ export class NglNotification implements OnChanges {
   @Input() set timeout(timeout: number) {
     this.clearTimeout();
     if (isInt(timeout) && timeout >= 0) {
-      this.currentTimeout = setTimeout(() => this.close('timeout'), timeout);
+      this.currentTimeout = setTimeout(() => this.close('timeout'), +timeout);
     }
   }
 
