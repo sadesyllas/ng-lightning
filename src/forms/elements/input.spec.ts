@@ -14,7 +14,7 @@ function getInputElement(element: Element): HTMLInputElement {
   return <HTMLInputElement>element.querySelector('input');
 }
 
-function getErrorElement(element: Element): HTMLDivElement {
+export function getErrorElement(element: Element): HTMLDivElement {
   return <HTMLDivElement>element.querySelector('.slds-form-element__help');
 }
 
@@ -52,7 +52,7 @@ describe('`NglFormInput`', () => {
   });
 
   it('should render error message', () => {
-    const fixture = createTestComponent(`<ngl-form-element [error]="error"><input type="text"></ngl-form-element>`);
+    const fixture = createTestComponent(`<ngl-form-element [error]="error"><input nglFormControl type="text"></ngl-form-element>`);
     const element = fixture.nativeElement.firstElementChild;
 
     expect(element).not.toHaveCssClass('slds-has-error');
@@ -67,10 +67,8 @@ describe('`NglFormInput`', () => {
     expect(errorEl).toHaveText('This is an error!');
   });
 
-  it('should not leak outside parent', () => {
-    const fixture = createTestComponent(`<input class="out"><ngl-form-element><input class="in"></ngl-form-element>`);
-    expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-input');
-    expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-input');
+  it('should throw error if structure is wrong', () => {
+    expect(() => createTestComponent(`<ngl-form-element><input type="input"></ngl-form-element>`)).toThrowError();
   });
 
 });
@@ -78,7 +76,7 @@ describe('`NglFormInput`', () => {
 @Component({
   template: `
     <ngl-form-element [label]="label">
-      <input type="text">
+      <input nglFormControl type="text">
     </ngl-form-element>
   `,
 })

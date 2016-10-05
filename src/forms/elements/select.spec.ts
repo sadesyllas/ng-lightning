@@ -2,7 +2,7 @@ import {TestBed, ComponentFixture}  from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent} from '../../../test/util/helpers';
 import {NglFormsModule} from '../module';
-import {getLabelElement, getRequiredElement} from './input.spec';
+import {getLabelElement, getRequiredElement, getErrorElement} from './input.spec';
 
 const createTestComponent = (html?: string, detectChanges?: boolean) =>
   createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
@@ -32,7 +32,7 @@ describe('`NglFormSelect`', () => {
   });
 
   it('should hook label indication on input required', () => {
-    const fixture = createTestComponent(`<ngl-form-element><select [required]="required"></select></ngl-form-element>`);
+    const fixture = createTestComponent(`<ngl-form-element><select nglFormControl [required]="required"></select></ngl-form-element>`);
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
 
     fixture.componentInstance.required = true;
@@ -45,22 +45,33 @@ describe('`NglFormSelect`', () => {
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
   });
 
-  it('should not leak outside parent', () => {
-    const fixture = createTestComponent(`<select class="out"></select><ngl-form-element><select class="in"></select></ngl-form-element>`);
-    expect(fixture.nativeElement.querySelector('.out')).not.toHaveCssClass('slds-select');
-    expect(fixture.nativeElement.querySelector('.in')).toHaveCssClass('slds-select');
+  it('should render error message', () => {
+    const fixture = createTestComponent();
+    fixture.componentInstance.error = 'An error';
+    fixture.detectChanges();
+
+    const errorEl = getErrorElement(fixture.nativeElement);
+    const inputEl = getInputElement(fixture.nativeElement);
+    expect(errorEl).toHaveText('An error');
+    expect(errorEl.id).toEqual(inputEl.getAttribute('aria-describedby'));
   });
+
+  it('should throw error if structure is wrong', () => {
+    expect(() => createTestComponent(`<ngl-form-element><select></select></ngl-form-element>`)).toThrowError();
+  });
+
 });
 
 
 @Component({
   template: `
-    <ngl-form-element [label]="label">
-      <select></select>
+    <ngl-form-element [label]="label" [error]="error">
+      <select nglFormControl></select>
     </ngl-form-element>
   `,
 })
 export class TestComponent {
   label: string = 'My label';
   required: boolean;
+  error: string;
 }

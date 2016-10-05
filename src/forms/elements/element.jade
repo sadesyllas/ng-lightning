@@ -1,11 +1,6 @@
-label.slds-form-element__label(*ngIf="!isCheckbox", [attr.for]="uid")
+label.slds-form-element__label([attr.for]="uid")
   abbr.slds-required(*ngIf="required", title="required") *
   span([nglInternalOutlet]="_label")
 .slds-form-element__control
-  label.slds-checkbox(*ngIf="isCheckbox")
-    abbr.slds-required(*ngIf="required", title="required") *
-    ng-content(select="input[type=checkbox]")
-    span.slds-checkbox--faux
-    span.slds-form-element__label([nglInternalOutlet]="_label")
   ng-content
 .slds-form-element__help(*ngIf="error", [id]="'error_' + uid") {{error}}

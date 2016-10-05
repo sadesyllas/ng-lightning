@@ -3,22 +3,21 @@ import {CommonModule} from '@angular/common';
 import {NglInternalOutletModule} from '../util/outlet.module';
 
 import {NglFormElement} from './elements/element';
-import {NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox} from './elements/input';
+import {NglFormElementCheckbox} from './elements/checkbox';
+import {NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox, NglFormRadio} from './elements/input';
 import {NglFormElementRequired} from './elements/required';
 import {NglFormGroup} from './groups/group';
 import {NglFormGroupAlternate} from './groups/group-alt';
 import {NglFormGroupElement} from './groups/element';
-import {NglFormGroupCheckbox, NglFormGroupRadio} from './groups/input';
 import {NglFormLabelTemplate} from './form-label';
 
 const NGL_FORM_DIRECTIVES = [
-  NglFormElement,
-  NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox,
+  NglFormElement, NglFormElementCheckbox,
+  NglFormInput, NglFormTextarea, NglFormSelect, NglFormCheckbox, NglFormRadio,
   NglFormElementRequired,
   NglFormGroup,
   NglFormGroupAlternate,
   NglFormGroupElement,
-  NglFormGroupCheckbox, NglFormGroupRadio,
   NglFormLabelTemplate,
 ];
 

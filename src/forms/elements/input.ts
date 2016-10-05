@@ -1,56 +1,64 @@
-import {Directive, HostBinding, ElementRef, Renderer} from '@angular/core';
+import {Directive, HostBinding, Optional} from '@angular/core';
+import {NglFormGroup} from '../groups/group';
+import {NglFormGroupAlternate} from '../groups/group-alt';
+
 
 @Directive({
-  selector: 'input:not([type=checkbox]), input:not([type=radio])',
+  selector: 'input[nglFormControl]:not([type=checkbox]), input[nglFormControl]:not([type=radio])',
+  host: {
+    '[class.slds-input]': 'true',
+  },
 })
 export class NglFormInput {
+  @HostBinding('id') id: string;
   @HostBinding('attr.aria-describedby') describedBy: string;
-
-  protected hostClass = 'slds-input';
-
-  constructor(protected element: ElementRef, protected renderer: Renderer) {}
-
-  setup(id: string) {
-    this.renderer.setElementAttribute(this.element.nativeElement, 'id', id);
-
-    if (this.hostClass) {
-      this.renderer.setElementClass(this.element.nativeElement, this.hostClass, true);
-    }
-  }
 };
 
 @Directive({
-  selector: 'textarea',
+  selector: 'textarea[nglFormControl]',
   providers: [ {provide: NglFormInput, useExisting: NglFormTextarea} ],
+  host: {
+    '[class.slds-textarea]': 'true',
+  },
 })
-export class NglFormTextarea extends NglFormInput {
-  protected hostClass = 'slds-textarea';
-
-  constructor(protected element: ElementRef, protected renderer: Renderer) {
-    super(element, renderer);
-  }
+export class NglFormTextarea {
+  @HostBinding('id') id: string;
+  @HostBinding('attr.aria-describedby') describedBy: string;
 }
 
 @Directive({
-  selector: 'select',
+  selector: 'select[nglFormControl]',
   providers: [ {provide: NglFormInput, useExisting: NglFormSelect} ],
+  host: {
+    '[class.slds-select]': 'true',
+  },
 })
-export class NglFormSelect extends NglFormInput {
-  protected hostClass = 'slds-select';
-
-  constructor(protected element: ElementRef, protected renderer: Renderer) {
-    super(element, renderer);
-  }
+export class NglFormSelect {
+  @HostBinding('id') id: string;
+  @HostBinding('attr.aria-describedby') describedBy: string;
 }
 
 @Directive({
-  selector: 'input[type=checkbox]',
-  providers: [ {provide: NglFormInput, useExisting: NglFormCheckbox} ],
+  selector: 'input[nglFormControl][type=checkbox]',
 })
-export class NglFormCheckbox extends NglFormInput {
-  protected hostClass: string = null;
+export class NglFormCheckbox {
+  type = 'checkbox';
 
-  constructor(protected element: ElementRef, protected renderer: Renderer) {
-    super(element, renderer);
+  @HostBinding('id') id: string;
+  @HostBinding('attr.aria-describedby') describedBy: string;
+}
+
+@Directive({
+  selector: 'input[nglFormControl][type=radio]',
+  providers: [ {provide: NglFormCheckbox, useExisting: NglFormRadio} ],
+})
+export class NglFormRadio {
+  type = 'radio';
+
+  @HostBinding('id') id: string;
+  @HostBinding('attr.name') name: string;
+
+  constructor(@Optional() formGroup: NglFormGroup, @Optional() formGroupAlt: NglFormGroupAlternate) {
+    this.name = `name_${(formGroup || formGroupAlt).uid}`;
   }
 }

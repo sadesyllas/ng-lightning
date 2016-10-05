@@ -18,7 +18,7 @@ describe('`NglFormLabelTemplate`', () => {
     const fixture = createTestComponent(`
       <ngl-form-element>
         <template nglFormLabel>{{ label }}</template>
-        <input type="text">
+        <input nglFormControl type="text">
       </ngl-form-element>`);
     const labelEl = getLabelElement(fixture.nativeElement);
     expect(labelEl).toHaveText('My Label');
@@ -34,7 +34,7 @@ describe('`NglFormLabelTemplate`', () => {
     const fixture = createTestComponent(`
       <fieldset ngl-form-group-alt>
         <template nglFormLabel>{{ label }}</template>
-        <label ngl-form-group-element><template nglFormLabel>Checkbox label</template><input type="checkbox" /></label>
+        <ngl-form-group-element><template nglFormLabel>Checkbox label</template><input nglFormControl type="checkbox" /></ngl-form-group-element>
       </fieldset>`);
 
     const labelEl = getLabelElement(fixture.nativeElement);

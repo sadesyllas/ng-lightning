@@ -1,4 +1,4 @@
-# `<ngl-form-element>`
+# `<ngl-form-element> | <ngl-form-checkbox>`
 
 ### Input
   * `label?: string | TemplateRef`: Input label.
@@ -21,7 +21,7 @@
 
   * `template[nglFormLabel]?`: Group template label.
 
-# `<label[ngl-form-group-element]>`
+# `<ngl-form-group-element>`
 
 ### Content
 

@@ -1,0 +1,10 @@
+.slds-form-element__control
+  span.slds-checkbox
+    abbr.slds-required(*ngIf="required", title="required") *
+    ng-content
+    
+    label.slds-checkbox__label([attr.for]="uid")
+      span.slds-checkbox--faux
+      span.slds-form-element__label([nglInternalOutlet]="_label")
+
+.slds-form-element__help(*ngIf="error", [id]="'error_' + uid") {{error}}

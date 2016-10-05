@@ -25,16 +25,11 @@ describe('`NglFormElementRequired`', () => {
     expect(getRequiredElement(fixture.nativeElement)).toBeFalsy();
   });
 
-  it('should not leak outside parent', () => {
-    createTestComponent(`<input required="required">`);
-    expect(true).toBe(true); // Expect just to compile correctly and reach here
-  });
-
 });
 
 
 @Component({
-  template: `<ngl-form-element><input type="text" [required]="required"></ngl-form-element>`,
+  template: `<ngl-form-element><input nglFormControl type="text" [required]="required"></ngl-form-element>`,
 })
 export class TestComponent {
   required: boolean;

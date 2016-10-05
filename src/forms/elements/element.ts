@@ -1,6 +1,6 @@
 import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, ContentChild, ElementRef, Renderer, TemplateRef} from '@angular/core';
 import {uniqueId} from '../../util/util';
-import {NglFormInput, NglFormCheckbox} from './input';
+import {NglFormInput} from './input';
 import {NglFormLabelTemplate, getFormLabel} from '../form-label';
 
 @Component({
@@ -23,10 +23,6 @@ export class NglFormElement {
 
   _label: TemplateRef<any> | string;
 
-  get isCheckbox() {
-    return this.contentEl instanceof NglFormCheckbox;
-  }
-
   constructor(public detector: ChangeDetectorRef, private element: ElementRef, private renderer: Renderer) {}
 
   ngOnInit() {
@@ -40,7 +36,10 @@ export class NglFormElement {
   }
 
   ngAfterContentInit() {
-    this.contentEl.setup(this.uid);
+    if (!this.contentEl) {
+      throw Error(`Couldn't find an input, textarea or select with [nglFormControl] attribute inside <ngl-form-element>`);
+    }
+    this.contentEl.id = this.uid;
     this.setInputErrorId();
     this.setFormLabel();
   }

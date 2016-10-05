@@ -20,45 +20,39 @@ describe('`NglFormGroupElement`', () => {
 
   it('should render checkbox group correctly', () => {
     const fixture = createTestComponent(`<fieldset ngl-form-group>
-          <label ngl-form-group-element [label]="label"><input type="checkbox" /></label>
-          <label ngl-form-group-element label="Checkbox Label Two"><input type="checkbox" /></label>
+          <ngl-form-group-element [label]="label"><input nglFormControl type="checkbox" /></ngl-form-group-element>
+          <ngl-form-group-element label="Checkbox Label Two"><input nglFormControl type="checkbox" /></ngl-form-group-element>
         </fieldset>`);
     const labelEls = getLabelElements(fixture.nativeElement);
     expect(labelEls.map(e => e.textContent.trim())).toEqual(['Label One', 'Checkbox Label Two']);
 
-    labelEls.forEach(e => {
-      expect(e).toHaveCssClass('slds-checkbox');
+    const inputEls = getInputElements(fixture.nativeElement);
+    expect(labelEls.map(e => e.getAttribute('for'))).toEqual(inputEls.map(e => e.getAttribute('id')));
 
-      const fauxEl = e.querySelector('.slds-checkbox--faux');
-      expect(fauxEl).toBeTruthy();
-    });
+    labelEls.forEach(e => expect(e).toHaveCssClass('slds-checkbox__label'));
   });
 
   it('should render radio group correctly', () => {
     const fixture = createTestComponent(`
       <fieldset ngl-form-group>
-        <label ngl-form-group-element [label]="label"><input type="radio" /></label>
-        <label ngl-form-group-element label="Radio Label Two"><input type="radio" /></label>
+        <ngl-form-group-element [label]="label"><input nglFormControl type="radio" /></ngl-form-group-element>
+        <ngl-form-group-element label="Radio Label Two"><input nglFormControl type="radio" /></ngl-form-group-element>
       </fieldset>`);
     const labelEls = getLabelElements(fixture.nativeElement);
     expect(labelEls.map(e => e.textContent.trim())).toEqual(['Label One', 'Radio Label Two']);
 
-    labelEls.forEach(e => {
-      expect(e).toHaveCssClass('slds-radio');
+    const inputEls = getInputElements(fixture.nativeElement);
+    expect(labelEls.map(e => e.getAttribute('for'))).toEqual(inputEls.map(e => e.getAttribute('id')));
 
-      const fauxEl = e.querySelector('.slds-radio--faux');
-      expect(fauxEl).toBeTruthy();
-    });
+    labelEls.forEach(e => expect(e).toHaveCssClass('slds-radio__label'));
 
     const names = getInputElements(fixture.nativeElement).map(e => e.getAttribute('name'));
     expect(names[0]).toMatch(/form_group_/);
     expect(names[0]).toEqual(names[1]);
   });
 
-  it('should not leak outside parent', () => {
-    const fixture = createTestComponent(`<input type="radio" />`);
-    const inputEl = fixture.nativeElement.querySelector('input');
-    expect(inputEl.getAttribute('name')).toBeNull();
+  it('should throw error if structure is wrong', () => {
+    expect(() => createTestComponent(`<ngl-form-group-element><input nglFormControl type="radio" /></ngl-form-group-element>`)).toThrowError();
   });
 });
 

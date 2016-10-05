@@ -1,4 +1,7 @@
 ng-content
-span([ngClass]="'slds-' + contentEl?.type + '--faux'")
-  span(*ngIf="groupAlt", [nglInternalOutlet]="_label")
-span.slds-form-element__label(*ngIf="!groupAlt", [nglInternalOutlet]="_label")
+label(*ngIf="contentEl", [ngClass]="labelClass", [attr.for]="uid", [ngSwitch]="!!groupAlt")
+  ng-container(*ngSwitchCase="false")
+    span([ngClass]="'slds-' + contentEl.type + '--faux'")
+    span.slds-form-element__label([nglInternalOutlet]="_label")
+  ng-container(*ngSwitchCase="true")
+    span([ngClass]="'slds-' + contentEl.type + '--faux'", [nglInternalOutlet]="_label")

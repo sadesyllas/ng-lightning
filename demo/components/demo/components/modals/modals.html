@@ -13,12 +13,12 @@
   </template>
 </ngl-modal>
 
-<ngl-form-element label="Empty header" class="slds-m-top--small">
-  <input type="checkbox" [(ngModel)]="noHeader" />
-</ngl-form-element>
-<ngl-form-element label="Empty footer" class="slds-m-top--small">
-  <input type="checkbox" [(ngModel)]="noFooter" />
-</ngl-form-element>
-<ngl-form-element label="Directional footer" class="slds-m-top--small">
-  <input type="checkbox" [(ngModel)]="directional" [disabled]="noFooter" />
-</ngl-form-element>
+<ngl-form-checkbox label="Empty header" class="slds-m-top--small">
+  <input nglFormControl type="checkbox" [(ngModel)]="noHeader" />
+</ngl-form-checkbox>
+<ngl-form-checkbox label="Empty footer" class="slds-m-top--small">
+  <input nglFormControl type="checkbox" [(ngModel)]="noFooter" />
+</ngl-form-checkbox>
+<ngl-form-checkbox label="Directional footer" class="slds-m-top--small">
+  <input nglFormControl type="checkbox" [(ngModel)]="directional" [disabled]="noFooter" />
+</ngl-form-checkbox>

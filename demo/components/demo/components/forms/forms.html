@@ -1,46 +1,46 @@
-<ngl-form-element label="Required" style="display: inline-block;">
-  <input type="checkbox" [(ngModel)]="required" />
-</ngl-form-element>
-<ngl-form-element label="Error" style="display: inline-block;">
-  <input type="checkbox" [(ngModel)]="hasError" />
-</ngl-form-element>
+<ngl-form-checkbox label="Required" style="display: inline-block;">
+  <input nglFormControl type="checkbox" [(ngModel)]="required" />
+</ngl-form-checkbox>
+<ngl-form-checkbox label="Error" style="display: inline-block;">
+  <input nglFormControl type="checkbox" [(ngModel)]="hasError" />
+</ngl-form-checkbox>
 
 <ngl-form-element label="Input Label" [error]="hasError ? error : null" class="slds-m-top--small">
-  <input type="text" placeholder="My input" [required]="required">
+  <input nglFormControl type="text" placeholder="My input" [required]="required">
 </ngl-form-element>
 
 <ngl-form-element [error]="hasError ? error : null" class="slds-m-top--small">
   <template nglFormLabel><i>Textarea Label</i> <span *ngIf="required">(<b>required</b>!)</span></template>
-  <textarea placeholder="Placeholder Text" [required]="required"></textarea>
+  <textarea nglFormControl placeholder="Placeholder Text" [required]="required"></textarea>
 </ngl-form-element>
 
 <ngl-form-element label="Select Label" [error]="hasError ? error : null" class="slds-m-top--small">
-  <select class="slds-select" [required]="required">
+  <select nglFormControl class="slds-select" [required]="required">
     <option>Option One</option>
     <option>Option Two</option>
     <option>Option Three</option>
   </select>
 </ngl-form-element>
 
-<ngl-form-element label="Checkbox Label" [error]="hasError ? error : null" class="slds-m-top--small">
-  <input type="checkbox" [required]="required" />
-</ngl-form-element>
+<ngl-form-checkbox label="Checkbox Label" [error]="hasError ? error : null" class="slds-m-top--small">
+  <input nglFormControl type="checkbox" [required]="required" />
+</ngl-form-checkbox>
 
 <fieldset ngl-form-group label="Radio Group Label" [required]="required" [error]="hasError ? error : null" class="slds-m-top--small">
-  <label ngl-form-group-element label="Radio Label One"><input type="radio" /></label>
-  <label ngl-form-group-element label="Radio Label Two"><input type="radio" /></label>
+  <ngl-form-group-element label="Radio Label One"><input nglFormControl type="radio" /></ngl-form-group-element>
+  <ngl-form-group-element label="Radio Label Two"><input nglFormControl type="radio" /></ngl-form-group-element>
 </fieldset>
 
 <fieldset ngl-form-group-alt [required]="required" [error]="hasError ? error : null" class="slds-m-top--small">
   <template nglFormLabel><i>Alternate Radio Group</i></template>
-  <label ngl-form-group-element *ngFor="let day of days"><template nglFormLabel>{{day}}</template><input type="radio" /></label>
+  <ngl-form-group-element *ngFor="let day of days"><template nglFormLabel>{{day}}</template><input nglFormControl type="radio" /></ngl-form-group-element>
 </fieldset>
 
 <fieldset ngl-form-group label="Checkbox Group Label" [required]="required" [error]="hasError ? error : null" class="slds-m-top--small">
-  <label ngl-form-group-element label="Checkbox Label One"><input type="checkbox" /></label>
-  <label ngl-form-group-element label="Checkbox Label Two"><input type="checkbox" /></label>
+  <ngl-form-group-element label="Checkbox Label One"><input nglFormControl type="checkbox" /></ngl-form-group-element>
+  <ngl-form-group-element label="Checkbox Label Two"><input nglFormControl type="checkbox" /></ngl-form-group-element>
 </fieldset>
 
 <fieldset ngl-form-group-alt label="Alternate Checkbox Group" [required]="required" [error]="hasError ? error : null" class="slds-m-top--small">
-  <label ngl-form-group-element *ngFor="let day of days" [label]="day"><input type="checkbox" /></label>
+  <ngl-form-group-element *ngFor="let day of days" [label]="day"><input nglFormControl type="checkbox" /></ngl-form-group-element>
 </fieldset>
