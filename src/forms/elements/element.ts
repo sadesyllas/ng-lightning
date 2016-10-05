@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, ContentChild, HostBinding, TemplateRef} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, ContentChild, ElementRef, Renderer, TemplateRef} from '@angular/core';
 import {uniqueId} from '../../util/util';
 import {NglFormInput, NglFormCheckbox} from './input';
 import {NglFormLabelTemplate, getFormLabel} from '../form-label';
@@ -7,9 +7,6 @@ import {NglFormLabelTemplate, getFormLabel} from '../form-label';
   selector: 'ngl-form-element',
   templateUrl: './element.jade',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[class.slds-form-element]': 'true',
-  },
   styles: [`:host { display: block; }`],
 })
 export class NglFormElement {
@@ -18,14 +15,7 @@ export class NglFormElement {
   @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;
 
-  @Input('error') set setError(error: string) {
-    this.error = error;
-    if (this.contentEl) {
-      this.setInputErrorId();
-    }
-  }
-
-  @HostBinding('class.slds-has-error') error: string;
+  @Input() error: string;
 
   uid = uniqueId('form_element');
 
@@ -37,10 +27,16 @@ export class NglFormElement {
     return this.contentEl instanceof NglFormCheckbox;
   }
 
-  constructor(public detector: ChangeDetectorRef) {}
+  constructor(public detector: ChangeDetectorRef, private element: ElementRef, private renderer: Renderer) {}
+
+  ngOnInit() {
+    this.renderer.setElementClass(this.element.nativeElement, 'slds-form-element', true);
+  }
 
   ngOnChanges() {
     this.setFormLabel();
+    this.setInputErrorId();
+    this.renderer.setElementClass(this.element.nativeElement, 'slds-has-error', !!this.error);
   }
 
   ngAfterContentInit() {
@@ -50,6 +46,7 @@ export class NglFormElement {
   }
 
   private setInputErrorId() {
+    if (!this.contentEl) return;
     this.contentEl.describedBy = this.error ? `error_${this.uid}` : null;
   }
 
