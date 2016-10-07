@@ -4,10 +4,12 @@ import {NglIconsModule} from '../icons/module';
 
 import {NglModal} from './modal';
 import {NglModalFooter} from './footer';
+import {NglModalHeaderTemplate} from './header';
 
 const NGL_MODAL_DIRECTIVES = [
   NglModal,
   NglModalFooter,
+  NglModalHeaderTemplate,
 ];
 
 @NgModule({

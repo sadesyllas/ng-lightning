@@ -1,6 +1,7 @@
 import {Component, Input, Output, ElementRef, Renderer, EventEmitter, HostListener, ViewChild, ContentChild} from '@angular/core';
 import {toBoolean, uniqueId} from '../util/util';
 import {NglModalFooter} from './footer';
+import {NglModalHeaderTemplate} from './header';
 
 @Component({
   selector: 'ngl-modal',
@@ -35,6 +36,8 @@ export class NglModal {
     this.open = _open;
   }
   @Output() openChange = new EventEmitter();
+
+  @ContentChild(NglModalHeaderTemplate) headerTpl: NglModalHeaderTemplate;
 
   @ContentChild(NglModalFooter) footer: NglModalFooter;
 

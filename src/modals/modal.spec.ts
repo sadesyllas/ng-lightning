@@ -75,6 +75,18 @@ describe('`NglModal`', () => {
     expect(getHeader(fixture.nativeElement)).toBeFalsy();
   });
 
+  it('should support custom header', () => {
+    const fixture = createTestComponent(`
+      <ngl-modal>
+        <template nglModalHeader let-id="id"><span [id]="id" class="my-custom">Hello</span></template>
+        <div body>Body content.</div>
+      </ngl-modal>`);
+    const headerEl = fixture.nativeElement.querySelector('.slds-modal__header > .my-custom');
+    expect(headerEl).toHaveText('Hello');
+    expect(headerEl.id).toEqual(getModal(fixture.nativeElement).getAttribute('aria-labelledby'));
+    expect(getHeader(fixture.nativeElement)).toBeFalsy();
+  });
+
   it('should close when close button is clicked', () => {
     const fixture = createTestComponent();
     expect(fixture.componentInstance.openChange).not.toHaveBeenCalled();

@@ -16,3 +16,9 @@
 ### Output
 
   * `openChange: EventEmitter<boolean>`: emitted when modal's visibility is going to change to `false`
+
+# `template[nglModalHeader]`
+
+### Variables
+
+  * `id: string`: Auto generated unique ID used for accessibility.
