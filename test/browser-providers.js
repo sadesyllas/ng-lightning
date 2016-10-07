@@ -7,7 +7,7 @@ module.exports = {
   'SL_FireFox': {
     base: 'SauceLabs',
     browserName: 'firefox',
-    version: '48'
+    version: '49'
   },
   'SL_Safari_9': {
     base: 'SauceLabs',
