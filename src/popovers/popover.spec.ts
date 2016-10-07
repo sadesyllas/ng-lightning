@@ -111,15 +111,22 @@ describe('Popovers', () => {
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
 
     tick(200);
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
-
-    fixture.componentInstance.open = false;
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    fixture.whenStable().then(() => {
 
-    tick(200);
-    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-    fixture.destroy();
+      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+      fixture.componentInstance.open = false;
+      fixture.detectChanges();
+      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+      tick(200);
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+        fixture.destroy();
+      });
+    });
   }));
 
   it('should support different opening and closing delays', fakeAsync(() => {
@@ -127,15 +134,22 @@ describe('Popovers', () => {
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
 
     tick(100);
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
-
-    fixture.componentInstance.open = false;
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-    tick(500);
-    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-    fixture.destroy();
+      fixture.componentInstance.open = false;
+      fixture.detectChanges();
+      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+      tick(500);
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+        fixture.destroy();
+      });
+    });
   }));
 });
 
