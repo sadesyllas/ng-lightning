@@ -24,4 +24,9 @@
 </div>
 
 <div class="slds-text-title--caps slds-m-bottom--small slds-m-top--x-large">Open and close with delay</div>
-<a tabindex="0" nglPopover="I open and close with 1 second delay..." nglPopoverBehavior nglTooltip nglPopoverDelay="1000">Hover me!</a>
+<a tabindex="0" nglPopover="I open and close with 1 second delay..." nglPopoverBehavior nglTooltip nglPopoverDelay="1000" #x="nglPopover">Hover me!</a>
+
+<div class="slds-m-top--medium">
+  <button type="button" nglButton="neutral" (click)="x.open(0)">Open immediately</button>
+  <button type="button" nglButton="neutral" (click)="x.close(0)">Close immediately</button>
+</div>

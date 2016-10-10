@@ -151,6 +151,52 @@ describe('Popovers', () => {
       });
     });
   }));
+
+  it('should support "manual" opening', fakeAsync(() => {
+    const fixture = createTestComponent(`
+      <div nglPopoverDelay="200" nglPopover="tip" #tip="nglPopover"></div>
+      <button type="button" (click)="tip.open()"></button>
+    `);
+
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+
+    tick(200);
+    fixture.detectChanges();
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+  }));
+
+  it('should support "manual" closing', () => {
+    const fixture = createTestComponent(`
+      <div nglPopover="tip" #tip="nglPopover" nglOpen="true"></div>
+      <button type="button" (click)="tip.close()"></button>
+    `);
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+    fixture.detectChanges();
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+  });
+
+  it('should support "manual" opening and closing with custom delay', () => {
+    const fixture = createTestComponent(`
+      <div nglPopoverDelay="200" nglPopover="tip" #tip="nglPopover"></div>
+      <button type="button" class="open" (click)="tip.open(0)"></button>
+      <button type="button" class="close" (click)="tip.close(0)"></button>
+    `);
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+
+    const buttonOpen = fixture.nativeElement.querySelector('button.open');
+    const buttonClose = fixture.nativeElement.querySelector('button.close');
+
+    buttonOpen.click();
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+    buttonClose.click();
+    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+  });
 });
 
 @Component({

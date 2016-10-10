@@ -5,6 +5,7 @@ import {placement} from './placements';
 
 @Directive({
   selector: '[nglPopover]',
+  exportAs: 'nglPopover',
 })
 export class NglPopoverTrigger {
 
@@ -28,22 +29,7 @@ export class NglPopoverTrigger {
   }
 
   @Input() set nglOpen(open: boolean) {
-    if (this.toggleTimeout) {
-      clearTimeout(this.toggleTimeout);
-      this.toggleTimeout = null;
-    }
-
-    const toggleFn = (open ? this.create : this.destroy).bind(this);
-    const delay = open ? this.openDelay : this.closeDelay;
-
-    if (delay > 0) {
-      this.toggleTimeout = setTimeout(() => {
-        this.toggleTimeout = null;
-        toggleFn();
-      }, delay);
-    } else {
-      toggleFn();
-    }
+    this.toggle(open, open ? this.openDelay : this.closeDelay);
   }
 
   private popover: NglPopover;
@@ -61,8 +47,36 @@ export class NglPopoverTrigger {
     this.popoverFactory = componentFactoryResolver.resolveComponentFactory(NglPopover);
   }
 
+  // Expose open method
+  open(delay = this.openDelay) {
+    this.toggle(true, delay);
+  }
+
+  // Expose close method
+  close(delay = this.closeDelay) {
+    this.toggle(false, delay);
+  }
+
   ngOnDestroy() {
     this.destroy();
+  }
+
+  private toggle(open: boolean, delay: number) {
+    if (this.toggleTimeout) {
+      clearTimeout(this.toggleTimeout);
+      this.toggleTimeout = null;
+    }
+
+    const toggleFn = (open ? this.create : this.destroy).bind(this);
+
+    if (delay > 0) {
+      this.toggleTimeout = setTimeout(() => {
+        this.toggleTimeout = null;
+        toggleFn();
+      }, delay);
+    } else {
+      toggleFn();
+    }
   }
 
   private setTether(create = false) {
