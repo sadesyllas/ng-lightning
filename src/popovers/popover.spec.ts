@@ -19,6 +19,7 @@ describe('Popovers', () => {
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toHaveCssClass('slds-popover');
     expect(popoverEl.textContent.trim()).toBe('My content');
+    fixture.destroy();
   });
 
   it('should notify when view is initialized', () => {
@@ -26,6 +27,7 @@ describe('Popovers', () => {
     expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
     fixture.detectChanges();
     expect(fixture.componentInstance.cb).toHaveBeenCalled();
+    fixture.destroy();
   });
 
   it('should render the created popover correctly', () => {
@@ -34,12 +36,14 @@ describe('Popovers', () => {
     expect(popoverEl).toHaveCssClass('slds-popover');
     expect(popoverEl).toHaveCssClass('slds-nubbin--bottom'); // Top placement
     expect(popoverEl.textContent.trim()).toBe('I am a tooltip');
+    fixture.destroy();
   });
 
   it('should render popover with string content', () => {
     const fixture = createTestComponent(`<span nglPopover="I am a string" nglOpen="true"></span>`);
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl.textContent.trim()).toBe('I am a string');
+    fixture.destroy();
   });
 
   it('should change visibility based on trigger', () => {
@@ -49,6 +53,7 @@ describe('Popovers', () => {
 
     const popoverEl = getPopoverElement(fixture.nativeElement);
     expect(popoverEl).toBeFalsy();
+    fixture.destroy();
   });
 
   it('should change nubbin based on placement', () => {
@@ -65,6 +70,7 @@ describe('Popovers', () => {
     fixture.detectChanges();
     expect(popoverEl).toHaveCssClass('slds-nubbin--top');
     expect(popoverEl).not.toHaveCssClass('slds-nubbin--right');
+    fixture.destroy();
   });
 
   it('should change theme based on input', () => {
@@ -87,6 +93,7 @@ describe('Popovers', () => {
     componentInstance.theme = null;
     fixture.detectChanges();
     expect(popoverEl).not.toHaveCssClass('slds-theme--error');
+    fixture.destroy();
   });
 
   it('should have tooltip appearence', () => {
@@ -104,52 +111,41 @@ describe('Popovers', () => {
     fixture.componentInstance.exists = false;
     fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+    fixture.destroy();
   });
 
-  it('should support delayed opening and closing', fakeAsync(() => {
-    const fixture = createTestComponent('<div nglPopoverDelay="200" nglPopover="tip" [(nglOpen)]="open"></div>');
-    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+  it('should support delayed opening', fakeAsync(() => {
+    const fixture = createTestComponent('<div nglPopoverDelay="200" nglPopover="tip" [nglOpen]="open"></div>');
+    expect(getPopoverElement(fixture.nativeElement)).toBeNull();
 
     tick(200);
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    fixture.componentInstance.open = false;
+    fixture.detectChanges();
 
-      fixture.componentInstance.open = false;
-      fixture.detectChanges();
-      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
-
-      tick(200);
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-        fixture.destroy();
-      });
-    });
+    tick(200);
+    fixture.detectChanges();
+    expect(getPopoverElement(fixture.nativeElement)).toBeNull();
+    fixture.destroy();
   }));
 
   it('should support different opening and closing delays', fakeAsync(() => {
-    const fixture = createTestComponent('<div [nglPopoverDelay]="[100, 500]" nglPopover="tip" [(nglOpen)]="open"></div>');
+    const fixture = createTestComponent('<div [nglPopoverDelay]="[100, 500]" nglPopover="tip" [nglOpen]="open"></div>');
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
 
     tick(100);
     fixture.detectChanges();
+    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+
+    fixture.componentInstance.open = false;
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
 
-      fixture.componentInstance.open = false;
-      fixture.detectChanges();
-      expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
-
-      tick(500);
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
-        fixture.destroy();
-      });
-    });
+    tick(500);
+    fixture.detectChanges();
+    expect(getPopoverElement(fixture.nativeElement)).toBeNull();
+    fixture.destroy();
   }));
 
   it('should support "manual" opening', fakeAsync(() => {
@@ -160,11 +156,13 @@ describe('Popovers', () => {
 
     const button = fixture.nativeElement.querySelector('button');
     button.click();
+    fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
 
     tick(200);
     fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    fixture.destroy();
   }));
 
   it('should support "manual" closing', () => {
@@ -178,6 +176,7 @@ describe('Popovers', () => {
     button.click();
     fixture.detectChanges();
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+    fixture.destroy();
   });
 
   it('should support "manual" opening and closing with custom delay', () => {
@@ -196,6 +195,7 @@ describe('Popovers', () => {
 
     buttonClose.click();
     expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+    fixture.destroy();
   });
 });
 
