@@ -17,7 +17,7 @@ const config = {
     'rxjs': 'node_modules/rxjs',
   },
   paths: {
-    'dist/*': 'dist/*.js',
+    'temp/es5/*': 'temp/es5/*.js',
   },
   meta: {
     'node_modules/@angular/*': { build: false },
@@ -28,19 +28,9 @@ const config = {
 
 builder.config(config);
 
-function bundle(options) {
-  return builder.bundle('dist/' + name, options).then((output) => {
-    const deferred = q.defer();
-    const outputFile = path.resolve(__dirname, '../dist', `${name}.bundle${options.minify ? '.min' : ''}.js`);
-    fs.writeFile(outputFile, output.source.replace(/dist\//g, `${name}/`), function(err) {
-      if(err) {
-        deferred.reject(err);
-        return;
-      }
-      deferred.resolve();
-    });
-    return deferred.promise;
-  });
+function bundle() {
+  const exportFile = 'dist/bundles/' + name + '.umd.js';
+  return builder.buildStatic('temp/es5/' + name, exportFile, {format: 'umd'});
 }
 
 module.exports = bundle;

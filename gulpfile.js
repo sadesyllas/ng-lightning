@@ -10,14 +10,15 @@ var argv = require('yargs')
             .argv;
 var bundle = require('./scripts/bundle');
 
-var BUILD = tsProject.options.outDir;
-
 var PATHS = {
   src: ['src/**/*.ts','!src/**/*.spec.ts'],
   templates: ['src/**/*.jade'],
   spec: ['src/**/*.ts', 'test/util/*.ts'],
   typings: 'typings/index.d.ts',
   temp: 'temp/',
+  tsInline: 'temp/inline/',
+  es5: 'temp/es5/',
+  dist: 'dist/',
 };
 
 var inlineTemplatesTask = lazypipe()
@@ -35,7 +36,7 @@ var inlineTemplatesTask = lazypipe()
   });
 
 gulp.task('clean', function() {
-  return require('del')(BUILD);
+  return require('del')([PATHS.dist, PATHS.tsInline, PATHS.es5]);
 });
 
 gulp.task('lint:ts', function lint_ts_impl() {
@@ -52,23 +53,37 @@ gulp.task('lint:ts', function lint_ts_impl() {
     }));
 });
 
-gulp.task('build:ts', gulp.series('lint:ts', function build_ts_impl() {
-  return gulp.src(PATHS.src.concat(PATHS.typings), {base: 'src'})
+gulp.task('ngc:templates', function() {
+  return gulp.src(PATHS.src, {base: 'src'})
     .pipe(inlineTemplatesTask())
-    .pipe(tsProject())
-    .pipe(cache('build:ts'))
-    .pipe(gulp.dest(BUILD));
+    .pipe(gulp.dest(PATHS.tsInline));
+});
+
+gulp.task('ngc', gulp.series('ngc:templates', function __ngc(cb) {
+  var exec = require('child_process').exec;
+  var isWin = /^win/.test(process.platform);
+  var executable = isWin ? 'node_modules\\.bin\\ngc.cmd' : './node_modules/.bin/ngc';
+  exec(`${executable} -p ./tsconfig-es2015.json`, (e) => {
+    if (e) console.log(e);
+    require('del')('./dist/waste');
+    cb();
+  }).stdout.on('data', function(data) { console.log(data); });
 }));
 
-gulp.task('bundle', function() {
-  return bundle({});
+gulp.task('build:ts', gulp.series('lint:ts', 'ngc'));
+
+
+gulp.task('bundle:es5', function build_ts_es5_impl() {
+  return gulp.src([PATHS.tsInline + '**/*.ts', PATHS.typings] , {base: PATHS.tsInline})
+    .pipe(tsProject())
+    .pipe(gulp.dest(PATHS.es5));
 });
 
-gulp.task('bundle:min', function() {
-  return bundle({minify: true, sourceMaps: true});
-});
+gulp.task('bundle', gulp.series('bundle:es5', function __bundle() {
+  return bundle();
+}));
 
-gulp.task('build', gulp.series('clean', 'build:ts', gulp.parallel('bundle', 'bundle:min')));
+gulp.task('build', gulp.series('clean', gulp.series('build:ts', 'bundle')));
 
 gulp.task('build:watch', function() {
   gulp.watch([ PATHS.src, PATHS.templates ], gulp.series('build:ts', 'bundle'));
@@ -116,7 +131,7 @@ gulp.task('tdd', gulp.series('test:clean-build', function tdd_impl(done) {
 
 gulp.task('prepublish', gulp.series('build', function prepublish_impl() {
   return gulp.src(['package.json', '*.md', 'LICENSE'])
-    .pipe(gulp.dest(BUILD));
+    .pipe(gulp.dest(PATHS.dist));
 }));
 
 gulp.task('typings:clean', function() {

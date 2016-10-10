@@ -25,7 +25,8 @@ const config = {
   resolve: {
     extensions: ['', '.ts',  '.js'],
     alias: {
-      'ng-lightning': path.resolve(__dirname, '../dist'),
+      'ng-lightning': path.resolve(__dirname, '../temp/inline'),
+      'bundle.umd.js': path.resolve(__dirname, '../dist/bundles/ng-lightning.umd.js'),
     }
   },
   module: {

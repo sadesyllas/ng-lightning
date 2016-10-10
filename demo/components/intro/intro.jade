@@ -41,15 +41,16 @@ mixin prism(html)
       | :
     +prism(install)
       
-    p.slds-m-vertical--small 
+    p.slds-m-top--large.slds-m-bottom--small 
       | If you use&nbsp;
       strong SystemJS
-      | &nbsp;to load your files, you may want to use our bundle file through&nbsp;
+      | &nbsp;to load your files, you should adjust your configuration to point our UMD bundle through&nbsp;
       a(href="https://unpkg.com/") unpkg
-      | .
+      | &nbsp;or your node_modules, similar to this:
     +prism(bundle)
+    p.slds-m-top--small You can also check on of our plunker examples for a working setup.
 
-  .slds-p-vertical--large
+  .slds-p-vertical--x-small
     .slds-text-heading--large.slds-m-bottom--large Reading the documentation
     p 
       | Each component has API documentation, examples, and a working demo. They can be found&nbsp; 

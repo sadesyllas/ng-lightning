@@ -29,7 +29,12 @@ export class Plunker {
   }
 
   lib() {
-    return require('!!raw!ng-lightning/ng-lightning.bundle.js');
+    return require('!!raw!bundle.umd.js');
+  }
+
+  systemjs() {
+    const libPath = __ENV__.production ? `npm:ng-lightning@${__ENV__.pkg.version}/bundles/ng-lightning.umd.js` : './ng-lightning.umd.js';
+    return require('!!raw!./files/systemjs.config.js').replace('__NG_LIGHTHNING_URL__', libPath);
   }
 
   raw(filename: string) {

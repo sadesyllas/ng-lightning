@@ -20,10 +20,13 @@ Install through `npm`:
 npm install --save ng-lightning
 ```
 
-If you use **SystemJS** to load your files, you may want to use our bundle file through [unpkg](https://unpkg.com/)
+If you use **SystemJS** to load your files, you should adjust your configuration to point our UMD bundle through [unpkg](https://unpkg.com/)
 
-```html
-<script src="https://unpkg.com/ng-lightning@x.x.x/ng-lightning.bundle.js"></script>
+```javascript
+map: {
+  ...
+  'ng-lightning/ng-lightning': 'https://unpkg.com/ng-lightning@x.x.x/bundles/ng-lightning.umd.js'
+}
 ```
 
 #### IE11 support

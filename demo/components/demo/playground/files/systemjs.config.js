@@ -6,15 +6,9 @@
 (function(global) {
 
   var config = {
-    // DEMO ONLY! REAL CODE SHOULD NOT TRANSPILE IN THE BROWSER
-    transpiler: 'ts',
+    transpiler: 'typescript',
     typescriptOptions: {
-      tsconfig: true
-    },
-    meta: {
-      'typescript': {
-        'exports': 'ts'
-      }
+      emitDecoratorMetadata: true
     },
     paths: {
       // paths serve as alias
@@ -25,6 +19,7 @@
     map: {
       // our app is within the app folder
       app: 'app',
+      'ng-lightning/ng-lightning': '__NG_LIGHTHNING_URL__',
 
       // angular bundles
       '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
@@ -37,7 +32,6 @@
 
       // other libraries
       'rxjs':                       'npm:rxjs',
-      'ts':                         'npm:plugin-typescript@4.0.10/lib/plugin.js',
       'typescript':                 'npm:typescript@2.0.2/lib/typescript.js',
 
     },
@@ -46,6 +40,9 @@
       app: {
         main: './main.ts',
         defaultExtension: 'ts'
+      },
+      'ng-lightning': {
+        defaultExtension: 'js'
       },
       rxjs: {
         defaultExtension: 'js'
