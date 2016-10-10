@@ -33,11 +33,11 @@ export class NglIcon {
   private _containerClass: string[];
 
   constructor(public element: ElementRef, public renderer: Renderer,
-              @Attribute('state') private state: 'not-selected' | 'selected' | 'selected-focus',
-              @Attribute('button') button: 'not-selected' | 'selected' | 'selected-focus',
-              @Optional() private nglButton: NglButton, @Optional() private nglButtonIcon: NglButtonIcon) {
+              @Attribute('state') private state: string,
+              @Attribute('button') button: string,
+              @Optional() nglButton: NglButton, @Optional() nglButtonIcon: NglButtonIcon) {
 
-    this.button = button === null ? !!(this.nglButton || this.nglButtonIcon) : toBoolean(button);
+    this.button = button === null ? !!(nglButton || nglButtonIcon) : toBoolean(button);
     if (state) {
       renderer.setElementClass(element.nativeElement, `slds-text-${state}`, true);
     }
