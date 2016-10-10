@@ -1,4 +1,4 @@
-import {Component, ContentChild, ChangeDetectionStrategy, Input, Attribute, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild, TemplateRef} from '@angular/core';
+import {Component, ContentChild, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild, TemplateRef} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import {NglLookupItemTemplate, NglLookupLabelTemplate} from './item';
 import {NglLookupScopeItem} from './scope-item';
@@ -50,6 +50,8 @@ export class NglLookup {
 
   @ViewChild('lookupInput') inputEl: ElementRef;
 
+  @Input() debounce: number = 200;
+
   inputId = uniqueId('lookup_input');
 
   _label: string | TemplateRef<any>;
@@ -80,12 +82,7 @@ export class NglLookup {
   private lastUserInput: string;
   private pendingFocus = false;
 
-  constructor(private element: ElementRef, private renderer: Renderer, private detector: ChangeDetectorRef,
-              @Attribute('debounce') private debounce: number) {
-    if (this.debounce === null) {
-      this.debounce = 200;
-    }
-  }
+  constructor(private element: ElementRef, private renderer: Renderer, private detector: ChangeDetectorRef) {}
 
   handlePick(item: any) {
     this.pickChange.emit(item);
