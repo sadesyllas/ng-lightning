@@ -1,10 +1,7 @@
 import {Injectable, EventEmitter, ChangeDetectorRef, OpaqueToken, Inject} from '@angular/core';
+import {INglConfig} from './config.interface';
 
 export const NGL_CONFIG = new OpaqueToken('NGL_CONFIG');
-
-export interface INglConfig {
-  svgPath?: string;
-}
 
 @Injectable()
 export class NglConfig {

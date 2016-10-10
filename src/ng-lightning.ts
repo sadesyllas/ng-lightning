@@ -22,9 +22,11 @@ import {NglRatingsModule} from './ratings/module';
 import {NglSectionsModule} from './sections/module';
 import {NglSpinnersModule} from './spinners/module';
 import {NglTabsModule} from './tabs/module';
-import {NglConfig, INglConfig, NGL_CONFIG} from './config/config';
+import {INglConfig} from './config/config.interface';
+import {NglConfig, NGL_CONFIG} from './config/config';
 
 export {INglDatatableSort, INglDatatableRowClick} from './datatables/module';
+export {INglConfig} from './config/config.interface';
 export {NglConfig} from './config/config';
 
 const MODULES = [
