@@ -114,6 +114,13 @@ describe('`nglNotification`', () => {
     fixture.destroy();
   }));
 
+  it('should cancel timeout if destroyed', fakeAsync(() => {
+    const fixture = createTestComponent(`<ngl-notification *ngIf="severity" timeout="1000" (nglNotificationClose)="onClose($event)"></ngl-notification>`);
+
+    fixture.componentInstance.severity = null;
+    fixture.detectChanges();
+  }));
+
 });
 
 

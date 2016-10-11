@@ -62,6 +62,10 @@ export class NglNotification implements OnChanges {
     this.closeEventEmitter.emit(reason);
   }
 
+  ngOnDestroy() {
+    this.clearTimeout();
+  }
+
   private clearTimeout() {
     if (this.currentTimeout !== null) {
       clearTimeout(this.currentTimeout);
