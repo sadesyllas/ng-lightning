@@ -114,7 +114,7 @@ export class NglPopoverTrigger {
 
     this.componentRef = this.viewContainer.createComponent(this.popoverFactory, 0, this.injector, [this.projectableNodes]);
     this.popover = this.componentRef.instance;
-    this.popover.afterViewInit.take(1).subscribe(() => this.tether.position());
+    this.popover.afterViewInit.subscribe(() => this.tether.position()).unsubscribe();
     this.setTether(true);
 
     // To avoid unexpected behavior when template "lives" inside an OnPush

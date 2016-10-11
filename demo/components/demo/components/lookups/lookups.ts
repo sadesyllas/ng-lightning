@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'demo-lookups',

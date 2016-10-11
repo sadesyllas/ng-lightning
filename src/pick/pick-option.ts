@@ -1,5 +1,5 @@
 import { Directive, Input, HostListener, ElementRef, Renderer } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 import { NglPick } from './pick';
 
 @Directive({

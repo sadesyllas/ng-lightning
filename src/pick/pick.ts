@@ -1,5 +1,5 @@
 import { Directive, Input, Output, EventEmitter, ElementRef, Renderer } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {toBoolean} from '../util/util';
 
 @Directive({

@@ -1,5 +1,13 @@
 import {Component, ContentChild, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, Renderer, ChangeDetectorRef, ViewChild, TemplateRef} from '@angular/core';
-import {Observable, BehaviorSubject} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/publish';
 import {NglLookupItemTemplate, NglLookupLabelTemplate} from './item';
 import {NglLookupScopeItem} from './scope-item';
 import {uniqueId, isObject} from '../util/util';

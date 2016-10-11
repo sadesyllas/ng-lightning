@@ -1,4 +1,5 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ContentChild, ViewChild, ElementRef} from '@angular/core';
+import 'rxjs/add/operator/filter';
 import {NglPicklistItemTemplate} from './item';
 import {NglPick} from '../pick/pick';
 import {toBoolean} from '../util/util';
