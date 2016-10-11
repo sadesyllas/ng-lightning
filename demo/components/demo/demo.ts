@@ -64,7 +64,6 @@ components.forEach(component => {
   const path = 'components/' + key + '/' + key;
   component.html = require('!!prismjs?lang=markup!./' + path + '.html');
   component.ts = require('!!prismjs?lang=typescript!./' + path + '.ts')
-                  .replace('../../../../../dist/ng-lightning', 'ng-lightning/ng-lightning')
                   .replace(/\{/g, `&#x007b;`).replace(/\}/g, `&#x007d;`);
   if (!component.title) {
     component.title = key.charAt(0).toUpperCase() + key.slice(1);

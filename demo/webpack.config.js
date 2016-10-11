@@ -25,8 +25,7 @@ const config = {
   resolve: {
     extensions: ['', '.ts',  '.js'],
     alias: {
-      src: path.resolve(__dirname, '../src'),
-      dist: path.resolve(__dirname, '../dist'),
+      'ng-lightning': path.resolve(__dirname, '../dist'),
     }
   },
   module: {

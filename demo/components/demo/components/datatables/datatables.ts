@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {INglDatatableSort, INglDatatableRowClick} from '../../../../../dist/ng-lightning';
+import {INglDatatableSort, INglDatatableRowClick} from 'ng-lightning/ng-lightning';
 
 const DATA = [
   { rank: 1, name: 'Kareem', surname: 'Abdul-Jabbar', points: 38387 },

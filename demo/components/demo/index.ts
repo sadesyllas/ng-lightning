@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {NglModule} from '../../../dist/ng-lightning';
+import {NglModule} from 'ng-lightning/ng-lightning';
 
 import {Plunker} from './playground/plunker';
 import {components} from './demo';

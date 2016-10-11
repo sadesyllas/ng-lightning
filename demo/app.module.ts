@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {routing} from './routes';
 
-import {NglModule} from '../dist/ng-lightning';
+import {NglModule} from 'ng-lightning/ng-lightning';
 
 import {AppComp} from './app';
 import {IntroComponent} from './components/intro/intro';

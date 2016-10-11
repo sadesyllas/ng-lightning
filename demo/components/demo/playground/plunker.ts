@@ -17,7 +17,6 @@ export class Plunker {
     if (!this.component) return '';
 
     const ts = this.component.tsRaw
-                .replace('../../../../../dist/ng-lightning', 'ng-lightning/ng-lightning')
                 .replace(/selector: '(.*)'/, 'selector: \'my-app\'')
                 .replace(/template: require(.*)/, 'templateUrl: \'app/demo.html\',')
                 .replace(/class Demo(.*) {/, 'class AppComponent {');
@@ -30,7 +29,7 @@ export class Plunker {
   }
 
   lib() {
-    return require('!!raw!dist/ng-lightning.bundle.js');
+    return require('!!raw!ng-lightning/ng-lightning.bundle.js');
   }
 
   raw(filename: string) {
