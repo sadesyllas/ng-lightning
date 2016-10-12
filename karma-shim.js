@@ -14,7 +14,6 @@ System.config({
     'tether': 'node_modules/tether/dist/js/tether.min.js'
   },
   map: {
-    'rxjs': 'npm:rxjs',
     'temp': 'temp',
 
     // angular bundles
@@ -30,6 +29,9 @@ System.config({
     '@angular/compiler/testing': 'npm:@angular/compiler/bundles/compiler-testing.umd.js',
     '@angular/platform-browser/testing': 'npm:@angular/platform-browser/bundles/platform-browser-testing.umd.js',
     '@angular/platform-browser-dynamic/testing': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+
+    // other libraries
+    'rxjs': 'npm:rxjs'
   },
   packages: {
     'temp': {defaultExtension: 'js'},
@@ -46,7 +48,7 @@ Promise.all([
     System.import('https://unpkg.com/svg4everybody')
       .then(function(){
         svg4everybody();
-      })
+    })
   ])
   .then(function(providers) {
     var coreTesting = providers[0];
@@ -59,12 +61,17 @@ Promise.all([
   })
   .then(__karma__.start, __karma__.error);
 
+function onlyBuiltFiles(filePath) {
+  return /^\/base\/temp\//.test(filePath);
+}
+
 function onlySpecFiles(path) {
   return /\.spec\.js$/.test(path);
 }
 
 function resolveTestFiles() {
   return Object.keys(window.__karma__.files)
+    .filter(onlyBuiltFiles)
     .filter(onlySpecFiles)
     .map(function(moduleName) {
       return System.import(moduleName);
