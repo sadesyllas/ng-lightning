@@ -10,13 +10,9 @@
 * **notifications:** clear timeout when destroyed ([c91a20c](https://github.com/ng-lightning/ng-lightning/commit/c91a20c)), closes [#237](https://github.com/ng-lightning/ng-lightning/issues/237)
 
 
-### Chores
-
-* **build:** distribute ESM with metadata and UMD bundle ([a52702f](https://github.com/ng-lightning/ng-lightning/commit/a52702f)), closes [#239](https://github.com/ng-lightning/ng-lightning/issues/239)
-
-
 ### Features
 
+* **build:** distribute ESM with metadata and UMD bundle ([a52702f](https://github.com/ng-lightning/ng-lightning/commit/a52702f)), closes [#239](https://github.com/ng-lightning/ng-lightning/issues/239)
 * **app:** upgrade SLDS to to 2.1.2 ([8125ec7](https://github.com/ng-lightning/ng-lightning/commit/8125ec7))
 * **modals:** support custom header template ([345bce7](https://github.com/ng-lightning/ng-lightning/commit/345bce7)), closes [#234](https://github.com/ng-lightning/ng-lightning/issues/234)
 * **popovers:** support "manual" open and close with custom delay ([adc0fcc](https://github.com/ng-lightning/ng-lightning/commit/adc0fcc)), closes [#235](https://github.com/ng-lightning/ng-lightning/issues/235)
@@ -26,7 +22,8 @@
 ### BREAKING CHANGES
 
 * build: code is now available as ES modules or UMD bundle and no longer as commonjs
-* forms:   * all input/textarea/select inside `<ngl-form-element>` or `<ngl-form-group-element>` should have `nglFormControl` attribute
+* forms: structural changes
+  * all input/textarea/select inside `<ngl-form-element>` or `<ngl-form-group-element>` should have `nglFormControl` attribute
   * single checkboxes should be wrapped by `<ngl-form-checkbox>`
 
   Before:
