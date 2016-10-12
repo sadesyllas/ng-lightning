@@ -1,3 +1,73 @@
+<a name="0.24.0"></a>
+# [0.24.0](https://github.com/ng-lightning/ng-lightning/compare/v0.23.0...v0.24.0) (2016-10-12)
+
+
+### Bug Fixes
+
+* **forms:** checkbox/radios have more accessible DOM structure ([22a2464](https://github.com/ng-lightning/ng-lightning/commit/22a2464)), closes [#214](https://github.com/ng-lightning/ng-lightning/issues/214)
+* **lookups:** correctly declare `debounce` as input instead of attribute ([170bcd1](https://github.com/ng-lightning/ng-lightning/commit/170bcd1))
+* **lookups:** don't render `<label>` element if empty ([c50572e](https://github.com/ng-lightning/ng-lightning/commit/c50572e)), closes [#233](https://github.com/ng-lightning/ng-lightning/issues/233)
+* **notifications:** clear timeout when destroyed ([c91a20c](https://github.com/ng-lightning/ng-lightning/commit/c91a20c)), closes [#237](https://github.com/ng-lightning/ng-lightning/issues/237)
+
+
+### Chores
+
+* **build:** distribute ESM with metadata and UMD bundle ([a52702f](https://github.com/ng-lightning/ng-lightning/commit/a52702f)), closes [#239](https://github.com/ng-lightning/ng-lightning/issues/239)
+
+
+### Features
+
+* **app:** upgrade SLDS to to 2.1.2 ([8125ec7](https://github.com/ng-lightning/ng-lightning/commit/8125ec7))
+* **modals:** support custom header template ([345bce7](https://github.com/ng-lightning/ng-lightning/commit/345bce7)), closes [#234](https://github.com/ng-lightning/ng-lightning/issues/234)
+* **popovers:** support "manual" open and close with custom delay ([adc0fcc](https://github.com/ng-lightning/ng-lightning/commit/adc0fcc)), closes [#235](https://github.com/ng-lightning/ng-lightning/issues/235)
+* **popovers:** support delayed closing ([cb0b2c6](https://github.com/ng-lightning/ng-lightning/commit/cb0b2c6)), closes [#231](https://github.com/ng-lightning/ng-lightning/issues/231)
+
+
+### BREAKING CHANGES
+
+* build: code is now available as ES modules or UMD bundle and no longer as commonjs
+* forms:   * all input/textarea/select inside `<ngl-form-element>` or `<ngl-form-group-element>` should have `nglFormControl` attribute
+  * single checkboxes should be wrapped by `<ngl-form-checkbox>`
+
+  Before:
+
+  ```html
+  <ngl-form-element><input type="checkbox" /></ngl-form-element>
+  <ngl-form-element><select></select></ngl-form-element>
+  ```
+
+  After:
+
+  ```html
+  <ngl-form-checkbox><input nglFormControl type="checkbox" /></ngl-form-element>
+  <ngl-form-element><select nglFormControl></select></ngl-form-element>
+  ```
+* lookups: `nglLookupLabel` should be hosted on `<template>`
+
+  Before:
+
+  ```html
+  <ngl-lookup>
+     <span nglLookupLabel>...</span>
+  </ngl-lookup>
+  ```
+
+  After:
+
+  ```html
+  <ngl-lookup>
+     <template nglLookupLabel>...</template>
+  </ngl-lookup>
+
+  ```
+  or
+  ```html
+  <ngl-lookup label="..."></ngl-lookup>
+
+  ```
+
+
+
 <a name="0.23.0"></a>
 # [0.23.0](https://github.com/ng-lightning/ng-lightning/compare/v0.22.0...v0.23.0) (2016-10-03)
 
