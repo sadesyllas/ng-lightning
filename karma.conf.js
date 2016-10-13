@@ -79,7 +79,7 @@ module.exports = function(config) {
     port: isTravis ? 9876 : 23011,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    autoWatch: false,
     browsers: [isTravis ? 'Firefox' : 'Chrome'],
     customLaunchers: {
       IE_no_addons: {
@@ -87,7 +87,7 @@ module.exports = function(config) {
         flags: ['-extoff']
       }
     },
-    singleRun: false,
+    singleRun: true,
   };
 
   if (isSaucelabs) {
@@ -95,10 +95,24 @@ module.exports = function(config) {
     cfg.browsers = Object.keys(cfg.customLaunchers);
     cfg.reporters.push('saucelabs');
     cfg.sauceLabs = {
+      testName: 'ng-lightning',
       tunnelIdentifier: isTravis ? process.env.TRAVIS_JOB_NUMBER : 'ng-lightning',
+      buildId: 'TRAVIS ' + process.env.TRAVIS_BUILD_NUMBER + '(' + process.env.TRAVIS_BUILD_ID + ')',
+      retryLimit: 2,
+      startConnect: false,
+      recordVideo: false,
+      recordScreenshots: false,
+      options: {
+        'selenium-version': '2.53.1',
+        'command-timeout': 600,
+        'idle-timeout': 600,
+        'max-duration': 5400
+      },
     };
-    cfg.captureTimeout = 120000;
-    cfg.browserNoActivityTimeout = 120000;
+    cfg.captureTimeout = 60000;
+    cfg.browserDisconnectTimeout = 60000;
+    cfg.browserDisconnectTolerance = 3;
+    cfg.browserNoActivityTimeout = 60000;
   }
 
   config.set(cfg);

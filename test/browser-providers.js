@@ -23,9 +23,9 @@ module.exports = {
   },
   'SL_EDGE': {
     base: 'SauceLabs',
-    browserName: 'microsoftedge',
+    browserName: 'MicrosoftEdge',
     platform: 'Windows 10',
-    version: '20.10240'
+    version: '13.10586'
   },
   'SL_ANDROID5': {
     base: 'SauceLabs',
