@@ -1,0 +1,11 @@
+label.slds-checkbox--toggle.slds-grid
+  abbr.slds-required(*ngIf="required", title="required") *
+  span.slds-form-element__label.slds-m-bottom--none([nglInternalOutlet]="_label")
+  ng-content
+  
+  span.slds-checkbox--faux_container([attr.for]="uid", aria-live="assertive")
+    span.slds-checkbox--faux
+    span.slds-checkbox--on {{enabledText}}
+    span.slds-checkbox--off {{disabledText}}
+
+.slds-form-element__help(*ngIf="error", [id]="'error_' + uid") {{error}}

@@ -26,6 +26,10 @@
   <input nglFormControl type="checkbox" [required]="required" />
 </ngl-form-checkbox>
 
+<ngl-form-checkbox-toggle label="Toggle Label" [error]="hasError ? error : null" class="slds-m-top--small">
+  <input nglFormControl type="checkbox" [required]="required" />
+</ngl-form-checkbox-toggle>
+
 <fieldset ngl-form-group label="Radio Group Label" [required]="required" [error]="hasError ? error : null" class="slds-m-top--small">
   <ngl-form-group-element label="Radio Label One"><input nglFormControl type="radio" /></ngl-form-group-element>
   <ngl-form-group-element label="Radio Label Two"><input nglFormControl type="radio" /></ngl-form-group-element>
