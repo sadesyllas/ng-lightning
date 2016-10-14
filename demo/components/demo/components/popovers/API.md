@@ -9,6 +9,10 @@
    * `nglTooltip?: boolean`: Whether popover looks like tooltip.
    * `nglPopoverTheme?: string`: Theme you want to apply. [See available themes.](https://www.lightningdesignsystem.com/components/utilities/themes/#flavor-color)
 
+### Output
+
+ * `nglPopoverChange: EventEmitter<boolean>`: Event when actual popover elements becomes visible/hidden.
+
 ### Export (nglPopover)
 
   * `open(delay?: number)`: "Manually" trigger open. Optionally specify a `delay` different than `nglPopoverDelay`'s'.

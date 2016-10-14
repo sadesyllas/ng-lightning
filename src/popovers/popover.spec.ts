@@ -96,6 +96,18 @@ describe('Popovers', () => {
     fixture.destroy();
   });
 
+  it('should emit event when shows or hides', () => {
+    const fixture = createTestComponent(null, false);
+    expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
+
+    fixture.detectChanges();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(true);
+
+    fixture.componentInstance.open = false;
+    fixture.detectChanges();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(false);
+  });
+
   it('should have tooltip appearence', () => {
     const fixture = createTestComponent(`<template #tip></template><span [nglPopover]="tip" nglOpen="true" nglTooltip></span>`);
     const popoverEl = getPopoverElement(fixture.nativeElement);
@@ -115,53 +127,52 @@ describe('Popovers', () => {
   });
 
   it('should support delayed opening', fakeAsync(() => {
-    const fixture = createTestComponent('<div nglPopoverDelay="200" nglPopover="tip" [nglOpen]="open"></div>');
-    expect(getPopoverElement(fixture.nativeElement)).toBeNull();
+    const fixture = createTestComponent('<div nglPopoverDelay="200" nglPopover="tip" [nglOpen]="open" (nglPopoverToggled)="cb($event)"></div>');
+    expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
 
     tick(200);
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(true);
 
     fixture.componentInstance.open = false;
     fixture.detectChanges();
 
     tick(200);
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeNull();
-    fixture.destroy();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(false);
   }));
 
   it('should support different opening and closing delays', fakeAsync(() => {
-    const fixture = createTestComponent('<div [nglPopoverDelay]="[100, 500]" nglPopover="tip" [nglOpen]="open"></div>');
-    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+    const fixture = createTestComponent('<div [nglPopoverDelay]="[100, 500]" nglPopover="tip" [nglOpen]="open" (nglPopoverToggled)="cb($event)"></div>');
+    expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
 
     tick(100);
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(true);
 
     fixture.componentInstance.open = false;
     fixture.detectChanges();
 
     tick(500);
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeNull();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(false);
     fixture.destroy();
   }));
 
   it('should support "manual" opening', fakeAsync(() => {
     const fixture = createTestComponent(`
-      <div nglPopoverDelay="200" nglPopover="tip" #tip="nglPopover"></div>
+      <div nglPopoverDelay="200" nglPopover="tip" #tip="nglPopover" (nglPopoverToggled)="cb($event)"></div>
       <button type="button" (click)="tip.open()"></button>
     `);
 
     const button = fixture.nativeElement.querySelector('button');
     button.click();
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeFalsy();
+    expect(fixture.componentInstance.cb).not.toHaveBeenCalled();
 
     tick(200);
     fixture.detectChanges();
-    expect(getPopoverElement(fixture.nativeElement)).toBeTruthy();
+    expect(fixture.componentInstance.cb).toHaveBeenCalledWith(true);
     fixture.destroy();
   }));
 
@@ -202,7 +213,7 @@ describe('Popovers', () => {
 @Component({
   template: `
     <template #tip>I am a tooltip</template>
-    <span [nglPopover]="tip" [nglPopoverPlacement]="placement" [nglPopoverTheme]="theme" [nglOpen]="open">Open here</span>
+    <span [nglPopover]="tip" [nglPopoverPlacement]="placement" [nglPopoverTheme]="theme" [nglOpen]="open" (nglPopoverToggled)="cb($event)">Open here</span>
   `,
 })
 export class TestComponent {

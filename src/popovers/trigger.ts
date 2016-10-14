@@ -1,4 +1,6 @@
-import {Directive, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef, Renderer, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory} from '@angular/core';
+import {Directive, Input, ElementRef, ComponentRef, TemplateRef, ViewContainerRef,
+        Renderer, ComponentFactoryResolver, Injector, EmbeddedViewRef, ComponentFactory,
+        Output, EventEmitter} from '@angular/core';
 import * as Tether from 'tether';
 import {NglPopover, Direction} from './popover';
 import {placement} from './placements';
@@ -31,6 +33,9 @@ export class NglPopoverTrigger {
   @Input() set nglOpen(open: boolean) {
     this.toggle(open, open ? this.openDelay : this.closeDelay);
   }
+
+  // Emit an event when actual popover is shown or hidden
+  @Output() nglPopoverToggled = new EventEmitter<boolean>();
 
   private popover: NglPopover;
   private popoverFactory: ComponentFactory<NglPopover>;
@@ -120,6 +125,8 @@ export class NglPopoverTrigger {
     // To avoid unexpected behavior when template "lives" inside an OnPush
     // component, explicitlly request change detection to run on creation.
     this.popover.changeDetector.markForCheck();
+
+    this.nglPopoverToggled.emit(true);
   }
 
   private get projectableNodes() {
@@ -139,5 +146,7 @@ export class NglPopoverTrigger {
     this.componentRef.destroy();
     this.componentRef = null;
     this.popover = null;
+
+    this.nglPopoverToggled.emit(false);
   }
 };
