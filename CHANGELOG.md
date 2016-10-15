@@ -1,3 +1,14 @@
+<a name="0.25.0"></a>
+# [0.25.0](https://github.com/ng-lightning/ng-lightning/compare/v0.24.0...v0.25.0) (2016-10-15)
+
+
+### Features
+
+* **forms:** add checkbox toggle component ([99d0ddd](https://github.com/ng-lightning/ng-lightning/commit/99d0ddd)), closes [#246](https://github.com/ng-lightning/ng-lightning/issues/246)
+* **popovers:** add output event when shows or hides ([4d08456](https://github.com/ng-lightning/ng-lightning/commit/4d08456)), closes [#244](https://github.com/ng-lightning/ng-lightning/issues/244)
+
+
+
 <a name="0.24.0"></a>
 # [0.24.0](https://github.com/ng-lightning/ng-lightning/compare/v0.23.0...v0.24.0) (2016-10-12)
 
