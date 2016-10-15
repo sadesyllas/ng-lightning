@@ -1,4 +1,4 @@
-import {Directive, Input, Output, EventEmitter, HostBinding, HostListener, ElementRef, OnInit, OnDestroy, ContentChildren, QueryList, Renderer} from '@angular/core';
+import {Directive, Input, Output, EventEmitter, HostListener, ElementRef, OnInit, OnDestroy, ContentChildren, QueryList, Renderer} from '@angular/core';
 import {NglDropdownItem} from './dropdown-item';
 import {toBoolean} from '../util/util';
 
@@ -12,8 +12,8 @@ const openEventEmitter = new EventEmitter<any>();
   },
 })
 export class NglDropdown implements OnInit, OnDestroy {
-  @Input('open') set isOpen(isOpen: boolean | string) {
-    isOpen = toBoolean(isOpen);
+  @Input('open') set isOpen(isOpen: boolean) {
+    this._isOpen = toBoolean(isOpen);
     if (isOpen) {
       this.clearGlobalClickTimeout();
       this.globalClickTimeout = setTimeout(() => {
@@ -24,19 +24,18 @@ export class NglDropdown implements OnInit, OnDestroy {
     } else {
       this._unsubscribeFromClickEvents();
     }
-    this._isOpen = <boolean>isOpen;
+
+    this.renderer.setElementClass(this.element.nativeElement, 'slds-is-open', this.isOpen);
+    this.renderer.setElementAttribute(this.element.nativeElement, 'aria-expanded', `${this.isOpen}`);
   }
   get isOpen() {
     return this._isOpen;
   }
+
   @Input() handlePageEvents = true;
   @ContentChildren(NglDropdownItem, {descendants: true}) items: QueryList<NglDropdownItem>;
   @Output('openChange') isOpenChange = new EventEmitter<boolean>();
-  @HostBinding('class.slds-is-open')
-  @HostBinding('attr.aria-expanded')
-  get __isOpen() {
-    return this.isOpen;
-  }
+
   triggerFocusEventEmitter = new EventEmitter();
 
   private _isOpen = false;
