@@ -9,6 +9,10 @@ Value is: {{value}}
 <button type="button" nglButton="neutral" (click)="changeSize()">Change Size</button>
 <button type="button" nglButton="neutral" (click)="changeColor()">Change Color</button>
 
+<div class="slds-grid slds-m-top--large"></div>
+<button type="button" nglButton="neutral" (click)="value = 1.8">1.80</button>
+<button type="button" nglButton="neutral" (click)="value = 4.25">4.25</button>
+
 <div class="slds-text-title--caps slds-m-bottom--small slds-m-top--x-large">Custom icon</div>
 <ngl-rating [(rate)]="value">
   <template nglRatingIcon let-active>

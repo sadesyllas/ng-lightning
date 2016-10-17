@@ -229,20 +229,28 @@ describe('Rating Component', () => {
     beforeEach(function () {
       fixture = createTestComponent(`
         <ngl-rating [(rate)]="value">
-          <template nglRatingIcon let-active let-i="index">{{i}}/{{active}}</template>
+          <template nglRatingIcon let-active let-i="index" let-fill="fill">{{i}}/{{active}}/{{fill}}</template>
         </ngl-rating>`);
     });
 
     it('should render correctly', () => {
       const stars = getStars(fixture.nativeElement);
-      expect(stars.map(el => el.textContent)).toEqual(['0/true', '1/true', '2/false', '3/false', '4/false']);
+      expect(stars.map(el => el.textContent)).toEqual(['0/true/100', '1/true/100', '2/false/0', '3/false/0', '4/false/0']);
     });
 
     it('should update on hover', () => {
       const stars = getStars(fixture.nativeElement);
       dispatchEvent(stars[3], 'mouseenter');
       fixture.detectChanges();
-      expect(stars.map(el => el.textContent)).toEqual(['0/true', '1/true', '2/true', '3/true', '4/false']);
+      expect(stars.map(el => el.textContent)).toEqual(['0/true/100', '1/true/100', '2/true/100', '3/true/100', '4/false/0']);
+    });
+
+    it('should expose correct fill for fractional rate', () => {
+      fixture.componentInstance.value = 3.65;
+      fixture.detectChanges();
+
+      const stars = getStars(fixture.nativeElement);
+      expect(stars.map(el => el.textContent)).toEqual(['0/true/100', '1/true/100', '2/true/100', '3/false/65', '4/false/0']);
     });
   });
 });

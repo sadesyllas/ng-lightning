@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ContentChild} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostListener, HostBinding, ContentChild, ViewChild, TemplateRef} from '@angular/core';
 import {NglRatingIconTemplate} from './icons';
 import {toBoolean} from '../util/util';
 
@@ -28,6 +28,7 @@ export class NglRating {
     this.currentRate = rate;
   }
 
+  @ViewChild('t') defaultTemplate: TemplateRef<any>;
   @ContentChild(NglRatingIconTemplate) iconTemplate: NglRatingIconTemplate;
 
   @Input() set max(max: number | string) {
@@ -41,6 +42,7 @@ export class NglRating {
   @Input() colorOn = '#FFB75D';
   @Input() colorOff = '#54698D';
 
+  private _template: TemplateRef<any>;
   private _max: number = 5;
   private readonly = false;
   private inputRate: number;
@@ -52,28 +54,31 @@ export class NglRating {
     this.setRange();
   }
 
+  ngAfterContentInit() {
+    this._template = this.iconTemplate ? this.iconTemplate.templateRef : this.defaultTemplate;
+  }
+
   update(value: number) {
     if (value < 1 || value > this.max || this.readonly || value === this.inputRate) return;
     this.rateChange.emit(value);
   }
 
-  enter(value: number): void {
+  enter(value: number) {
     if (this.readonly) return;
 
     this.currentRate = value;
     this.hover.emit(value);
   }
 
-  get iconsCount() {
-    return Math.ceil(this.currentRate) || this.currentRate;
-  }
+  getFill(value: number) {
+    if (value <= this.currentRate) {
+      return 100;
+    }
+    if (Math.ceil(this.currentRate) < value) {
+      return 0;
+    }
 
-  get iconsOnCount() {
-    return Math.floor(this.currentRate);
-  }
-
-  xPos(index: number) {
-    return index <= Math.floor(this.currentRate) ? 0 : Math.round((this.currentRate - index) * 100);
+    return Math.round(100 * (this.currentRate % 1));
   }
 
   @HostListener('mouseleave') reset() {

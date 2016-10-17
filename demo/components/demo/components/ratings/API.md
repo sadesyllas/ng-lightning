@@ -21,3 +21,4 @@
 
   * `$implicit: boolean`: Whether icon should be active.
   * `index: number`: Icon index.
+  * `fill: number`: Fill percentage. An integer value between 0 and 100.

@@ -1,15 +1,7 @@
-mixin container(isDefault)
-  - var condition = isDefault ? '!' : '';
-  span(*ngIf="#{condition}iconTemplate")
-    .slds-show--inline-block(*ngFor="let r of range; let i = index", (click)="update(r)", (mouseenter)="enter(r)", style="position: relative;")
-      block
+template(#t, let-fill="fill")
+  svg.slds-icon([nglIcon]="icon", [ngClass]="size ? 'slds-icon--' + size : ''", [style.fill]="fill === 100 ? colorOn : colorOff")
+  svg.slds-icon(*ngIf="fill > 0 && fill < 100", [nglIcon]="icon", [ngClass]="size ? 'slds-icon--' + size : ''",
+    [style.fill]="colorOn", style="position:absolute; bottom:0;", [style.left.%]="fill - 100", [xPos]="(100 - fill) + '%'")
 
-
-+container(true)
-  svg.slds-icon(*ngIf="r <= iconsOnCount", [nglIcon]="icon", [ngClass]="size ? 'slds-icon--' + size : ''", [style.fill]="colorOn")
-  svg.slds-icon(*ngIf="r > iconsOnCount", [nglIcon]="icon", [ngClass]="size ? 'slds-icon--' + size : ''", [style.fill]="colorOff")
-  svg.slds-icon(*ngIf="r > iconsOnCount && r <= iconsCount", [nglIcon]="icon", [ngClass]="size ? 'slds-icon--' + size : ''",
-    [style.fill]="colorOn", style="position:absolute; bottom:0;", [style.left.%]="xPos(r)", [xPos]="-xPos(r) + '%'")
-
-+container(false)
-  template([ngTemplateOutlet]="iconTemplate.templateRef", [ngOutletContext]="{$implicit: r <= currentRate, index: i}")
+.slds-show--inline-block(*ngFor="let r of range; let i = index", (click)="update(r)", (mouseenter)="enter(r)", style="position: relative;")
+  template([ngTemplateOutlet]="_template", [ngOutletContext]="{$implicit: r <= currentRate, index: i, fill: getFill(r)}")
