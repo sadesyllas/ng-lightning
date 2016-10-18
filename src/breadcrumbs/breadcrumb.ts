@@ -1,13 +1,8 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+import {Directive, TemplateRef} from '@angular/core';
 
-@Component({
-  selector: 'ngl-breadcrumb',
-  templateUrl: './breadcrumb.jade',
-  host: {
-    '[class.slds-list__item]': 'true',
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+@Directive({
+  selector: '[nglBreadcrumb]',
 })
 export class NglBreadcrumb {
-  @Input() href: string;
+  constructor(public templateRef: TemplateRef<any>) {}
 }
